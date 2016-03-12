@@ -63,12 +63,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $(window).scroll(function (event) {
     var y = $(this).scrollTop();
 
-    if (y >= 520) { 
+    if (y >= 520) {
       $('#head').addClass('shadow');
     } else {
       $('#head').removeClass('shadow');
     }
-  });
+  }); 
 
 })
 
