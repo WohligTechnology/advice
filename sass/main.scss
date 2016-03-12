@@ -131,10 +131,10 @@ nav li:hover .dropdown-menu {
 .navbar-default {
   height: 70px;
   border: none;
-  box-shadow: 3px 2px 2px 0px #aaa;
   background-color: #fff;
   overflow: hidden;
 }
+.shadow { box-shadow: 3px 2px 2px 0px #aaa; }
 .get-start {
   margin-right: -5px;
   padding: 25px;
