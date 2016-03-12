@@ -1,18 +1,46 @@
-<header>
+<header ng-controller="headerctrl">
    <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#/home"><img src="img/logo.png" alt="logo" width="20"> </a>
-        </div>
+    <div class="">
+        <div class="clearfix">
+          <div class="pull-left">
+            <div class="navbar-header">
+                <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button> -->
+                <div class="hamburger inline-block">
+                  <div class="pointer" ng-click="menu();">
+                    <span class="{{one}}"></span>
+                    <span class="{{two}}"></span>
+                    <span class="{{three}}"></span>
+                  </div>
+                </div>
+                <h1 class="m-clear inline-block">
+                  <a class="navbar-brand" href="#/home"><img src="img/logo.png" alt="logo" width=""> </a>
+                </h1>
+            </div>
 
-        <div class="collapse navbar-collapse" id="nav-collapse">
-               <div ng-include="template.menu" class="template menu"></div>
+            <div class="slide-menu {{getclass}}">
+                   <!-- <div ng-include="template.menu" class="template menu"></div> -->
+            </div>
+          </div>
+          <div class="pull-right">
+            <div class="clearfix">
+              <div class="get-start inline-block pointer">
+                <a href="" >
+                  <span class="white">GET STARTED</span>
+                  <i class="fa fa-arrow-circle-o-right white"></i>
+                </a>
+              </div>
+              <div class="login inline-block  pointer">
+                <a href="">
+                  <i class="fa fa-user white block text-center"></i>
+                  <span class="white">Login</span></a>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
 </nav>

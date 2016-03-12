@@ -2,16 +2,16 @@
   <flex-slider flex-slide="slide in mySlides" direction-nav="false">
     <li>
       <div class="home-banner relate">
-        <img ng-src="{{slide.img}}" alt="Sorvest" class="img-responsive">
+        <img ng-src="{{slide}}" alt="Sorvest" class="img-responsive">
         <div class="blur-backbg"></div>
-        <div class="get-center">
+        <div class="home-slider-text white">
           <p class="m-clear">Smile More Often</p>
-          <p class="m-clear">With<span>Sortvest</span></p>
+          <p class="m-clear">With <span class="primary-light">Sortvest</span></p>
         </div>
       </div>
     </li>
   </flex-slider>
-  <section class="investing">
+  <section class="investing same-section">
     <div class="container">
       <div class="invest-head">
         <h2 class="heading text-center primary text-light m-clear">investing the sortvest way !</h2>
@@ -73,7 +73,7 @@
     </div>
   </section>
   <section class="bg-technology bgz">
-    <div class="technology">
+    <div class="technology same-section">
       <div class="container">
         <h2 class="heading text-center text-light white m-clear">use the <span class="primary-light">power of technology</span> to your advantage</h2>
         <div class="power-tech-list">
@@ -104,7 +104,7 @@
       </div>
     </div>
   </section>
-  <section class="trust">
+  <section class="trust same-section">
     <div class="container">
       <h2 class="heading text-center primary text-light m-clear">worthy of your trust</h2>
       <div class="row">
@@ -132,7 +132,7 @@
     </div>
   </section>
   <section class="client-bg bgz ">
-    <div class="client-main">
+    <div class="client-main same-section">
       <h2 class="heading text-center text-light white m-clear">Client endorsements</h2>
       <div class="client-slider white">
         <flex-slider class="carousel" flex-slide="detail in client track by $index" direction-nav="false">
@@ -152,7 +152,7 @@
       </div>
     </div>
   </section>
-  <section class="sortvest-main">
+  <section class="sortvest-main same-section">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
@@ -168,7 +168,7 @@
     </div>
   </section>
   <section class="bg-begining bgz">
-    <div class="begining">
+    <div class="begining same-section">
       <div class="container">
         <h2 class="heading text-center white m-clear">Make a begining</h2>
         <div class="row">
@@ -176,32 +176,34 @@
             <img src="" alt="" class="img-responsive">
           </div>
           <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-offset-1 col-md-10">
-                <div class="contact">
-                  <form action="" name="getintouch">
-                    <div class="form-group">
-                      <input type="text" class="form-control" name="name" ng-model="name" placeholder="Name *" required>
-                      <div class="ab white" ng-show="getintouch.name.$error.required && getintouch.name.$touched">
-                        Please Enter Your Name.
+            <div class="contact-blur">
+              <div class="row">
+                <div class="col-md-offset-1 col-md-10">
+                  <div class="contact">
+                    <form action="" name="getintouch">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="name" ng-model="name" placeholder="Name *" required>
+                        <div class="ab white" ng-show="getintouch.name.$error.required && getintouch.name.$touched">
+                          Please Enter Your Name.
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <input type="email" class="form-control" name="mail" ng-model="mail" placeholder="Email *" required>
-                      <div class="ab white" ng-show="getintouch.mail.$error.required && getintouch.mail.$touched">
-                        Please Enter Your Email.
+                      <div class="form-group">
+                        <input type="email" class="form-control" name="mail" ng-model="mail" placeholder="Email *" required>
+                        <div class="ab white" ng-show="getintouch.mail.$error.required && getintouch.mail.$touched">
+                          Please Enter Your Email.
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <input type="text" class="form-control" name="code" ng-model="code" placeholder="Reference Code *" required>
-                      <div class="ab white" ng-show="getintouch.code.$error.required && getintouch.code.$touched">
-                        Please Enter Your Reference Code.
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="code" ng-model="code" placeholder="Reference Code *" required>
+                        <div class="ab white" ng-show="getintouch.code.$error.required && getintouch.code.$touched">
+                          Please Enter Your Reference Code.
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group text-center">
-                      <button class="btn btn-primary">Submit</button>
-                    </div>
-                  </form>
+                      <div class="form-group text-center">
+                        <button class="btn btn-primary-light btn-large">SUBMIT</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>

@@ -13,12 +13,7 @@ var navigationservice = angular.module('navigationservice', [])
   var navigation = [{
     name: "Home",
     classis: "active",
-    anchor: "home",
-    subnav: [{
-      name: "Subnav1",
-      classis: "active",
-      link: "#/home"
-    }]
+    anchor: "home"
   }];
 
   return {

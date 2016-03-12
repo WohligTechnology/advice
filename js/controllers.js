@@ -11,10 +11,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.navigation = NavigationService.getnav();
 
   $scope.mySlides = [
-    'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
-    'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
-    'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
-    'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
+    'img/banner.jpg'
   ];
   $scope.client = [
     {
@@ -43,6 +40,27 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
     $(window).scrollTop(0);
   });
+
+  $scope.getclass = "menu-in";
+  $scope.one = "";
+  $scope.two = "";
+  $scope.three = ""
+  $scope.menu = function (){
+    if($scope.getclass == "menu-out")
+    {
+      $scope.getclass ="menu-in";
+      $scope.one = "";
+      $scope.two = "";
+      $scope.three = "";
+    }
+    else {
+      $scope.getclass = "menu-out";
+      $scope.one = "first";
+      $scope.two = "second";
+      $scope.three = "three";
+    }
+  };
+
 })
 
 ;
