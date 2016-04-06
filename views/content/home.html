@@ -194,6 +194,12 @@
                         </div>
                       </div>
                       <div class="form-group">
+                        <input type="password" class="form-control" name="password" ng-model="password" placeholder="Password *" required>
+                        <div class="ab white" ng-show="getintouch.password.$error.required && getintouch.password.$touched">
+                          Please Enter Your Password.
+                        </div>
+                      </div>
+                      <div class="form-group">
                         <input type="text" class="form-control" name="code" ng-model="code" placeholder="Reference Code *" required>
                         <div class="ab white" ng-show="getintouch.code.$error.required && getintouch.code.$touched">
                           Please Enter Your Reference Code.

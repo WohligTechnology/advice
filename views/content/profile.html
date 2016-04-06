@@ -1,0 +1,104 @@
+<div class="profile">
+  <md-toolbar class="white-bg md-whiteframe-8dp">
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" md-ink-ripple="#000000" aria-label="Menu" ng-disabled="false">
+        <i class="material-icons black">menu</i>
+      </md-button>
+      <h1><img src="img/logo.png" alt="Sortvest" class="img-responsive" /></h1>
+      <span flex></span>
+      <h4 class="black">Profile</h4>
+    </div>
+  </md-toolbar>
+  <div class="user-form">
+    <div class="user-detail">
+      <div class="user-image">
+        <img src="http://dummyimage.com/200x200/000/fff" alt="" class="img-responsive img-circle" />
+      </div>
+      <h2>Vikas Mehra</h2>
+    </div>
+    <div class="container">
+      <div class="user-form md-whiteframe-8dp">
+        <div class="navigation-tabs"></div>
+        <div class="nominee-details">
+          <h4 layout-align="start" class="text-uppercase">Nominee Details</h4>
+          <md-checkbox class="blue" md-ink-ripple="false" aria-label="No Nominee">
+            No Nominee
+          </md-checkbox>
+          <md-button class="md-icon-button md-fab md-mini md-primary md-whiteframe-8dp" aria-label="Add Nominee">
+            <i class="material-icons">add</i>
+          </md-button>
+          <div class="nominee-form">
+            <p>Nominee 1</p>
+            <div class="row">
+              <div class="col-sm-4">
+                <md-input-container class="md-block">
+                  <label>Name</label>
+                  <input>
+                </md-input-container>
+              </div>
+              <div class="col-sm-4">
+                <md-datepicker class="md-block" ng-model="user.submissionDate" md-placeholder="Birth Date">
+                </md-datepicker>
+              </div>
+              <div class="col-sm-4">
+                <md-input-container class="md-block">
+                  <label>Relationship</label>
+                  <input>
+                </md-input-container>
+              </div>
+            </div>
+            <md-input-container class="md-block">
+              <label>Address</label>
+              <input>
+            </md-input-container>
+            <div class="row">
+              <div class="col-sm-4">
+                <md-input-container class="md-block">
+                  <label>City</label>
+                  <input>
+                </md-input-container>
+              </div>
+              <div class="col-sm-4">
+                <md-input-container class="md-block">
+                  <label>Pincode</label>
+                  <input type="number">
+                </md-input-container>
+              </div>
+              <div class="col-sm-4">
+                <md-input-container class="md-block">
+                  <label>Country</label>
+                  <md-select ng-model="ctrl.userState">
+                    <md-option value="IN">IN</md-option>
+                    <md-option value="US">US</md-option>
+                    <md-option value="UK">UK</md-option>
+                    <md-option value="SP">SP</md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+            </div>
+            <div class="guardian-form">
+              <div class="row">
+                <div class="col-sm-6">
+                  <md-input-container class="md-block">
+                    <label>Guardian Name</label>
+                    <input>
+                  </md-input-container>
+                </div>
+                <div class="col-sm-6">
+                  <md-input-container class="md-block">
+                    <label>Guardian PAN</label>
+                    <input>
+                  </md-input-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="next-button text-right">
+          <span flex></span>
+          <md-button class="md-raised md-primary">Next</md-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
