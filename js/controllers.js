@@ -44,7 +44,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.getclass = "menu-in";
   $scope.one = "";
   $scope.two = "";
-  $scope.three = ""
+  $scope.three = "";
   $scope.menu = function (){
     if($scope.getclass == "menu-out")
     {
@@ -68,7 +68,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     } else {
       $('#head').removeClass('shadow');
     }
-  }); 
+  });
 
 })
 

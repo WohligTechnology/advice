@@ -1,7 +1,7 @@
 {
   "name": "Sortvest",
   "version": "0.0.1",
-  "description": "AngularFrameworkFrontend",
+  "description": "sortvest",
   "main": "gulpfile.js",
   "dependencies": {
     "crypto-js": "^3.1.6",
