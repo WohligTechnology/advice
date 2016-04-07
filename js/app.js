@@ -24,6 +24,11 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
       url: "/referral",
       templateUrl: "views/template.html",
       controller: 'ReferralCtrl'
+    })
+    .state('notification', {
+      url: "/notification",
+      templateUrl: "views/template.html",
+      controller: 'NotificationCtrl'
     });
   $urlRouterProvider.otherwise("/home");
   $locationProvider.html5Mode(isproduction);

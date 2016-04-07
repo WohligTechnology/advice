@@ -53,6 +53,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.footer = "";
 })
 
+.controller('NotificationCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+  $scope.template = TemplateService.changecontent("notification");
+  $scope.menutitle = NavigationService.makeactive("Notification");
+  TemplateService.title = $scope.menutitle;
+  $scope.navigation = NavigationService.getnav();
+  TemplateService.header = "";
+  TemplateService.footer = "";
+})
+
 .controller('headerctrl', function($scope, TemplateService) {
   $scope.template = TemplateService;
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
