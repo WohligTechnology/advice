@@ -18,6 +18,7 @@ $brand-danger: #fc483f !default;
 $brand-info: #000072 !default;
 $brand-gray: #777777 !default;
 $brand-gray-light: #aaaaaa !default;
+$brand-blue: #4285F4 !default;
 
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 @mixin placeholder {
@@ -63,6 +64,7 @@ nav li:hover .dropdown-menu {
 .pointer { cursor: pointer; }
 .black { color: black; }
 .white { color: #fff; }
+.blue { color: $brand-blue; }
 .white-bg { background-color: #fff !important; }
 .no-radius { border-radius: 0; }
 .radius { border-radius: 100%; }
@@ -327,6 +329,34 @@ md-toolbar {
   margin: 20px 0;
   md-list-item img {
     margin: 25px 25px 0 0 !important;
+  }
+}
+
+// Referral
+.referral-main {
+  margin: 50px 0;
+  .referral-title {
+    font-size: 24px;
+  }
+  .all-referrals {
+    margin: 50px 0;
+    .referral-image {
+      img {
+        width: 150px;
+        margin: 0 auto 10px;
+      }
+      p { font-size: 18px; }
+    }
+  }
+  .referral-code {
+    padding: 20px 20px 10px;
+    position: relative;
+    p { font-size: 16px; }
+    button {
+      position: absolute;
+      right: -8px;
+      bottom: -7px;
+    }
   }
 }
 
