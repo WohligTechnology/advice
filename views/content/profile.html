@@ -10,13 +10,12 @@
     </div>
   </md-toolbar>
   <div class="user-form">
-    <div class="user-detail">
+    <div class="container"><div class="user-detail">
       <div class="user-image">
-        <img src="http://dummyimage.com/200x200/000/fff" alt="" class="img-responsive img-circle" />
+        <img src="http://dummyimage.com/200x200/aaa/fff" alt="" class="img-responsive img-circle" />
       </div>
       <h2>Vikas Mehra</h2>
-    </div>
-    <div class="container">
+      </div>
       <div class="user-form md-whiteframe-8dp">
         <div class="navigation-tabs"></div>
         <div class="nominee-details">
@@ -93,10 +92,191 @@
               </div>
             </div>
           </div>
+          <div class="next-button text-right">
+            <span flex></span>
+            <md-button class="md-raised md-primary">Next</md-button>
+          </div>
         </div>
-        <div class="next-button text-right">
-          <span flex></span>
-          <md-button class="md-raised md-primary">Next</md-button>
+
+        <div class="regulatory-details">
+          <h4 layout-align="start" class="text-uppercase">Regulatory Details</h4>
+          <div class="birth-place">
+            <span>Place of birth:</span>
+            <md-input-container>
+              <label>Place of Birth</label>
+              <input>
+            </md-input-container>
+          </div>
+          <div class="birth-country">
+            <span>Country of Birth:</span>
+            <md-input-container>
+              <label>Select Country</label>
+              <md-select ng-model="ctrl.userCountry">
+                <md-option value="IN">IN</md-option>
+                <md-option value="US">US</md-option>
+                <md-option value="UK">UK</md-option>
+                <md-option value="SP">SP</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="gross-income">
+            <span>Gross Annual Income:</span>
+            <md-input-container>
+              <label>Select Income</label>
+              <md-select ng-model="ctrl.userIncome">
+                <md-option value="10000">10,000</md-option>
+                <md-option value="15000">15,000</md-option>
+                <md-option value="20000">20,000</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="net-worth">
+            <span>Net Worth (Optional):</span>
+            <md-input-container>
+              <span><i class="fa fa-inr"></i></span>
+              <input type="number" aria-label="Net Worth">
+            </md-input-container>
+          </div>
+          <div class="occupation">
+            <span>Occupation:</span>
+            <md-input-container>
+              <label>Select Occupation</label>
+              <md-select ng-model="ctrl.userOccupation">
+                <md-option value="IN">IN</md-option>
+                <md-option value="US">US</md-option>
+                <md-option value="UK">UK</md-option>
+                <md-option value="SP">SP</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="politically-exposed">
+            <span>Are you a Politically Exposed Person?</span>
+            <md-input-container>
+              <label>Select</label>
+              <md-select ng-model="ctrl.userPolitical">
+                <md-option value="yes">Yes</md-option>
+                <md-option value="no">No</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="tax-country">
+            <span>Is your Country of Tax Residency other than India?</span>
+            <md-input-container>
+              <label>Select</label>
+              <md-select ng-model="ctrl.userTax">
+                <md-option value="yes">Yes</md-option>
+                <md-option value="no">No</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="gender">
+            <span>Gender:</span>
+            <md-input-container>
+              <label>Select Gender</label>
+              <md-select ng-model="ctrl.userGender">
+                <md-option value="male">Male</md-option>
+                <md-option value="female">Female</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="marital-status">
+            <span>Marital Status:</span>
+            <md-input-container>
+              <label>Select</label>
+              <md-select ng-model="ctrl.userMarital">
+                <md-option value="single">Single</md-option>
+                <md-option value="married">Married</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="natioanlity">
+            <span>Nationality:</span>
+            <md-input-container>
+              <label>Select Nationality</label>
+              <md-select ng-model="ctrl.userNationality">
+                <md-option value="indian">Indian</md-option>
+                <md-option value="american">American</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="tax-status">
+            <span>Tax Status:</span>
+            <md-input-container>
+              <label>Select</label>
+              <md-select ng-model="ctrl.userTaxStatus">
+                <md-option value="1"></md-option>
+                <md-option value="2"></md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="next-button text-right">
+            <span flex></span>
+            <md-button class="md-raised md-primary">Next</md-button>
+          </div>
+        </div>
+
+        <div class="document-upload">
+          <div class="passport-photo">
+            <span>Passport size photograph:</span>
+            <md-button class="md-primary" aria-label="File">
+              <input type="file">
+            </md-button>
+          </div>
+          <div class="address-per">
+            <span>Address Proof (Permanant):</span>
+            <md-button class="md-primary" aria-label="File">
+              <input type="file">
+            </md-button>
+          </div>
+          <div class="address-cor">
+            <span>Address Proof (Corresponant):</span>
+            <md-button class="md-primary" aria-label="File">
+              <input type="file">
+            </md-button>
+            <md-checkbox class="blue" md-ink-ripple="false" aria-label="Same as Permanant Address">
+              Same as Permanant Address
+            </md-checkbox>
+          </div>
+          <div class="address-type">
+            <span>Address Type:</span>
+            <md-input-container>
+              <label>Select</label>
+              <md-select ng-model="ctrl.userAddress">
+                <md-option value="residential">Residential</md-option>
+                <md-option value="commercial">Commercial</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="pan-card">
+            <span>PAN Card:</span>
+            <md-button class="md-primary" aria-label="File">
+              <input type="file">
+            </md-button>
+          </div>
+          <div class="bank-name">
+            <span>Bank Name:</span>
+            <md-input-container>
+              <label>Select Bank</label>
+              <md-select ng-model="ctrl.userBank">
+                <md-option value="axis">AXIS</md-option>
+                <md-option value="hdfc">HDFC</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div class="cancelled-cheque">
+            <span>Cancelled Cheque:</span>
+            <md-button class="md-primary" aria-label="File">
+              <input type="file">
+            </md-button>
+          </div>
+          <div class="next-button text-right">
+            <span flex></span>
+            <md-button class="md-raised md-primary">Next</md-button>
+          </div>
+        </div>
+
+        <div class="verification">
+          <p>We have got all the information required to activate your account. We will be sending your documents shortly for physical verification.</p>
         </div>
       </div>
     </div>
