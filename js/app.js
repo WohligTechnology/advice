@@ -34,6 +34,11 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
       url: "/overview",
       templateUrl: "views/template.html",
       controller: 'OverviewCtrl'
+    })
+    .state('portfolio', {
+      url: "/portfolio",
+      templateUrl: "views/template.html",
+      controller: 'PortfolioCtrl'
     });
   $urlRouterProvider.otherwise("/home");
   $locationProvider.html5Mode(isproduction);

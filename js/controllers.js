@@ -71,6 +71,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.footer = "";
 })
 
+.controller('PortfolioCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+  $scope.template = TemplateService.changecontent("portfolio");
+  $scope.menutitle = NavigationService.makeactive("Portfolio");
+  TemplateService.title = $scope.menutitle;
+  $scope.navigation = NavigationService.getnav();
+  TemplateService.header = "";
+  TemplateService.footer = "";
+})
+
 .controller('headerctrl', function($scope, TemplateService) {
   $scope.template = TemplateService;
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
