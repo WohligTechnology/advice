@@ -29,6 +29,11 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
       url: "/notification",
       templateUrl: "views/template.html",
       controller: 'NotificationCtrl'
+    })
+    .state('overview', {
+      url: "/overview",
+      templateUrl: "views/template.html",
+      controller: 'OverviewCtrl'
     });
   $urlRouterProvider.otherwise("/home");
   $locationProvider.html5Mode(isproduction);
