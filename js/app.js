@@ -35,10 +35,10 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
       templateUrl: "views/template.html",
       controller: 'OverviewCtrl'
     })
-    .state('portfolio', {
-      url: "/portfolio",
+    .state('planner', {
+      url: "/planner",
       templateUrl: "views/template.html",
-      controller: 'PortfolioCtrl'
+      controller: 'PlannerCtrl'
     });
   $urlRouterProvider.otherwise("/home");
   $locationProvider.html5Mode(isproduction);
