@@ -19,6 +19,11 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
       url: "/profile",
       templateUrl: "views/template.html",
       controller: 'ProfileCtrl'
+    })
+    .state('referral', {
+      url: "/referral",
+      templateUrl: "views/template.html",
+      controller: 'ReferralCtrl'
     });
   $urlRouterProvider.otherwise("/home");
   $locationProvider.html5Mode(isproduction);

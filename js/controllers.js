@@ -44,6 +44,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.footer = "";
 })
 
+.controller('ReferralCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+  $scope.template = TemplateService.changecontent("referral");
+  $scope.menutitle = NavigationService.makeactive("Referral");
+  TemplateService.title = $scope.menutitle;
+  $scope.navigation = NavigationService.getnav();
+  TemplateService.header = "";
+  TemplateService.footer = "";
+})
+
 .controller('headerctrl', function($scope, TemplateService) {
   $scope.template = TemplateService;
   $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
