@@ -313,5 +313,22 @@ footer {
 }
 // footer end
 
+// Material SCSS
+// Header
+md-toolbar {
+  padding: 0 20px;
+  img {
+    width: 120px;
+    margin: -5px 0 0 20px;
+  }
+}
+// Notification
+.notification-main {
+  margin: 20px 0;
+  md-list-item img {
+    margin: 25px 25px 0 0 !important;
+  }
+}
+
 /* Start writing sass here */
 @import "fancybox-override";
