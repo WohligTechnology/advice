@@ -35,6 +35,11 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
       templateUrl: "views/template.html",
       controller: 'OverviewCtrl'
     })
+    .state('portfolio', {
+      url: "/portfolio",
+      templateUrl: "views/template.html",
+      controller: 'PortfolioCtrl'
+    })
     .state('planner', {
       url: "/planner",
       templateUrl: "views/template.html",

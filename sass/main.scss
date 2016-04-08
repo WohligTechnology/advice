@@ -360,5 +360,94 @@ md-toolbar {
   }
 }
 
+// Portfolio
+.portfolio {
+  position: relative;
+  .portfolio-main {
+    margin: 50px 0;
+    md-list-item {
+      h3 { font-size: 20px !important; }
+    }
+    .live-portfolios, .saved-portfolios {
+      margin: 20px 0;
+      md-card {
+        width: 80%;
+        margin: 10px auto;
+        cursor: pointer;
+        // .portfolio-image {
+        //   width: 400px;
+        //   height: 400px;
+        //   position: relative;
+        //   overflow: hidden;
+        //   background-image: url('../img/decision.jpg');
+        //   background-size: cover;
+        //   background-position: 100% 100%;
+        //   img {
+        //     height: 100%;
+        //     margin: auto;
+        //     position: absolute;
+        //     left: -100%;
+        //     right: -100%;
+        //     top: -100%;
+        //     bottom: -100%;
+        //   }
+        // }
+        span {
+          position: relative;
+          i {
+            position: absolute;
+            bottom: 2px;
+            right: 4px;
+            color: lighten($body-bg, .5);
+          }
+        }
+        md-card-actions {
+          margin: 10px 5px;
+          .title {
+            margin-left: 10px;
+            font-size: 20px;
+          }
+          .price {
+            color: green;
+            font-size: 16px;
+          }
+          .time {
+            margin-right: 10px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+  .add-button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    i {
+      font-size: 32px;
+      line-height: 1.8em;
+    }
+  }
+}
+
+// Overview
+.overview-main {
+  margin: 50px 0;
+  .donut-one {
+    margin-bottom: 25px;
+  }
+  .investment-holdings {
+    margin-top: 50px;
+    padding: 10px 0;
+    .invest-title {
+      margin-left: 20px !important;
+      font-size: 20px !important;
+    }
+    .investers {
+      margin: 0 20px;
+    }
+  }
+}
+
 /* Start writing sass here */
 @import "fancybox-override";
