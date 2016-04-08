@@ -9,23 +9,26 @@
       <h4 class="black">Profile</h4>
     </div>
   </md-toolbar>
-  <div class="user-form">
-    <div class="container"><div class="user-detail">
-      <div class="user-image">
-        <img src="http://dummyimage.com/200x200/aaa/fff" alt="" class="img-responsive img-circle" />
-      </div>
-      <h2>Vikas Mehra</h2>
+  <div class="user-profile">
+    <div class="container">
+      <div class="user-detail" layout="row">
+        <div class="user-image">
+          <img src="http://dummyimage.com/200x200/aaa/fff" alt="" class="img-responsive img-circle md-whiteframe-2dp" />
+        </div>
+        <h2>Vikas Mehra</h2>
       </div>
       <div class="user-form md-whiteframe-8dp">
         <div class="navigation-tabs"></div>
         <div class="nominee-details">
-          <h4 layout-align="start" class="text-uppercase">Nominee Details</h4>
-          <md-checkbox class="blue" md-ink-ripple="false" aria-label="No Nominee">
-            No Nominee
-          </md-checkbox>
-          <md-button class="md-icon-button md-fab md-mini md-primary md-whiteframe-8dp" aria-label="Add Nominee">
-            <i class="material-icons">add</i>
-          </md-button>
+          <div layout="row">
+            <h4 flex="80" class="text-uppercase blue">Nominee Details</h4>
+            <md-checkbox md-ink-ripple="false" aria-label="No Nominee">
+              No Nominee
+            </md-checkbox>
+            <md-button class="md-icon-button md-fab md-mini md-primary md-whiteframe-8dp" aria-label="Add Nominee">
+              <i class="material-icons">add</i>
+            </md-button>
+          </div>
           <div class="nominee-form">
             <p>Nominee 1</p>
             <div class="row">
@@ -99,16 +102,16 @@
         </div>
 
         <div class="regulatory-details">
-          <h4 layout-align="start" class="text-uppercase">Regulatory Details</h4>
-          <div class="birth-place">
-            <span>Place of birth:</span>
+          <h4 layout-align="start" class="text-uppercase blue">Regulatory Details</h4>
+          <div class="birth-place" layout="row">
+            <span flex="80">Place of birth:</span>
             <md-input-container>
               <label>Place of Birth</label>
               <input>
             </md-input-container>
           </div>
-          <div class="birth-country">
-            <span>Country of Birth:</span>
+          <div class="birth-country" layout="row">
+            <span flex="80">Country of Birth:</span>
             <md-input-container>
               <label>Select Country</label>
               <md-select ng-model="ctrl.userCountry">
@@ -119,8 +122,8 @@
               </md-select>
             </md-input-container>
           </div>
-          <div class="gross-income">
-            <span>Gross Annual Income:</span>
+          <div class="gross-income" layout="row">
+            <span flex="80">Gross Annual Income:</span>
             <md-input-container>
               <label>Select Income</label>
               <md-select ng-model="ctrl.userIncome">
@@ -130,15 +133,15 @@
               </md-select>
             </md-input-container>
           </div>
-          <div class="net-worth">
-            <span>Net Worth (Optional):</span>
+          <div class="net-worth" layout="row">
+            <span flex="80">Net Worth (Optional):</span>
             <md-input-container>
-              <span><i class="fa fa-inr"></i></span>
+              <span class="inr"><i class="fa fa-inr"></i></span>
               <input type="number" aria-label="Net Worth">
             </md-input-container>
           </div>
-          <div class="occupation">
-            <span>Occupation:</span>
+          <div class="occupation" layout="row">
+            <span flex="80">Occupation:</span>
             <md-input-container>
               <label>Select Occupation</label>
               <md-select ng-model="ctrl.userOccupation">
@@ -149,8 +152,8 @@
               </md-select>
             </md-input-container>
           </div>
-          <div class="politically-exposed">
-            <span>Are you a Politically Exposed Person?</span>
+          <div class="politically-exposed" layout="row">
+            <span flex="80">Are you a Politically Exposed Person?</span>
             <md-input-container>
               <label>Select</label>
               <md-select ng-model="ctrl.userPolitical">
@@ -159,8 +162,8 @@
               </md-select>
             </md-input-container>
           </div>
-          <div class="tax-country">
-            <span>Is your Country of Tax Residency other than India?</span>
+          <div class="tax-country" layout="row">
+            <span flex="80">Is your Country of Tax Residency other than India?</span>
             <md-input-container>
               <label>Select</label>
               <md-select ng-model="ctrl.userTax">
@@ -169,8 +172,8 @@
               </md-select>
             </md-input-container>
           </div>
-          <div class="gender">
-            <span>Gender:</span>
+          <div class="gender" layout="row">
+            <span flex="80">Gender:</span>
             <md-input-container>
               <label>Select Gender</label>
               <md-select ng-model="ctrl.userGender">
@@ -179,8 +182,8 @@
               </md-select>
             </md-input-container>
           </div>
-          <div class="marital-status">
-            <span>Marital Status:</span>
+          <div class="marital-status" layout="row">
+            <span flex="80">Marital Status:</span>
             <md-input-container>
               <label>Select</label>
               <md-select ng-model="ctrl.userMarital">
@@ -189,8 +192,8 @@
               </md-select>
             </md-input-container>
           </div>
-          <div class="natioanlity">
-            <span>Nationality:</span>
+          <div class="natioanlity" layout="row">
+            <span flex="80">Nationality:</span>
             <md-input-container>
               <label>Select Nationality</label>
               <md-select ng-model="ctrl.userNationality">
@@ -199,8 +202,8 @@
               </md-select>
             </md-input-container>
           </div>
-          <div class="tax-status">
-            <span>Tax Status:</span>
+          <div class="tax-status" layout="row">
+            <span flex="80">Tax Status:</span>
             <md-input-container>
               <label>Select</label>
               <md-select ng-model="ctrl.userTaxStatus">
@@ -216,29 +219,35 @@
         </div>
 
         <div class="document-upload">
-          <div class="passport-photo">
-            <span>Passport size photograph:</span>
+          <h4 layout-align="start" class="text-uppercase blue">Document Upload</h4>
+          <div class="passport-photo" layout="row">
+            <span flex="80">Passport size photograph:</span>
             <md-button class="md-primary" aria-label="File">
               <input type="file">
+              <span class="text-uppercase white">File</span>
             </md-button>
           </div>
-          <div class="address-per">
-            <span>Address Proof (Permanant):</span>
+          <div class="address-per" layout="row">
+            <span flex="80">Address Proof (Permanant):</span>
             <md-button class="md-primary" aria-label="File">
               <input type="file">
+              <span class="text-uppercase white">File</span>
             </md-button>
           </div>
-          <div class="address-cor">
-            <span>Address Proof (Corresponant):</span>
-            <md-button class="md-primary" aria-label="File">
-              <input type="file">
-            </md-button>
-            <md-checkbox class="blue" md-ink-ripple="false" aria-label="Same as Permanant Address">
+          <div class="address-cor" layout="column">
+            <div layout="row">
+              <span flex="80">Address Proof (Corresponant):</span>
+              <md-button class="md-primary" aria-label="File">
+                <input type="file">
+                <span class="text-uppercase white">File</span>
+              </md-button>
+            </div>
+            <md-checkbox md-ink-ripple="false" aria-label="Same as Permanant Address" class="same">
               Same as Permanant Address
             </md-checkbox>
           </div>
-          <div class="address-type">
-            <span>Address Type:</span>
+          <div class="address-type" layout="row">
+            <span flex="80">Address Type:</span>
             <md-input-container>
               <label>Select</label>
               <md-select ng-model="ctrl.userAddress">
@@ -247,14 +256,15 @@
               </md-select>
             </md-input-container>
           </div>
-          <div class="pan-card">
-            <span>PAN Card:</span>
+          <div class="pan-card" layout="row">
+            <span flex="80">PAN Card:</span>
             <md-button class="md-primary" aria-label="File">
               <input type="file">
+              <span class="text-uppercase white">File</span>
             </md-button>
           </div>
-          <div class="bank-name">
-            <span>Bank Name:</span>
+          <div class="bank-name" layout="row">
+            <span flex="80">Bank Name:</span>
             <md-input-container>
               <label>Select Bank</label>
               <md-select ng-model="ctrl.userBank">
@@ -263,10 +273,11 @@
               </md-select>
             </md-input-container>
           </div>
-          <div class="cancelled-cheque">
-            <span>Cancelled Cheque:</span>
+          <div class="cancelled-cheque" layout="row">
+            <span flex="80">Cancelled Cheque:</span>
             <md-button class="md-primary" aria-label="File">
               <input type="file">
+              <span class="text-uppercase white">File</span>
             </md-button>
           </div>
           <div class="next-button text-right">

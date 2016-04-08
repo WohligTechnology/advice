@@ -18,6 +18,7 @@ $brand-danger: #fc483f !default;
 $brand-info: #000072 !default;
 $brand-gray: #777777 !default;
 $brand-gray-light: #aaaaaa !default;
+$brand-gray-lighter: #eeeeee !default;
 $brand-blue: #4285F4 !default;
 
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
@@ -66,6 +67,8 @@ nav li:hover .dropdown-menu {
 .white { color: #fff; }
 .blue { color: $brand-blue; }
 .white-bg { background-color: #fff !important; }
+.gray-lighter-bg { background-color: $brand-gray-lighter !important; }
+.blue-bg { background-color: $brand-blue !important; }
 .no-radius { border-radius: 0; }
 .radius { border-radius: 100%; }
 .text-light { font-weight: 300; }
@@ -445,6 +448,117 @@ md-toolbar {
     }
     .investers {
       margin: 0 20px;
+    }
+  }
+}
+
+// Planner
+.planner-main {
+  margin: 50px 0;
+  .md-list-item-text {
+    h3 {
+      margin-left: 20px !important;
+      font-size: 18px !important;
+    }
+  }
+  .planner-chats {
+    margin: 30px;
+    .planner-receiver, .planner-sender {
+      margin-bottom: 15px;
+      .receiver-message, .sender-message {
+        max-width: 55%;
+        display: inline-block;
+        border-top-left-radius: 0;
+        border-top-right-radius: 2.5em;
+        border-bottom-left-radius: 2.5em;
+        border-bottom-right-radius: 2.5em;
+        span {
+          margin: 20px 25px;
+          display: block;
+          font-size: 16px;
+        }
+      }
+      .receiver-message {
+        margin-left: 50px;
+      }
+      .sender-message {
+        margin: 0 10px 0 0;
+        border-top-left-radius: 2.5em;
+        border-bottom-right-radius: 0;
+        span { color: white; }
+      }
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .receiver-image {
+        position: absolute;
+      }
+    }
+  }
+  .chat-input {
+    background: #ddd;
+    border-radius: 2em;
+    margin: 0 0 20px 30px;
+    input {
+      width: 80%;
+      margin-left: -10px;
+      padding: 0 20px;
+      font-size: 16px;
+      background-color: #ddd;
+      border: none;
+      border-left: 1px solid black;
+    }
+  }
+  .send-button {
+    width: 100px;
+    margin: 3px 30px 3px 0;
+    padding: 3px 0;
+    font-size: 16px;
+  }
+}
+
+// Profile
+.profile {
+  .user-profile {
+    margin: 50px 0;
+    .user-detail { margin: 0 0 -100px 30px; }
+    .user-form {
+      padding: 150px 50px 50px;
+      h4 { margin-bottom: 50px; }
+      .regulatory-details, .document-upload {
+        span { font-size: 16px; }
+        .inr {
+          position: absolute;
+          top: 8px;
+          left: -10px;
+        }
+      }
+      .document-upload {
+        button {
+          width: 80px;
+          input[type="file"] {
+            position: relative;
+            opacity: 0;
+            z-index: 9;
+          }
+          span {
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+          }
+        }
+        .same span { font-size: 14px; }
+      }
+      .verification {
+        margin: 50px 0;
+        p { font-size: 18px; }
+      }
     }
   }
 }
