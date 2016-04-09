@@ -1,10 +1,10 @@
-/* Custom, iPhone Retina */
-@media (max-width : 480px) {
+/* Large Devices, Wide Screens */
+@media (max-width : 1200px) {
 
 }
 
-/* Extra Small Devices, Phones */
-@media (max-width : $screen-xs-max) {
+/* Medium Devices, Desktops */
+@media (max-width : $screen-md-max) {
 
 }
 
@@ -13,14 +13,18 @@
   .main-graph { margin: 15px; }
   .donuts { margin-top: 25px; }
   .overview-main .investment-holdings { margin: 20px 15px 0; }
+  .referral-main .all-referrals { margin: 30px 0; }
+  .referral-image { margin-top: 20px; }
+  .referral-title { margin-left: 20px; }
+  .referral-code { margin: 0 20px; }
 }
 
-/* Medium Devices, Desktops */
-@media (max-width : $screen-md-max) {
+/* Extra Small Devices, Phones */
+@media (max-width : $screen-xs-max) {
 
 }
 
-/* Large Devices, Wide Screens */
-@media (max-width : 1200px) {
+/* Custom, iPhone Retina */
+@media (max-width : 480px) {
 
 }
