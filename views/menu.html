@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav">
+<!-- <ul class="nav navbar-nav">
   <li ng-repeat="menu in navigation" class="{{menu.classis}}">
     <a ui-sref="menu.anchor" ng-if="menu.anchor">{{menu.name}}</a>
     <a href="menu.link" ng-if="menu.link">{{menu.name}}</a>
@@ -8,4 +8,16 @@
       </li>
     </ul>
   </li>
-</ul>
+</ul> -->
+  <div layout-fill layout="column">
+    <!-- <md-toolbar class="md-theme-indigo">
+      <div class="md-toolbar-tools">
+        <span>Sortvest</span>
+      </div>
+    </md-toolbar> -->
+    <md-list>
+      <md-list-item class="{{menu.classis}}" ng-repeat="menu in navigation" ng-href="{{menu.link}}">
+          {{menu.name}}
+      </md-list-item>
+    </md-list>
+  </div>

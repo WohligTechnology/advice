@@ -126,4 +126,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
+.controller('headerCtrl', function($scope, TemplateService) {
+  $scope.template = TemplateService;
+  $scope.mySplit = function() {
+    $scope.name = window.location.hash;
+    var array = window.location.hash.split(',');
+    console.log(window.location.hash);
+    return array[0];
+  };
+})
+
 ;

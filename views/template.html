@@ -1,6 +1,19 @@
-<div ng-include="template.headermenu" class="template headermenu"></div>
+<!-- <div ng-include="template.headermenu" class="template headermenu"></div>
 <div ng-include="template.header" class="template header"></div>
-<div ng-include="template.slider" class="template slider"></div>
-<div ng-include="template.content" class="template content"></div>
-<div ng-include="template.footermenu" class="template footermenu"></div>
-<div ng-include="template.footer" class="template footer"></div>
+<div ng-include="template.slider" class="template slider"></div> -->
+<div ng-include="template.mheader" class="template mheader"></div>
+<section layout="row" flex>
+   <!-- <md-sidenav
+        class="md-sidenav-left"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-md')"
+        md-disable-backdrop
+        md-whiteframe="4">
+    <div ng-include="template.menu" class="template menu"></div>
+  </md-sidenav> -->
+<md-content flex>
+  <div ng-include="template.content" class="template content"></div>
+</md-content>
+</section>
+<!-- <div ng-include="template.footermenu" class="template footermenu"></div>
+<div ng-include="template.footer" class="template footer"></div> -->
