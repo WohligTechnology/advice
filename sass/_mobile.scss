@@ -21,10 +21,36 @@
 
 /* Extra Small Devices, Phones */
 @media (max-width : $screen-xs-max) {
-
+  .planner-main {
+    margin: 0;
+    box-shadow: none;
+  }
+  .planner-main .chat-input {
+    width: 100%;
+    margin: 0 0 0 10px;
+  }
+  .planner-main .chat-input input { width: 75%; }
+  .skip-button { min-width: 60px; }
+  .planner-main .planner-chats .planner-receiver .receiver-message span,
+  .planner-main .planner-chats .planner-sender .sender-message span {
+    margin: 15px 20px;
+    font-size: 14px;
+  }
+  .message-box {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    padding: 5px 0;
+    background-color: $body-bg;
+  }
+  .planner-main .send-fab { margin: 0 10px 0 0; }
+  .planner-main .planner-chats { padding-bottom: 30px; }
 }
 
 /* Custom, iPhone Retina */
 @media (max-width : 480px) {
-
+  .skip-button { min-width: 50px; }
+  .planner-main .chat-input input { padding: 0 10px; }
+  .planner-main .planner-chats .planner-receive .receive-message { max-width: 65%; }
+  .planner-main .planner-chats .planner-sender .sender-message { max-width: 65%; }
 }

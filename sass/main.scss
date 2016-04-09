@@ -322,10 +322,15 @@ footer {
 // Header
 md-toolbar {
   padding: 0 20px;
+  position: fixed;
   img {
     width: 120px;
     margin: -5px 0 0 20px;
   }
+}
+.notification, .referral, .portfolio,
+.overview, .planner, .profile {
+  margin-top: 60px;
 }
 // Notification
 .notification-main {
@@ -501,7 +506,7 @@ md-toolbar {
     }
   }
   .chat-input {
-    background: #ddd;
+    background: $brand-gray-lighter;
     border-radius: 2em;
     margin: 0 0 20px 30px;
     input {
@@ -509,9 +514,9 @@ md-toolbar {
       margin-left: -10px;
       padding: 0 20px;
       font-size: 16px;
-      background-color: #ddd;
+      background-color: $brand-gray-lighter;
       border: none;
-      border-left: 1px solid black;
+      border-left: 2px solid #C1C1C1;
     }
   }
   .send-button {
@@ -519,6 +524,18 @@ md-toolbar {
     margin: 3px 30px 3px 0;
     padding: 3px 0;
     font-size: 16px;
+  }
+  .send-fab {
+    width: 50px;
+    height: 50px;
+    margin-top: 0;
+    margin-right: 28px;
+    text-align: center;
+    line-height: 50px;
+    i {
+      margin: 13px 0 0 5px;
+      font-size: 24px;
+    }
   }
 }
 

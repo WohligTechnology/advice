@@ -1,14 +1,4 @@
 <div class="planner">
-  <md-toolbar class="white-bg md-whiteframe-8dp">
-    <div class="md-toolbar-tools">
-      <md-button class="md-icon-button" md-ink-ripple="#000000" aria-label="Menu" ng-disabled="false">
-        <i class="material-icons black">menu</i>
-      </md-button>
-      <h1><img src="img/logo.png" alt="Sortvest" class="img-responsive" /></h1>
-      <span flex></span>
-      <h4 class="black"></h4>
-    </div>
-  </md-toolbar>
   <div class="container">
     <div class="row">
       <div class="planner-main md-whiteframe-8dp">
@@ -33,18 +23,45 @@
             </div>
             <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
           </div>
+          <div class="planner-receiver">
+            <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive receiver-image" />
+            <div class="receiver-message gray-lighter-bg">
+              <span>Hi Vikas! Let's get started with creating your new portfolio. What would you like to call this portfolio?</span>
+            </div>
+          </div>
+          <div class="planner-sender text-right">
+            <div class="sender-message blue-bg">
+              <span>My Personal world tour plan</span>
+            </div>
+            <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
+          </div>
+          <div class="planner-receiver">
+            <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive receiver-image" />
+            <div class="receiver-message gray-lighter-bg">
+              <span>Hi Vikas! Let's get started with creating your new portfolio. What would you like to call this portfolio?</span>
+            </div>
+          </div>
+          <div class="planner-sender text-right">
+            <div class="sender-message blue-bg">
+              <span>My Personal world tour plan</span>
+            </div>
+            <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
+          </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-10">
+        <div layout="row" class="message-box">
+          <div flex="84" flex-gt-xs="80" flex-xs="80">
             <div class="chat-input">
-              <md-button class="text-uppercase">Skip</md-button>
+              <md-button class="text-uppercase skip-button">Skip</md-button>
               <input type="text" placeholder="Type Something...">
             </div>
           </div>
-          <div class="col-md-2">
-            <md-button class="send-button pull-right md-button md-raised md-primary white" md-ink-ripple="#ffffff" aria-label="Send">
+          <div flex="16" flex-gt-xs="20" flex-xs="20">
+            <md-button class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff" aria-label="Send">
               <span class="text-uppercase">Send</span>
+            </md-button>
+            <md-button class="send-fab pull-right md-fab md-raised md-primary white hidden-sm hidden-md hidden-lg" md-ink-ripple="#ffffff" aria-label="Send">
+              <span><i class="material-icons">send</i></span>
             </md-button>
           </div>
         </div>
