@@ -1,0 +1,26 @@
+/* Custom, iPhone Retina */
+@media (max-width : 480px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media (max-width : $screen-xs-max) {
+
+}
+
+/* Small Devices, Tablets */
+@media (max-width : $screen-sm-max) {
+  .main-graph { margin: 15px; }
+  .donuts { margin-top: 25px; }
+  .overview-main .investment-holdings { margin: 20px 15px 0; }
+}
+
+/* Medium Devices, Desktops */
+@media (max-width : $screen-md-max) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media (max-width : 1200px) {
+
+}
