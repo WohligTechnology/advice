@@ -3,16 +3,40 @@
     <div class="container">
       <div class="user-detail" layout="row">
         <div class="user-image">
-          <img src="http://dummyimage.com/200x200/aaa/fff" alt="" class="img-responsive img-circle md-whiteframe-2dp" />
+          <img src="img/team.jpg" alt="" class="img-responsive img-circle md-whiteframe-2dp" />
         </div>
         <h2>Vikas Mehra</h2>
       </div>
       <div class="user-form md-whiteframe-8dp">
-        <div class="navigation-tabs"></div>
-        <div class="nominee-details">
+        <div class="navigation-tabs">
+          <div class="progress-bar">
+            <div class="determinate"></div>
+          </div>
+          <div class="tab-one text-center">
+            <p class="tab-icon"><i class="material-icons">done</i></p>
+            <p>Registration</p>
+          </div>
+          <div class="tab-two text-center" ng-click="nominee=true;regulatory=false;document=false;verification=false;">
+            <p class="tab-icon"><i class="material-icons">done</i></p>
+            <p>Nominee Details</p>
+          </div>
+          <div class="tab-three text-center" ng-click="nominee=false;regulatory=true;document=false;verification=false;">
+            <p class="tab-icon"><i class="material-icons">done</i></p>
+            <p>Regulatory Details</p>
+          </div>
+          <div class="tab-four text-center" ng-click="nominee=false;regulatory=false;document=true;verification=false;">
+            <p class="tab-icon"><i class="material-icons">done</i></p>
+            <p>Document Upload</p>
+          </div>
+          <div class="tab-five text-center" ng-click="nominee=false;regulatory=false;document=false;verification=true;">
+            <p class="tab-icon"><i class="material-icons">done</i></p>
+            <p>Verification</p>
+          </div>
+        </div>
+        <div class="nominee-details" ng-show="nominee" ng-hide="regulatory || document || verification">
           <div layout="row">
             <h4 flex="80" class="text-uppercase blue">Nominee Details</h4>
-            <md-checkbox md-ink-ripple="false" aria-label="No Nominee">
+            <md-checkbox md-no-ink aria-label="No Nominee">
               No Nominee
             </md-checkbox>
             <md-button class="md-icon-button md-fab md-mini md-primary md-whiteframe-8dp" aria-label="Add Nominee">
@@ -87,21 +111,21 @@
           </div>
           <div class="next-button text-right">
             <span flex></span>
-            <md-button class="md-raised md-primary">Next</md-button>
+            <md-button class="md-raised md-primary" ng-click="nominee=false;regulatory=true;document=false;verification=false;">Next</md-button>
           </div>
         </div>
 
-        <div class="regulatory-details">
+        <div class="regulatory-details" ng-show="regulatory" ng-hide="nominee || document || verification">
           <h4 layout-align="start" class="text-uppercase blue">Regulatory Details</h4>
           <div class="birth-place" layout="row">
-            <span flex="80">Place of birth:</span>
+            <span flex="90">Place of birth:</span>
             <md-input-container>
               <label>Place of Birth</label>
               <input>
             </md-input-container>
           </div>
           <div class="birth-country" layout="row">
-            <span flex="80">Country of Birth:</span>
+            <span flex="90">Country of Birth:</span>
             <md-input-container>
               <label>Select Country</label>
               <md-select ng-model="ctrl.userCountry">
@@ -113,7 +137,7 @@
             </md-input-container>
           </div>
           <div class="gross-income" layout="row">
-            <span flex="80">Gross Annual Income:</span>
+            <span flex="90">Gross Annual Income:</span>
             <md-input-container>
               <label>Select Income</label>
               <md-select ng-model="ctrl.userIncome">
@@ -124,14 +148,14 @@
             </md-input-container>
           </div>
           <div class="net-worth" layout="row">
-            <span flex="80">Net Worth (Optional):</span>
+            <span flex="90">Net Worth (Optional):</span>
             <md-input-container>
               <span class="inr"><i class="fa fa-inr"></i></span>
               <input type="number" aria-label="Net Worth">
             </md-input-container>
           </div>
           <div class="occupation" layout="row">
-            <span flex="80">Occupation:</span>
+            <span flex="90">Occupation:</span>
             <md-input-container>
               <label>Select Occupation</label>
               <md-select ng-model="ctrl.userOccupation">
@@ -143,7 +167,7 @@
             </md-input-container>
           </div>
           <div class="politically-exposed" layout="row">
-            <span flex="80">Are you a Politically Exposed Person?</span>
+            <span flex="90">Are you a Politically Exposed Person?</span>
             <md-input-container>
               <label>Select</label>
               <md-select ng-model="ctrl.userPolitical">
@@ -153,7 +177,7 @@
             </md-input-container>
           </div>
           <div class="tax-country" layout="row">
-            <span flex="80">Is your Country of Tax Residency other than India?</span>
+            <span flex="90">Is your Country of Tax Residency other than India?</span>
             <md-input-container>
               <label>Select</label>
               <md-select ng-model="ctrl.userTax">
@@ -163,7 +187,7 @@
             </md-input-container>
           </div>
           <div class="gender" layout="row">
-            <span flex="80">Gender:</span>
+            <span flex="90">Gender:</span>
             <md-input-container>
               <label>Select Gender</label>
               <md-select ng-model="ctrl.userGender">
@@ -173,7 +197,7 @@
             </md-input-container>
           </div>
           <div class="marital-status" layout="row">
-            <span flex="80">Marital Status:</span>
+            <span flex="90">Marital Status:</span>
             <md-input-container>
               <label>Select</label>
               <md-select ng-model="ctrl.userMarital">
@@ -183,7 +207,7 @@
             </md-input-container>
           </div>
           <div class="natioanlity" layout="row">
-            <span flex="80">Nationality:</span>
+            <span flex="90">Nationality:</span>
             <md-input-container>
               <label>Select Nationality</label>
               <md-select ng-model="ctrl.userNationality">
@@ -193,7 +217,7 @@
             </md-input-container>
           </div>
           <div class="tax-status" layout="row">
-            <span flex="80">Tax Status:</span>
+            <span flex="90">Tax Status:</span>
             <md-input-container>
               <label>Select</label>
               <md-select ng-model="ctrl.userTaxStatus">
@@ -204,21 +228,21 @@
           </div>
           <div class="next-button text-right">
             <span flex></span>
-            <md-button class="md-raised md-primary">Next</md-button>
+            <md-button class="md-raised md-primary" ng-click="nominee=false;regulatory=false;document=true;verification=false;">Next</md-button>
           </div>
         </div>
 
-        <div class="document-upload">
+        <div class="document-upload" ng-show="document" ng-hide="nominee || regulatory || verification">
           <h4 layout-align="start" class="text-uppercase blue">Document Upload</h4>
           <div class="passport-photo" layout="row">
-            <span flex="80">Passport size photograph:</span>
+            <span flex="90">Passport size photograph:</span>
             <md-button class="md-primary" aria-label="File">
               <input type="file">
               <span class="text-uppercase white">File</span>
             </md-button>
           </div>
           <div class="address-per" layout="row">
-            <span flex="80">Address Proof (Permanant):</span>
+            <span flex="90">Address Proof (Permanant):</span>
             <md-button class="md-primary" aria-label="File">
               <input type="file">
               <span class="text-uppercase white">File</span>
@@ -226,18 +250,18 @@
           </div>
           <div class="address-cor" layout="column">
             <div layout="row">
-              <span flex="80">Address Proof (Corresponant):</span>
+              <span flex="90">Address Proof (Corresponant):</span>
               <md-button class="md-primary" aria-label="File">
                 <input type="file">
                 <span class="text-uppercase white">File</span>
               </md-button>
             </div>
-            <md-checkbox md-ink-ripple="false" aria-label="Same as Permanant Address" class="same">
+            <md-checkbox md-no-ink aria-label="Same as Permanant Address" class="same">
               Same as Permanant Address
             </md-checkbox>
           </div>
           <div class="address-type" layout="row">
-            <span flex="80">Address Type:</span>
+            <span flex="90">Address Type:</span>
             <md-input-container>
               <label>Select</label>
               <md-select ng-model="ctrl.userAddress">
@@ -247,14 +271,14 @@
             </md-input-container>
           </div>
           <div class="pan-card" layout="row">
-            <span flex="80">PAN Card:</span>
+            <span flex="90">PAN Card:</span>
             <md-button class="md-primary" aria-label="File">
               <input type="file">
               <span class="text-uppercase white">File</span>
             </md-button>
           </div>
           <div class="bank-name" layout="row">
-            <span flex="80">Bank Name:</span>
+            <span flex="90">Bank Name:</span>
             <md-input-container>
               <label>Select Bank</label>
               <md-select ng-model="ctrl.userBank">
@@ -264,7 +288,7 @@
             </md-input-container>
           </div>
           <div class="cancelled-cheque" layout="row">
-            <span flex="80">Cancelled Cheque:</span>
+            <span flex="90">Cancelled Cheque:</span>
             <md-button class="md-primary" aria-label="File">
               <input type="file">
               <span class="text-uppercase white">File</span>
@@ -272,11 +296,11 @@
           </div>
           <div class="next-button text-right">
             <span flex></span>
-            <md-button class="md-raised md-primary">Submit</md-button>
+            <md-button class="md-raised md-primary" ng-click="nominee=false;regulatory=false;document=false;verification=true;">Submit</md-button>
           </div>
         </div>
 
-        <div class="verification">
+        <div class="verification" ng-show="verification" ng-hide="nominee || regulatory || document">
           <p>We have got all the information required to activate your account. We will be sending your documents shortly for physical verification.</p>
         </div>
       </div>

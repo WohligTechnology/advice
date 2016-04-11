@@ -1,6 +1,9 @@
 /* Large Devices, Wide Screens */
 @media (max-width : 1200px) {
-
+  .profile .user-profile .user-form .navigation-tabs { width: 550px; }
+  width: 500px;
+    margin-left: -190px;
+    margin-top: 80px;
 }
 
 /* Medium Devices, Desktops */
@@ -32,6 +35,14 @@
         .time { min-width: 110px; }
       }
     }
+  }
+  .profile .user-profile .user-form {
+    .navigation-tabs {
+      width: 500px;
+      margin-left: -190px;
+      margin-top: 80px;
+    }
+    .nominee-details, .regulatory-details, .document-upload, .verification { margin-top: 120px; }
   }
 }
 

@@ -42,6 +42,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.navigation = NavigationService.getnav();
   TemplateService.header = "";
   TemplateService.footer = "";
+
+  $scope.nominee = true;
 })
 
 .controller('ReferralCtrl', function($scope, TemplateService, NavigationService, $timeout) {
@@ -126,13 +128,30 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('headerCtrl', function($scope, TemplateService) {
+.controller('headerCtrl', function($scope, TemplateService, $mdSidenav) {
   $scope.template = TemplateService;
   $scope.mySplit = function() {
     $scope.name = window.location.hash;
     var array = window.location.hash.split(',');
     console.log(window.location.hash);
     return array[0];
+  };
+  $scope.toggleMenu = buildToggler('menu');
+  $scope.isOpenMenu = function(){
+    return $mdSidenav('menu').isOpen();
+  };
+  function buildToggler(navID) {
+    return function() {
+      $mdSidenav(navID)
+        .toggle()
+        .then(function () {
+        });
+    };
+  }
+  $scope.closeMenu = function () {
+    $mdSidenav('menu').close()
+      .then(function () {
+    });
   };
 })
 
