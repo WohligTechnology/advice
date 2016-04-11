@@ -328,8 +328,7 @@ md-toolbar {
     margin: -5px 0 0 20px;
   }
 }
-.notification, .referral, .portfolio,
-.overview, .planner, .profile {
+.notification, .planner {
   margin-top: 60px;
 }
 // Notification
@@ -342,7 +341,7 @@ md-toolbar {
 
 // Referral
 .referral-main {
-  margin: 50px 0;
+  margin: 110px 0;
   .referral-title {
     margin-bottom: -40px;
     display: block;
@@ -374,7 +373,7 @@ md-toolbar {
 .portfolio {
   position: relative;
   .portfolio-main {
-    margin: 50px 0;
+    margin: 70px 0 50px;
     md-list-item {
       h3 { font-size: 20px !important; }
     }
@@ -430,7 +429,7 @@ md-toolbar {
     }
   }
   .add-button {
-    position: absolute;
+    position: fixed;
     right: 10px;
     bottom: 10px;
     i {
@@ -442,7 +441,7 @@ md-toolbar {
 
 // Overview
 .overview-main {
-  margin: 50px 0;
+  margin: 120px 0 50px;
   .donut-one {
     margin-bottom: 25px;
   }
@@ -542,8 +541,11 @@ md-toolbar {
 // Profile
 .profile {
   .user-profile {
-    margin: 50px 0;
-    .user-detail { margin: 0 0 -100px 30px; }
+    margin: 150px 0;
+    .user-detail {
+      margin: 0 0 -100px 40px;
+      h2 { margin: 60px 0 0 40px; }
+    }
     .user-form {
       padding: 150px 50px 50px;
       h4 { margin-bottom: 50px; }
