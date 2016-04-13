@@ -20,6 +20,7 @@
 
 /* Small Devices, Tablets */
 @media (max-width : $screen-sm-max) {
+  md-sidenav.md-sidenav-left { top: 40px; }
   .main-graph { margin: 15px; }
   .donuts { margin-top: 25px; }
   .overview-main { margin-top: 80px; }

@@ -44,6 +44,11 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
       url: "/planner",
       templateUrl: "views/template.html",
       controller: 'PlannerCtrl'
+    })
+    .state('archive', {
+      url: "/home",
+      templateUrl: "views/template.html",
+      controller: 'HomeCtrl'
     });
   $urlRouterProvider.otherwise("/home");
   $locationProvider.html5Mode(isproduction);

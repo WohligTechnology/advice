@@ -13,31 +13,38 @@ var navigationservice = angular.module('navigationservice', [])
   var navigation = [{
     name: "Overview",
     classis: "active",
-    anchor: "overview"
+    anchor: "overview",
+    icon: "dashboard"
   }, {
     name: "Portfolios",
     classis: "active",
-    anchor: "portfolio"
+    anchor: "portfolio",
+    icon: "home"
   }, {
     name: "Notification",
     classis: "active",
-    anchor: "notification"
+    anchor: "notification",
+    icon: "notifications"
   }, {
     name: "Archive",
     classis: "active",
-    anchor: "archive"
+    anchor: "archive",
+    icon: "archive"
   }, {
     name: "Referral",
     classis: "active",
-    anchor: "referral"
+    anchor: "referral",
+    icon: "group"
   }, {
     name: "Profile",
     classis: "active",
-    anchor: "Profile"
+    anchor: "profile",
+    icon: "person"
   }, {
     name: "Logout",
     classis: "active",
-    anchor: "logout"
+    anchor: "logout",
+    icon: "exit_to_app"
   }];
 
   return {

@@ -9,15 +9,30 @@
     </ul>
   </li>
 </ul> -->
-  <div layout-fill layout="column">
-    <!-- <md-toolbar class="md-theme-indigo">
-      <div class="md-toolbar-tools">
-        <span>Sortvest</span>
+  <section ng-controller="headerCtrl">
+    <div layout-fill layout="column">
+      <!-- <md-toolbar class="md-theme-indigo">
+        <div class="md-toolbar-tools">
+          <span>Sortvest</span>
+        </div>
+      </md-toolbar> -->
+      <div class="header-user">
+        <div class="header-user-image">
+          <img src="img/team.jpg" alt="" class="img-responsive img-circle" />
+        </div>
+        <div class="header-user-detail">
+          <span class="header-user-name">Jane Doe</span>
+          <div class="wallet pull-right">
+            <span><i class="material-icons">account_balance_wallet</i></span>
+            <span class="wallet-money">1,13,135</span>
+          </div>
+        </div>
       </div>
-    </md-toolbar> -->
-    <md-list>
-      <md-list-item class="{{menu.classis}}" ng-repeat="menu in navigation" ng-href="{{menu.link}}">
-          {{menu.name}}
-      </md-list-item>
-    </md-list>
-  </div>
+      <md-list class="headerList">
+        <md-list-item class="{{menu.classis}}" ng-repeat="menu in navigation" ui-sref="{{menu.anchor}}" md-no-ink>
+            <span class="menu-icon"><i class="material-icons">{{menu.icon}}</i></span>
+            <span>{{menu.name}}</span>
+        </md-list-item>
+      </md-list>
+    </div>
+  </section>

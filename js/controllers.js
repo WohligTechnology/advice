@@ -9,6 +9,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.menutitle = NavigationService.makeactive("Home");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
+  TemplateService.header = "views/header.html";
 
   $scope.mySlides = [
     'img/banner.jpg'
@@ -16,19 +17,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.client = [
     {
       img: "img/team.jpg",
-      name: "Jara visariya",
+      name: "Jane Doe",
       desg: "Product Manager, TATA Honeywell",
       descp: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
     },
     {
       img: "img/team.jpg",
-      name: "Jara visariya",
+      name: "Jane Doe",
       desg: "Product Manager, TATA Honeywell",
       descp: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
     },
     {
       img: "img/team.jpg",
-      name: "Jara visariya",
+      name: "Jane Doe",
       desg: "Product Manager, TATA Honeywell",
       descp: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
     }
@@ -40,8 +41,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.menutitle = NavigationService.makeactive("Profile");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  TemplateService.header = "";
-  TemplateService.footer = "";
+  TemplateService.header = "views/content/header.html";
 
   $scope.nominee = true;
 })
@@ -51,8 +51,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.menutitle = NavigationService.makeactive("Referral");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  TemplateService.header = "";
-  TemplateService.footer = "";
+  TemplateService.header = "views/content/header.html";
 })
 
 .controller('NotificationCtrl', function($scope, TemplateService, NavigationService, $timeout) {
@@ -60,8 +59,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.menutitle = NavigationService.makeactive("Notification");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  TemplateService.header = "";
-  TemplateService.footer = "";
+  TemplateService.header = "views/content/header.html";
 })
 
 .controller('OverviewCtrl', function($scope, TemplateService, NavigationService, $timeout) {
@@ -69,8 +67,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.menutitle = NavigationService.makeactive("Overview");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  TemplateService.header = "";
-  TemplateService.footer = "";
+  TemplateService.header = "views/content/header.html";
 })
 
 .controller('PortfolioCtrl', function($scope, TemplateService, NavigationService, $timeout) {
@@ -78,8 +75,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.menutitle = NavigationService.makeactive("Portfolio");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  TemplateService.header = "";
-  TemplateService.footer = "";
+  TemplateService.header = "views/content/header.html";
 })
 
 .controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $timeout) {
@@ -87,8 +83,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.menutitle = NavigationService.makeactive("Planner");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  TemplateService.header = "";
-  TemplateService.footer = "";
+  TemplateService.header = "views/content/header.html";
 })
 
 .controller('headerctrl', function($scope, TemplateService) {
@@ -128,31 +123,43 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('headerCtrl', function($scope, TemplateService, $mdSidenav) {
+.controller('headerCtrl', function($scope, TemplateService, $mdSidenav, $timeout, $log) {
   $scope.template = TemplateService;
-  $scope.mySplit = function() {
-    $scope.name = window.location.hash;
-    var array = window.location.hash.split(',');
-    console.log(window.location.hash);
-    return array[0];
-  };
-  $scope.toggleMenu = buildToggler('menu');
-  $scope.isOpenMenu = function(){
-    return $mdSidenav('menu').isOpen();
-  };
+
+  var array = window.location.hash.split('/');
+  $scope.headerText = array[1];
+
+  $scope.toggleLeft = buildDelayedToggler('left');
+  function debounce(func, wait, context) {
+    var timer;
+    return function debounced() {
+      var context = $scope,
+          args = Array.prototype.slice.call(arguments);
+      $timeout.cancel(timer);
+      timer = $timeout(function() {
+        timer = undefined;
+        func.apply(context, args);
+      }, wait || 10);
+    };
+  }
+  function buildDelayedToggler(navID) {
+    return debounce(function() {
+      $mdSidenav(navID)
+        .toggle()
+        .then(function () {
+          $log.debug("toggle " + navID + " is done");
+        });
+    }, 200);
+  }
   function buildToggler(navID) {
     return function() {
       $mdSidenav(navID)
         .toggle()
         .then(function () {
+          $log.debug("toggle " + navID + " is done");
         });
     };
   }
-  $scope.closeMenu = function () {
-    $mdSidenav('menu').close()
-      .then(function () {
-    });
-  };
 })
 
 ;
