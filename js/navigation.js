@@ -19,7 +19,7 @@ var navigationservice = angular.module('navigationservice', [])
     name: "Portfolios",
     classis: "active",
     anchor: "portfolio",
-    icon: "home"
+    icon: "dashboard"
   }, {
     name: "Notification",
     classis: "active",

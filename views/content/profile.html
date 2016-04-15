@@ -5,7 +5,7 @@
         <div class="user-image">
           <img src="img/team.jpg" alt="" class="img-responsive img-circle md-whiteframe-2dp" />
         </div>
-        <h2>Jane Doe</h2>
+        <h3>Jane Doe</h3>
       </div>
       <div class="user-form md-whiteframe-8dp">
         <div class="navigation-tabs">
@@ -35,11 +35,11 @@
         </div>
         <div class="nominee-details" ng-show="nominee" ng-hide="regulatory || document || verification">
           <div layout="row">
-            <h4 flex="80" class="text-uppercase blue">Nominee Details</h4>
+            <h4 flex="80" class="text-uppercase blue"></h4>
             <md-checkbox md-no-ink aria-label="No Nominee">
               No Nominee
             </md-checkbox>
-            <md-button class="md-icon-button md-fab md-mini md-primary md-whiteframe-8dp" aria-label="Add Nominee">
+            <md-button class="md-icon-button md-fab md-mini md-primary md-whiteframe-8dp add-nominee" aria-label="Add Nominee">
               <i class="material-icons">add</i>
             </md-button>
           </div>
@@ -116,7 +116,7 @@
         </div>
 
         <div class="regulatory-details" ng-show="regulatory" ng-hide="nominee || document || verification">
-          <h4 layout-align="start" class="text-uppercase blue">Regulatory Details</h4>
+          <!-- <h4 layout-align="start" class="text-uppercase blue">Regulatory Details</h4> -->
           <div class="birth-place" layout="row">
             <span flex="90">Place of birth:</span>
             <md-input-container>
@@ -233,7 +233,7 @@
         </div>
 
         <div class="document-upload" ng-show="document" ng-hide="nominee || regulatory || verification">
-          <h4 layout-align="start" class="text-uppercase blue">Document Upload</h4>
+          <!-- <h4 layout-align="start" class="text-uppercase blue">Document Upload</h4> -->
           <div class="passport-photo" layout="row">
             <span flex="90">Passport size photograph:</span>
             <md-button class="md-primary" aria-label="File">
@@ -250,7 +250,7 @@
           </div>
           <div class="address-cor" layout="column">
             <div layout="row">
-              <span flex="90">Address Proof (Corresponant):</span>
+              <span flex="90">Address Proof (Corresponance):</span>
               <md-button class="md-primary" aria-label="File">
                 <input type="file">
                 <span class="text-uppercase white">File</span>

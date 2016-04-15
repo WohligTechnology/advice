@@ -20,6 +20,7 @@
 
 /* Small Devices, Tablets */
 @media (max-width : $screen-sm-max) {
+  md-toolbar img { width: 100px; }
   md-sidenav.md-sidenav-left { top: 40px; }
   .main-graph { margin: 15px; }
   .donuts { margin-top: 25px; }
@@ -76,7 +77,7 @@
   .investment-holdings {
     .investers .md-list-item-text h3 { font-size: 14px; }
     .md-list-item-text { max-width: 100%; }
-    .md-secondary { top: 58px; }
+    .md-secondary { top: 18px; }
   }
   .portfolio .portfolio-main {
     .live-portfolios, .saved-portfolios {

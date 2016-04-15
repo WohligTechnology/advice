@@ -323,12 +323,20 @@ footer {
 .md-sidenav-backdrop { display: none; }
 // Header
 md-toolbar {
-  padding: 0 20px;
+  min-height: 50px;
+  padding: 0 2px;
   position: fixed;
   z-index: 9;
+  .md-toolbar-tools {
+    height: 50px;
+    .md-icon-button i {
+      margin-left: -2px;
+      line-height: 24px;
+    }
+  }
   img {
     width: 120px;
-    margin: -5px 0 0 20px;
+    margin: -5px 0 0 3px;
   }
 }
 .header-user {
@@ -387,7 +395,7 @@ md-toolbar {
 }
 md-sidenav.md-sidenav-left {
   position: fixed;
-  top: 60px;
+  top: 50px;
   z-index: 8;
 }
 .notification, .planner {
@@ -506,16 +514,22 @@ md-sidenav.md-sidenav-left {
   margin: 120px 0 50px;
   .donut-one {
     margin-bottom: 25px;
+    img { margin: 0 auto; }
   }
+  .donut-two img { margin: 0 auto; }
   .investment-holdings {
     margin-top: 50px;
     padding: 10px 0;
-    .invest-title {
-      margin-left: 20px !important;
-      font-size: 20px !important;
+    md-list-item {
+      .md-list-item-text .invest-title {
+        margin-left: 20px !important;
+        font-size: 20px !important;
+      }
+      .md-secondary.total { right: 36px; }
     }
     .investers {
       margin: 0 20px;
+      md-list-item .md-secondary img { margin-right: 2px; }
     }
   }
 }
@@ -603,22 +617,22 @@ md-sidenav.md-sidenav-left {
 // Profile
 .profile {
   .user-profile {
-    margin: 150px 0 50px;
+    margin: 100px 0 50px;
     .user-detail {
-      margin: 0 0 -100px 40px;
-      h2 { margin: 60px 0 0 40px; }
-      .user-image { width: 200px; }
+      margin: 0 0 -70px 40px;
+      h3 { margin: 50px 0 0 20px; }
+      .user-image { width: 150px; }
     }
     .user-form {
-      padding: 150px 50px 50px;
+      padding: 50px 50px 50px;
       position: relative;
       h4 { margin-bottom: 50px; }
       .navigation-tabs {
         position: absolute;;
         width: 750px;
         height: 20px;
-        top: 80px;
-        left: 285px;
+        top: -30px;
+        left: 325px;
         .progress-bar {
           position: relative;
           height: 4px;
@@ -662,7 +676,7 @@ md-sidenav.md-sidenav-left {
       }
       md-checkbox.md-checked .md-icon { background-color: #4285F4; }
       .nominee-details {
-        margin-top: 50px;
+        margin-top: 30px;
         md-checkbox {
           min-width: 150px;
           height: 30px;
@@ -671,12 +685,14 @@ md-sidenav.md-sidenav-left {
             & + div { margin-top: 10px; }
           }
         }
+        button.add-nominee { z-index: 1; }
         md-datepicker {
           margin-top: 10px;
           display: block;
           .md-datepicker-input-container { width: 80%; }
         }
         button i { font-size: 24px; }
+        .nominee-form md-input-container { margin-bottom: 0; }
       }
       .regulatory-details, .document-upload {
         margin-top: 50px;
