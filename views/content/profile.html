@@ -1,3 +1,4 @@
+<div class="blue-back"></div>
 <div class="profile">
   <div class="user-profile">
     <div class="container">
@@ -18,15 +19,15 @@
           </div>
           <div class="tab-two text-center" ng-click="nominee=true;regulatory=false;document=false;verification=false;">
             <p class="tab-icon"><i class="material-icons">done</i></p>
-            <p>Nominee Details</p>
+            <p>Nominee<br>Details</p>
           </div>
           <div class="tab-three text-center" ng-click="nominee=false;regulatory=true;document=false;verification=false;">
             <p class="tab-icon"><i class="material-icons">done</i></p>
-            <p>Regulatory Details</p>
+            <p>Regulatory<br>Details</p>
           </div>
           <div class="tab-four text-center" ng-click="nominee=false;regulatory=false;document=true;verification=false;">
             <p class="tab-icon"><i class="material-icons">done</i></p>
-            <p>Document Upload</p>
+            <p>Document<br>Upload</p>
           </div>
           <div class="tab-five text-center" ng-click="nominee=false;regulatory=false;document=false;verification=true;">
             <p class="tab-icon"><i class="material-icons">done</i></p>
@@ -52,9 +53,36 @@
                   <input>
                 </md-input-container>
               </div>
-              <div class="col-sm-4">
-                <md-datepicker class="md-block" ng-model="user.submissionDate" md-placeholder="Birth Date">
-                </md-datepicker>
+              <div class="col-sm-4" layout="row">
+                <!-- <md-datepicker class="md-block" ng-model="user.submissionDate" md-placeholder="Birth Date">
+                </md-datepicker> -->
+                <md-input-container layout="column" flex="33">
+                  <label>Day</label>
+                  <md-select ng-model="ctrl.userDay">
+                    <md-option value="IN">IN</md-option>
+                    <md-option value="US">US</md-option>
+                    <md-option value="UK">UK</md-option>
+                    <md-option value="SP">SP</md-option>
+                  </md-select>
+                </md-input-container>
+                <md-input-container layout="column" flex="33">
+                  <label>Month</label>
+                  <md-select ng-model="ctrl.userMonth">
+                    <md-option value="IN">IN</md-option>
+                    <md-option value="US">US</md-option>
+                    <md-option value="UK">UK</md-option>
+                    <md-option value="SP">SP</md-option>
+                  </md-select>
+                </md-input-container>
+                <md-input-container layout="column" flex="33">
+                  <label>Year</label>
+                  <md-select ng-model="ctrl.userYear">
+                    <md-option value="IN">IN</md-option>
+                    <md-option value="US">US</md-option>
+                    <md-option value="UK">UK</md-option>
+                    <md-option value="SP">SP</md-option>
+                  </md-select>
+                </md-input-container>
               </div>
               <div class="col-sm-4">
                 <md-input-container class="md-block">
@@ -117,114 +145,112 @@
 
         <div class="regulatory-details" ng-show="regulatory" ng-hide="nominee || document || verification">
           <!-- <h4 layout-align="start" class="text-uppercase blue">Regulatory Details</h4> -->
-          <div class="birth-place" layout="row">
-            <span flex="90">Place of birth:</span>
-            <md-input-container>
-              <label>Place of Birth</label>
-              <input>
-            </md-input-container>
+          <div class="row">
+            <div class="birth-place col-md-4">
+              <md-input-container>
+                <label>Place of Birth</label>
+                <input>
+              </md-input-container>
+            </div>
+            <div class="birth-country col-md-4">
+              <md-input-container>
+                <label>Country</label>
+                <md-select ng-model="ctrl.userCountry">
+                  <md-option value="IN">IN</md-option>
+                  <md-option value="US">US</md-option>
+                  <md-option value="UK">UK</md-option>
+                  <md-option value="SP">SP</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div class="gross-income col-md-4">
+              <md-input-container>
+                <label>Gross Annual Income</label>
+                <md-select ng-model="ctrl.userIncome">
+                  <md-option value="10000">10,000</md-option>
+                  <md-option value="15000">15,000</md-option>
+                  <md-option value="20000">20,000</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
           </div>
-          <div class="birth-country" layout="row">
-            <span flex="90">Country of Birth:</span>
-            <md-input-container>
-              <label>Select Country</label>
-              <md-select ng-model="ctrl.userCountry">
-                <md-option value="IN">IN</md-option>
-                <md-option value="US">US</md-option>
-                <md-option value="UK">UK</md-option>
-                <md-option value="SP">SP</md-option>
-              </md-select>
-            </md-input-container>
+          <div class="row">
+            <div class="net-worth col-md-4">
+              <md-input-container>
+                <span class="inr"><i class="fa fa-inr"></i></span>
+                <input type="number" placeholder="Net Worth (Optional):" aria-label="Net Worth">
+              </md-input-container>
+            </div>
+            <div class="occupation col-md-4">
+              <md-input-container>
+                <label>Occupation</label>
+                <md-select ng-model="ctrl.userOccupation">
+                  <md-option value="IN">IN</md-option>
+                  <md-option value="US">US</md-option>
+                  <md-option value="UK">UK</md-option>
+                  <md-option value="SP">SP</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div class="gender col-md-4">
+              <md-input-container>
+                <label>Gender</label>
+                <md-select ng-model="ctrl.userGender">
+                  <md-option value="male">Male</md-option>
+                  <md-option value="female">Female</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
           </div>
-          <div class="gross-income" layout="row">
-            <span flex="90">Gross Annual Income:</span>
-            <md-input-container>
-              <label>Select Income</label>
-              <md-select ng-model="ctrl.userIncome">
-                <md-option value="10000">10,000</md-option>
-                <md-option value="15000">15,000</md-option>
-                <md-option value="20000">20,000</md-option>
-              </md-select>
-            </md-input-container>
+          <div class="row">
+            <div class="politically-exposed col-md-6">
+              <md-input-container>
+                <label>Are you a Politically Exposed Person?</label>
+                <md-select ng-model="ctrl.userPolitical">
+                  <md-option value="yes">Yes</md-option>
+                  <md-option value="no">No</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div class="tax-country col-md-6">
+              <md-input-container>
+                <label>Is your Country of Tax Residency other than India?</label>
+                <md-select ng-model="ctrl.userTax">
+                  <md-option value="yes">Yes</md-option>
+                  <md-option value="no">No</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
           </div>
-          <div class="net-worth" layout="row">
-            <span flex="90">Net Worth (Optional):</span>
-            <md-input-container>
-              <span class="inr"><i class="fa fa-inr"></i></span>
-              <input type="number" aria-label="Net Worth">
-            </md-input-container>
-          </div>
-          <div class="occupation" layout="row">
-            <span flex="90">Occupation:</span>
-            <md-input-container>
-              <label>Select Occupation</label>
-              <md-select ng-model="ctrl.userOccupation">
-                <md-option value="IN">IN</md-option>
-                <md-option value="US">US</md-option>
-                <md-option value="UK">UK</md-option>
-                <md-option value="SP">SP</md-option>
-              </md-select>
-            </md-input-container>
-          </div>
-          <div class="politically-exposed" layout="row">
-            <span flex="90">Are you a Politically Exposed Person?</span>
-            <md-input-container>
-              <label>Select</label>
-              <md-select ng-model="ctrl.userPolitical">
-                <md-option value="yes">Yes</md-option>
-                <md-option value="no">No</md-option>
-              </md-select>
-            </md-input-container>
-          </div>
-          <div class="tax-country" layout="row">
-            <span flex="90">Is your Country of Tax Residency other than India?</span>
-            <md-input-container>
-              <label>Select</label>
-              <md-select ng-model="ctrl.userTax">
-                <md-option value="yes">Yes</md-option>
-                <md-option value="no">No</md-option>
-              </md-select>
-            </md-input-container>
-          </div>
-          <div class="gender" layout="row">
-            <span flex="90">Gender:</span>
-            <md-input-container>
-              <label>Select Gender</label>
-              <md-select ng-model="ctrl.userGender">
-                <md-option value="male">Male</md-option>
-                <md-option value="female">Female</md-option>
-              </md-select>
-            </md-input-container>
-          </div>
-          <div class="marital-status" layout="row">
-            <span flex="90">Marital Status:</span>
-            <md-input-container>
-              <label>Select</label>
-              <md-select ng-model="ctrl.userMarital">
-                <md-option value="single">Single</md-option>
-                <md-option value="married">Married</md-option>
-              </md-select>
-            </md-input-container>
-          </div>
-          <div class="natioanlity" layout="row">
-            <span flex="90">Nationality:</span>
-            <md-input-container>
-              <label>Select Nationality</label>
-              <md-select ng-model="ctrl.userNationality">
-                <md-option value="indian">Indian</md-option>
-                <md-option value="american">American</md-option>
-              </md-select>
-            </md-input-container>
-          </div>
-          <div class="tax-status" layout="row">
-            <span flex="90">Tax Status:</span>
-            <md-input-container>
-              <label>Select</label>
-              <md-select ng-model="ctrl.userTaxStatus">
-                <md-option value="1"></md-option>
-                <md-option value="2"></md-option>
-              </md-select>
-            </md-input-container>
+
+          <div class="row">
+            <div class="marital-status col-md-4">
+              <md-input-container>
+                <label>Marital Status</label>
+                <md-select ng-model="ctrl.userMarital">
+                  <md-option value="single">Single</md-option>
+                  <md-option value="married">Married</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div class="natioanlity col-md-4">
+              <md-input-container>
+                <label>Nationality</label>
+                <md-select ng-model="ctrl.userNationality">
+                  <md-option value="indian">Indian</md-option>
+                  <md-option value="american">American</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div class="tax-status col-md-4">
+              <md-input-container>
+                <label>Tax Status</label>
+                <md-select ng-model="ctrl.userTaxStatus">
+                  <md-option value="1"></md-option>
+                  <md-option value="2"></md-option>
+                </md-select>
+              </md-input-container>
+            </div>
           </div>
           <div class="next-button text-right">
             <span flex></span>
@@ -234,65 +260,63 @@
 
         <div class="document-upload" ng-show="document" ng-hide="nominee || regulatory || verification">
           <!-- <h4 layout-align="start" class="text-uppercase blue">Document Upload</h4> -->
-          <div class="passport-photo" layout="row">
-            <span flex="90">Passport size photograph:</span>
-            <md-button class="md-primary" aria-label="File">
-              <input type="file">
-              <span class="text-uppercase white">File</span>
-            </md-button>
-          </div>
-          <div class="address-per" layout="row">
-            <span flex="90">Address Proof (Permanant):</span>
-            <md-button class="md-primary" aria-label="File">
-              <input type="file">
-              <span class="text-uppercase white">File</span>
-            </md-button>
-          </div>
-          <div class="address-cor" layout="column">
-            <div layout="row">
-              <span flex="90">Address Proof (Corresponance):</span>
+          <div class="document-one row">
+            <div class="passport-photo col-md-4">
               <md-button class="md-primary" aria-label="File">
                 <input type="file">
-                <span class="text-uppercase white">File</span>
+                <span class="text-uppercase white">Passport size photograph</span>
               </md-button>
             </div>
-            <md-checkbox md-no-ink aria-label="Same as Permanant Address" class="same">
-              Same as Permanant Address
-            </md-checkbox>
+            <div class="address-per col-md-4">
+              <md-button class="md-primary" aria-label="File">
+                <input type="file">
+                <span class="text-uppercase white">Address Proof (Permanant)</span>
+              </md-button>
+            </div>
+            <div class="address-cor col-md-4">
+              <md-button class="md-primary" aria-label="File">
+                <input type="file">
+                <span class="text-uppercase white">Address Proof (Corresponance)</span>
+              </md-button>
+              <md-checkbox md-no-ink aria-label="Same as Permanant Address" class="same" layout="row">
+                Same as Permanant Address
+              </md-checkbox>
+            </div>
           </div>
-          <div class="address-type" layout="row">
-            <span flex="90">Address Type:</span>
-            <md-input-container>
-              <label>Select</label>
-              <md-select ng-model="ctrl.userAddress">
-                <md-option value="residential">Residential</md-option>
-                <md-option value="commercial">Commercial</md-option>
-              </md-select>
-            </md-input-container>
+          <div class="row">
+            <div class="address-type col-md-6">
+              <md-input-container>
+                <label>Address Type</label>
+                <md-select ng-model="ctrl.userAddress">
+                  <md-option value="residential">Residential</md-option>
+                  <md-option value="commercial">Commercial</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div class="bank-name col-md-6">
+              <md-input-container>
+                <label>Bank Name</label>
+                <md-select ng-model="ctrl.userBank">
+                  <md-option value="axis">AXIS</md-option>
+                  <md-option value="hdfc">HDFC</md-option>
+                </md-select>
+              </md-input-container>
+            </div>
           </div>
-          <div class="pan-card" layout="row">
-            <span flex="90">PAN Card:</span>
-            <md-button class="md-primary" aria-label="File">
-              <input type="file">
-              <span class="text-uppercase white">File</span>
-            </md-button>
-          </div>
-          <div class="bank-name" layout="row">
-            <span flex="90">Bank Name:</span>
-            <md-input-container>
-              <label>Select Bank</label>
-              <md-select ng-model="ctrl.userBank">
-                <md-option value="axis">AXIS</md-option>
-                <md-option value="hdfc">HDFC</md-option>
-              </md-select>
-            </md-input-container>
-          </div>
-          <div class="cancelled-cheque" layout="row">
-            <span flex="90">Cancelled Cheque:</span>
-            <md-button class="md-primary" aria-label="File">
-              <input type="file">
-              <span class="text-uppercase white">File</span>
-            </md-button>
+
+          <div class="row">
+            <div class="pan-card col-md-6">
+              <md-button class="md-primary" aria-label="File">
+                <input type="file">
+                <span class="text-uppercase white">PAN Card</span>
+              </md-button>
+            </div>
+            <div class="cancelled-cheque col-md-6">
+              <md-button class="md-primary" aria-label="File">
+                <input type="file">
+                <span class="text-uppercase white">Cancelled Cheque</span>
+              </md-button>
+            </div>
           </div>
           <div class="next-button text-right">
             <span flex></span>

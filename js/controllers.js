@@ -70,12 +70,28 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.header = "views/content/header.html";
 })
 
-.controller('PortfolioCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('PortfolioCtrl', function($scope, TemplateService, NavigationService, $timeout, $mdDialog, $mdMedia, $state) {
   $scope.template = TemplateService.changecontent("portfolio");
   $scope.menutitle = NavigationService.makeactive("Portfolio");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
   TemplateService.header = "views/content/header.html";
+
+  $scope.showConfirm = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('How do you wish to go about creating the portfolio?')
+          //.textContent('All of the banks have agreed to forgive you your debts.')
+          .ariaLabel('Create Portfolio')
+          .targetEvent(ev)
+          .ok('CREATE ADVISED PORTFOLIO')
+          .cancel('CREATE OWN PORTFOLIO');
+    $mdDialog.show(confirm).then(function() {
+      $state.go("planner");
+    }, function() {
+      $state.go("planner");
+    });
+  };
 })
 
 .controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $timeout) {
