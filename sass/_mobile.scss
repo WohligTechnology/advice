@@ -19,6 +19,7 @@
       }
     }
   }
+  .profile .user-profile .user-form .navigation-tabs { width: 450px; left: 400px; }
 }
 
 /* Small Devices, Tablets */
@@ -33,6 +34,12 @@
   .referral-image { margin-top: 20px; }
   .referral-title { margin-left: 20px; }
   .referral-code { margin: 0 20px; }
+  .profile .user-profile .user-form .navigation-tabs {
+    width: 450px; left: 400px;
+    .progress-bar .determinate { background-color: #009E55; }
+    .tab-one, .tab-two, .tab-three,
+    .tab-four, .tab-five {i { background-color: #009E55; color: white; }}
+  }
   .portfolio .portfolio-main {
     .live-portfolios, .saved-portfolios {
       md-card md-card-actions {
@@ -44,7 +51,7 @@
   .profile .user-profile .user-form {
     .navigation-tabs {
       width: 420px;
-      margin-left: -135px;
+      margin-left: -190px;
       margin-top: 100px;
       .tab-one { left: -4%; }
     }
@@ -54,6 +61,7 @@
 
 /* Extra Small Devices, Phones */
 @media (max-width : $screen-xs-max) {
+  //.blue-back { display: none; }
   .planner-main {
     margin: 0;
     box-shadow: none;
@@ -96,6 +104,8 @@
       }
     }
   }
+  .profile .user-profile .user-form .navigation-tabs { width: 300px; }
+  .profile .user-profile .user-form .navigation-tabs .tab-one { left: -5%; }
 }
 
 /* Custom, iPhone Retina */

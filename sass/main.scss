@@ -346,7 +346,7 @@ md-toolbar {
   width: 100%;
   height: 200px;
   position: relative;
-  background-image: url('../img/back.jpg');
+  background-image: url('../img/back.png');
   background-size: cover;
   div { display: inline-block; }
   .header-user-image {
@@ -384,6 +384,7 @@ md-toolbar {
     }
   }
 }
+md-list-item.active { background: #ccc; }
 .headerList {
   md-list-item {
     .md-list-item-inner { height: 45px; }
@@ -650,7 +651,7 @@ md-sidenav.md-sidenav-left {
         width: 650px;
         height: 20px;
         top: -35px;
-        left: 365px;
+        left: 400px;
         .progress-bar {
           position: relative;
           height: 4px;
@@ -695,15 +696,17 @@ md-sidenav.md-sidenav-left {
       md-checkbox.md-checked .md-icon { background-color: #4285F4; }
       .nominee-details {
         margin-top: 30px;
+        .nominee-first { display: block; text-align: right; }
         md-checkbox {
           min-width: 150px;
           height: 30px;
+          text-align: center;
           .md-container {
             margin-top: 4px;
             & + div { margin-top: 10px; }
           }
         }
-        button.add-nominee { z-index: 1; }
+        button.add-nominee { margin-top: 10px; z-index: 1; }
         md-datepicker {
           margin-top: 10px;
           display: block;
