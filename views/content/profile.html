@@ -57,29 +57,20 @@
                 </md-datepicker> -->
                 <md-input-container layout="column" flex="33">
                   <label>Day</label>
-                  <md-select ng-model="ctrl.userDay">
-                    <md-option value="IN">IN</md-option>
-                    <md-option value="US">US</md-option>
-                    <md-option value="UK">UK</md-option>
-                    <md-option value="SP">SP</md-option>
+                  <md-select ng-model="formData.birthDay">
+                    <md-option value="{{day}}" ng-repeat="day in birthDay">{{day}}</md-option>
                   </md-select>
                 </md-input-container>
                 <md-input-container layout="column" flex="33">
                   <label>Month</label>
-                  <md-select ng-model="ctrl.userMonth">
-                    <md-option value="IN">IN</md-option>
-                    <md-option value="US">US</md-option>
-                    <md-option value="UK">UK</md-option>
-                    <md-option value="SP">SP</md-option>
+                  <md-select ng-model="formData.birthMonth" ng-change="onChangeMonth()">
+                    <md-option value="{{month}}" ng-repeat="month in birthMonth">{{month}}</md-option>
                   </md-select>
                 </md-input-container>
                 <md-input-container layout="column" flex="33">
                   <label>Year</label>
-                  <md-select ng-model="ctrl.userYear">
-                    <md-option value="IN">IN</md-option>
-                    <md-option value="US">US</md-option>
-                    <md-option value="UK">UK</md-option>
-                    <md-option value="SP">SP</md-option>
+                  <md-select ng-model="formData.birthYear">
+                    <md-option value="{{year}}" ng-repeat="year in birthYear">{{year}}</md-option>
                   </md-select>
                 </md-input-container>
               </div>

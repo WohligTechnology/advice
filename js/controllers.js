@@ -42,8 +42,21 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
   TemplateService.header = "views/content/header.html";
-
+  $scope.formData = {};
   $scope.nominee = true;
+  $scope.birthDay = [
+    "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
+    "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"
+  ];
+  $scope.birthMonth = [
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"
+  ];
+  $scope.birthYear = [];
+  var now = new Date().getFullYear() - 18;
+  for(var i = now; i > 1929; i--) {
+    $scope.birthYear.push(i);
+  }
 })
 
 .controller('ReferralCtrl', function($scope, TemplateService, NavigationService, $timeout) {
