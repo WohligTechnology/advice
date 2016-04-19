@@ -91,18 +91,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.header = "views/content/header.html";
 
   $scope.showConfirm = function(ev) {
-    // Appending dialog to document.body to cover sidenav in docs app
     var confirm = $mdDialog.confirm()
-          .title('How do you wish to go about creating the portfolio?')
-          //.textContent('All of the banks have agreed to forgive you your debts.')
-          .ariaLabel('Create Portfolio')
-          .targetEvent(ev)
-          .ok('CREATE ADVISED PORTFOLIO')
-          .cancel('CREATE OWN PORTFOLIO');
+      .clickOutsideToClose(true)
+      .title('How do you wish to go about creating the portfolio?')
+      .ariaLabel('Create Portfolio')
+      .targetEvent(ev)
+      .ok('CREATE ADVISED PORTFOLIO')
+      .cancel('CREATE OWN PORTFOLIO');
     $mdDialog.show(confirm).then(function() {
       $state.go("planner");
     }, function() {
-      $state.go("planner");
+      //clicked outside
     });
   };
 })
