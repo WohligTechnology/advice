@@ -112,6 +112,29 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
   TemplateService.header = "views/content/header.html";
+
+  $scope.oneAtATime = true;
+  $scope.leftValue = 0;
+
+  window.onload = function (e) {
+    setTimeout(function () {
+      console.log("loaded");
+      $('.nstSlider').nstSlider({
+        "left_grip_selector": ".leftGrip",
+        "value_bar_selector": ".bar",
+        "value_changed_callback": function(cause, leftValue, rightValue) {
+          var $container = $(this).parent(),
+              g = 255 - 127 + leftValue,
+              r = 255 - g,
+              b = 0;
+          $container.find('.leftLabel').text(leftValue);
+          $scope.leftValue = leftValue;
+          $(this).find('.bar').css('background', 'rgb(' + [r, g, b].join(',') + ')');
+        }
+      });
+    }, 200);
+  };
+
 })
 
 .controller('headerctrl', function($scope, TemplateService) {

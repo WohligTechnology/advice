@@ -4,6 +4,8 @@
     width: 550px;
     left: 325px;
   }
+  .planner-sidebar .right-bar .fund-main table th:first-child { width: 73%; }
+  .planner-sidebar .right-bar .fund-main table td:first-child { width: 75%; }
   // width: 500px;
   //   margin-left: -190px;
   //   margin-top: 80px;
@@ -20,6 +22,9 @@
     }
   }
   .profile .user-profile .user-form .navigation-tabs { width: 450px; left: 400px; }
+  .planner-sidebar .right-bar .fund-main table th { font-size: 16px;}
+  .planner-sidebar .right-bar .fund-main table th:first-child { width: 68%; }
+  .planner-sidebar .right-bar .fund-main table td:first-child { width: 70%; }
 }
 
 /* Small Devices, Tablets */
@@ -106,6 +111,7 @@
   }
   .profile .user-profile .user-form .navigation-tabs { width: 300px; }
   .profile .user-profile .user-form .navigation-tabs .tab-one { left: -5%; }
+  .planner-sidebar .right-bar { padding: 20px !important; }
 }
 
 /* Custom, iPhone Retina */
