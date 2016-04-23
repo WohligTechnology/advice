@@ -37,22 +37,23 @@
         <div class="nominee-details" ng-show="nominee" ng-hide="regulatory || document || verification">
           <form name="nomineeForm" ng-submit="close()">
           <div layout="row" class="nominee-first">
-            <md-checkbox md-no-ink ng-model= "nonominee" aria-label="No Nominee">
+            <md-checkbox md-no-ink ng-model= "nonominee" ng-change="emptyNominees(nonominee);" aria-label="No Nominee">
               No Nominee
             </md-checkbox>
-            <md-button class="md-icon-button md-fab md-mini  md-whiteframe-2dp add-nominee" aria-label="Add Nominee" ng-class="{'md-primary':!nonominee}" ng-disabled="nonominee">
+            <md-button ng-click ="addNominees();" class="md-icon-button md-fab md-mini  md-whiteframe-2dp add-nominee" aria-label="Add Nominee" ng-class="{'md-primary':!nonominee}" ng-disabled="nonominee">
               <i class="material-icons">add</i>
             </md-button>
 
           </div>
 
-  <div class="nominee-form" ng-hide = "nonominee">
-    <p>Nominee {{$index}}</p>
+  <div class="nominee-form" ng-hide = "nonominee"ng-if="nominees.length !== 0">
+  <div ng-repeat= "nominee in nominees">
+    <p>Nominee {{$index + 1}}</p>
     <div class="row">
       <div class="col-sm-4">
         <md-input-container name="name"  class="md-block">
           <label>Name </label>
-          <input required ng-model="nominees.name">
+          <input required ng-model="nominee.name">
         </md-input-container>
 
       </div>
@@ -61,19 +62,19 @@
         </md-datepicker> -->
         <md-input-container name="birthday" layout="column" flex="33">
           <label>Day</label>
-          <md-select required ng-model="nominees.birthday">
+          <md-select required ng-model="nominee.birthday">
             <md-option value="{{day}}" ng-repeat="day in birthDay">{{day}}</md-option>
           </md-select>
         </md-input-container>
         <md-input-container name="birthmonth" layout="column" flex="33">
           <label>Month</label>
-          <md-select required ng-model="nominees.birthmonth" ng-change="onChangeMonth()">
+          <md-select required ng-model="nominee.birthmonth" ng-change="onChangeMonth()">
             <md-option value="{{month}}" ng-repeat="month in birthMonth">{{month}}</md-option>
           </md-select>
         </md-input-container>
         <md-input-container name="birthyear" layout="column" flex="33">
           <label>Year</label>
-          <md-select  required ng-model="nominees.birthyear">
+          <md-select  required ng-model="nominee.birthyear">
             <md-option value="{{year}}" ng-repeat="year in birthYear">{{year}}</md-option>
           </md-select>
         </md-input-container>
@@ -81,31 +82,32 @@
       <div class="col-sm-4">
         <md-input-container name="relationship" class="md-block">
           <label>Relationship</label>
-          <input required ng-model="nominees.relationship">
+          <input required ng-model="nominee.relationship">
         </md-input-container>
       </div>
     </div>
     <md-input-container name="address" class="md-block">
       <label>Address</label>
-      <input required ng-model="nominees.address">
+      <input required ng-model="nominee.address">
     </md-input-container>
     <div class="row">
       <div class="col-sm-4">
         <md-input-container name="city" class="md-block">
           <label>City</label>
-          <input required ng-model="nominees.city">
+          <input required ng-model="nominee.city">
         </md-input-container>
       </div>
       <div class="col-sm-4">
         <md-input-container name="pincode"  class="md-block">
           <label>Pincode</label>
-          <input type="number" required ng-model="nominees.pincode">
+          <input type="number" required ng-model="nominee.pincode">
         </md-input-container>
       </div>
       <div class="col-sm-4">
         <md-input-container name="country" class="md-block">
           <label>Country</label>
-          <md-select  required ng-model="nominees.country">
+          <md-select  required ng-model="nominee.country">
+            <md-option value=""></md-option>
             <md-option value="IN">IN</md-option>
             <md-option value="US">US</md-option>
             <md-option value="UK">UK</md-option>
@@ -119,18 +121,19 @@
         <div class="col-sm-6">
           <md-input-container name="guardianname" class="md-block">
             <label>Guardian Name</label>
-            <input required ng-model="nominees.guardianname">
+            <input required ng-model="nominee.guardianname">
           </md-input-container>
         </div>
         <div class="col-sm-6">
           <md-input-container name="guardianpan" class="md-block">
             <label>Guardian PAN</label>
-            <input required ng-model="nominees.guardianpan">
+            <input required ng-model="nominee.guardianpan">
           </md-input-container>
         </div>
       </div>
     </div>
   </div>
+</div>
   <div class="next-button text-right">
     <span flex></span>
     <md-button type="submit" class="md-raised md-primary">Next</md-button>

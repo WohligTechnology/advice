@@ -36,7 +36,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   ];
 })
 
-.controller('ProfileCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('ProfileCtrl', function($scope, TemplateService, NavigationService, $timeout,$log,$window) {
   $scope.template = TemplateService.changecontent("profile");
   $scope.menutitle = NavigationService.makeactive("Profile");
   TemplateService.title = $scope.menutitle;
@@ -44,7 +44,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.header = "views/content/header.html";
   $scope.formData = {};
   $scope.nominee = true;
-  $scope.nominees = {};
+  $scope.nominees = [];
+  $scope.addNominees = function(){
+    $scope.nominees.push({});
+    $window.scrollBy(100, 0);
+  };
+  $scope.addNomineeDetails = function(){
+
+  };
+  $scope.emptyNominees = function(flag){
+    if(flag ===true){
+      $log.log(flag);
+      $scope.nominees = [];
+    }
+  };
   $scope.birthDay = [
     "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
     "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"
