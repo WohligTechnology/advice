@@ -109,8 +109,28 @@
       }
     }
   }
-  .profile .user-profile .user-form .navigation-tabs { width: 300px; }
-  .profile .user-profile .user-form .navigation-tabs .tab-one { left: -5%; }
+  .profile .user-profile .user-detail h3 {
+    font-size: 20px;
+    margin-top: 55px;
+    margin-left: 10px;
+  }
+  .profile .user-profile .user-form {
+    .nominee-details, .regulatory-details,
+    .document-upload, .verification {
+      margin-top: 150px;
+    }
+  }
+  .profile .user-profile .user-form .navigation-tabs {
+    width: 250px;
+    margin: 140px 0 0 -350px;
+    .progress-bar { width: 104%; }
+    .tab-one { left: -7%; }
+    .tab-one, .tab-two, .tab-three, .tab-four, .tab-five {
+      top: -20px;
+      p { font-size: 12px; }
+      i { padding: 5px; font-size: 20px; }
+    }
+  }
   .planner-sidebar .right-bar { padding: 20px !important; }
 }
 
