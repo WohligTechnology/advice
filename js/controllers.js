@@ -128,7 +128,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.header = "views/content/header.html";
 
   $scope.oneAtATime = true;
-  $scope.leftValue = 0;
 
   window.onload = function (e) {
     setTimeout(function () {
@@ -141,7 +140,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
               g = 255 - 127 + leftValue,
               r = 255 - g,
               b = 0;
-          $container.find('.leftLabel').text(leftValue);
+              $container.find('.leftLabel').text(leftValue);
+              $container.find('.leftLabelVal').val(leftValue);
           $scope.leftValue = leftValue;
           $(this).find('.bar').css('background', 'rgb(' + [r, g, b].join(',') + ')');
         }
