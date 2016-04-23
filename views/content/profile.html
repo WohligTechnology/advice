@@ -13,40 +13,43 @@
           <div class="progress-bar">
             <div class="determinate"></div>
           </div>
-          <div class="tab-one text-center">
+          <div class="tab-one text-center" ng-click="changeTab(0)" ng-class="{'active': tabs[0].active}">
             <p class="tab-icon"><i class="material-icons">done</i></p>
             <p>Registration</p>
           </div>
-          <div class="tab-two text-center" ng-click="nominee=true;regulatory=false;document=false;verification=false;">
+          <div class="tab-two text-center"  ng-click="changeTab(1)" ng-class="{'active': tabs[1].active}">
             <p class="tab-icon"><i class="material-icons">done</i></p>
             <p>Nominee<br>Details</p>
           </div>
-          <div class="tab-three text-center" ng-click="nominee=false;regulatory=true;document=false;verification=false;">
+          <div class="tab-three text-center"  ng-click="changeTab(2)" ng-class="{'active': tabs[2].active}">
             <p class="tab-icon"><i class="material-icons">done</i></p>
             <p>Regulatory<br>Details</p>
           </div>
-          <div class="tab-four text-center" ng-click="nominee=false;regulatory=false;document=true;verification=false;">
+          <div class="tab-four text-center"  ng-click="changeTab(3)" ng-class="{'active': tabs[3].active}">
             <p class="tab-icon"><i class="material-icons">done</i></p>
             <p>Document<br>Upload</p>
           </div>
-          <div class="tab-five text-center" ng-click="nominee=false;regulatory=false;document=false;verification=true;">
+          <div class="tab-five text-center"  ng-click="changeTab(4)" ng-class="{'active': tabs[4].active}">
             <p class="tab-icon"><i class="material-icons">done</i></p>
             <p>Verification</p>
           </div>
         </div>
-        <div class="nominee-details" ng-show="nominee" ng-hide="regulatory || document || verification">
-          <form name="nomineeForm" ng-submit="close()">
+        <div class="nominee-details" ng-if="tabs[1].active">
+          <form name="nomineeForm" ng-submit="addNomineeDetails(nomineeForm)">
           <div layout="row" class="nominee-first">
             <md-checkbox md-no-ink ng-model= "nonominee" ng-change="emptyNominees(nonominee);" aria-label="No Nominee">
               No Nominee
             </md-checkbox>
             <md-button ng-click ="addNominees();" class="md-icon-button md-fab md-mini  md-whiteframe-2dp add-nominee" aria-label="Add Nominee" ng-class="{'md-primary':!nonominee}" ng-disabled="nonominee">
               <i class="material-icons">add</i>
+              <md-tooltip md-direction="top">
+                  Add Nominee
+              </md-tooltip>
             </md-button>
 
           </div>
 
-  <div class="nominee-form" ng-hide = "nonominee"ng-if="nominees.length !== 0">
+  <div class="nominee-form" ng-hide = "nonominee" ng-if="nominees.length !== 0">
   <div ng-repeat= "nominee in nominees">
     <p>Nominee {{$index + 1}}</p>
     <div class="row">
@@ -141,19 +144,20 @@
 </form>
         </div>
 
-        <div class="regulatory-details" ng-show="regulatory" ng-hide="nominee || document || verification">
+        <div class="regulatory-details" ng-if="tabs[2].active">
           <!-- <h4 layout-align="start" class="text-uppercase blue">Regulatory Details</h4> -->
+          <form name="regulatoryForm" ng-submit="">
           <div class="row">
             <div class="birth-place col-md-4">
-              <md-input-container>
+              <md-input-container name="placeofbirth">
                 <label>Place of Birth</label>
-                <input>
+                <input required ng-model="user.placeofbirth">
               </md-input-container>
             </div>
             <div class="birth-country col-md-4">
-              <md-input-container>
+              <md-input-container name="country">
                 <label>Country</label>
-                <md-select ng-model="ctrl.userCountry">
+                <md-select required ng-model="user.country" ng-model="ctrl.userCountry">
                   <md-option value="IN">IN</md-option>
                   <md-option value="US">US</md-option>
                   <md-option value="UK">UK</md-option>
@@ -162,9 +166,9 @@
               </md-input-container>
             </div>
             <div class="gross-income col-md-4">
-              <md-input-container>
+              <md-input-container name="grossannualincome">
                 <label>Gross Annual Income</label>
-                <md-select ng-model="ctrl.userIncome">
+                <md-select required ng-model="user.grossannualincome" ng-model="ctrl.userIncome">
                   <md-option value="10000">10,000</md-option>
                   <md-option value="15000">15,000</md-option>
                   <md-option value="20000">20,000</md-option>
@@ -174,15 +178,15 @@
           </div>
           <div class="row">
             <div class="net-worth col-md-4">
-              <md-input-container>
+              <md-input-container name="networthoccupation">
                 <span class="inr"><i class="fa fa-inr"></i></span>
-                <input type="number" placeholder="Net Worth (Optional):" aria-label="Net Worth">
+                <input required ng-model="user.networthoccupation" type="number" placeholder="Net Worth (Optional):" aria-label="Net Worth">
               </md-input-container>
             </div>
             <div class="occupation col-md-4">
-              <md-input-container>
+              <md-input-container name="occupation">
                 <label>Occupation</label>
-                <md-select ng-model="ctrl.userOccupation">
+                <md-select required ng-model="user.occupation" ng-model="ctrl.userOccupation">
                   <md-option value="IN">IN</md-option>
                   <md-option value="US">US</md-option>
                   <md-option value="UK">UK</md-option>
@@ -191,9 +195,9 @@
               </md-input-container>
             </div>
             <div class="gender col-md-4">
-              <md-input-container>
+              <md-input-container name="gender">
                 <label>Gender</label>
-                <md-select ng-model="ctrl.userGender">
+                <md-select required ng-model="user.gender" ng-model="ctrl.userGender">
                   <md-option value="male">Male</md-option>
                   <md-option value="female">Female</md-option>
                 </md-select>
@@ -202,18 +206,18 @@
           </div>
           <div class="row">
             <div class="politically-exposed col-md-6">
-              <md-input-container>
+              <md-input-container name="political">
                 <label>Are you a Politically Exposed Person?</label>
-                <md-select ng-model="ctrl.userPolitical">
+                <md-select required ng-model="user.political" ng-model="ctrl.userPolitical">
                   <md-option value="yes">Yes</md-option>
                   <md-option value="no">No</md-option>
                 </md-select>
               </md-input-container>
             </div>
             <div class="tax-country col-md-6">
-              <md-input-container>
+              <md-input-container name="taxcountry">
                 <label>Is your Country of Tax Residency other than India?</label>
-                <md-select ng-model="ctrl.userTax">
+                <md-select required ng-model="user.taxcountry" ng-model="ctrl.userTax">
                   <md-option value="yes">Yes</md-option>
                   <md-option value="no">No</md-option>
                 </md-select>
@@ -223,40 +227,41 @@
 
           <div class="row">
             <div class="marital-status col-md-4">
-              <md-input-container>
+              <md-input-container name="maritalstatus">
                 <label>Marital Status</label>
-                <md-select ng-model="ctrl.userMarital">
+                <md-select required ng-model="user.maritalstatus" ng-model="ctrl.userMarital">
                   <md-option value="single">Single</md-option>
                   <md-option value="married">Married</md-option>
                 </md-select>
               </md-input-container>
             </div>
             <div class="natioanlity col-md-4">
-              <md-input-container>
+              <md-input-container name="nationality">
                 <label>Nationality</label>
-                <md-select ng-model="ctrl.userNationality">
+                <md-select required ng-model="user.nationality" ng-model="ctrl.userNationality">
                   <md-option value="indian">Indian</md-option>
                   <md-option value="american">American</md-option>
                 </md-select>
               </md-input-container>
             </div>
             <div class="tax-status col-md-4">
-              <md-input-container>
+              <md-input-container name="taxstatus">
                 <label>Tax Status</label>
-                <md-select ng-model="ctrl.userTaxStatus">
-                  <md-option value="1"></md-option>
-                  <md-option value="2"></md-option>
+                <md-select required ng-model="user.taxstatus" ng-model="ctrl.userTaxStatus">
+                  <md-option value="1">1</md-option>
+                  <md-option value="2">2</md-option>
                 </md-select>
               </md-input-container>
             </div>
           </div>
           <div class="next-button text-right">
             <span flex></span>
-            <md-button class="md-raised md-primary" ng-click="nominee=false;regulatory=false;document=true;verification=false;">Next</md-button>
+            <md-button type="submit" class="md-raised md-primary" >Next</md-button>
           </div>
+        </form>
         </div>
 
-        <div class="document-upload" ng-show="document" ng-hide="nominee || regulatory || verification">
+        <div class="document-upload" ng-if="tabs[3].active">
           <!-- <h4 layout-align="start" class="text-uppercase blue">Document Upload</h4> -->
           <div class="document-one row">
             <div class="passport-photo col-md-4">
@@ -322,7 +327,7 @@
           </div>
         </div>
 
-        <div class="verification" ng-show="verification" ng-hide="nominee || regulatory || document">
+        <div class="verification" ng-if="tabs[4].active">
           <p>We have got all the information required to activate your account. We will be sending your documents shortly for physical verification.</p>
         </div>
       </div>

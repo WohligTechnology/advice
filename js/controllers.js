@@ -45,12 +45,35 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.formData = {};
   $scope.nominee = true;
   $scope.nominees = [];
+  $scope.tabs = [{
+    active: false
+  },{
+    active: true
+  },{
+    active: false
+  },{
+    active: false
+  },{
+    active: false
+  }];
+  $scope.changeTab = function(index){
+    _.each($scope.tabs,function(key){
+      key.active = false;
+    });
+    $scope.tabs[index].active = true;
+  };
   $scope.addNominees = function(){
     $scope.nominees.push({});
     $window.scrollBy(100, 0);
   };
-  $scope.addNomineeDetails = function(){
+  $scope.addNomineeDetails = function(formValidate){
+    $log.log($scope.nominees);
+    $log.log(formValidate);
+    if(formValidate.$valid){
+      $scope.changeTab(2);
+    }else{
 
+    }
   };
   $scope.emptyNominees = function(flag){
     if(flag ===true){

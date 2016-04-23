@@ -6,8 +6,9 @@ var firstapp = angular.module('firstapp', [
   'navigationservice'
 ]);
 
-firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider,$logProvider) {
   // for http request with session
+        $logProvider.debugEnabled(false);
   $httpProvider.defaults.withCredentials = true;
   $stateProvider
     .state('home', {
