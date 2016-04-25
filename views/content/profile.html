@@ -14,23 +14,23 @@
             <div class="determinate"></div>
           </div>
           <div class="tab-one text-center" ng-click="changeTab(0)" ng-class="{'active': tabs[0].active}">
-            <p class="tab-icon"><i class="material-icons">done</i></p>
+            <p class="tab-icon"><i class="material-icons {{tabs[0].status.colorclass}}">{{tabs[0].status.fontname}}</i></p>
             <p>Registration</p>
           </div>
           <div class="tab-two text-center"  ng-click="changeTab(1)" ng-class="{'active': tabs[1].active}">
-            <p class="tab-icon"><i class="material-icons">done</i></p>
+            <p class="tab-icon"><i class="material-icons {{tabs[1].status.colorclass}}">{{tabs[1].status.fontname}}</i></p>
             <p>Nominee<br>Details</p>
           </div>
           <div class="tab-three text-center"  ng-click="changeTab(2)" ng-class="{'active': tabs[2].active}">
-            <p class="tab-icon"><i class="material-icons">done</i></p>
+            <p class="tab-icon"><i class="material-icons {{tabs[2].status.colorclass}}">{{tabs[2].status.fontname}}</i></p>
             <p>Regulatory<br>Details</p>
           </div>
           <div class="tab-four text-center"  ng-click="changeTab(3)" ng-class="{'active': tabs[3].active}">
-            <p class="tab-icon"><i class="material-icons">done</i></p>
+            <p class="tab-icon"><i class="material-icons {{tabs[3].status.colorclass}}">{{tabs[3].status.fontname}}</i></p>
             <p>Document<br>Upload</p>
           </div>
           <div class="tab-five text-center"  ng-click="changeTab(4)" ng-class="{'active': tabs[4].active}">
-            <p class="tab-icon"><i class="material-icons">done</i></p>
+            <p class="tab-icon"><i class="material-icons {{tabs[4].status.colorclass}}">{{tabs[4].status.fontname}}</i></p>
             <p>Verification</p>
           </div>
         </div>

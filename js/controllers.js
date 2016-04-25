@@ -45,6 +45,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.formData = {};
   $scope.nominee = true;
   $scope.nominees = [];
+  $scope.process =  [
+    {
+      fontname : 'done',
+      colorclass : 'color-success'
+    },
+    {
+      fontname : 'error_outline',
+      colorclass : 'color-danger'
+    },
+    {
+      fontname : 'more_horiz',
+      colorclass : 'color-primary'
+    }
+  ]
   $scope.tabs = [{
     active: false
   },{
@@ -56,29 +70,40 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   },{
     active: false
   }];
+  _.each($scope.tabs,function(key){
+    key.status = $scope.process[2];
+  })
   $scope.changeTab = function(index){
     _.each($scope.tabs,function(key){
       key.active = false;
     });
     $scope.tabs[index].active = true;
   };
+  $scope.changeStatus = function(index,status){
+    $scope.tabs[index].status = $scope.process[status];
+  }
   $scope.addNominees = function(){
     $scope.nominees.push({});
     $window.scrollBy(100, 0);
+    $scope.changeStatus(1,1);
   };
   $scope.addNomineeDetails = function(formValidate){
     $log.log($scope.nominees);
     $log.log(formValidate);
     if(formValidate.$valid){
       $scope.changeTab(2);
+      $scope.changeStatus(1,0);
     }else{
-
+      $scope.changeStatus(1,1)
     }
   };
   $scope.emptyNominees = function(flag){
     if(flag ===true){
       $log.log(flag);
       $scope.nominees = [];
+      $scope.changeStatus(1,0);
+    }else{
+      $scope.changeStatus(1,1);
     }
   };
   $scope.birthDay = [

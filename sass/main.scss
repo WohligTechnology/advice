@@ -14,7 +14,7 @@
 $brand-primary: #1d71b8 !default;
 $brand-primary-light : #2bd3d6 !default;
 $brand-success: #84ce3c !default;
-$brand-warning: #ffec39 !default;
+  $brand-warning: #ffec39 !default;
 $brand-danger: #fc483f !default;
 $brand-info: #000072 !default;
 $brand-gray: #777777 !default;
@@ -103,7 +103,15 @@ nav li:hover .dropdown-menu {
 .btn-primary-light {
   @include button-variant(white, $brand-primary-light, $brand-primary-light);
 }
-
+.color-danger{
+  color:$brand-danger !important;
+}
+.color-primary{
+  color:$brand-primary-light !important;
+}
+.color-success{
+  color:$brand-success !important;
+}
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
