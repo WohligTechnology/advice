@@ -43,7 +43,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.navigation = NavigationService.getnav();
   TemplateService.header = "views/content/header.html";
   $scope.formData = {};
-  $scope.nominee = true;
+  $scope.nonominee = false;
   $scope.nominees = [];
   $scope.process =  [
     {
@@ -56,7 +56,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     },
     {
       fontname : 'more_horiz',
-      colorclass : 'color-primary'
+      colorclass : 'color-gray'
     }
   ]
   $scope.tabs = [{

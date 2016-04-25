@@ -34,7 +34,7 @@
             <p>Verification</p>
           </div>
         </div>
-        <div class="nominee-details" ng-if="tabs[1].active">
+        <div class="nominee-details" ng-show="tabs[1].active">
           <form name="nomineeForm" ng-submit="addNomineeDetails(nomineeForm)">
           <div layout="row" class="nominee-first">
             <md-checkbox md-no-ink ng-model= "nonominee" ng-change="emptyNominees(nonominee);" aria-label="No Nominee">
@@ -144,7 +144,7 @@
 </form>
         </div>
 
-        <div class="regulatory-details" ng-if="tabs[2].active">
+        <div class="regulatory-details" ng-show="tabs[2].active">
           <!-- <h4 layout-align="start" class="text-uppercase blue">Regulatory Details</h4> -->
           <form name="regulatoryForm" ng-submit="">
           <div class="row">
@@ -261,7 +261,7 @@
         </form>
         </div>
 
-        <div class="document-upload" ng-if="tabs[3].active">
+        <div class="document-upload" ng-show="tabs[3].active">
           <!-- <h4 layout-align="start" class="text-uppercase blue">Document Upload</h4> -->
           <div class="document-one row">
             <div class="passport-photo col-md-4">
@@ -327,7 +327,7 @@
           </div>
         </div>
 
-        <div class="verification" ng-if="tabs[4].active">
+        <div class="verification" ng-show="tabs[4].active">
           <p>We have got all the information required to activate your account. We will be sending your documents shortly for physical verification.</p>
         </div>
       </div>
