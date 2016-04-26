@@ -46,9 +46,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.nonominee = false;
   $scope.nominees = [];
   $scope.progress = 0;
-  $scope.prog = {};
-  $scope.prog.variableProgress ="'width' : 10% !important;";
-  console.log($scope.variableProgress);
   $scope.process =  [
     {
       status:'done',
@@ -65,7 +62,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       fontname : 'more_horiz',
       colorclass : 'color-gray'
     }
-  ]
+  ];
   $scope.tabs = [{
     active: false
   },{
@@ -77,10 +74,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   },{
     active: false
   }];
+  //All except registration 'untouched'
   _.each($scope.tabs,function(key){
     key.status = $scope.process[2];
   })
   $scope.tabs[0].status = $scope.process[0];
+  //All except registration 'untouched' end
+
+  //change tabs here, cannot change registration
   $scope.changeTab = function(index){
     if(index !== 0){
       _.each($scope.tabs,function(key){
@@ -90,7 +91,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }
   };
 
-
+  //change status of ticks and move progress bar
   $scope.changeStatus = function(index,status){
 
     $scope.tabs[index].status = $scope.process[status];
@@ -105,30 +106,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       i++;
     })
     $scope.progress = (contActive.length - 1) *25;
-  }
+  };
+  
   $scope.addNominees = function(){
     $scope.nominees.push({});
     $window.scrollBy(100, 0);
     $scope.changeStatus(1,1);
-  };
-  $scope.addNomineeDetails = function(formValidate){
-    $log.log($scope.nominees);
-    $log.log(formValidate);
-    if(formValidate.$valid){
-      $scope.changeTab(2);
-      $scope.changeStatus(1,0);
-    }else{
-      $scope.changeStatus(1,1);
-    }
-  };
-  $scope.addRegulatoryDetails = function(formValidate){
-    $log.log(formValidate);
-    if(formValidate.$valid){
-      $scope.changeTab(3);
-      $scope.changeStatus(2,0);
-    }else{
-      $scope.changeStatus(2,1);
-    }
   };
   $scope.emptyNominees = function(flag){
     if(flag ===true){
@@ -139,6 +122,28 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.changeStatus(1,1);
     }
   };
+
+  //ALL form submits
+
+  $scope.addNomineeDetails = function(formValidate){
+    if(formValidate.$valid){
+      $scope.changeTab(2);
+      $scope.changeStatus(1,0);
+    }else{
+      $scope.changeStatus(1,1);
+    }
+  };
+  $scope.addRegulatoryDetails = function(formValidate){
+    if(formValidate.$valid){
+      $scope.changeTab(3);
+      $scope.changeStatus(2,0);
+    }else{
+      $scope.changeStatus(2,1);
+    }
+  };
+
+  //ALL form submits end
+
   $scope.birthDay = [
     "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
     "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"
