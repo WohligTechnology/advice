@@ -45,16 +45,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.formData = {};
   $scope.nonominee = false;
   $scope.nominees = [];
+  $scope.progress = 0;
   $scope.process =  [
     {
+      status:'done',
       fontname : 'done',
       colorclass : 'color-success'
     },
     {
+      status:'invalid',
       fontname : 'error_outline',
       colorclass : 'color-danger'
     },
     {
+      status:'untouched',
       fontname : 'more_horiz',
       colorclass : 'color-gray'
     }
@@ -73,14 +77,33 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   _.each($scope.tabs,function(key){
     key.status = $scope.process[2];
   })
+  $scope.tabs[0].status = $scope.process[0];
   $scope.changeTab = function(index){
-    _.each($scope.tabs,function(key){
-      key.active = false;
-    });
-    $scope.tabs[index].active = true;
+    if(index !== 0){
+      _.each($scope.tabs,function(key){
+        key.active = false;
+      });
+      $scope.tabs[index].active = true;
+    }
+  };
+
+  $scope.variableProgress = {
+    'width':$scope.progress+'% !important;'
   };
   $scope.changeStatus = function(index,status){
+
     $scope.tabs[index].status = $scope.process[status];
+    var i= 0;
+    var contActive= [];
+    _.each($scope.tabs,function(key){
+      if(key.status.status == 'done'){
+        if(i == contActive.length){
+          contActive.push(key);
+        }
+      }
+      i++;
+    })
+    $scope.progress = contActive.length *25;
   }
   $scope.addNominees = function(){
     $scope.nominees.push({});
@@ -196,7 +219,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         maximum:undefined
     },
     errormessages:{
-      
+
     }
   }];
   $scope.response = [];

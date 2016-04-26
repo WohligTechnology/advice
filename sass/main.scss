@@ -767,7 +767,7 @@ md-sidenav.md-sidenav-left {
             background-color: inherit;
             top: 0;
             bottom: 0;
-            background-color: white;
+            background-color: $brand_success;
             transition: width .3s linear;
           }
         }
