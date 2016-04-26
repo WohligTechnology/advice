@@ -46,6 +46,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.nonominee = false;
   $scope.nominees = [];
   $scope.progress = 0;
+  $scope.prog = {};
+  $scope.prog.variableProgress ="'width' : 10% !important;";
+  console.log($scope.variableProgress);
   $scope.process =  [
     {
       status:'done',
@@ -87,9 +90,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }
   };
 
-  $scope.variableProgress = {
-    'width':$scope.progress+'% !important;'
-  };
+
   $scope.changeStatus = function(index,status){
 
     $scope.tabs[index].status = $scope.process[status];
@@ -103,7 +104,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       }
       i++;
     })
-    $scope.progress = contActive.length *25;
+    $scope.progress = (contActive.length - 1) *25;
   }
   $scope.addNominees = function(){
     $scope.nominees.push({});

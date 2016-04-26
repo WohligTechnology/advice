@@ -10,8 +10,8 @@
       </div>
       <div class="user-form md-whiteframe-2dp">
         <div class="navigation-tabs">
-          <div class="progress-bar">
-            <div class="determinate" ng-style="variableProgress"></div>
+          <div class="progress-bar">{{variableProgress}}
+            <div class="determinate" ng-style="{'width':progress+'%'}"></div>
           </div>
           <div class="tab-one text-center" ng-click="changeTab(0)" ng-class="{'active': tabs[0].active}">
             <p class="tab-icon"><i class="material-icons {{tabs[0].status.colorclass}}">{{tabs[0].status.fontname}}</i></p>
