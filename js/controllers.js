@@ -94,7 +94,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.changeTab(2);
       $scope.changeStatus(1,0);
     }else{
-      $scope.changeStatus(1,1)
+      $scope.changeStatus(1,1);
+    }
+  };
+  $scope.addRegulatoryDetails = function(formValidate){
+    $log.log(formValidate);
+    if(formValidate.$valid){
+      $scope.changeTab(3);
+      $scope.changeStatus(2,0);
+    }else{
+      $scope.changeStatus(2,1);
     }
   };
   $scope.emptyNominees = function(flag){
@@ -177,6 +186,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
   $scope.oneAtATime = true;
 
+  $scope.planner = [{
+    question: 'Hi,lets get started. Please give us the name of your portfolio',
+    canSkip:false,
+    valueDefault: '',
+    valueType: 'text',
+    rules:{
+        minimum:undefined,
+        maximum:undefined
+    },
+    errormessages:{
+      
+    }
+  }];
+  $scope.response = [];
   window.onload = function (e) {
     setTimeout(function () {
       console.log("loaded");
