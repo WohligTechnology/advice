@@ -2,9 +2,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout) {
   //Used to name the .html file
-
-  console.log("Testing Consoles");
-
   $scope.template = TemplateService.changecontent("home");
   $scope.menutitle = NavigationService.makeactive("Home");
   TemplateService.title = $scope.menutitle;
@@ -107,7 +104,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     })
     $scope.progress = (contActive.length - 1) *25;
   };
-  
+
   $scope.addNominees = function(){
     $scope.nominees.push({});
     $window.scrollBy(100, 0);
@@ -206,29 +203,25 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
 })
 
-.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $timeout,$log) {
   $scope.template = TemplateService.changecontent("planner");
   $scope.menutitle = NavigationService.makeactive("Planner");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
   TemplateService.header = "views/content/header.html";
-
+  $scope.skipped = [];
   $scope.oneAtATime = true;
-
-  $scope.planner = [{
-    question: 'Hi,lets get started. Please give us the name of your portfolio',
-    canSkip:false,
-    valueDefault: '',
-    valueType: 'text',
-    rules:{
-        minimum:undefined,
-        maximum:undefined
-    },
-    errormessages:{
-
+  $scope.sendMessage = function(input){
+    console.log(input);
+    NavigationService.autoresponder(input,$scope.skipped,function(data){
+      $log.log(data);
+    },function(err){
+      $log.log(err);
     }
-  }];
-  $scope.response = [];
+  );
+  }
+
+
   window.onload = function (e) {
     setTimeout(function () {
       console.log("loaded");
@@ -248,7 +241,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     }, 200);
   };
+  $scope.receiveMessage = function(msg){
 
+  };
+  $scope.pushMessage = function(msg){
+
+  };
 })
 
 .controller('headerctrl', function($scope, TemplateService) {

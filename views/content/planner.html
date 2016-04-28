@@ -54,14 +54,14 @@
             <div flex="84" flex-gt-xs="80" flex-xs="80">
               <div class="chat-input">
                 <md-button class="text-uppercase skip-button">Skip</md-button>
-                <input type="text" placeholder="Type Something...">
+                <input type="text" ng-model="reply" placeholder="Type Something...">
               </div>
             </div>
             <div flex="16" flex-gt-xs="20" flex-xs="20">
-              <md-button class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff" aria-label="Send" ng-click="suggestion=true;">
+                <md-button class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff"  aria-label="Send" ng-click="sendMessage(reply)">
                 <span class="text-uppercase">Send</span>
               </md-button>
-              <md-button class="send-fab pull-right md-fab md-raised md-primary white hidden-sm hidden-md hidden-lg" md-ink-ripple="#ffffff" aria-label="Send" ng-click="suggestion=true;">
+                <md-button class="send-fab pull-right md-fab md-raised md-primary white hidden-sm hidden-md hidden-lg" md-ink-ripple="#ffffff"  aria-label="Send" ng-click="sendMessage(reply)">
                 <span><i class="material-icons">send</i></span>
               </md-button>
             </div>

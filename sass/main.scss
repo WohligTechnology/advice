@@ -865,6 +865,9 @@ md-sidenav.md-sidenav-left {
   }
   .active { font-weight: bold; color: $brand_blue; }
 }
+button[disabled] {
+  div.md-ripple-container { display: none; }
+}
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
