@@ -51,7 +51,7 @@ var navigationservice = angular.module('navigationservice', [])
     getnav: function() {
       return navigation;
     },
-    autoresponder :  function(reponse,skipped,callback,err){
+    autoresponder :  function(response,skipped,callback,err){
     var scenarios= [{
       question: 'Hi,lets get started. Please give us the name of your portfolio',
       canSkip:false,

@@ -221,6 +221,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   );
   }
 
+  $scope.errorPush = function(){
+
+  };
 
   window.onload = function (e) {
     setTimeout(function () {
@@ -291,7 +294,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
   var array = window.location.hash.split('/');
   $scope.headerText = array[1];
-
   $scope.toggleLeft = buildDelayedToggler('left');
   function debounce(func, wait, context) {
     var timer;

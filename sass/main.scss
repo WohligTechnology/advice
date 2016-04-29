@@ -564,6 +564,9 @@ md-sidenav.md-sidenav-left {
   }
   .planner-chats {
     margin: 30px;
+    min-height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
     .planner-receiver, .planner-sender {
       margin-bottom: 15px;
       .receiver-message, .sender-message {

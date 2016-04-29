@@ -12,6 +12,7 @@
           <md-divider></md-divider>
 
           <div class="planner-chats">
+            <div ng-repeat="chat in chats">
             <div class="planner-receiver">
               <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive receiver-image" />
               <div class="receiver-message gray-lighter-bg">
@@ -24,30 +25,7 @@
               </div>
               <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
             </div>
-            <div class="planner-receiver">
-              <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive receiver-image" />
-              <div class="receiver-message gray-lighter-bg">
-                <span>Hi Vikas! Let's get started with creating your new portfolio. What would you like to call this portfolio?</span>
-              </div>
-            </div>
-            <div class="planner-sender text-right">
-              <div class="sender-message blue-bg">
-                <span>My Personal world tour plan</span>
-              </div>
-              <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
-            </div>
-            <div class="planner-receiver">
-              <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive receiver-image" />
-              <div class="receiver-message gray-lighter-bg">
-                <span>Hi Vikas! Let's get started with creating your new portfolio. What would you like to call this portfolio?</span>
-              </div>
-            </div>
-            <div class="planner-sender text-right">
-              <div class="sender-message blue-bg">
-                <span>My Personal world tour plan</span>
-              </div>
-              <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
-            </div>
+          </div>
           </div>
 
           <div layout="row" class="message-box">
