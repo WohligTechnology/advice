@@ -84,7 +84,7 @@ firstapp.directive('schrollBottom', function () {
       scope.$watchCollection('schrollBottom', function (newValue) {
         if (newValue)
         {
-          $(element).scrollTop($(element)[0].scrollHeight);
+                    $(element).scrollTop($(element)[0].scrollHeight);
         }
       });
     }

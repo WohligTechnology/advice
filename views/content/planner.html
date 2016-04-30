@@ -16,12 +16,12 @@
               <div class="planner-receiver" ng-if="chat.type == 'received'">
                 <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive receiver-image" />
                 <div class="receiver-message gray-lighter-bg">
-                  <span>{{chat.text}}</span>
+                  <span ng-bind-html="chat.text"></span>
                 </div>
               </div>
               <div class="planner-sender text-right" ng-if="chat.type == 'sent'">
                 <div class="sender-message blue-bg">
-                  <span>{{chat.text}}</span>
+                  <span ng-bind-html="chat.text"></span>
                 </div>
                 <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
               </div>
@@ -32,7 +32,7 @@
 
               <div flex="84" flex-gt-xs="80" flex-xs="80">
                 <div class="chat-input">
-                  <md-button class="text-uppercase skip-button" ng-disabled="currentResponse.canSkip">Skip</md-button>
+                  <md-button class="text-uppercase skip-button" ng-disabled="!currentResponse.canSkip" ng-click="skipIt()">Skip</md-button>
                   <input type="{{currentResponse.valueType}}" ng-model="reply" placeholder="Type Something...">
                 </div>
               </div>

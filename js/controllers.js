@@ -104,7 +104,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
   $scope.emptyNominees = function(flag) {
     if (flag === true) {
-      $log.log(flag);
       $scope.nominees = [];
       $scope.changeStatus(1, 0);
     } else {
@@ -204,47 +203,62 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.skipped = [];
   $scope.oneAtATime = true;
   $scope.chats = [];
+  $scope.reply= undefined;
   $scope.sendMessage = function(msg) {
+
+
     if(angular.isDate(msg)){
-      msg= $filter('date')(msg,'mediumDate');
+      msg= $filter('date')(new Date(msg),'mediumDate');
+
     }
     $scope.chats.push({
       text: msg,
       type: 'sent'
     });
-    $scope.validateMessage(msg);
+    $scope.validateMessage(_.cloneDeep(msg));
+    $scope.reply=null;
+
+
   };
-  $scope.recievedMessage = function(msg) {
+  $scope.recievedMessage = function(msg,interval) {
+    $timeout(function(){
     $scope.chats.push({
       text: msg,
       type: 'received'
     })
+  },interval);
   };
   $scope.replyMessage = function(input) {
     NavigationService.autoresponder(input, $scope.skipped, function(data) {
-      console.log(data);
+      
       if (data) {
         $scope.currentResponse = data;
-        $scope.recievedMessage($scope.currentResponse.question);
+        console.log($scope.currentResponse);
+        $scope.recievedMessage($scope.currentResponse.question,3000);
 
       }
     }, function(err) {
-      $log.log(err);
+
     });
   }
-$scope.errAgain =0;
+  var errAgain = 0;
   $scope.validateMessage = function(msg) {
-    console.log(msg);
     if($scope.currentResponse.rules.minlength && angular.isString(msg) && msg.length < $scope.currentResponse.rules.minlength){
-      var msg=["This name is too short for your dream investment plan, don't you think?",'Nice. Try better.'];
-      $scope.chats.push({
-          text: (!msg[$scope.errAgain])?msg[0]:msg[$scope.errAgain],
-          type: 'received'
-      });
+      var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
+      $timeout(function(){
+        $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],2000);
+        errAgain++;
+      },1000);
+
     }else{
-      $scope.replyMessage(msg)
-        }
-        $scope.errAgain++;
+      var confirmMessages=['Got it.','Okay!','Thanks','Thank you','Confirmed'];
+      $timeout(function(){
+        $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length-1))],2000);
+        $scope.replyMessage(msg)
+        errAgain++;
+      },1000);
+
+      }
   };
   $scope.replyMessage(undefined);
   window.onload = function(e) {
@@ -343,6 +357,4 @@ $scope.errAgain =0;
         });
     };
   }
-})
-
-;
+});
