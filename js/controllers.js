@@ -230,11 +230,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
   $scope.replyMessage = function(input) {
     NavigationService.autoresponder(input, $scope.skipped, function(data) {
-      
+
       if (data) {
         $scope.currentResponse = data;
         console.log($scope.currentResponse);
-        $scope.recievedMessage($scope.currentResponse.question,3000);
+        $scope.recievedMessage($scope.currentResponse.question,2000);
 
       }
     }, function(err) {
