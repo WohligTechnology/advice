@@ -568,6 +568,7 @@ md-sidenav.md-sidenav-left {
     max-height: 500px;
     overflow-y: scroll;
     .planner-receiver, .planner-sender {
+      position: relative;
       margin-bottom: 15px;
       .receiver-message, .sender-message {
         max-width: 55%;
