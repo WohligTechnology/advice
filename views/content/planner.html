@@ -11,39 +11,42 @@
           </md-list-item>
           <md-divider></md-divider>
 
-          <div class="planner-chats">
+          <div class="planner-chats" id="chatBox" schroll-bottom="chats">
             <div ng-repeat="chat in chats">
-            <div class="planner-receiver">
-              <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive receiver-image" />
-              <div class="receiver-message gray-lighter-bg">
-                <span>Hi Vikas! Let's get started with creating your new portfolio. What would you like to call this portfolio?</span>
+              <div class="planner-receiver" ng-if="chat.type == 'received'">
+                <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive receiver-image" />
+                <div class="receiver-message gray-lighter-bg">
+                  <span>Hi Vikas! Let's get started with creating your new portfolio. What would you like to call this portfolio?</span>
+                </div>
+              </div>
+              <div class="planner-sender text-right" ng-if="chat.type == 'sent'">
+                <div class="sender-message blue-bg">
+                  <span>{{chat.text}}</span>
+                </div>
+                <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
               </div>
             </div>
-            <div class="planner-sender text-right">
-              <div class="sender-message blue-bg">
-                <span>My Personal world tour plan</span>
-              </div>
-              <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
-            </div>
           </div>
-          </div>
+          <form ng-submit="sendMessage(reply)">
+            <div layout="row" class="message-box">
 
-          <div layout="row" class="message-box">
-            <div flex="84" flex-gt-xs="80" flex-xs="80">
-              <div class="chat-input">
-                <md-button class="text-uppercase skip-button">Skip</md-button>
-                <input type="text" ng-model="reply" placeholder="Type Something...">
+              <div flex="84" flex-gt-xs="80" flex-xs="80">
+                <div class="chat-input">
+                  <md-button class="text-uppercase skip-button">Skip</md-button>
+                  <input type="text" ng-model="reply" placeholder="Type Something...">
+                </div>
               </div>
+              <div flex="16" flex-gt-xs="20" flex-xs="20">
+                <md-button type="submit" class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff" aria-label="Send">
+                  <span class="text-uppercase">Send</span>
+                </md-button>
+                <md-button type="submit" class="send-fab pull-right md-fab md-raised md-primary white hidden-sm hidden-md hidden-lg" md-ink-ripple="#ffffff" aria-label="Send">
+                  <span><i class="material-icons">send</i></span>
+                </md-button>
+              </div>
+
             </div>
-            <div flex="16" flex-gt-xs="20" flex-xs="20">
-                <md-button class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff"  aria-label="Send" ng-click="sendMessage(reply)">
-                <span class="text-uppercase">Send</span>
-              </md-button>
-                <md-button class="send-fab pull-right md-fab md-raised md-primary white hidden-sm hidden-md hidden-lg" md-ink-ripple="#ffffff"  aria-label="Send" ng-click="sendMessage(reply)">
-                <span><i class="material-icons">send</i></span>
-              </md-button>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

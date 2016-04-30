@@ -211,7 +211,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.header = "views/content/header.html";
   $scope.skipped = [];
   $scope.oneAtATime = true;
-  $scope.sendMessage = function(input){
+  $scope.chats=[];
+  $scope.replyMessage = function(input){
     console.log(input);
     NavigationService.autoresponder(input,$scope.skipped,function(data){
       $log.log(data);
@@ -221,7 +222,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   );
   }
 
-  $scope.errorPush = function(){
+  $scope.errorMessage = function(){
 
   };
 
@@ -244,8 +245,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     }, 200);
   };
-  $scope.receiveMessage = function(msg){
-
+  $scope.sendMessage = function(msg){
+    $scope.chats.push({
+      text:msg,
+      type:'sent'
+    })
   };
   $scope.pushMessage = function(msg){
 
