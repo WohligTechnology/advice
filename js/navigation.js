@@ -53,18 +53,29 @@ var navigationservice = angular.module('navigationservice', [])
     },
     autoresponder :  function(response,skipped,callback,err){
     var scenarios= [{
-      question: 'Hi,lets get started. Please give us the name of your portfolio',
-      canSkip:false,
+      id:1,
+      question: 'Hi!Lets get started. Please give us the name of your portfolio',
+      canSkip:true,
       valueDefault: '',
-      valueType: 'text'
+      valueType: 'text',
+      rules:{
+        minlength:10,
+        maxlength:undefined,
+        minimum:undefined,
+        maximum:undefined
+      }
     }, {
       question: 'Hi,lets get started. Please give us the name of your portfolio',
       canSkip:false,
       valueDefault: '',
       valueType: 'text'
     }];
+    if(response == undefined){
+      return callback(scenarios[0]);
 
-   return callback(scenarios[0]);
+    }else{
+      return callback(scenarios[1])
+    }
     },
     makeactive: function(menuname) {
       for (var i = 0; i < navigation.length; i++) {
