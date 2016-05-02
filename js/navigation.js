@@ -73,7 +73,14 @@ var navigationservice = angular.module('navigationservice', [])
       rules:{
         minimum:50000,
         maximum:700000
-      }
+      },
+      errors:[{
+        type:'minimum',
+        starthere:['cfpLoadingBar','cfpLoa','cfpLoading']
+      },{
+        type:'maximum',
+        starthere:['cfpLoadingB','coiaja','fs;lf,']
+      }]
     },{
       id:2,
       question:'Now, what will be the monthly contribution?',
