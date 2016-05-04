@@ -215,7 +215,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       text: msg,
       type: 'sent'
     });
-    $scope.validateMessage(_.cloneDeep(msg));
+    $scope.replyMessage(_.cloneDeep(msg),$scope.currentResponse.id);
     $scope.reply=null;
 
 
@@ -235,27 +235,27 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       if (data) {
         $scope.currentResponse = data;
         console.log($scope.currentResponse);
-        $scope.recievedMessage($scope.currentResponse.question,2000);
+        $scope.recievedMessage($scope.currentResponse.question,1000);
 
       }
     }, function(err) {
-console.log(err);
+      $scope.recievedMessage(err,1000);
     });
   }
   var errAgain = 0;
-  $scope.validateMessage = function(msg) {
+  $scope.validateMessage = function(msg,qid) {
     if($scope.currentResponse.rules.minlength && angular.isString(msg) && msg.length < $scope.currentResponse.rules.minlength){
       // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
       var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
       $timeout(function(){
-        $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],2000);
+        $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
         errAgain++;
       },1000);
 
     }else{
       var confirmMessages=['Got it.','Okay!','Thanks','Thank you','Confirmed'];
       $timeout(function(){
-        $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length-1))],2000);
+        $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length-1))],1000);
         $scope.replyMessage(msg)
         errAgain++;
       },1000);
