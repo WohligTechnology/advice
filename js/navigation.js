@@ -14,11 +14,11 @@ var scenarios = [{
   },
   errors: [{
     type: 'minlength',
-    errAgain:0,
+    errAgain: 0,
     messages: ['the name is too short for your dream investment plan, don&apos;t you think?', 'Nice. Try better. 10 letters minimum']
   }, {
     type: 'maximum',
-    errAgain:0,
+    errAgain: 0,
     messages: ['cfpLoadingB', 'coiaja', 'fs;lf,']
   }]
 }, {
@@ -33,11 +33,11 @@ var scenarios = [{
   },
   errors: [{
     type: 'minimum',
-    errAgain:0,
+    errAgain: 0,
     messages: ['cfpLoadingBar', 'cfpLoa', 'cfpLoading']
   }, {
     type: 'maximum',
-    errAgain:0,
+    errAgain: 0,
     messages: ['cfpLoadingB', 'coiaja', 'fs;lf,']
   }]
 }, {
@@ -112,23 +112,22 @@ var navigationservice = angular.module('navigationservice', [])
         });
         var errMsg = [];
         if (current.rules.minlength && angular.isString(response) && response.length < current.rules.minlength) {
-          // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
           errMsg = _.find(current.errors, function(o) {
             return o.type == 'minlength';
           }).messages;
-        return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
-      } else if (current.rules.maxlength && angular.isString(response) && response.length > current.rules.maxlength) {
+          return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
+        } else if (current.rules.maxlength && angular.isString(response) && response.length > current.rules.maxlength) {
           errMsg = _.find(current.errors, function(o) {
             return o.type == 'maxlength';
           }).messages;
-        return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
+          return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
         } else if (current.rules.maximum) {
           errMsg = _.find(current.errors, function(o) {
             return o.type == 'maximum';
           }).messages;
-        return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
+          return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
         } else {
-          
+
         }
       }
 
