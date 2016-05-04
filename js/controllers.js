@@ -228,8 +228,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     })
   },interval);
   };
-  $scope.replyMessage = function(input) {
-    NavigationService.autoresponder(input, $scope.skipped, function(data) {
+
+  $scope.replyMessage = function(input,qid) {
+    NavigationService.autoresponder(input,qid, $scope.skipped, function(data) {
 
       if (data) {
         $scope.currentResponse = data;
@@ -238,13 +239,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
       }
     }, function(err) {
-
+console.log(err);
     });
   }
   var errAgain = 0;
   $scope.validateMessage = function(msg) {
     if($scope.currentResponse.rules.minlength && angular.isString(msg) && msg.length < $scope.currentResponse.rules.minlength){
-      var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
+      // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
+      var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
       $timeout(function(){
         $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],2000);
         errAgain++;
