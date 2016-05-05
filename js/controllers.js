@@ -252,12 +252,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         errAgain++;
       },1000);
 
+    }else if($scope.currentResponse.rules.maxlengthdd && angular.isString(msg) && msg.length > $scope.currentResponse.rules.maxlength){
+      // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
+      var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
+      $timeout(function(){
+        $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
+        errAgain++;
+      },1000);
+
     }else{
       var confirmMessages=['Got it.','Okay!','Thanks','Thank you','Confirmed'];
       $timeout(function(){
         $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length-1))],1000);
-        $scope.replyMessage(msg)
-        errAgain++;
+        $scope.replyMessage(msg,$scope.currentResponse.id);
+        
       },1000);
 
       }

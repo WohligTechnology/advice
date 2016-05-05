@@ -11,16 +11,8 @@ var scenarios = [{
     maxlength: undefined,
     minimum: undefined,
     maximum: undefined
-  },
-  errors: [{
-    type: 'minlength',
-    errAgain: 0,
-    messages: ['the name is too short for your dream investment plan, don&apos;t you think?', 'Nice. Try better. 10 letters minimum']
-  }, {
-    type: 'maximum',
-    errAgain: 0,
-    messages: ['cfpLoadingB', 'coiaja', 'fs;lf,']
-  }]
+  }
+
 }, {
   id: 1,
   question: 'Now, What will be the lumpsum payment?',
@@ -29,17 +21,10 @@ var scenarios = [{
   valueType: 'number',
   rules: {
     minimum: 50000,
-    maximum: 700000
-  },
-  errors: [{
-    type: 'minimum',
-    errAgain: 0,
-    messages: ['cfpLoadingBar', 'cfpLoa', 'cfpLoading']
-  }, {
-    type: 'maximum',
-    errAgain: 0,
-    messages: ['cfpLoadingB', 'coiaja', 'fs;lf,']
-  }]
+    maximum: 700000,
+    minlength:undefined,
+    maxlength:undefined
+  }
 }, {
   id: 2,
   question: 'Now, what will be the monthly contribution?',
@@ -107,28 +92,32 @@ var navigationservice = angular.module('navigationservice', [])
       if (response == undefined) {
         return callback(scenarios[0]);
       } else {
-        var current = _.find(scenarios, function(key) {
-          return (key.id == responseto);
-        });
-        var errMsg = [];
-        if (current.rules.minlength && angular.isString(response) && response.length < current.rules.minlength) {
-          errMsg = _.find(current.errors, function(o) {
-            return o.type == 'minlength';
-          }).messages;
-          return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
-        } else if (current.rules.maxlength && angular.isString(response) && response.length > current.rules.maxlength) {
-          errMsg = _.find(current.errors, function(o) {
-            return o.type == 'maxlength';
-          }).messages;
-          return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
-        } else if (current.rules.maximum) {
-          errMsg = _.find(current.errors, function(o) {
-            return o.type == 'maximum';
-          }).messages;
-          return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
-        } else {
-
-        }
+        // var current = _.find(scenarios, function(key) {
+        //   return (key.id == responseto);
+        // });
+        // var errMsg = [];
+        // if (current.rules.minlength && angular.isString(response) && response.length < current.rules.minlength) {
+        //   errMsg = _.find(current.errors, function(o) {
+        //     return o.type == 'minlength';
+        //   }).messages;
+        //   return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
+        // } else if (current.rules.maxlength && angular.isString(response) && response.length > current.rules.maxlength) {
+        //   errMsg = _.find(current.errors, function(o) {
+        //     return o.type == 'maxlength';
+        //   }).messages;
+        //   return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
+        // } else if (current.rules.maximum) {
+        //   errMsg = _.find(current.errors, function(o) {
+        //     return o.type == 'maximum';
+        //   }).messages;
+        //   return err((errMsg[0] == undefined) ? errMsg[errMsg.length - 1] : errMsg[0]);
+        // } else {
+        //   return callback(scenarios[responseto+1]);
+        // }
+        result[responseto]={};
+        result[responseto].value = response;
+        console.log(result);
+        return callback(scenarios[responseto+1])
       }
 
 
