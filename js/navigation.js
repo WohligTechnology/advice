@@ -30,7 +30,14 @@ var scenarios = [{
     maximum: 700000,
     minlength:undefined,
     maxlength:undefined
-  }
+  },
+  errors:[{
+    type:'minlength',
+    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum','fuck you! barabar se likh na.']
+  },{
+    type:'maxlength',
+    messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+  }]
 }, {
   id: 2,
   question: 'Now, what will be the monthly contribution?',
@@ -40,7 +47,14 @@ var scenarios = [{
   rules: {
     minimum: 7000,
     maximum: 80000
-  }
+  },
+  errors:[{
+    type:'minlength',
+    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum','fuck you! barabar se likh na.']
+  },{
+    type:'maxlength',
+    messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+  }]
 }];
 
 if (isproduction) {
