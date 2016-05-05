@@ -8,11 +8,17 @@ var scenarios = [{
   valueType: 'text',
   rules: {
     minlength: 10,
-    maxlength: undefined,
+    maxlength: 25,
     minimum: undefined,
     maximum: undefined
-  }
-
+  },
+  errors:[{
+    type:'minlength',
+    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum','fuck you! barabar se likh na.']
+  },{
+    type:'maxlength',
+    messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+  }]
 }, {
   id: 1,
   question: 'Now, What will be the lumpsum payment?',
