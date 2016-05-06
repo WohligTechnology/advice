@@ -116,9 +116,15 @@ var navigationservice = angular.module('navigationservice', [])
       if (response == undefined) {
         return callback(scenarios[0]);
       } else {
-        result[responseto].value = response;
-        result[responseto].label = scenarios[responseto].label;
-        skipped[responseto]=skip;
+        if(skip){
+          result[responseto].value = scenarios[responseto].valueDefault;
+          result[responseto].label = scenarios[responseto].label;
+          skipped[responseto]=skip;
+        }else{
+          result[responseto].value = response;
+          result[responseto].label = scenarios[responseto].label;
+          skipped[responseto]=skip;
+        }
         console.log(result);
         return callback(scenarios[responseto+1])
       }
