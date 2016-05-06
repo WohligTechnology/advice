@@ -11,16 +11,16 @@
           </md-list-item>
           <md-divider></md-divider>
 
-          <div class="main-planner-chats">
-            <div class="planner-chats" id="chatBox" schroll-bottom="chats">
+          <div class="main-planner-chats" id="chatBox" schroll-bottom="chats">
+            <div class="planner-chats" >
               <div ng-repeat="chat in chats">
-                <div class="planner-receiver" ng-if="chat.type == 'received'">
+                <div class="planner-receiver" ng-show="chat.type == 'received'">
                   <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive receiver-image" />
                   <div class="receiver-message gray-lighter-bg">
                     <span ng-bind-html="chat.text"></span>
                   </div>
                 </div>
-                <div class="planner-sender text-right" ng-if="chat.type == 'sent'">
+                <div class="planner-sender text-right" ng-show="chat.type == 'sent'">
                   <div class="sender-message blue-bg">
                     <span ng-bind-html="chat.text"></span>
                   </div>
