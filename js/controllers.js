@@ -200,7 +200,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
   TemplateService.header = "views/content/header.html";
-  $scope.skipped = [];
   $scope.oneAtATime = true;
   $scope.chats = [];
   $scope.reply= undefined;
@@ -233,14 +232,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   },interval);
   };
 
-  $scope.replyMessage = function(input,qid) {
-    NavigationService.autoresponder(input,qid, $scope.skipped, function(data) {
+  $scope.replyMessage = function(input,qid,skipped) {
+    NavigationService.autoresponder(input,qid, skipped, function(data) {
 
       if (data) {
         $scope.currentResponse = data;
-        console.log($scope.currentResponse);
         $scope.recievedMessage($scope.currentResponse.question,1000);
-
+        errAgain=0;
       }
     }, function(err) {
       $scope.recievedMessage(err,1000);
@@ -250,7 +248,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.validateMessage = function(msg,qid) {
     console.log($scope.currentResponse);
     if($scope.currentResponse.rules.minlength && angular.isString(msg) && msg.length < $scope.currentResponse.rules.minlength){
-      // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
+
       var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
       $timeout(function(){
         $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
@@ -258,7 +256,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       },1000);
 
     }else if($scope.currentResponse.rules.maxlength && angular.isString(msg) && msg.length > $scope.currentResponse.rules.maxlength){
-      // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
+
       var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
       $timeout(function(){
         $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
@@ -266,7 +264,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       },1000);
 
     }else if($scope.currentResponse.rules.maximum && msg > $scope.currentResponse.rules.maximum){
-      // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
+
       var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'maximum'; }).messages;
       $timeout(function(){
         $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
@@ -275,7 +273,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     }else if($scope.currentResponse.rules.minimum && msg < $scope.currentResponse.rules.minimum){
       console.log("isminimum");
-      // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
+
       var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minimum'; }).messages;
       $timeout(function(){
         $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
@@ -284,14 +282,25 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     }else{
       var confirmMessages=['Got it.','Okay!','Thanks','Thank you','Confirmed'];
-      $timeout(function(){
+
         $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length-1))],1000);
-      },500);
-      $timeout(function(){
-        $scope.replyMessage(msg,qid);
-      },1000);
+
+
+        $scope.replyMessage(msg,qid,false);
+
 
       }
+  };
+  $scope.skipIt= function(){
+    var skiptexts=['Let&apos;s skip it.','I would like to skip it','Skip it' ];
+    $scope.chats.push({
+      text: skiptexts[Math.floor(Math.random() * (skiptexts.length-1))],
+      type: 'sent'
+    });
+    var confirmMessages=['Got it.','Okay!','Thanks','Thank you','Confirmed'];
+    $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length-1))],1000);
+    $scope.replyMessage($scope.currentResponse.valueDefault,$scope.currentResponse.id,true);
+    $scope.typing=false;
   };
   $scope.replyMessage(undefined);
   window.onload = function(e) {
