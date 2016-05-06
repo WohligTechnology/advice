@@ -1,5 +1,6 @@
 var adminURL = "";
 var result = [];
+var skipped = [];
 var scenarios = [{
   id: 0,
   question: 'Hi! Lets get started. Please give us the name of your portfolio',
@@ -107,7 +108,7 @@ var navigationservice = angular.module('navigationservice', [])
     getnav: function() {
       return navigation;
     },
-    autoresponder: function(response, responseto, skipped, callback, err) {
+    autoresponder: function(response, responseto, skip, callback, err) {
 
       if (response == undefined) {
         return callback(scenarios[0]);
@@ -136,7 +137,9 @@ var navigationservice = angular.module('navigationservice', [])
         // }
         result[responseto]={};
         result[responseto].value = response;
+        skipped[responseto]=skip;
         console.log(result);
+        console.log(skipped);
         return callback(scenarios[responseto+1])
       }
 
