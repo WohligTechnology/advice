@@ -26,16 +26,17 @@
                   </div>
                   <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
                 </div>
-                <div class="planner-sender text-right" ng-if="chat.type == 'sent'">
-                  <div class="sender-message blue-bg">
-                    <span>
-                      <span class="circle circle1"></span>
-                      <span class="circle circle2"></span>
-                      <span class="circle circle3"></span>
-                    </span>
-                  </div>
-                  <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
+
+              </div>
+              <div class="planner-sender text-right" ng-if="typing">
+                <div class="sender-message blue-bg">
+                  <span>
+                    <span class="circle circle1"></span>
+                    <span class="circle circle2"></span>
+                    <span class="circle circle3"></span>
+                  </span>
                 </div>
+                <img src="http://dummyimage.com/20x20/eee/fff" alt="" class="md-avatar img-responsive sender-image" />
               </div>
             </div>
           </div>
@@ -45,11 +46,11 @@
               <div flex="84" flex-gt-xs="80" flex-xs="80">
                 <div class="chat-input">
                   <md-button class="text-uppercase skip-button" ng-disabled="!currentResponse.canSkip" ng-click="skipIt()">Skip</md-button>
-                  <input type="{{currentResponse.valueType}}" ng-model="reply" placeholder="Type Something...">
+                  <input type="{{currentResponse.valueType}}" ng-change="typingIt()" ng-model="reply" placeholder="Type Something...">
                 </div>
               </div>
               <div flex="16" flex-gt-xs="20" flex-xs="20">
-                <md-button type="submit" class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff" aria-label="Send">
+                <md-button type="submit" class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff"  aria-label="Send">
                   <span class="text-uppercase">Send</span>
                 </md-button>
                 <md-button type="submit" class="send-fab pull-right md-fab md-raised md-primary white hidden-sm hidden-md hidden-lg" md-ink-ripple="#ffffff" aria-label="Send">

@@ -204,9 +204,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.oneAtATime = true;
   $scope.chats = [];
   $scope.reply= undefined;
+  $scope.typing=false;
   $scope.sendMessage = function(msg) {
 
-
+    $scope.typing=false;
     if(angular.isDate(msg)){
       msg= $filter('date')(new Date(msg),'mediumDate');
 
@@ -220,6 +221,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
   };
+  $scope.typingIt=function(){
+    $scope.typing=true;
+  }
   $scope.recievedMessage = function(msg,interval) {
     $timeout(function(){
     $scope.chats.push({
