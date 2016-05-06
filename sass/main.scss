@@ -602,6 +602,34 @@ md-sidenav.md-sidenav-left {
         position: absolute;
       }
     }
+    span.circle {
+      width: 7px;
+      height: 7px;
+      background-color: white;
+      border-radius: 50%;
+      display: inline-block !important;
+      margin: 0px !important;
+    }
+    span.circle1 { animation: 1s animate1 infinite; }
+    @keyframes animate1 {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      99% { transform: translateY(0px); }
+    }
+    span.circle2 { animation: 1s animate2 infinite; }
+    @keyframes animate2 {
+      0% { transform: translateY(0px); }
+      25% { transform: translateY(0px); }
+      75% { transform: translateY(-8px); }
+      99% { transform: translateY(0px); }
+    }
+    span.circle3 { animation: 1s animate3 infinite; }
+    @keyframes animate3 {
+      0% { transform: translateY(-8px); }
+      25% { transform: translateY(0px); }
+      50% { transform: translateY(0px); }
+      99% { transform: translateY(-8px); }
+    }
   }
   .chat-input {
     background: $brand-gray-lighter;
