@@ -53,7 +53,7 @@
   <div ng-repeat= "nominee in nominees">
     <div class="nominee-top">
       <span>Nominee {{$index + 1}}</span>
-      <md-button class="md-raised md-delete pull-right">Delete</md-button>
+      <md-button class="md-raised md-delete pull-right" ng-click="deleteNominee($index)">Delete</md-button>
     </div>
     <div class="row">
       <div class="col-sm-4">

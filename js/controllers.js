@@ -52,6 +52,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     fontname: 'more_horiz',
     colorclass: 'color-gray'
   }];
+  $scope.deleteNominee = function(index){
+    $scope.nominees.splice(index,1);
+  }
   $scope.tabs = [{
     active: false
   }, {
@@ -205,23 +208,30 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.reply= undefined;
   $scope.typing=false;
   $scope.sendMessage = function(msg) {
+console.log(msg);
+    if(msg !== undefined || msg !== null){
+      $scope.typing=false;
+      if(angular.isDate(msg)){
+        msg= $filter('date')(new Date(msg),'mediumDate');
 
-    $scope.typing=false;
-    if(angular.isDate(msg)){
-      msg= $filter('date')(new Date(msg),'mediumDate');
+      }
+      $scope.chats.push({
+        text: msg,
+        type: 'sent'
+      });
+      $scope.reply=undefined;
 
+      $scope.validateMessage(_.cloneDeep(msg),$scope.currentResponse.id);
     }
-    $scope.chats.push({
-      text: msg,
-      type: 'sent'
-    });
-    $scope.validateMessage(_.cloneDeep(msg),$scope.currentResponse.id);
-    $scope.reply=null;
 
 
   };
-  $scope.typingIt=function(){
-    $scope.typing=true;
+  $scope.typingIt=function(check){
+    if(check== null || check == undefined || check == ""){
+      $scope.typing=false;
+    }else{
+      $scope.typing=true;
+    }
   }
   $scope.recievedMessage = function(msg,interval) {
     $timeout(function(){
