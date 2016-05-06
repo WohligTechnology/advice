@@ -248,6 +248,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   }
   var errAgain = 0;
   $scope.validateMessage = function(msg,qid) {
+    console.log($scope.currentResponse);
     if($scope.currentResponse.rules.minlength && angular.isString(msg) && msg.length < $scope.currentResponse.rules.minlength){
       // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
       var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
@@ -264,9 +265,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         errAgain++;
       },1000);
 
-    }else if($scope.currentResponse.rules.maximum && angular.isNumber(msg) && !angular.isNan(msg) && msg > $scope.currentResponse.rules.maximum){
+    }else if($scope.currentResponse.rules.maximum && msg > $scope.currentResponse.rules.maximum){
       // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
-      var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'maxlength'; }).messages;
+      var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'maximum'; }).messages;
+      $timeout(function(){
+        $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
+        errAgain++;
+      },1000);
+
+    }else if($scope.currentResponse.rules.minimum && msg < $scope.currentResponse.rules.minimum){
+      console.log("isminimum");
+      // var errMsg=['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum'];
+      var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minimum'; }).messages;
       $timeout(function(){
         $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
         errAgain++;
@@ -276,6 +286,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       var confirmMessages=['Got it.','Okay!','Thanks','Thank you','Confirmed'];
       $timeout(function(){
         $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length-1))],1000);
+      },500);
+      $timeout(function(){
         $scope.replyMessage(msg,qid);
       },1000);
 

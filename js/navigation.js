@@ -14,16 +14,16 @@ var scenarios = [{
   },
   errors:[{
     type:'minlength',
-    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum','fuck you! barabar se likh na.']
+    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
   },{
     type:'maxlength',
-    messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+    messages : ['the name is too long.','Nice. Try better. 25 letters max.','one too far. Shorten it.']
   }]
 }, {
   id: 1,
   question: 'Now, What will be the lumpsum payment?',
   canSkip: true,
-  valueDefault: '',
+  valueDefault: 0,
   valueType: 'number',
   rules: {
     minimum: 50000,
@@ -32,10 +32,10 @@ var scenarios = [{
     maxlength:undefined
   },
   errors:[{
-    type:'minlength',
-    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum','fuck you! barabar se likh na.']
+    type:'minimum',
+    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
   },{
-    type:'maxlength',
+    type:'maximum',
     messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
   }]
 }, {
@@ -49,10 +49,10 @@ var scenarios = [{
     maximum: 80000
   },
   errors:[{
-    type:'minlength',
-    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum','fuck you! barabar se likh na.']
+    type:'minimum',
+    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
   },{
-    type:'maxlength',
+    type:'maximum',
     messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
   }]
 }];
