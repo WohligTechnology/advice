@@ -29,7 +29,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   }];
 })
 
-.controller('ProfileCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $window) {
+.controller('ProfileCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $window, $mdDialog) {
   $scope.template = TemplateService.changecontent("profile");
   $scope.menutitle = NavigationService.makeactive("Profile");
   TemplateService.title = $scope.menutitle;
@@ -82,6 +82,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.tabs[index].active = true;
     }
   };
+
+$scope.summaryDialog = function () {
+   $mdDialog.show({
+     scope: $scope,
+     templateUrl: 'views/modal/summaryDialog.html',
+     controller: DialogController
+   });
+ };
+ function DialogController($scope, $mdDialog) {
+   $scope.closeDialog = function () {
+     $mdDialog.hide();
+   };
+ }
 
   //change status of ticks and move progress bar
   $scope.changeStatus = function(index, status) {
@@ -208,7 +221,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.reply= undefined;
   $scope.typing=false;
   $scope.sendMessage = function(msg) {
-console.log(msg);
     if(msg !== undefined || msg !== null){
       $scope.typing=false;
       if(angular.isDate(msg)){
@@ -247,6 +259,9 @@ console.log(msg);
 
       if (data) {
         $scope.currentResponse = data;
+        if(skipped !== undefined && ((skipped[1] == false && skipped[2]==false) || skipped[3]==false)){
+          $scope.currentResponse.canSkip=true
+        }
         $scope.recievedMessage($scope.currentResponse.question,1000);
         errAgain=0;
       }
@@ -256,7 +271,6 @@ console.log(msg);
   }
   var errAgain = 0;
   $scope.validateMessage = function(msg,qid) {
-    console.log($scope.currentResponse);
     if($scope.currentResponse.rules.minlength && angular.isString(msg) && msg.length < $scope.currentResponse.rules.minlength){
 
       var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
@@ -282,7 +296,6 @@ console.log(msg);
       },1000);
 
     }else if($scope.currentResponse.rules.minimum && msg < $scope.currentResponse.rules.minimum){
-      console.log("isminimum");
 
       var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minimum'; }).messages;
       $timeout(function(){

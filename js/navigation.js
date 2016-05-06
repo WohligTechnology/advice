@@ -5,6 +5,7 @@ var scenarios = [{
   id: 0,
   question: 'Hi! Lets get started. Please give us the name of your portfolio',
   canSkip: false,
+  label:'Goal Name',
   valueDefault: 0,
   valueType: 'text',
   rules: {
@@ -24,6 +25,7 @@ var scenarios = [{
   id: 1,
   question: 'Now, What will be the lumpsum payment?',
   canSkip: true,
+  label:'Lumpsum amount',
   valueDefault: 0,
   valueType: 'number',
   rules: {
@@ -43,6 +45,7 @@ var scenarios = [{
   id: 2,
   question: 'Now, what will be the monthly contribution?',
   canSkip: true,
+  label:'Monthly contribution',
   valueDefault: 0,
   valueType: 'number',
   rules: {
@@ -114,7 +117,9 @@ var navigationservice = angular.module('navigationservice', [])
         return callback(scenarios[0]);
       } else {
         result[responseto].value = response;
+        result[responseto].label = scenarios[responseto].label;
         skipped[responseto]=skip;
+        console.log(result);
         return callback(scenarios[responseto+1])
       }
 
