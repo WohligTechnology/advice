@@ -14,7 +14,7 @@
 $brand-primary: #1d71b8 !default;
 $brand-primary-light : #2bd3d6 !default;
 $brand-success: #84ce3c !default;
-  $brand-warning: #ffec39 !default;
+$brand-warning: #ffec39 !default;
 $brand-danger: #fc483f !default;
 $brand-info: #000072 !default;
 $brand-gray: #777777 !default;
@@ -154,6 +154,7 @@ md-dialog .md-primary {
   line-height: 25px;
   span { color: white; }
 }
+.bold { font-weight: bold; }
 // header
 .hamburger {
   padding: 16px 4px 16px 25px;
@@ -907,6 +908,20 @@ md-sidenav.md-sidenav-left {
     }
   }
   .active { font-weight: bold; color: $brand_blue; }
+}
+.summary-dialog {
+  padding: 0 20px 10px;
+  h3 { margin-top: 15px; }
+  .right-space { margin-right: 10px; }
+  .nominee-details-summary {
+    margin-top: 20px;
+  }
+  .summary-terms {
+    margin: 20px 0;
+    .terms {
+      span { font-size: 14px; }
+    }
+  }
 }
 button[disabled] {
   div.md-ripple-container { display: none; }
