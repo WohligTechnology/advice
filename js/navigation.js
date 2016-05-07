@@ -68,17 +68,59 @@ var scenarios = [{
   valueDefault: '1-1-1970',
   valueType: 'date',
   rules: {
-    minimum: '28-5-2022'
+    minimum: '2022-05-28'
   },
   errors:[{
     type:'minimum',
-    messages : ['It cannot start on or before '+ new Date()]
+    messages : ['It cannot start on or before '+ new Date('2022-05-28'),'start it after '+ new Date('2022-05-28')]
   }]
 }, {
-  id: 3,
+  id: 4,
   question: 'How frequently do you plan to withdraw this amount?',
   canSkip: true,
-  label:'Mont',
+  label:'Withdrawal frequency',
+  valueDefault: 1,
+  valueType: 'number',
+  rules: {
+    minimum: 1
+  },
+  errors:[{
+    type:'minimum',
+    messages : ['Mininum once']
+  }]
+}, {
+  id: 5,
+  question: 'What will the inflation rate be?',
+  canSkip: true,
+  label:'Inflation rate',
+  valueDefault: 6,
+  valueType: 'number',
+  rules: {
+    minimum: 0
+  },
+  errors:[{
+    type:'minimum',
+    messages : ['Minimum 6 percent']
+  }]
+}, {
+  id: 6,
+  question: 'and what about the withdrawal amount?',
+  canSkip: false,
+  label:'withdrawal amount',
+  valueDefault: 0,
+  valueType: 'number',
+  rules: {
+    minimum: 0
+  },
+  errors:[{
+    type:'minimum',
+    messages : ['Minimum 0']
+  }]
+}, {
+  id: 7,
+  question: 'and what about the withdrawal period?',
+  canSkip: false,
+  label:'withdrawal period',
   valueDefault: '1-1-1970',
   valueType: 'date',
   rules: {
@@ -86,8 +128,38 @@ var scenarios = [{
   },
   errors:[{
     type:'minimum',
-    messages : ['It cannot start on or before '+ new Date()]
+    messages : ['It cannot start on or before '+ new Date('28-5-2022')]
   }]
+}, {
+  id: 8,
+  question: 'and what about the short-term loss?',
+  canSkip: false,
+  label:'short-term loss',
+  valueDefault: 0,
+  valueType: 'number',
+  rules: {
+    minimum: 0
+  },
+  errors:[{
+    type:'minimum',
+    messages : ['Minimum 0']
+  }]
+}, {
+  id: 9,
+  question: 'and what about the long-term loss?',
+  canSkip: false,
+  label:'long-term loss',
+  valueDefault: 0,
+  valueType: 'number',
+  rules: {
+    minimum: 0
+  },
+  errors:[{
+    type:'minimum',
+    messages : ['Minimum 0']
+  }]
+}, {
+  id: -1
 }];
 
 if (isproduction) {
