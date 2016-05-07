@@ -850,7 +850,7 @@ md-sidenav.md-sidenav-left {
           text-align: center;
           .md-container {
             margin-top: 4px;
-            & + div { margin-top: 10px; }
+            & + div { margin: 10px 0 0 -10px; }
           }
         }
         button.add-nominee { margin-top: 10px; z-index: 1; }
@@ -918,9 +918,8 @@ md-sidenav.md-sidenav-left {
   }
   .summary-terms {
     margin: 20px 0;
-    .terms {
-      span { font-size: 14px; }
-    }
+    .terms { span { font-size: 14px; } }
+    md-checkbox.md-checked .md-icon { background-color: $brand_blue; }
   }
 }
 button[disabled] {

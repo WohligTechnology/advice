@@ -87,14 +87,17 @@ $scope.summaryDialog = function () {
   $mdDialog.show({
     templateUrl: 'views/modal/summarydialog.html',
     clickOutsideToClose: false,
-    controller: DialogController
+    controller: DialogController,
+    scope: $scope
   });
  };
  function DialogController($scope, $mdDialog) {
    $scope.closeDialog = function () {
      $mdDialog.hide();
+     $scope.changeTab(4);
    };
  }
+
 
   //change status of ticks and move progress bar
   $scope.changeStatus = function(index, status) {
