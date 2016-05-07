@@ -205,7 +205,6 @@ $scope.summaryDialog = function () {
     $mdDialog.show(confirm).then(function() {
       $state.go("planner");
     }, function() {
-      //clicked outside
     });
   };
 })
@@ -223,7 +222,8 @@ $scope.summaryDialog = function () {
   $scope.sendMessage = function(msg) {
     if(msg !== undefined || msg !== null){
       $scope.typing=false;
-      if(angular.isDate(msg)){
+
+      if($scope.currentResponse.valueType == 'date'){
         msg= $filter('date')(new Date(msg),'mediumDate');
 
       }
@@ -261,12 +261,20 @@ $scope.summaryDialog = function () {
     NavigationService.autoresponder(input,qid, skipped, function(data) {
 
       if (data) {
-        $scope.currentResponse = data;
-        if(skipped !== undefined && ((skipped[1] === false && skipped[2]===false) || skipped[3]===false)){
-          $scope.currentResponse.canSkip=true;
+        if(data.id !== -1){
+          $scope.currentResponse = data;
+          if(skipped !== undefined && ((skipped[1] === false && skipped[2]===false) || skipped[3]===false)){
+            $scope.currentResponse.canSkip=true;
+          }
+          $scope.recievedMessage($scope.currentResponse.question,2000);
+          errAgain=0;
+        }else{
+          _.each(result,function(key){
+            $scope.recievedMessage(key.label + ' '+ key.value,1000);
+          });
+          $scope.recievedMessage('Check the above messages',1000);
+          $scope.recievedMessage('are you sure you want to go forward with it?',1000);
         }
-        $scope.recievedMessage($scope.currentResponse.question,1000);
-        errAgain=0;
       }
     }, function(err) {
       $scope.recievedMessage(err,1000);
@@ -275,6 +283,13 @@ $scope.summaryDialog = function () {
   var errAgain = 0;
   var errMsg = [];
   $scope.validateMessage = function(msg,qid) {
+    if($scope.currentResponse.valueType == 'date'){
+      msg = new Date(msg);
+      if($scope.currentResponse.rules.minimum && !angular.isDate($scope.currentResponse.rules.minimum)){
+        $scope.currentResponse.rules.minimum = new Date($scope.currentResponse.rules.minimum);
+      }
+    }
+    console.log(angular.isDate(msg));
     if($scope.currentResponse.rules.minlength && angular.isString(msg) && msg.length < $scope.currentResponse.rules.minlength){
 
       errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
@@ -310,7 +325,7 @@ $scope.summaryDialog = function () {
     }else{
       var confirmMessages=['Got it.','Okay!','Thanks','Thank you','Confirmed'];
 
-        $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length-1))],1000);
+        $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length-1))],500);
 
 
         $scope.replyMessage(msg,qid,false);
