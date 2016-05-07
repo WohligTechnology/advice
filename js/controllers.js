@@ -54,7 +54,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   }];
   $scope.deleteNominee = function(index){
     $scope.nominees.splice(index,1);
-  }
+  };
   $scope.tabs = [{
     active: false
   }, {
@@ -69,7 +69,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   //All except registration 'untouched'
   _.each($scope.tabs, function(key) {
     key.status = $scope.process[2];
-  })
+  });
   $scope.tabs[0].status = $scope.process[0];
   //All except registration 'untouched' end
 
@@ -84,11 +84,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
 
 $scope.summaryDialog = function () {
-   $mdDialog.show({
-     scope: $scope,
-     templateUrl: 'views/modal/summaryDialog.html',
-     controller: DialogController
-   });
+  $mdDialog.show({
+    templateUrl: 'views/modal/summarydialog.html',
+    clickOutsideToClose: false,
+    controller: DialogController
+  });
  };
  function DialogController($scope, $mdDialog) {
    $scope.closeDialog = function () {
@@ -109,7 +109,7 @@ $scope.summaryDialog = function () {
         }
       }
       i++;
-    })
+    });
     $scope.progress = (contActive.length - 1) * 25;
   };
 
@@ -239,18 +239,18 @@ $scope.summaryDialog = function () {
 
   };
   $scope.typingIt=function(check){
-    if(check== null || check == undefined || check == ""){
+    if(check === null || check === undefined || check === ""){
       $scope.typing=false;
     }else{
       $scope.typing=true;
     }
-  }
+  };
   $scope.recievedMessage = function(msg,interval) {
     $timeout(function(){
     $scope.chats.push({
       text: msg,
       type: 'received'
-    })
+    });
   },interval);
   };
 
