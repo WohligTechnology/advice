@@ -1,6 +1,7 @@
 var adminURL = "";
 var result = [];
 var skipped = [];
+var adminURL = "http://wohlig.io:81/callApi/7advisors"
 var scenarios = [{
   id: 0,
   question: 'Hi! Lets get started. Please give us the name of your portfolio',
@@ -30,16 +31,16 @@ var scenarios = [{
   valueType: 'number',
   rules: {
     minimum: 50000,
-    maximum: 700000,
+    maximum: 70000,
     minlength:undefined,
     maxlength:undefined
   },
   errors:[{
     type:'minimum',
-    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+    messages : ['The lumpsum amount is less, don&apos;t you think?','Nice. Try better. more than 50000']
   },{
     type:'maximum',
-    messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+    messages : ['The lumpsum amount is a lot, don&apos;t you think?','Nice. Try less than that. less than 70000']
   }]
 }, {
   id: 2,
@@ -54,10 +55,38 @@ var scenarios = [{
   },
   errors:[{
     type:'minimum',
-    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+    messages : ['The monthly contribution is less, don&apos;t you think?','Nice. Try better. 10 letters minimum']
   },{
     type:'maximum',
     messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+  }]
+}, {
+  id: 3,
+  question: 'And till when do you plan to contribute?',
+  canSkip: true,
+  label:'Monthly contribution uptil',
+  valueDefault: '1-1-1970',
+  valueType: 'date',
+  rules: {
+    minimum: '28-5-2022'
+  },
+  errors:[{
+    type:'minimum',
+    messages : ['It cannot start on or before '+ new Date()]
+  }]
+}, {
+  id: 3,
+  question: 'How frequently do you plan to withdraw this amount?',
+  canSkip: true,
+  label:'Mont',
+  valueDefault: '1-1-1970',
+  valueType: 'date',
+  rules: {
+    minimum: '28-5-2022'
+  },
+  errors:[{
+    type:'minimum',
+    messages : ['It cannot start on or before '+ new Date()]
   }]
 }];
 
@@ -113,7 +142,7 @@ var navigationservice = angular.module('navigationservice', [])
     },
     autoresponder: function(response, responseto, skip, callback, err) {
       result[responseto]={};
-      if (response == undefined) {
+      if (response === undefined) {
         return callback(scenarios[0]);
       } else {
         if(skip){
@@ -126,10 +155,17 @@ var navigationservice = angular.module('navigationservice', [])
           skipped[responseto]=skip;
         }
         console.log(result);
-        return callback(scenarios[responseto+1])
+        return callback(scenarios[responseto+1]);
       }
 
 
+    },
+    getPortfolios:function(callback,err){
+      return $http({
+        url: adminURL + "addToCart",
+        method: "POST",
+        data:{}
+      }).success(callback).error(err);
     },
     makeactive: function(menuname) {
       for (var i = 0; i < navigation.length; i++) {

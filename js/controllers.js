@@ -246,7 +246,10 @@ $scope.summaryDialog = function () {
     }
   };
   $scope.recievedMessage = function(msg,interval) {
+    $scope.typingrec=true;
     $timeout(function(){
+      $scope.typingrec=false;
+
     $scope.chats.push({
       text: msg,
       type: 'received'
@@ -259,8 +262,8 @@ $scope.summaryDialog = function () {
 
       if (data) {
         $scope.currentResponse = data;
-        if(skipped !== undefined && ((skipped[1] == false && skipped[2]==false) || skipped[3]==false)){
-          $scope.currentResponse.canSkip=true
+        if(skipped !== undefined && ((skipped[1] === false && skipped[2]===false) || skipped[3]===false)){
+          $scope.currentResponse.canSkip=true;
         }
         $scope.recievedMessage($scope.currentResponse.question,1000);
         errAgain=0;
@@ -268,38 +271,39 @@ $scope.summaryDialog = function () {
     }, function(err) {
       $scope.recievedMessage(err,1000);
     });
-  }
+  };
   var errAgain = 0;
+  var errMsg = [];
   $scope.validateMessage = function(msg,qid) {
     if($scope.currentResponse.rules.minlength && angular.isString(msg) && msg.length < $scope.currentResponse.rules.minlength){
 
-      var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
+      errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
       $timeout(function(){
-        $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
+        $scope.recievedMessage((errMsg[errAgain] === undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
         errAgain++;
       },1000);
 
     }else if($scope.currentResponse.rules.maxlength && angular.isString(msg) && msg.length > $scope.currentResponse.rules.maxlength){
 
-      var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
+      errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minlength'; }).messages;
       $timeout(function(){
-        $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
+        $scope.recievedMessage((errMsg[errAgain] === undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
         errAgain++;
       },1000);
 
     }else if($scope.currentResponse.rules.maximum && msg > $scope.currentResponse.rules.maximum){
 
-      var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'maximum'; }).messages;
+      e=_.find($scope.currentResponse.errors, function(o) { return o.type == 'maximum'; }).messages;
       $timeout(function(){
-        $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
+        $scope.recievedMessage((errMsg[errAgain] === undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
         errAgain++;
       },1000);
 
     }else if($scope.currentResponse.rules.minimum && msg < $scope.currentResponse.rules.minimum){
 
-      var errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minimum'; }).messages;
+      errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'minimum'; }).messages;
       $timeout(function(){
-        $scope.recievedMessage((errMsg[errAgain] == undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
+        $scope.recievedMessage((errMsg[errAgain] === undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
         errAgain++;
       },1000);
 
