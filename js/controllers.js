@@ -6,7 +6,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.menutitle = NavigationService.makeactive("Home");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  TemplateService.header = "";
+  TemplateService.header = "views/header.html";
 
   $scope.section = {
     one: "views/section/section1.html",
@@ -86,7 +86,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.navigation = NavigationService.getnav();
   TemplateService.header = "views/content/header.html";
   $scope.formData = {};
-  $scope.nonominee = false;
+  $scope.nonominee = true;
   $scope.nominees = [];
   $scope.progress = 0;
   $scope.process = [{
@@ -272,6 +272,7 @@ $scope.summaryDialog = function () {
   $scope.chats = [];
   $scope.reply= undefined;
   $scope.typing=false;
+  $scope.suggestion = false;
   $scope.sendMessage = function(msg) {
     if(msg !== undefined || msg !== null){
       $scope.typing=false;
@@ -316,17 +317,25 @@ $scope.summaryDialog = function () {
       if (data) {
         if(data.id !== -1){
           $scope.currentResponse = data;
-          if(skipped !== undefined && ((skipped[1] === false && skipped[2]===false) || skipped[3]===false)){
+          if(skipped !== undefined && ((skipped[1] === false && skipped[2]===false) || skipped[3]===false || (skipped[1] === false && skipped[2]===false && skipped[3] === false && skipped[6]===false && skipped[7]===false))){
             $scope.currentResponse.canSkip=true;
           }
           $scope.recievedMessage($scope.currentResponse.question,2000);
           errAgain=0;
         }else{
-          _.each(result,function(key){
-            $scope.recievedMessage(key.label + ' '+ key.value,1000);
-          });
-          $scope.recievedMessage('Check the above messages',1000);
-          $scope.recievedMessage('are you sure you want to go forward with it?',1000);
+
+          $scope.recievedMessage('Please wait while we crunch the numbers ..',1000);
+          $scope.recievedMessage('Fine tune your plan in 3..',3000);
+          $scope.recievedMessage('2..',4000);
+          $scope.recievedMessage('1..',5000);
+          $timeout(function(){
+            $scope.suggestion = true;
+          },6000);
+          // _.each(result,function(key){
+          //   $scope.recievedMessage(key.label + ' '+ key.value,1000);
+          // });
+          // $scope.recievedMessage('Check the above messages',1000);
+          // $scope.recievedMessage('are you sure you want to go forward with it?',1000);
         }
       }
     }, function(err) {
@@ -361,7 +370,7 @@ $scope.summaryDialog = function () {
 
     }else if($scope.currentResponse.rules.maximum && msg > $scope.currentResponse.rules.maximum){
 
-      e=_.find($scope.currentResponse.errors, function(o) { return o.type == 'maximum'; }).messages;
+      errMsg=_.find($scope.currentResponse.errors, function(o) { return o.type == 'maximum'; }).messages;
       $timeout(function(){
         $scope.recievedMessage((errMsg[errAgain] === undefined)?errMsg[errMsg.length-1]:errMsg[errAgain],1000);
         errAgain++;
