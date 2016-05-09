@@ -104,6 +104,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }];
     $scope.deleteNominee = function(index) {
         $scope.nominees.splice(index, 1);
+        if($scope.nominees.length === 0){
+
+        $scope.emptyNominees(true);
+        $scope.nonominee = true;
+        }
     };
     $scope.tabs = [{
         active: false
@@ -166,6 +171,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
         $scope.progress = (contActive.length - 1) * 25;
     };
+    $scope.changeStatus(1,0);
 
     $scope.addNominees = function() {
         $scope.nominees.push({});
