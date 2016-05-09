@@ -84,12 +84,12 @@ firstapp.directive('schrollBottom', function () {
       scope.$watchCollection('schrollBottom', function (newValue) {
         if (newValue)
         {
-                    $(element).scrollTop($(element)[0].scrollHeight);
+          $(element).scrollTop($(element)[0].scrollHeight);
         }
       });
     }
-  }
-})
+  };
+});
 firstapp.directive('fancyboxBox', function($document) {
     return {
         restrict: 'EA',
@@ -113,4 +113,15 @@ firstapp.directive('fancyboxBox', function($document) {
             });
         }
     };
+});
+firstapp.directive('autoHeight', function($compile, $parse) {
+  return {
+    restrict: 'EA',
+    replace: false,
+    link: function($scope, element, attrs) {
+      var $element = $(element);
+      var windowHeight = $(window).height();
+      $element.css("height", windowHeight);
+    }
+  };
 });

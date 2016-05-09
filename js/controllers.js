@@ -6,7 +6,57 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.menutitle = NavigationService.makeactive("Home");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  TemplateService.header = "views/header.html";
+  TemplateService.header = "";
+
+  $scope.section = {
+    one: "views/section/section1.html",
+    two: "views/section/section2.html",
+    three: "views/section/section3.html",
+    four: "views/section/section4.html",
+    five: "views/section/section5.html",
+    six: "views/section/section6.html",
+    seven: "views/section/section7.html",
+  };
+
+  $scope.changeFullPage = function(no) {
+    console.log(no);
+    $.fn.fullpage.moveTo(no);
+  };
+
+  $scope.$on('$viewContentLoaded', function() {
+    $timeout(function() {
+      $('.fullpage').fullpage();
+      // $('#scene').parallax();
+      console.log($stateParams.name);
+      $scope.homeval = $stateParams.name;
+      switch ($scope.homeval) {
+        case "contact":
+          $.fn.fullpage.moveTo(7);
+          break;
+        case "careers":
+          $.fn.fullpage.moveTo(6);
+          break;
+        case "media":
+          $.fn.fullpage.moveTo(5);
+          break;
+        case "events":
+          $.fn.fullpage.moveTo(4);
+          break;
+        case "services":
+          $.fn.fullpage.moveTo(3);
+          break;
+        case "about":
+          $.fn.fullpage.moveTo(2);
+          break;
+        case "home":
+          $.fn.fullpage.moveTo(1);
+          break;
+        default:
+          $.fn.fullpage.moveTo(1);
+          break;
+      }
+    }, 1000);
+  });
 
   $scope.mySlides = [
     'img/banner.jpg'
