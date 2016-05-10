@@ -248,13 +248,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.linechartConfig = {
         options: {
             chart: {
-              borderColor: '#1d71b8',
+                borderColor: '#1d71b8',
                 type: 'line',
-                reflow:true
+                reflow: true
             }
         },
         series: [{
-            data: [10, 15, 12, 8, 7]
+            data: [10, 15, 12, 8, 7],
+            name: 'Median 1'
+        }, {
+            data: [10, 0, 9, 10, 6, 2, 3, 5]
+        }, {
+            data: [6, 2, 3, 5, 10, 0, 9, 10]
         }],
         title: {
             text: 'Line'
@@ -271,9 +276,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
 
             chart: {
-              borderColor: '#1d71b8',
+                borderColor: '#1d71b8',
                 type: 'pie',
-                reflow:true
+                reflow: true
             }
         },
         plotOptions: {
@@ -294,10 +299,47 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 enabled: false
             }
         }],
-        colors:['#2bd3d6',
-      '#4285F4'],
+        colors: ['#2bd3d6',
+            '#4285F4'
+        ],
         title: {
             text: 'Hello'
+        },
+        size: {
+            height: 247
+        },
+        loading: $scope.loadit
+    };
+    $scope.EDdonut2chartConfig = {
+        options: {
+
+            chart: {
+                borderColor: '#1d71b8',
+                type: 'pie',
+                reflow: true
+            }
+        },
+        plotOptions: {
+            pie: {
+                shadow: true
+            }
+        },
+        series: [{
+            name: 'Browsers',
+            data: [
+                ["Firefox", 6],
+                ["MSIE", 4]
+            ],
+            size: '100%',
+            innerSize: '30%',
+            showInLegend: true,
+            dataLabels: {
+                enabled: false
+            }
+        }],
+        colors: ['#2bd3d6', '#4285F4'],
+        title: {
+            text: 'Hello2'
         },
         size: {
             height: 247
@@ -341,12 +383,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.linechartConfig = {
         options: {
             chart: {
-              borderColor: '#1d71b8',
+                borderColor: '#1d71b8',
                 type: 'line',
-                reflow:true
+                reflow: true
             }
         },
         series: [{
+            data: [10, 15, 12, 8, 7]
+        }, {
+            data: [10, 15, 12, 8, 7]
+        }, {
             data: [10, 15, 12, 8, 7]
         }],
         title: {
@@ -361,9 +407,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
 
             chart: {
-              borderColor: '#1d71b8',
+                borderColor: '#1d71b8',
                 type: 'pie',
-                reflow:true
+                reflow: true
             }
         },
         plotOptions: {
@@ -384,8 +430,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 enabled: false
             }
         }],
-        colors:['#2bd3d6',
-      '#4285F4'],
+        colors: ['#2bd3d6',
+            '#4285F4'
+        ],
         title: {
             text: 'Hello'
         },
