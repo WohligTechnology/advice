@@ -1,4 +1,4 @@
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages',"highcharts-ng"])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng"])
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout) {
     //Used to name the .html file
@@ -104,10 +104,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }];
     $scope.deleteNominee = function(index) {
         $scope.nominees.splice(index, 1);
-        if($scope.nominees.length === 0){
+        if ($scope.nominees.length === 0) {
 
-        $scope.emptyNominees(true);
-        $scope.nonominee = true;
+            $scope.emptyNominees(true);
+            $scope.nonominee = true;
         }
     };
     $scope.tabs = [{
@@ -171,7 +171,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
         $scope.progress = (contActive.length - 1) * 25;
     };
-    $scope.changeStatus(1,0);
+    $scope.changeStatus(1, 0);
 
     $scope.addNominees = function() {
         $scope.nominees.push({});
@@ -245,6 +245,65 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/content/header.html";
+    $scope.linechartConfig = {
+        options: {
+            chart: {
+              borderColor: '#1d71b8',
+                type: 'line',
+                reflow:true
+            }
+        },
+        series: [{
+            data: [10, 15, 12, 8, 7]
+        }],
+        title: {
+            text: 'Line'
+        },
+        size: {
+            height: 520
+        },
+        loading: false
+    };
+
+
+
+    $scope.EDdonutchartConfig = {
+        options: {
+
+            chart: {
+              borderColor: '#1d71b8',
+                type: 'pie',
+                reflow:true
+            }
+        },
+        plotOptions: {
+            pie: {
+                shadow: true
+            }
+        },
+        series: [{
+            name: 'Browsers',
+            data: [
+                ["Firefox", 6],
+                ["MSIE", 4]
+            ],
+            size: '100%',
+            innerSize: '30%',
+            showInLegend: true,
+            dataLabels: {
+                enabled: false
+            }
+        }],
+        colors:['#2bd3d6',
+      '#4285F4'],
+        title: {
+            text: 'Hello'
+        },
+        size: {
+            height: 247
+        },
+        loading: $scope.loadit
+    };
 })
 
 .controller('PortfolioCtrl', function($scope, TemplateService, NavigationService, $timeout, $mdDialog, $mdMedia, $state) {
@@ -279,6 +338,62 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.reply = undefined;
     $scope.typing = false;
     $scope.suggestion = false;
+    $scope.linechartConfig = {
+        options: {
+            chart: {
+              borderColor: '#1d71b8',
+                type: 'line',
+                reflow:true
+            }
+        },
+        series: [{
+            data: [10, 15, 12, 8, 7]
+        }],
+        title: {
+            text: 'Line'
+        },
+        size: {
+            height: 550
+        },
+        loading: false
+    };
+    $scope.EDdonutchartConfig = {
+        options: {
+
+            chart: {
+              borderColor: '#1d71b8',
+                type: 'pie',
+                reflow:true
+            }
+        },
+        plotOptions: {
+            pie: {
+                shadow: true
+            }
+        },
+        series: [{
+            name: 'Browsers',
+            data: [
+                ["Firefox", 6],
+                ["MSIE", 4]
+            ],
+            size: '100%',
+            innerSize: '30%',
+            showInLegend: true,
+            dataLabels: {
+                enabled: false
+            }
+        }],
+        colors:['#2bd3d6',
+      '#4285F4'],
+        title: {
+            text: 'Hello'
+        },
+        size: {
+            height: 247
+        },
+        loading: $scope.loadit
+    };
     $scope.sendMessage = function(msg) {
         if (msg !== undefined || msg !== null) {
             $scope.typing = false;
