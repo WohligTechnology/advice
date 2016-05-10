@@ -6,9 +6,11 @@ var firstapp = angular.module('firstapp', [
   'navigationservice'
 ]);
 
-firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider,$logProvider) {
+firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider,$logProvider,highchartsNGProvider) {
   // for http request with session
         $logProvider.debugEnabled(false);
+         highchartsNGProvider.lazyLoad();
+         
   $httpProvider.defaults.withCredentials = true;
   $stateProvider
     .state('home', {
