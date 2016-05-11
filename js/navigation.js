@@ -1,7 +1,7 @@
 var adminURL = "";
 var result = [];
 var skipped = [];
-var adminURL = "http://wohlig.io:81/callApi/7advisors"
+var adminURL = "http://wohlig.io:81/callApi/7advisors";
 var scenarios = [{
   id: 0,
   question: 'Hi! Lets get started. Please give us the name of your portfolio',
