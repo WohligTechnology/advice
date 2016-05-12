@@ -1,6 +1,6 @@
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng"])
 
-.controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+.controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout,$stateParams) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("home");
     $scope.menutitle = NavigationService.makeactive("Home");
@@ -87,7 +87,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.header = "views/content/header.html";
     $scope.formData = {};
     $scope.nonominee = true;
-    $scope.nominees = [];
+    $scope.user ={};
+    $scope.user.nominees = [];
     $scope.progress = 0;
     $scope.process = [{
         status: 'done',
@@ -103,11 +104,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         colorclass: 'color-gray'
     }];
     $scope.deleteNominee = function(index) {
-        $scope.nominees.splice(index, 1);
-        if ($scope.nominees.length === 0) {
+        $scope.user.nominees.splice(index, 1);
+        if ($scope.user.nominees.length === 0) {
 
             $scope.emptyNominees(true);
-            $scope.nonominee = true;
         }
     };
     $scope.tabs = [{
@@ -174,14 +174,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.changeStatus(1, 0);
 
     $scope.addNominees = function() {
-        $scope.nominees.push({});
-        $window.scrollBy(100, 0);
-        $scope.changeStatus(1, 1);
+        if($scope.user.nominees.length <= 2){
+          $scope.user.nominees.push({});
+          // $window.scrollBy(100, 0);
+          $scope.changeStatus(1, 1);
+        }
     };
     $scope.emptyNominees = function(flag) {
         if (flag === true) {
-            $scope.nominees = [];
+            $scope.user.nominees = [];
             $scope.changeStatus(1, 0);
+            $scope.nonominee=true;
+
+            console.log($scope.nonominee);
         } else {
             $scope.changeStatus(1, 1);
         }
@@ -200,6 +205,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.addRegulatoryDetails = function(formValidate) {
         if (formValidate.$valid) {
             $scope.changeTab(3);
+            console.log($scope.user);
             $scope.changeStatus(2, 0);
         } else {
             $scope.changeStatus(2, 1);

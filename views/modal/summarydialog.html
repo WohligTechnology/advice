@@ -5,26 +5,26 @@
 
     <div class="nominee-details-summary">
       <h4 class="blue text-uppercase">Nominee Details</h4>
-      <div class="individual-nominee-summary">
+      <div class="individual-nominee-summary" ng-repeat="nominee in user.nominees" ng-if="user.nominees.length !== 0">
         <p>Nominee 1</p>
         <span class="bold">Name:</span>
-        <span class=right-space>Vikas Mehra</span>
+        <span class=right-space>{{nominee.name}}</span>
         <span class="bold">Birth Date:</span>
-        <span class=right-space>10/2/1999</span>
+        <span class=right-space>{{nominee.birthday}}/{{nominee.birthmonth}}/{{nominee.birthyear}}</span>
         <span class="bold">Relationship:</span>
-        <span class=right-space>Friend</span>
+        <span class=right-space>{{nominee.relationship}}</span>
         <span class="bold">Address:</span>
-        <span class=right-space>A/30, Ganesh Apt., LBS Marg, Ghatkopar (W)</span>
+        <span class=right-space>{{nominee.address}}</span>
         <span class="bold">City:</span>
-        <span class=right-space>Mumbai</span>
+        <span class=right-space>{{nominee.city}}</span>
         <span class="bold">Pincode:</span>
-        <span class=right-space>400086</span>
+        <span class=right-space>{{nominee.pincode}}</span>
         <span class="bold">Country:</span>
-        <span class=right-space>India</span>
+        <span class=right-space>{{nominee.country}}</span>
         <span class="bold">Guardian Name:</span>
-        <span class=right-space>Vaibhav Mehra</span>
+        <span class=right-space>{{nominee.guardianname}}</span>
         <span class="bold">Guardian PAN:</span>
-        <span class=right-space>ANRPM2537J</span>
+        <span class=right-space>{{nominee.guardianpan}}</span>
       </div>
     </div>
 

@@ -29,7 +29,7 @@
             <p class="tab-icon"><i class="material-icons {{tabs[3].status.colorclass}}">{{tabs[3].status.fontname}}</i></p>
             <p>Document<br>Upload</p>
           </div>
-          <div class="tab-five text-center"  ng-click="changeTab(4)" ng-class="{'active': tabs[4].active}">
+          <div class="tab-five text-center"   ng-class="{'active': tabs[4].active}">
             <p class="tab-icon"><i class="material-icons {{tabs[4].status.colorclass}}">{{tabs[4].status.fontname}}</i></p>
             <p>Verification</p>
           </div>
@@ -37,7 +37,7 @@
         <div class="nominee-details" ng-show="tabs[1].active">
           <form name="nomineeForm" ng-submit="addNomineeDetails(nomineeForm)">
           <div layout="row" class="nominee-first">
-            <md-checkbox md-no-ink ng-model= "nonominee" ng-change="emptyNominees(nonominee);" aria-label="No Nominee">
+            <md-checkbox md-no-ink id="nonom" ng-model= "nonominee" ng-true-value="true" ng-false-value="false" ngT ng-change="emptyNominees(nonominee);" aria-label="No Nominee">
               No Nominee
             </md-checkbox>
             <md-button ng-click ="addNominees();" class="md-icon-button md-fab md-mini  md-whiteframe-2dp add-nominee" aria-label="Add Nominee" ng-class="{'md-primary':!nonominee}" ng-disabled="nonominee">
@@ -49,8 +49,8 @@
 
           </div>
 
-  <div class="nominee-form" ng-hide = "nonominee" ng-if="nominees.length !== 0">
-  <div ng-repeat= "nominee in nominees">
+  <div class="nominee-form"  ng-if="user.nominees.length !== 0">
+  <div ng-repeat= "nominee in user.nominees">
     <div class="nominee-top">
       <span>Nominee {{$index + 1}}</span>
       <md-button class="md-raised md-delete pull-right" ng-click="deleteNominee($index)">Delete</md-button>
