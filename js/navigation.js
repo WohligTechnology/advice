@@ -4,7 +4,7 @@ var skipped = [];
 var adminURL = "http://wohlig.io:81/callApi/7advisors";
 var scenarios = [{
   id: 0,
-  question: 'Hi! Lets get started. Please give us the name of your portfolio',
+  question: 'What would you like to call this portfolio?',
   canSkip: false,
   label:'Goal Name',
   valueDefault: 0,
@@ -17,7 +17,7 @@ var scenarios = [{
   },
   errors:[{
     type:'minlength',
-    messages : ['the name is too short for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+    messages : ['What would you like to name this portfolio? For example: "Retirement Fund", "My New Car", "Europe Tour", etc.','Please suggest a shorter name. For example: "Retirement Fund", "My New Car", "Europe Tour", etc.']
   },{
     type:'maxlength',
     messages : ['the name is too long.','Nice. Try better. 25 letters max.','one too far. Shorten it.']
