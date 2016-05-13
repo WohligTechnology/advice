@@ -261,13 +261,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         },
         series: [{
             data:[100000, 107530, 115994, 124968, 135405, 144954, 155076, 164319, 174310, 185358, 194219, 191374, 189531, 187628, 164795, 144522, 122122, 102236, 80731, 59444, 37888, 15632, -6342, -28705],
-            name: 'Median 1'
+            name: 'Projection 1'
         }, {
             data: [100000, 111470, 122970, 134746, 146581, 158716, 171203, 183130, 195524, 208088, 220484, 221846, 222799, 224508, 203771, 183647, 162950, 142554, 121330, 99910, 79207, 57327, 35424, 13385],
-            name: 'Median 2'
+            name: 'Projection 50'
         }, {
             data: [100000, 115750, 130681, 145573, 160090, 175316, 189824, 204827, 220557, 234282, 248720, 253228, 255528, 260959, 248650, 227971, 211127, 190327, 172191, 151364, 130916, 109266, 88570, 68763],
-name: 'Median 2'
+name: 'Projection 99'
         },{
           type:'column',
           name:'Cashflow',
@@ -401,17 +401,24 @@ name: 'Median 2'
             }
         },
         series: [{
-            data: [10, 15, 12, 8, 7]
+            data:[100000, 107530, 115994, 124968, 135405, 144954, 155076, 164319, 174310, 185358, 194219, 191374, 189531, 187628, 164795, 144522, 122122, 102236, 80731, 59444, 37888, 15632, -6342, -28705],
+            name: 'Projection 1'
         }, {
-            data: [10, 15, 12, 8, 7]
+            data: [100000, 111470, 122970, 134746, 146581, 158716, 171203, 183130, 195524, 208088, 220484, 221846, 222799, 224508, 203771, 183647, 162950, 142554, 121330, 99910, 79207, 57327, 35424, 13385],
+            name: 'Projection 50'
         }, {
-            data: [10, 15, 12, 8, 7]
+            data: [100000, 115750, 130681, 145573, 160090, 175316, 189824, 204827, 220557, 234282, 248720, 253228, 255528, 260959, 248650, 227971, 211127, 190327, 172191, 151364, 130916, 109266, 88570, 68763],
+name: 'Projection 99'
+        },{
+          type:'column',
+          name:'Cashflow',
+          data:[100000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 0, 0, 0, -21407, -21511, -21616, -21721, -21827, -21933, -22040, -22147, -22255, -22363]
         }],
         title: {
             text: 'Line'
         },
         size: {
-            height: 550
+            height: 520
         },
         loading: false
     };
@@ -517,6 +524,10 @@ name: 'Median 2'
             $scope.recievedMessage(err, 1000);
         });
     };
+    $scope.recievedMessage('Hi! To create your plan I will be asking you some basic questions. You may choose to skip a question in case you are not able to answer it.',1000);
+    $scope.recievedMessage('So let&apos;s get started!',2000);
+    $scope.replyMessage(undefined);
+    
     var errAgain = 0;
     var errMsg = [];
     $scope.validateMessage = function(msg, qid) {
@@ -589,7 +600,6 @@ name: 'Median 2'
         $scope.replyMessage($scope.currentResponse.valueDefault, $scope.currentResponse.id, true);
         $scope.typing = false;
     };
-    $scope.replyMessage(undefined);
     window.onload = function(e) {
         setTimeout(function() {
             console.log("loaded");

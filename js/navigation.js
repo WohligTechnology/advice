@@ -30,17 +30,17 @@ var scenarios = [{
   valueDefault: 0,
   valueType: 'number',
   rules: {
-    minimum: 50000,
-    maximum: 70000,
+    minimum: 25000,
+    maximum: 25000000,
     minlength:undefined,
     maxlength:undefined
   },
   errors:[{
     type:'minimum',
-    messages : ['The lumpsum amount is less, don&apos;t you think?','Nice. Try better. more than 50000']
+    messages : ['The lumpsum amount is less, don&apos;t you think?','Nice. Try better. more than 25000']
   },{
     type:'maximum',
-    messages : ['The lumpsum amount is a lot, don&apos;t you think?','Nice. Try less than that. less than 70000']
+    messages : ['The lumpsum amount is a lot, don&apos;t you think?','Nice. Try less than that. less than 25000000']
   }]
 }, {
   id: 2,
@@ -50,15 +50,15 @@ var scenarios = [{
   valueDefault: 0,
   valueType: 'number',
   rules: {
-    minimum: 7000,
-    maximum: 80000
+    minimum: 5000,
+    maximum: 1000000
   },
   errors:[{
     type:'minimum',
-    messages : ['The monthly contribution is less, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+    messages : ['The monthly contribution is less, don&apos;t you think?','Nice. Try better. 5000 letters minimum']
   },{
     type:'maximum',
-    messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 10 letters minimum']
+    messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 1000000 letters minimum']
   }]
 }, {
   id: 3,
@@ -80,10 +80,12 @@ var scenarios = [{
   canSkip: true,
   label:'Withdrawal frequency',
   valueDefault: 1,
+  hasSelect:true,
   valueType: 'number',
   rules: {
     minimum: 1
   },
+  selectValues:[],
   errors:[{
     type:'minimum',
     messages : ['Mininum once']
