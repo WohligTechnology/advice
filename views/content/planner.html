@@ -56,7 +56,12 @@
               <div flex="84" flex-gt-xs="80" flex-xs="80">
                 <div class="chat-input">
                   <md-button class="text-uppercase skip-button" ng-disabled="!currentResponse.canSkip" ng-click="skipIt()">Skip</md-button>
-                  <input type="{{currentResponse.valueType}}" ng-change="typingIt(reply)" ng-model="reply" placeholder="Type Something...">
+                  <input type="{{currentResponse.valueType}}" ng-change="typingIt(reply)" ng-model="reply" placeholder="Type Something..." style="">
+                  <md-select required ng-model="data.data" style="width: 80%; margin: 0; display: inline-block; display: none;">
+                    <md-option value="1">1</md-option>
+                    <md-option value="2">2</md-option>
+                    <md-option value="3">3</md-option>
+                  </md-select>
                 </div>
               </div>
               <div flex="16" flex-gt-xs="20" flex-xs="20">
