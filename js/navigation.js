@@ -24,7 +24,7 @@ var scenarios = [{
   }]
 }, {
   id: 1,
-  question: 'Now, What will be the lumpsum payment?',
+  question: 'For this portfolio, what would be your initial contribution?',
   canSkip: true,
   label:'Lumpsum amount',
   valueDefault: 0,
@@ -40,7 +40,7 @@ var scenarios = [{
     messages : ['The lumpsum amount is less, don&apos;t you think?','Nice. Try better. more than 25000']
   },{
     type:'maximum',
-    messages : ['The lumpsum amount is a lot, don&apos;t you think?','Nice. Try less than that. less than 25000000']
+    messages : ['To create a well-diversified portfolio we will need at least Rs.25,000. Increase your initial contribution if possible; else, you may skip this question.','Okay! I will take that as Rs.XXX00 to round it off.']
   }]
 }, {
   id: 2,
