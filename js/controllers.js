@@ -143,7 +143,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             templateUrl: 'views/modal/summarydialog.html',
             clickOutsideToClose: false,
             controller: DialogController,
-            scope: $scope
+            scope: $scope.$new()
         });
     };
 
