@@ -301,8 +301,8 @@ name: 'Projection 99'
         series: [{
             name: 'Browsers',
             data: [
-                ["Firefox", 6],
-                ["MSIE", 4]
+                ["Equity", 6],
+                ["Debt", 4]
             ],
             size: '100%',
             innerSize: '30%',
@@ -315,7 +315,7 @@ name: 'Projection 99'
             '#4285F4'
         ],
         title: {
-            text: 'Hello'
+            text: 'Overall Equity-Debt Distribution'
         },
         size: {
             height: 247
@@ -527,7 +527,7 @@ name: 'Projection 99'
     $scope.recievedMessage('Hi! To create your plan I will be asking you some basic questions. You may choose to skip a question in case you are not able to answer it.',1000);
     $scope.recievedMessage('So let&apos;s get started!',2000);
     $scope.replyMessage(undefined);
-    
+
     var errAgain = 0;
     var errMsg = [];
     $scope.validateMessage = function(msg, qid) {
