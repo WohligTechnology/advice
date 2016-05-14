@@ -44,18 +44,17 @@ var scenarios = [{
   }]
 }, {
   id: 2,
-  question: 'Now, what will be the monthly contribution?',
+  question: 'For this portfolio, how much are you willing to contribute every month?',
   canSkip: true,
   label:'Monthly contribution',
   valueDefault: 0,
   valueType: 'number',
   rules: {
-    minimum: 5000,
-    maximum: 1000000
+    minimum: 5000
   },
   errors:[{
     type:'minimum',
-    messages : ['The monthly contribution is less, don&apos;t you think?','Nice. Try better. 5000 letters minimum']
+    messages : ['To create a well-diversified portfolio we will need at least Rs.5,000 every month.Increase your monthly contribution if possible; else, you may skip this question.','Nice. Try better. 5000 letters minimum']
   },{
     type:'maximum',
     messages : ['the name is too long for your dream investment plan, don&apos;t you think?','Nice. Try better. 1000000 letters minimum']

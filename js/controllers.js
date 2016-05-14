@@ -389,7 +389,7 @@ name: 'Projection 99'
     TemplateService.header = "views/content/header.html";
     $scope.oneAtATime = true;
     $scope.chats = [];
-    $scope.reply = undefined;
+    $scope.response = {};
     $scope.typing = false;
     $scope.suggestion = false;
     $scope.linechartConfig = {
@@ -460,8 +460,10 @@ name: 'Projection 99'
         },
         loading: $scope.loadit
     };
+    $scope.response.reply=undefined;
     $scope.sendMessage = function(msg) {
-        if (msg !== undefined || msg !== null) {
+      console.log(msg);
+        if (msg !== undefined) {
             $scope.typing = false;
 
             if ($scope.currentResponse.valueType == 'date') {
@@ -472,12 +474,11 @@ name: 'Projection 99'
                 text: msg,
                 type: 'sent'
             });
-            $scope.reply = undefined;
 
             $scope.validateMessage(_.cloneDeep(msg), $scope.currentResponse.id);
         }
-
-
+        $scope.response.reply=undefined;
+        console.log($scope.reply);
     };
     $scope.typingIt = function(check) {
         if (check === null || check === undefined || check === "") {
