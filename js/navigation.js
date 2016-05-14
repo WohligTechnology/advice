@@ -39,7 +39,7 @@ var scenarios = [{
   },
   errors:[{
     type:'minimum',
-    messages : ['The lumpsum amount is less, don&apos;t you think?','Nice. Try better. more than 25000']
+    messages : ['To create a well-diversified portfolio we will need at least Rs.25,000. Increase your initial contribution if possible; else, you may skip this question.','Okay! I will take that as Rs.XXX00 to round it off.']
   },{
     type:'maximum',
     messages : ['To create a well-diversified portfolio we will need at least Rs.25,000. Increase your initial contribution if possible; else, you may skip this question.','Okay! I will take that as Rs.XXX00 to round it off.']
@@ -71,11 +71,11 @@ var scenarios = [{
   valueDefault: '1-1-1970',
   valueType: 'date',
   rules: {
-    minimum: '2022-05-28'
+    minimum: '2016-05-28'
   },
   errors:[{
     type:'minimum',
-    messages : ['It cannot start on or before '+ new Date('2022-05-28'),'start it after '+ new Date('2022-05-28')]
+    messages : ['It cannot start on or before '+ new Date('2016-05-28'),'start it after '+ new Date('2016-05-28')]
   }]
 }, {
   id: 4,
@@ -132,11 +132,11 @@ var scenarios = [{
   valueDefault: '1-1-1970',
   valueType: 'date',
   rules: {
-    minimum: '28-5-2022'
+    minimum: '28-5-2016'
   },
   errors:[{
     type:'minimum',
-    messages : ['It cannot start on or before '+ new Date('28-5-2022')]
+    messages : ['It cannot start on or before '+ new Date('28-5-2016')]
   }]
 }, {
   id: 8,

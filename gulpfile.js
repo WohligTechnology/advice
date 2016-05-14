@@ -8,6 +8,7 @@ var jsArray = [
     './bower_components/angular-material/angular-material.min.js',
     './bower_components/angular-aria/angular-aria.min.js',
     './bower_components/angular-messages/angular-messages.min.js',
+        './bower_components/highcharts-ng/dist/highcharts-ng.min.js',
     './bower_components/angular-sanitize/angular-sanitize.min.js',
     './bower_components/angular-animate/angular-animate.min.js',
     './bower_components/angular-bootstrap/ui-bootstrap.min.js',
@@ -15,7 +16,7 @@ var jsArray = [
     './bower_components/ui-router/release/angular-ui-router.min.js',
     './bower_components/angular-flexslider/angular-flexslider.js',
     './bower_components/lodash/lodash.js',
-    './bower_components/highcharts-ng/dist/highcharts-ng.min.js',
+
     './js/app.js',
     './js/controllers.js',
     './js/templateservice.js',

@@ -152,6 +152,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $mdDialog.hide();
             $scope.changeTab(4);
         };
+        $scope.editDetails = function(){
+          $mdDialog.hide();
+          $scope.changeTab(1);
+        }
     }
 
 
@@ -262,16 +266,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         series: [{
             data:[100000, 107530, 115994, 124968, 135405, 144954, 155076, 164319, 174310, 185358, 194219, 191374, 189531, 187628, 164795, 144522, 122122, 102236, 80731, 59444, 37888, 15632, -6342, -28705],
             name: 'Projection 1'
-        }, {
-            data: [100000, 111470, 122970, 134746, 146581, 158716, 171203, 183130, 195524, 208088, 220484, 221846, 222799, 224508, 203771, 183647, 162950, 142554, 121330, 99910, 79207, 57327, 35424, 13385],
-            name: 'Projection 50'
-        }, {
-            data: [100000, 115750, 130681, 145573, 160090, 175316, 189824, 204827, 220557, 234282, 248720, 253228, 255528, 260959, 248650, 227971, 211127, 190327, 172191, 151364, 130916, 109266, 88570, 68763],
-name: 'Projection 99'
-        },{
-          type:'column',
-          name:'Cashflow',
-          data:[100000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 0, 0, 0, -21407, -21511, -21616, -21721, -21827, -21933, -22040, -22147, -22255, -22363]
         }],
         title: {
             text: 'Line'
@@ -337,10 +331,12 @@ name: 'Projection 99'
             }
         },
         series: [{
-            name: 'Browsers',
+            name: 'Investment',
             data: [
-                ["Firefox", 6],
-                ["MSIE", 4]
+                ["INV1", 2],
+                ["INV2", 2],
+                ["INV3", 2],
+                ["INV4", 4]
             ],
             size: '100%',
             innerSize: '30%',
@@ -351,7 +347,7 @@ name: 'Projection 99'
         }],
         colors: ['#2bd3d6', '#4285F4'],
         title: {
-            text: 'Hello2'
+            text: 'Over Wealth Distribution'
         },
         size: {
             height: 247
@@ -439,8 +435,8 @@ name: 'Projection 99'
         series: [{
             name: 'Browsers',
             data: [
-                ["Firefox", 6],
-                ["MSIE", 4]
+                ["Equity", 6],
+                ["Debt", 4]
             ],
             size: '100%',
             innerSize: '30%',
@@ -453,17 +449,17 @@ name: 'Projection 99'
             '#4285F4'
         ],
         title: {
-            text: 'Hello'
+            text: 'Equity-Debt Distribution'
         },
         size: {
             height: 247
         },
-        loading: $scope.loadit
+        loading:false
     };
     $scope.response.reply=undefined;
     $scope.sendMessage = function(msg) {
-      console.log(msg);
-        if (msg !== undefined) {
+      console.log($scope.chats[$scope.chats.length-1].type !== 'sent');
+        if (msg !== undefined && $scope.chats[$scope.chats.length-1].type !== 'sent') {
             $scope.typing = false;
 
             if ($scope.currentResponse.valueType == 'date') {
