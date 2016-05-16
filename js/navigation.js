@@ -1,7 +1,8 @@
 var adminURL = "";
 var result = [];
 var skipped = [];
-var adminURL = "http://wohlig.io:81/callApi/7advisors";
+// var adminURL = "http://wohlig.io:81/callApi/7advisors";
+var adminURL = "http://localhost:1337/";
 var scenarios = [{
   id: 0,
   question: 'What would you like to call this portfolio?',
@@ -247,6 +248,13 @@ var navigationservice = angular.module('navigationservice', [])
         url: adminURL + "addToCart",
         method: "POST",
         data:{}
+      }).success(callback).error(err);
+    },
+    saveUserDetails : function(formData,callback,err){
+      return $http({
+        url: adminURL + "user/save",
+        method: "POST",
+        data:formData
       }).success(callback).error(err);
     },
     makeactive: function(menuname) {

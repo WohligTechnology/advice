@@ -200,8 +200,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.addNomineeDetails = function(formValidate) {
         if (formValidate.$valid) {
+        NavigationService.saveUserDetails($scope.user,function(data){
+          if(data.value){
             $scope.changeTab(2);
             $scope.changeStatus(1, 0);
+          }
+        });
         } else {
             $scope.changeStatus(1, 1);
         }
@@ -512,6 +516,7 @@ name: 'Projection 99'
                     $scope.recievedMessage('Fine tune your plan in 3..', 3000);
                     $scope.recievedMessage('2..', 4000);
                     $scope.recievedMessage('1..', 5000);
+                    console.log(result);
                     $timeout(function() {
                         $scope.suggestion = true;
                     }, 6000);
@@ -579,7 +584,9 @@ name: 'Projection 99'
             var confirmMessages = ['Got it.', 'Okay!', 'Thanks', 'Thank you', 'Confirmed'];
 
             $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length - 1))], 500);
-
+            if($scope.currentResponse.valueType == 'number'){
+              msg = parseInt(msg);
+            }
 
             $scope.replyMessage(msg, qid, false);
 
