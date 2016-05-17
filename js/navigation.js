@@ -8,7 +8,7 @@ var scenarios = [{
   question: 'What would you like to call this portfolio?',
   canSkip: false,
   hasSelect:false,
-  label:'Goal Name',
+  label:'goalname',
   valueDefault: 0,
   valueType: 'text',
   rules: {
@@ -29,7 +29,7 @@ var scenarios = [{
   question: 'For this portfolio, what would be your initial contribution?',
   canSkip: true,
   hasSelect:false,
-  label:'Lumpsum amount',
+  label:'lumpsum',
   valueDefault: 0,
   valueType: 'number',
   rules: {
@@ -50,7 +50,7 @@ var scenarios = [{
   question: 'For this portfolio, how much are you willing to contribute every month?',
   canSkip: true,
   hasSelect:false,
-  label:'Monthly contribution',
+  label:'monthly',
   valueDefault: 0,
   valueType: 'number',
   rules: {
@@ -68,7 +68,7 @@ var scenarios = [{
   question: 'And till when do you plan to contribute?',
   canSkip: true,
   hasSelect:false,
-  label:'Monthly contribution uptil',
+  label:'monthlyuntildate',
   valueDefault: '1-1-1970',
   valueType: 'date',
   rules: {
@@ -83,7 +83,7 @@ var scenarios = [{
   question: 'How frequently do you plan to withdraw this amount?',
   canSkip: true,
   hasSelect:true,
-  label:'Withdrawal frequency',
+  label:'withdrawalfrequency',
   valueDefault: 1,
   valueType: 'number',
   rules: {
@@ -99,7 +99,7 @@ var scenarios = [{
   question: 'What will the inflation rate be?',
   canSkip: true,
   hasSelect:false,
-  label:'Inflation rate',
+  label:'inflation',
   valueDefault: 6,
   valueType: 'number',
   rules: {
@@ -114,7 +114,7 @@ var scenarios = [{
   question: 'and what about the withdrawal amount?',
   canSkip: false,
   hasSelect:false,
-  label:'withdrawal amount',
+  label:'installment',
   valueDefault: 0,
   valueType: 'number',
   rules: {
@@ -126,10 +126,10 @@ var scenarios = [{
   }]
 }, {
   id: 7,
-  question: 'and what about the withdrawal period?',
+  question: 'Till when would you want to keep withdrawing? ',
   canSkip: false,
   hasSelect:false,
-  label:'withdrawal period',
+  label:'startMonth',
   valueDefault: '1-1-1970',
   valueType: 'date',
   rules: {
@@ -141,10 +141,25 @@ var scenarios = [{
   }]
 }, {
   id: 8,
+  question: 'Till when will you stop withdrawing? ',
+  canSkip: false,
+  hasSelect:false,
+  label:'endMonth',
+  valueDefault: (new Date()),
+  valueType: 'date',
+  rules: {
+    minimum: '28-5-2016'
+  },
+  errors:[{
+    type:'minimum',
+    messages : ['It cannot start on or before '+ new Date('28-5-2016')]
+  }]
+}, {
+  id: 9,
   question: 'and what about the short-term loss?',
   canSkip: false,
   hasSelect:false,
-  label:'short-term loss',
+  label:'shortterm',
   valueDefault: 0,
   valueType: 'number',
   rules: {
@@ -155,11 +170,11 @@ var scenarios = [{
     messages : ['Minimum 0']
   }]
 }, {
-  id: 9,
+  id: 10,
   question: 'and what about the long-term loss?',
   canSkip: false,
   hasSelect:false,
-  label:'long-term loss',
+  label:'longterm',
   valueDefault: 0,
   valueType: 'number',
   rules: {
@@ -237,7 +252,6 @@ var navigationservice = angular.module('navigationservice', [])
           result[responseto].label = scenarios[responseto].label;
           skipped[responseto]=skip;
         }
-        console.log(result);
         return callback(scenarios[responseto+1]);
       }
 

@@ -16,6 +16,7 @@ var jsArray = [
     './bower_components/ui-router/release/angular-ui-router.min.js',
     './bower_components/angular-flexslider/angular-flexslider.js',
     './bower_components/lodash/lodash.js',
+    './bower_components/moment/min/moment.min.js',
 
     './js/app.js',
     './js/controllers.js',

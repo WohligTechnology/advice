@@ -155,7 +155,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.editDetails = function(){
           $mdDialog.hide();
           $scope.changeTab(1);
-        }
+        };
     }
 
 
@@ -392,6 +392,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.response = {};
     $scope.typing = false;
     $scope.suggestion = false;
+    $scope.result={};
     $scope.linechartConfig = {
         options: {
             chart: {
@@ -511,12 +512,11 @@ name: 'Projection 99'
                     $scope.recievedMessage($scope.currentResponse.question, 2000);
                     errAgain = 0;
                 } else {
-
+                    $scope.changeToObject(result);
                     $scope.recievedMessage('Please wait while we crunch the numbers ..', 1000);
                     $scope.recievedMessage('Fine tune your plan in 3..', 3000);
                     $scope.recievedMessage('2..', 4000);
                     $scope.recievedMessage('1..', 5000);
-                    console.log(result);
                     $timeout(function() {
                         $scope.suggestion = true;
                     }, 6000);
@@ -623,6 +623,24 @@ name: 'Projection 99'
             });
         }, 200);
     };
+    $scope.changeToObject = function (res) {
+      _.each(res,function(key) {
+        $scope.result[key.label]=key.value;
+      });
+      console.log($scope.result);
+      $scope.computeIt($scope.result);
+    };
+    $scope.computeIt =function(res){
+      resultNow = _.cloneDeep(res);
+      resultNow.lumpsum = $filter('nearest100') (resultNow.lumpsum);
+      resultNow.monthly = $filter('nearest100') (resultNow.monthly);
+      resultNow.installment = $filter('nearest100') (resultNow.installment);
+      resultNow.noOfInstallment =-1*$filter('monthsSince') (resultNow.endMonth,resultNow.startMonth);
+      resultNow.startMonth=-1*$filter('monthsSince') (resultNow.startMonth);
+      resultNow.noOfMonth=-1*$filter('monthsSince') (resultNow.monthlyuntildate);
+      console.log(resultNow);
+    };
+
 
 })
 

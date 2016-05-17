@@ -94,6 +94,22 @@ firstapp.filter('uploadpath', function() {
         }
     };
 });
+firstapp.filter('nearest100', function() {
+  return function(value) {
+    return parseInt((value+50)/100)*100;
+  };
+});
+firstapp.filter('monthsSince', function() {
+  return function(value,value2) {
+var temp=null;
+  if(value2){
+    temp=moment.duration( moment(new Date(value2)).diff(moment(new Date(value))));
+  }else{
+    temp=moment.duration( moment(new Date()).diff(moment(new Date(value))));
+  }
+  return temp.years()*12+temp.months();
+  };
+});
 firstapp.directive('uploadImage', function($http) {
     return {
         templateUrl: 'views/directive/uploadFile.html',
