@@ -429,15 +429,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         },
         loading: false
     };
-    $scope.slider = {
-        value: 0,
-        options: {
-            floor: -10,
-            ceil: 10,
-            showSelectionBarFromValue: 0,
-            hideLimitLabels: true
-        }
-    };
+
     $scope.EDdonutchartConfig = {
         options: {
 
@@ -619,6 +611,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.replyMessage($scope.currentResponse.valueDefault, $scope.currentResponse.id, true);
         $scope.typing = false;
     };
+// REMOVE SOON START
     window.onload = function(e) {
         setTimeout(function() {
             console.log("loaded");
@@ -638,6 +631,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         }, 200);
     };
+// REMOVE SOON END
     $scope.changeToObject = function(res) {
         $scope.suggestion = true;
         _.each(res, function(key) {
@@ -646,6 +640,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         console.log($scope.result);
         $scope.computeIt($scope.result);
     };
+
     $scope.reflowChart = function(currentPlan) {
         $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
         $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
@@ -658,11 +653,26 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         _.each(currentPlan.feasible[0].tenures, function(key) {
             $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key ), 'mediumDate'));
         });
-        console.log($scope.planlinechartconfig);
+
     };
 
+    //Slider models
+    $scope.lumpsumSlider={
+        value: $scope.result.lumpsum,
+        options: {
+            floor: 25000,
+            ceil: 25000000,
+    //         translate: function(value) {
+    //   return $filter('date')(value,'mediumDate');
+    // },
+            showSelectionBarFromValue: $scope.result.lumpsum,
+            hideLimitLabels: true
+        }
+    };
+//Slider models end
+
     $scope.computeIt = function(res) {
-        resultNow = _.cloneDeep(res);
+        resultNow = res;
         resultNow.lumpsum = $filter('nearest100')(resultNow.lumpsum);
         resultNow.monthly = $filter('nearest100')(resultNow.monthly);
         resultNow.installment = $filter('nearest100')(resultNow.installment);
