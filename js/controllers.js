@@ -1,6 +1,6 @@
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng"])
 
-.controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout,$stateParams) {
+.controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("home");
     $scope.menutitle = NavigationService.makeactive("Home");
@@ -87,7 +87,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.header = "views/content/header.html";
     $scope.formData = {};
     $scope.nonominee = true;
-    $scope.user ={};
+    $scope.user = {};
     $scope.user.nominees = [];
     $scope.progress = 0;
     $scope.process = [{
@@ -152,9 +152,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $mdDialog.hide();
             $scope.changeTab(4);
         };
-        $scope.editDetails = function(){
-          $mdDialog.hide();
-          $scope.changeTab(1);
+        $scope.editDetails = function() {
+            $mdDialog.hide();
+            $scope.changeTab(1);
         };
     }
 
@@ -178,17 +178,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.changeStatus(1, 0);
 
     $scope.addNominees = function() {
-        if($scope.user.nominees.length <= 2){
-          $scope.user.nominees.push({});
-          // $window.scrollBy(100, 0);
-          $scope.changeStatus(1, 1);
+        if ($scope.user.nominees.length <= 2) {
+            $scope.user.nominees.push({});
+            // $window.scrollBy(100, 0);
+            $scope.changeStatus(1, 1);
         }
     };
     $scope.emptyNominees = function(flag) {
         if (flag === true) {
             $scope.user.nominees = [];
             $scope.changeStatus(1, 0);
-            $scope.nonominee=true;
+            $scope.nonominee = true;
 
             console.log($scope.nonominee);
         } else {
@@ -200,12 +200,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.addNomineeDetails = function(formValidate) {
         if (formValidate.$valid) {
-        NavigationService.saveUserDetails($scope.user,function(data){
-          if(data.value){
-            $scope.changeTab(2);
-            $scope.changeStatus(1, 0);
-          }
-        });
+            NavigationService.saveUserDetails($scope.user, function(data) {
+                if (data.value) {
+                    $scope.changeTab(2);
+                    $scope.changeStatus(1, 0);
+                }
+            });
         } else {
             $scope.changeStatus(1, 1);
         }
@@ -265,10 +265,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 borderColor: '#1d71b8',
                 type: 'line',
                 reflow: true
+            },
+            xAxis: {
+                title: {
+                    text: 'Tenure month'
+                },
+                categories: tenure
             }
         },
         series: [{
-            data:[100000, 107530, 115994, 124968, 135405, 144954, 155076, 164319, 174310, 185358, 194219, 191374, 189531, 187628, 164795, 144522, 122122, 102236, 80731, 59444, 37888, 15632, -6342, -28705],
+            data: [100000, 107530, 115994, 124968, 135405, 144954, 155076, 164319, 174310, 185358, 194219, 191374, 189531, 187628, 164795, 144522, 122122, 102236, 80731, 59444, 37888, 15632, -6342, -28705],
             name: 'Projection 1'
         }],
         title: {
@@ -381,7 +387,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 })
 
-.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $filter) {
+.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $filter, $interval) {
     $scope.template = TemplateService.changecontent("planner");
     $scope.menutitle = NavigationService.makeactive("Planner");
     TemplateService.title = $scope.menutitle;
@@ -392,7 +398,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.response = {};
     $scope.typing = false;
     $scope.suggestion = false;
-    $scope.result={};
+    $scope.result = {};
     $scope.linechartConfig = {
         options: {
             chart: {
@@ -402,24 +408,29 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         },
         series: [{
-            data:[100000, 107530, 115994, 124968, 135405, 144954, 155076, 164319, 174310, 185358, 194219, 191374, 189531, 187628, 164795, 144522, 122122, 102236, 80731, 59444, 37888, 15632, -6342, -28705],
+            data: [100000, 107530, 115994, 124968, 135405, 144954, 155076, 164319, 174310, 185358, 194219, 191374, 189531, 187628, 164795, 144522, 122122, 102236, 80731, 59444, 37888, 15632, -6342, -28705],
             name: 'Projection 1'
         }, {
             data: [100000, 111470, 122970, 134746, 146581, 158716, 171203, 183130, 195524, 208088, 220484, 221846, 222799, 224508, 203771, 183647, 162950, 142554, 121330, 99910, 79207, 57327, 35424, 13385],
             name: 'Projection 50'
         }, {
             data: [100000, 115750, 130681, 145573, 160090, 175316, 189824, 204827, 220557, 234282, 248720, 253228, 255528, 260959, 248650, 227971, 211127, 190327, 172191, 151364, 130916, 109266, 88570, 68763],
-name: 'Projection 99'
-        },{
-          type:'column',
-          name:'Cashflow',
-          data:[100000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 0, 0, 0, -21407, -21511, -21616, -21721, -21827, -21933, -22040, -22147, -22255, -22363]
+            name: 'Projection 99'
+        }, {
+            type: 'column',
+            name: 'Cashflow',
+            data: [100000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 0, 0, 0, -21407, -21511, -21616, -21721, -21827, -21933, -22040, -22147, -22255, -22363]
         }],
         title: {
             text: 'Line'
         },
         size: {
             height: 520
+        },xAxis: {
+            title: {
+                text: 'Tenure month'
+            },
+            categories: tenure
         },
         loading: false
     };
@@ -459,12 +470,12 @@ name: 'Projection 99'
         size: {
             height: 247
         },
-        loading:false
+        loading: false
     };
-    $scope.response.reply=undefined;
+    $scope.response.reply = undefined;
     $scope.sendMessage = function(msg) {
-      console.log($scope.chats[$scope.chats.length-1].type !== 'sent');
-        if (msg !== undefined && $scope.chats[$scope.chats.length-1].type !== 'sent') {
+        console.log($scope.chats[$scope.chats.length - 1].type !== 'sent');
+        if (msg !== undefined && $scope.chats[$scope.chats.length - 1].type !== 'sent') {
             $scope.typing = false;
 
             if ($scope.currentResponse.valueType == 'date') {
@@ -478,7 +489,7 @@ name: 'Projection 99'
 
             $scope.validateMessage(_.cloneDeep(msg), $scope.currentResponse.id);
         }
-        $scope.response.reply=undefined;
+        $scope.response.reply = undefined;
         console.log($scope.reply);
     };
     $scope.typingIt = function(check) {
@@ -526,8 +537,8 @@ name: 'Projection 99'
             $scope.recievedMessage(err, 1000);
         });
     };
-    $scope.recievedMessage('Hi! To create your plan I will be asking you some basic questions. You may choose to skip a question in case you are not able to answer it.',1000);
-    $scope.recievedMessage('So let&apos;s get started!',2000);
+    $scope.recievedMessage('Hi! To create your plan I will be asking you some basic questions. You may choose to skip a question in case you are not able to answer it.', 1000);
+    $scope.recievedMessage('So let&apos;s get started!', 2000);
     $scope.replyMessage(undefined);
 
     var errAgain = 0;
@@ -584,8 +595,8 @@ name: 'Projection 99'
             var confirmMessages = ['Got it.', 'Okay!', 'Thanks', 'Thank you', 'Confirmed'];
 
             $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length - 1))], 500);
-            if($scope.currentResponse.valueType == 'number'){
-              msg = parseInt(msg);
+            if ($scope.currentResponse.valueType == 'number') {
+                msg = parseInt(msg);
             }
 
             $scope.replyMessage(msg, qid, false);
@@ -623,22 +634,40 @@ name: 'Projection 99'
             });
         }, 200);
     };
-    $scope.changeToObject = function (res) {
-      _.each(res,function(key) {
-        $scope.result[key.label]=key.value;
-      });
-      console.log($scope.result);
-      $scope.computeIt($scope.result);
+    $scope.changeToObject = function(res) {
+        _.each(res, function(key) {
+            $scope.result[key.label] = key.value;
+        });
+        console.log($scope.result);
+        $scope.computeIt($scope.result);
     };
-    $scope.computeIt =function(res){
-      resultNow = _.cloneDeep(res);
-      resultNow.lumpsum = $filter('nearest100') (resultNow.lumpsum);
-      resultNow.monthly = $filter('nearest100') (resultNow.monthly);
-      resultNow.installment = $filter('nearest100') (resultNow.installment);
-      resultNow.noOfInstallment =-1*$filter('monthsSince') (resultNow.endMonth,resultNow.startMonth);
-      resultNow.startMonth=-1*$filter('monthsSince') (resultNow.startMonth);
-      resultNow.noOfMonth=-1*$filter('monthsSince') (resultNow.monthlyuntildate);
-      console.log(resultNow);
+    $scope.currentPlan
+    $scope.reflowChart = function(currentPlan){
+      $scope.linechartConfig.series[0].data = currentPlan.feasible[0].median1;
+      $scope.linechartConfig.series[1].data=currentPlan.feasible[0].median2;
+      $scope.linechartConfig.series[2].data=currentPlan.feasible[0].median3;
+      _.each(currentPlan.feasible[0].tenures,function(){
+
+      })
+    };
+
+    $scope.computeIt = function(res) {
+        resultNow = _.cloneDeep(res);
+        resultNow.lumpsum = $filter('nearest100')(resultNow.lumpsum);
+        resultNow.monthly = $filter('nearest100')(resultNow.monthly);
+        resultNow.installment = $filter('nearest100')(resultNow.installment);
+        resultNow.noOfInstallment = -1 * $filter('monthsSince')(resultNow.endMonth, resultNow.startMonth);
+        resultNow.startMonth = -1 * $filter('monthsSince')(resultNow.startMonth);
+        resultNow.noOfMonth = -1 * $filter('monthsSince')(resultNow.monthlyuntildate);
+        NavigationService.play(resultNow,function (data) {
+          if(data.value === false){
+            $scope.currentPlan=data;
+          }else{
+            $scope.currentPlan=data;
+            $scope.reflowChart($scope.currentPlan);
+          }
+        });
+        console.log(resultNow);
     };
 
 
