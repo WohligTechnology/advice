@@ -1,4 +1,4 @@
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng"])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule'])
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams) {
     //Used to name the .html file
@@ -391,7 +391,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.chats = [];
     $scope.response = {};
     $scope.typing = false;
-    $scope.suggestion = true;
+    $scope.suggestion = false;
     $scope.result = {};
     $scope.planlinechartconfig = {
         options: {
@@ -402,31 +402,41 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         },
         series: [{
-            data: [100000, 107530, 115994, 124968, 135405, 144954, 155076, 164319, 174310, 185358, 194219, 191374, 189531, 187628, 164795, 144522, 122122, 102236, 80731, 59444, 37888, 15632, -6342, -28705],
+            data: [],
             name: 'Projection 1'
         }, {
-            data: [100000, 111470, 122970, 134746, 146581, 158716, 171203, 183130, 195524, 208088, 220484, 221846, 222799, 224508, 203771, 183647, 162950, 142554, 121330, 99910, 79207, 57327, 35424, 13385],
+            data: [],
             name: 'Projection 50'
         }, {
-            data: [100000, 115750, 130681, 145573, 160090, 175316, 189824, 204827, 220557, 234282, 248720, 253228, 255528, 260959, 248650, 227971, 211127, 190327, 172191, 151364, 130916, 109266, 88570, 68763],
+            data: [],
             name: 'Projection 99'
         }, {
             type: 'column',
             name: 'Cashflow',
-            data: [100000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 11000, 0, 0, 0, -21407, -21511, -21616, -21721, -21827, -21933, -22040, -22147, -22255, -22363]
+            data: []
         }],
         title: {
             text: 'Line'
         },
         size: {
             height: 520
-        },xAxis: {
+        },
+        xAxis: {
             title: {
                 text: 'Tenure month'
             },
-            categories: [1,2,3,4,5,6,7,8,9]
+            categories: []
         },
         loading: false
+    };
+    $scope.slider = {
+        value: 0,
+        options: {
+            floor: -10,
+            ceil: 10,
+            showSelectionBarFromValue: 0,
+            hideLimitLabels: true
+        }
     };
     $scope.EDdonutchartConfig = {
         options: {
@@ -517,13 +527,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     $scope.recievedMessage($scope.currentResponse.question, 1000);
                     errAgain = 0;
                 } else {
-                    $scope.changeToObject(result);
-                    $scope.recievedMessage('Please wait while we crunch the numbers ..', 1000);
-                    $scope.recievedMessage('Fine tune your plan in 3..', 3000);
-                    $scope.recievedMessage('2..', 4000);
-                    $scope.recievedMessage('1..', 5000);
+
+                    $scope.recievedMessage('Please wait while we crunch the numbers ..', 500);
+                    $scope.recievedMessage('Fine tune your plan in 3..', 1500);
+                    $scope.recievedMessage('2..', 2500);
+                    $scope.recievedMessage('1..', 3500);
                     $timeout(function() {
-                        $scope.suggestion = true;
+                        $scope.changeToObject(result);
                     }, 6000);
                 }
             }
@@ -551,8 +561,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 return o.type == 'minlength';
             }).messages;
 
-                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain],500);
-                errAgain++;
+            $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain], 500);
+            errAgain++;
 
 
         } else if ($scope.currentResponse.rules.maxlength && angular.isString(msg) && msg.length > $scope.currentResponse.rules.maxlength) {
@@ -561,8 +571,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 return o.type == 'minlength';
             }).messages;
 
-                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain],500);
-                errAgain++;
+            $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain], 500);
+            errAgain++;
 
 
         } else if ($scope.currentResponse.rules.maximum && msg > $scope.currentResponse.rules.maximum) {
@@ -571,8 +581,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 return o.type == 'maximum';
             }).messages;
 
-                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain],500);
-                errAgain++;
+            $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain], 500);
+            errAgain++;
 
 
         } else if ($scope.currentResponse.rules.minimum && msg < $scope.currentResponse.rules.minimum) {
@@ -581,8 +591,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 return o.type == 'minimum';
             }).messages;
 
-                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain],500);
-                errAgain++;
+            $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain], 500);
+            errAgain++;
 
 
         } else {
@@ -605,7 +615,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             type: 'sent'
         });
         var confirmMessages = ['Got it.', 'Okay!', 'Thanks', 'Thank you', 'Confirmed'];
-        $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length - 1))],500);
+        $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length - 1))], 500);
         $scope.replyMessage($scope.currentResponse.valueDefault, $scope.currentResponse.id, true);
         $scope.typing = false;
     };
@@ -629,20 +639,26 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }, 200);
     };
     $scope.changeToObject = function(res) {
+        $scope.suggestion = true;
         _.each(res, function(key) {
             $scope.result[key.label] = key.value;
         });
         console.log($scope.result);
         $scope.computeIt($scope.result);
     };
-    $scope.reflowChart = function(currentPlan){
-      $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
-      $scope.planlinechartconfig.series[1].data=currentPlan.feasible[0].median2;
-      $scope.planlinechartconfig.series[2].data=currentPlan.feasible[0].median3;
-      _.each(currentPlan.feasible[0].tenures,function(){
-
-      });
-      console.log($scope.planlinechartconfig);
+    $scope.reflowChart = function(currentPlan) {
+        $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
+        $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
+        $scope.planlinechartconfig.series[2].data = currentPlan.feasible[0].median99;
+        $scope.planlinechartconfig.series[0].data.unshift(currentPlan.cashflow[0]);
+        $scope.planlinechartconfig.series[1].data.unshift(currentPlan.cashflow[0]);
+        $scope.planlinechartconfig.series[2].data.unshift(currentPlan.cashflow[0]);
+        $scope.planlinechartconfig.series[3].data = currentPlan.cashflow;
+        $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()), 'mediumDate'));
+        _.each(currentPlan.feasible[0].tenures, function(key) {
+            $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key ), 'mediumDate'));
+        });
+        console.log($scope.planlinechartconfig);
     };
 
     $scope.computeIt = function(res) {
@@ -653,15 +669,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultNow.noOfInstallment = -1 * $filter('monthsSince')(resultNow.endMonth, resultNow.startMonth);
         resultNow.startMonth = -1 * $filter('monthsSince')(resultNow.startMonth);
         resultNow.noOfMonth = -1 * $filter('monthsSince')(resultNow.monthlyuntildate);
-        NavigationService.play(resultNow,function (data) {
-          if(data.value === false){
-            $scope.currentPlan=data;
-          }else{
-            $scope.currentPlan=data;
-            $scope.reflowChart($scope.currentPlan);
-          }
-        },function(err){
-          console.log();
+        NavigationService.play(resultNow, function(data) {
+            if (data.value === false) {
+                $scope.currentPlan = data;
+            } else {
+                $scope.currentPlan = data;
+                $scope.reflowChart($scope.currentPlan);
+            }
+        }, function(err) {
+            console.log();
         });
         console.log(resultNow);
     };
