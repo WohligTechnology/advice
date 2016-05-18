@@ -265,12 +265,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 borderColor: '#1d71b8',
                 type: 'line',
                 reflow: true
-            },
-            xAxis: {
-                title: {
-                    text: 'Tenure month'
-                },
-                categories: tenure
             }
         },
         series: [{
@@ -397,9 +391,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.chats = [];
     $scope.response = {};
     $scope.typing = false;
-    $scope.suggestion = false;
+    $scope.suggestion = true;
     $scope.result = {};
-    $scope.linechartConfig = {
+    $scope.planlinechartconfig = {
         options: {
             chart: {
                 borderColor: '#1d71b8',
@@ -430,7 +424,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             title: {
                 text: 'Tenure month'
             },
-            categories: tenure
+            categories: [1,2,3,4,5,6,7,8,9]
         },
         loading: false
     };
@@ -520,7 +514,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     if (skipped !== undefined && ((skipped[1] === false && skipped[2] === false) || skipped[3] === false || (skipped[1] === false && skipped[2] === false && skipped[3] === false && skipped[6] === false && skipped[7] === false))) {
                         $scope.currentResponse.canSkip = true;
                     }
-                    $scope.recievedMessage($scope.currentResponse.question, 2000);
+                    $scope.recievedMessage($scope.currentResponse.question, 1000);
                     errAgain = 0;
                 } else {
                     $scope.changeToObject(result);
@@ -537,8 +531,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.recievedMessage(err, 1000);
         });
     };
-    $scope.recievedMessage('Hi! To create your plan I will be asking you some basic questions. You may choose to skip a question in case you are not able to answer it.', 1000);
-    $scope.recievedMessage('So let&apos;s get started!', 2000);
+    $scope.recievedMessage('Hi! To create your plan I will be asking you some basic questions. You may choose to skip a question in case you are not able to answer it.', 500);
+    $scope.recievedMessage('So let&apos;s get started!', 800);
     $scope.replyMessage(undefined);
 
     var errAgain = 0;
@@ -556,40 +550,40 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             errMsg = _.find($scope.currentResponse.errors, function(o) {
                 return o.type == 'minlength';
             }).messages;
-            $timeout(function() {
-                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain], 1000);
+
+                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain],500);
                 errAgain++;
-            }, 1000);
+
 
         } else if ($scope.currentResponse.rules.maxlength && angular.isString(msg) && msg.length > $scope.currentResponse.rules.maxlength) {
 
             errMsg = _.find($scope.currentResponse.errors, function(o) {
                 return o.type == 'minlength';
             }).messages;
-            $timeout(function() {
-                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain], 1000);
+
+                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain],500);
                 errAgain++;
-            }, 1000);
+
 
         } else if ($scope.currentResponse.rules.maximum && msg > $scope.currentResponse.rules.maximum) {
 
             errMsg = _.find($scope.currentResponse.errors, function(o) {
                 return o.type == 'maximum';
             }).messages;
-            $timeout(function() {
-                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain], 1000);
+
+                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain],500);
                 errAgain++;
-            }, 1000);
+
 
         } else if ($scope.currentResponse.rules.minimum && msg < $scope.currentResponse.rules.minimum) {
 
             errMsg = _.find($scope.currentResponse.errors, function(o) {
                 return o.type == 'minimum';
             }).messages;
-            $timeout(function() {
-                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain], 1000);
+
+                $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain],500);
                 errAgain++;
-            }, 1000);
+
 
         } else {
             var confirmMessages = ['Got it.', 'Okay!', 'Thanks', 'Thank you', 'Confirmed'];
@@ -611,7 +605,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             type: 'sent'
         });
         var confirmMessages = ['Got it.', 'Okay!', 'Thanks', 'Thank you', 'Confirmed'];
-        $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length - 1))], 1000);
+        $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length - 1))],500);
         $scope.replyMessage($scope.currentResponse.valueDefault, $scope.currentResponse.id, true);
         $scope.typing = false;
     };
@@ -641,14 +635,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         console.log($scope.result);
         $scope.computeIt($scope.result);
     };
-    $scope.currentPlan
     $scope.reflowChart = function(currentPlan){
-      $scope.linechartConfig.series[0].data = currentPlan.feasible[0].median1;
-      $scope.linechartConfig.series[1].data=currentPlan.feasible[0].median2;
-      $scope.linechartConfig.series[2].data=currentPlan.feasible[0].median3;
+      $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
+      $scope.planlinechartconfig.series[1].data=currentPlan.feasible[0].median2;
+      $scope.planlinechartconfig.series[2].data=currentPlan.feasible[0].median3;
       _.each(currentPlan.feasible[0].tenures,function(){
 
-      })
+      });
+      console.log($scope.planlinechartconfig);
     };
 
     $scope.computeIt = function(res) {
@@ -666,6 +660,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.currentPlan=data;
             $scope.reflowChart($scope.currentPlan);
           }
+        },function(err){
+          console.log();
         });
         console.log(resultNow);
     };

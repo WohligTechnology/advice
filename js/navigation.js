@@ -159,7 +159,7 @@ var scenarios = [{
     question: 'and what about the short-term loss?',
     canSkip: false,
     hasSelect: false,
-    label: 'shortterm',
+    label: 'shortinput',
     valueDefault: 0,
     valueType: 'number',
     rules: {
@@ -174,7 +174,7 @@ var scenarios = [{
     question: 'and what about the long-term loss?',
     canSkip: false,
     hasSelect: false,
-    label: 'longterm',
+    label: 'longinput',
     valueDefault: 0,
     valueType: 'number',
     rules: {
@@ -187,16 +187,16 @@ var scenarios = [{
 }, {
     id: -1
 }];
-
-if (isproduction) {
-    adminURL = "http://www.wohlig.co.in/demo/index.php";
-} else {
-    adminURL = "http://localhost/demo/index.php";
-}
+//
+// if (isproduction) {
+//     adminURL = "http://www.wohlig.co.in/demo/index.php";
+// } else {
+//     adminURL = "http://localhost/demo/index.php";
+// }
 
 var navigationservice = angular.module('navigationservice', [])
 
-.factory('NavigationService', function() {
+.factory('NavigationService', function( $http) {
     var navigation = [{
         name: "Overview",
         classis: "active",
