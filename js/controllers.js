@@ -674,9 +674,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             floor: 25000,
             ceil: 25000000,
             step: 25000,
-            //         translate: function(value) {
-            //   return $filter('date')(value,'mediumDate');
-            // },
+            translate:function(value){
+              return "₹ "+value;
+            },
             showSelectionBarFromValue: $scope.suggestions.lumpsum,
             hideLimitLabels: true
         }
@@ -684,8 +684,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.monthlySlider = {
         value: 0,
         options: {
-            floor: 0,
-            ceil: 600,
+            floor: 5000,
+            ceil:80000,
+            translate:function(value){
+              return "₹ "+value;
+            },
             showSelectionBarFromValue: $scope.suggestions.monthly,
             hideLimitLabels: true
         }
@@ -695,8 +698,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 0,
             ceil: 600,
-            showSelectionBarFromValue: $scope.suggestions.noOfMonth,
-            hideLimitLabels: false
+            translate:function(value){
+              return moment().add({months:value}).format("MMM, YYYY");
+            },
+            showSelectionBarFromValue: $scope.suggestions.noOfMonth
+
         }
     };
     $scope.inputs.installmentSlider = {
@@ -704,6 +710,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 0,
             ceil: 600,
+            translate:function(value){
+              return "₹ "+value;
+            },
             showSelectionBarFromValue: $scope.suggestions.installment,
             hideLimitLabels: true
         }
@@ -727,6 +736,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 0,
             ceil: 600,
+            translate:function(value){
+              return moment().add({months:value}).format("MMM, YYYY");
+            },
             showSelectionBarFromValue: $scope.suggestions.startMonth,
             hideLimitLabels: true
         }
@@ -736,16 +748,23 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 0,
             ceil: 600,
+            translate:function(value){
+              return moment().add({months:value}).format("MMM, YYYY");
+            },
             showSelectionBarFromValue: $scope.suggestions.endMonth,
+            hideLimitLabels: true
 
-            hideLimitLabels: false
+
         }
     };
     $scope.inputs.inflationSlider = {
         value: 0,
         options: {
-            floor: 0,
-            ceil: 600,
+            floor: 6,
+            ceil: 100,
+            translate:function(value){
+              return value+" %";
+            },
             showSelectionBarFromValue: $scope.suggestions.inflation,
             hideLimitLabels: true
         }
@@ -754,16 +773,24 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         value: 0,
         options: {
             floor: 0,
-            ceil: 600,
-            hideLimitLabels: false
+            ceil: 100,
+            translate:function(value){
+              return value+" %";
+            },
+            hideLimitLabels: true
+
         }
     };
     $scope.inputs.longinputSlider = {
         value: 0,
         options: {
             floor: 0,
-            ceil: 600,
-            hideLimitLabels: false
+            ceil: 100,
+            translate:function(value){
+              return value+" %";
+            },
+            hideLimitLabels: true
+
         }
     };
     var replyJSON = {
