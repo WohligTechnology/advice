@@ -56,7 +56,7 @@
               <div flex="84" flex-gt-xs="80" flex-xs="80">
                 <div class="chat-input">
                   <md-button class="text-uppercase skip-button" ng-disabled="!currentResponse.canSkip" ng-click="skipIt()">Skip</md-button>
-                  <input ng-hide="currentResponse.hasSelect" type="{{currentResponse.valueType}}" ng-change="typingIt(response.reply)" ng-model="response.reply" placeholder="Type Something..." style="">
+                  <input ng-hide="currentResponse.hasSelect" type="{{currentResponse.valueType}}" ng-change="typingIt(response.reply)"  ng-model="response.reply" placeholder="Type Something..." style="">
                   <md-select ng-show="currentResponse.hasSelect" required ng-change="typingIt(response.reply)" ng-model="response.reply" style="width: 80%; margin: 0; display: inline-block;">
                     <md-option ng-repeat="option in currentResponse.selectValues" value="{{option}}">{{option}}</md-option>
 
@@ -86,7 +86,7 @@
     <div class="slider slider1">
       <span>One Time Investment</span>
       <span class="pull-right block"><i class="fa fa-inr"></i>
-      <md-input-container><input type="number" class="leftLabelVal" ng-model="inputs.lumpsumSlider.value"></md-input-container>
+      <md-input-container><input type="number" class="leftLabelVal" ng-change="validateSliders()" ng-model="inputs.lumpsumSlider.value"></md-input-container>
       </span>
       <!-- <div class="nstSlider" data-range_min="15000" data-range_max="25000" data-cur_min="20000" data-cur_max="20000">
         <div class="bar"></div>
@@ -97,7 +97,7 @@
     <div class="slider slider2">
       <span>Monthly Investment</span>
       <span class="pull-right block"><i class="fa fa-inr"></i>
-      <md-input-container><input type="number" class="leftLabelVal" ng-model="inputs.monthlySlider.value"></md-input-container>
+      <md-input-container><input type="number" class="leftLabelVal" ng-change="validateSliders()" ng-model="inputs.monthlySlider.value"></md-input-container>
       </span>
       <!-- <div class="nstSlider" data-range_min="-127" data-range_max="127" data-cur_min="-90" data-cur_max="0">
         <div class="bar"></div>
@@ -110,8 +110,8 @@
       <span class="pull-right block">
 
 
-        <md-select ng-model="inputs.monthlyuntildateSlider.value">
-              <md-option ng-repeat="dates in sixHundredMonths" value="{{dates.id}}">
+        <md-select ng-change="validateSliders()" ng-model="inputs.monthlyuntildateSlider.value">
+              <md-option ng-repeat="dates in sixHundredMonths" value="{{dates.id}}" >
                 {{dates.value}}
               </md-option>
             </md-select>
@@ -128,7 +128,7 @@
     <div class="slider slider4">
       <span>Withdrawal Amount</span>
       <span class="pull-right block"><i class="fa fa-inr"></i>
-      <md-input-container><input type="number" class="leftLabelVal" ng-model="inputs.installmentSlider.value"></md-input-container>
+      <md-input-container><input type="number" class="leftLabelVal" ng-change="validateSliders()" ng-model="inputs.installmentSlider.value"></md-input-container>
       </span>
       <!-- <div class="nstSlider" data-range_min="-127" data-range_max="127" data-cur_min="-20" data-cur_max="0">
         <div class="bar"></div>
@@ -139,7 +139,7 @@
     <div class="slider slider5">
       <span>Withdrawal Frequency</span>
       <span class="pull-right block">
-      <md-input-container><input type="number" class="leftLabelVal" ng-model="inputs.withdrawalfrequencySlider.value"></md-input-container>
+      <md-input-container><input type="number" class="leftLabelVal" ng-change="validateSliders()" ng-model="inputs.withdrawalfrequencySlider.value"></md-input-container>
       </span>
       <!-- <div class="nstSlider" data-range_min="15000" data-range_max="25000" data-cur_min="20000" data-cur_max="20000">
         <div class="bar"></div>
@@ -150,7 +150,11 @@
     <div class="slider slider6">
       <span>Withdrawal Start</span>
       <span class="pull-right block">
-      <md-input-container><input type="date" class="leftLabelVal" ng-model="inputs.startMonthSlider.value"></md-input-container>
+        <md-select ng-change="validateSliders()" ng-model="inputs.startMonthSlider.value">
+              <md-option ng-repeat="dates in sixHundredMonths" value="{{dates.id}}" ng-show="dates.id >= inputs.startMonthSlider.options.floor">
+                {{dates.value}}
+              </md-option>
+            </md-select>
       </span>
       <!-- <div class="nstSlider" data-range_min="-127" data-range_max="127" data-cur_min="-90" data-cur_max="0">
         <div class="bar"></div>
@@ -161,7 +165,11 @@
     <div class="slider slider7">
       <span>Withdrawal End</span>
       <span class="pull-right block">
-      <md-input-container><input type="date" class="leftLabelVal" ng-model="inputs.endMonthSlider.value"></md-input-container>
+        <md-select ng-change="validateSliders()" ng-model="inputs.endMonthSlider.value">
+              <md-option ng-repeat="dates in sixHundredMonths" value="{{dates.id}}" ng-if="dates.id >= inputs.endMonthSlider.options.floor" >
+                {{dates.value}}
+              </md-option>
+            </md-select>
       </span>
       <!-- <div class="nstSlider" data-range_min="-127" data-range_max="127" data-cur_min="40" data-cur_max="0">
         <div class="bar"></div>
@@ -172,7 +180,7 @@
     <div class="slider slider8">
       <span>Expected Inflation</span>
       <span class="pull-right block">
-      <md-input-container><input type="number" class="leftLabelVal" ng-model="inputs.inflationSlider.value"></md-input-container>
+      <md-input-container><input type="number" class="leftLabelVal" ng-change="validateSliders()" ng-model="inputs.inflationSlider.value"></md-input-container>
       %</span>
       <!-- <div class="nstSlider" data-range_min="0" data-range_max="12" data-cur_min="6" data-cur_max="6">
         <div class="bar"></div>
@@ -183,7 +191,7 @@
     <div class="slider slider9">
       <span>Short-term Loss</span>
       <span class="pull-right block">
-      <md-input-container><input type="number" class="leftLabelVal" ng-model="inputs.shortinputSlider.value"></md-input-container>
+      <md-input-container><input type="number" class="leftLabelVal" ng-change="validateSliders()" ng-model="inputs.shortinputSlider.value"></md-input-container>
       %</span>
       <!-- <div class="nstSlider" data-range_min="0" data-range_max="60" data-cur_min="30" data-cur_max="30">
         <div class="bar"></div>
@@ -194,7 +202,7 @@
     <div class="slider slider10">
       <span>Long-term Loss</span>
       <span class="pull-right block">
-      <md-input-container><input type="number" class="leftLabelVal" ng-model="inputs.longinputSlider.value"></md-input-container>
+      <md-input-container><input type="number" class="leftLabelVal" ng-change="validateSliders()" ng-model="inputs.longinputSlider.value"></md-input-container>
       %</span>
       <!-- <div class="nstSlider" data-range_min="0" data-range_max="20" data-cur_min="5" data-cur_max="10">
         <div class="bar"></div>

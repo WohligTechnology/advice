@@ -676,12 +676,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         noOfMonth: 11,
         startMonth: 10
     };
+
     $scope.inputs.lumpsumSlider = {
         value: 25000,
         options: {
+          onChange : function () {
+            $scope.validateSliders();
+          },
             floor: 25000,
             ceil: 25000000,
-            step: 25000,
+            step: 100,
             translate: function(value) {
                 return "₹ " + value;
             },
@@ -692,6 +696,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.monthlySlider = {
         value: 0,
         options: {
+          onChange : function () {
+            $scope.validateSliders();
+          },
             floor: 5000,
             ceil: 80000,
             translate: function(value) {
@@ -704,6 +711,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.monthlyuntildateSlider = {
         value: 0,
         options: {
+          onChange : function () {
+            $scope.validateSliders();
+          },
             floor: 0,
             ceil: 600,
             translate: function(value) {
@@ -718,8 +728,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.installmentSlider = {
         value: 0,
         options: {
-            floor: 0,
-            ceil: 600,
+          onChange : function () {
+            $scope.validateSliders();
+          },
+            floor: 6000,
+            ceil: 50000,
             translate: function(value) {
                 return "₹ " + value;
             },
@@ -731,6 +744,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.withdrawalfrequencySlider = {
         value: 25000,
         options: {
+          onChange : function () {
+            $scope.validateSliders();
+          },
             floor: 25000,
             ceil: 25000000,
             step: 25000,
@@ -744,6 +760,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.startMonthSlider = {
         value: 0,
         options: {
+          onChange : function () {
+            $scope.validateSliders();
+          },
             floor: 0,
             ceil: 600,
             translate: function(value) {
@@ -758,6 +777,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.endMonthSlider = {
         value: 0,
         options: {
+          onChange : function () {
+            $scope.validateSliders();
+          },
             floor: 0,
             ceil: 600,
             translate: function(value) {
@@ -774,6 +796,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.inflationSlider = {
         value: 0,
         options: {
+          onChange : function () {
+            $scope.validateSliders();
+          },
             floor: 6,
             ceil: 100,
             translate: function(value) {
@@ -786,6 +811,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.shortinputSlider = {
         value: 0,
         options: {
+          onChange : function () {
+            $scope.validateSliders();
+          },
             floor: 0,
             ceil: 100,
             translate: function(value) {
@@ -798,6 +826,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.longinputSlider = {
         value: 0,
         options: {
+          onChange : function () {
+            $scope.validateSliders();
+          },
             floor: 0,
             ceil: 100,
             translate: function(value) {
@@ -806,6 +837,60 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             hideLimitLabels: true
 
         }
+    };
+    $scope.executeIt= true;
+    $scope.validateSliders = function () {
+      console.log($scope.inputs);
+      if($scope.inputs.startMonthSlider.value < $scope.inputs.monthlyuntildateSlider.value){
+        $scope.inputs.startMonthSlider.options.floor = $scope.inputs.monthlyuntildateSlider.value + 1;
+      }
+      if($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value){
+        $scope.inputs.endMonthSlider.options.floor = $scope.inputs.startMonthSlider.value + 1;
+      }
+
+
+          $scope.parseSliders();
+
+    };
+    var resultSlider={};
+    $scope.parseSliders= function(){
+      resultSlider.noOfInstallment = $scope.inputs.endMonthSlider.value - $scope.inputs.startMonthSlider.value;
+      resultSlider.monthly = $scope.inputs.monthlySlider.value;
+      resultSlider.startMonth = $scope.inputs.startMonthSlider.value;
+      resultSlider.noOfMonth = $scope.inputs.monthlyuntildateSlider.value;
+      resultSlider.lumpsum = $scope.inputs.lumpsumSlider.value;
+      resultSlider.inflation = $scope.inputs.inflationSlider.value;
+      resultSlider.installment = $scope.inputs.installmentSlider.value;
+      resultSlider.shortinput=$scope.inputs.shortinputSlider.value;
+      resultSlider.longinput=$scope.inputs.longinputSlider.value;
+      if($scope.executeIt){
+      $scope.executeCompute(resultSlider);
+    }
+
+    };
+    $scope.executeCompute=function(resultNow){
+      $scope.executeIt=false;
+      console.log(resultNow);
+      NavigationService.play(resultNow, function(data) {
+          if (data.value === false) {
+              $scope.currentPlan = data;
+              if($scope.currentPlan.suggestions){
+                $scope.suggestIt($scope.currentPlan.suggestions);
+              }
+          } else {
+              $scope.currentPlan = data;
+              $scope.planlinechartconfig.loading = false;
+              $scope.reflowChart($scope.currentPlan);
+              $scope.setSliders(resultNow);
+              $scope.suggestIt($scope.currentPlan.suggestions);
+
+          }
+          $timeout(function(){
+            $scope.executeIt=true;
+          },1000);
+      }, function(err) {
+          console.log(err);
+      });
     };
     var replyJSON = {
         "goalname": "The Game Plan",
@@ -840,7 +925,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.planlinechartconfig.loading = false;
 
                 $scope.reflowChart($scope.currentPlan);
-
+                $scope.setSliders(resultNow);
+                $scope.suggestIt($scope.currentPlan.suggestions);
             }
         }, function(err) {
             console.log(err);
@@ -850,29 +936,23 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.computeIt(replyJSON);
 
     $scope.suggestIt = function(suggestions) {
-        console.log(suggestions);
+        $scope.inputs.installmentSlider.options.showSelectionBarFromValue = suggestions.installment;
+        $scope.inputs.lumpsumSlider.options.showSelectionBarFromValue = suggestions.lumpsum;
+        $scope.inputs.monthlySlider.options.showSelectionBarFromValue = suggestions.monthly;
+        $scope.inputs.installmentSlider.options.showSelectionBarFromValue = suggestions.installment;
+        $scope.inputs.startMonthSlider.options.showSelectionBarFromValue = suggestions.startMonth;
+        $scope.inputs.endMonthSlider.options.showSelectionBarFromValue = $scope.inputs.startMonthSlider.options.showSelectionBarFromValue + suggestions.noOfMonth;
     };
     $scope.setSliders = function functionName(res) {
-        $scope.lumpsumSlider.options = {
-            ceil: _.find(scenarios, function(sc) {
-                return sc.label == 'lumpsum';
-            }).rules.maximum,
-            floor: _.find(scenarios, function(sc) {
-                return sc.label == 'lumpsum';
-            }).rules.minimum,
-            showSelectionBarFromValue: res.lumpsum
-        };
-        $scope.monthlySlider.options = {
-            ceil: _.find(scenarios, function(sc) {
-                return sc.label == 'monthly';
-            }).rules.maximum,
-            floor: _.find(scenarios, function(sc) {
-                return sc.label == 'monthly';
-            }).rules.minimum,
-            showSelectionBarFromValue: res.monthly
-        };
-        console.log($scope.lumpsumSlider);
-        console.log($scope.monthlySlider);
+      $scope.inputs.lumpsumSlider.value=res.lumpsum;
+      $scope.inputs.monthlySlider.value=res.monthly;
+      $scope.inputs.monthlyuntildateSlider.value=res.noOfMonth;
+      $scope.inputs.startMonthSlider.value=res.startMonth;
+      $scope.inputs.endMonthSlider.value=res.startMonth +res.noOfInstallment;
+      $scope.inputs.shortinputSlider.value=res.shortinput;
+      $scope.inputs.longinputSlider.value=res.longinput;
+      $scope.inputs.inflationSlider.value=res.inflation;
+      $scope.inputs.installmentSlider.value=res.installment;
     };
 })
 
