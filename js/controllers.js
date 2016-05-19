@@ -473,16 +473,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         console.log($scope.chats[$scope.chats.length - 1].type !== 'sent');
         if (msg !== undefined && $scope.chats[$scope.chats.length - 1].type !== 'sent') {
             $scope.typing = false;
-
             if ($scope.currentResponse.valueType == 'date') {
                 msg = $filter('date')(new Date(msg), 'mediumDate');
-
             }
             $scope.chats.push({
                 text: msg,
                 type: 'sent'
             });
-
             $scope.validateMessage(_.cloneDeep(msg), $scope.currentResponse.id);
         }
         $scope.response.reply = undefined;
@@ -519,14 +516,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     $scope.recievedMessage($scope.currentResponse.question, 1000);
                     errAgain = 0;
                 } else {
-
                     $scope.recievedMessage('Please wait while we crunch the numbers ..', 500);
                     $scope.recievedMessage('Fine tune your plan in 3..', 1500);
                     $scope.recievedMessage('2..', 2500);
                     $scope.recievedMessage('1..', 3500);
                     $timeout(function() {
                         $scope.changeToObject(result);
-                    }, 6000);
+                    }, 4000);
                 }
             }
         }, function(err) {
@@ -611,7 +607,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.replyMessage($scope.currentResponse.valueDefault, $scope.currentResponse.id, true);
         $scope.typing = false;
     };
-// REMOVE SOON START
+    // REMOVE SOON START
     window.onload = function(e) {
         setTimeout(function() {
             console.log("loaded");
@@ -631,7 +627,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         }, 200);
     };
-// REMOVE SOON END
+    // REMOVE SOON END
     $scope.changeToObject = function(res) {
         $scope.suggestion = true;
         _.each(res, function(key) {
@@ -649,30 +645,42 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.planlinechartconfig.series[1].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.series[2].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.series[3].data = currentPlan.cashflow;
+        $scope.planlinechartconfig.title.text = $scope.result.goalname;
         $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()), 'mediumDate'));
         _.each(currentPlan.feasible[0].tenures, function(key) {
-            $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key ), 'mediumDate'));
+            $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key), 'mediumDate'));
         });
 
     };
 
-    //Slider models
-    $scope.lumpsumSlider={
+    //Slider models start
+    $scope.lumpsumSlider = {
         value: $scope.result.lumpsum,
         options: {
             floor: 25000,
             ceil: 25000000,
-    //         translate: function(value) {
-    //   return $filter('date')(value,'mediumDate');
-    // },
+            //         translate: function(value) {
+            //   return $filter('date')(value,'mediumDate');
+            // },
             showSelectionBarFromValue: $scope.result.lumpsum,
             hideLimitLabels: true
         }
     };
-//Slider models end
-
+    $scope.monthlySlider = {
+        value: $scope.result.monthly,
+        options: {
+            floor: 25000,
+            ceil: 25000000,
+            //         translate: function(value) {
+            //   return $filter('date')(value,'mediumDate');
+            // },
+            showSelectionBarFromValue: $scope.result.monthly,
+            hideLimitLabels: false
+        }
+    };
+    //Slider models end
     $scope.computeIt = function(res) {
-        resultNow = res;
+        resultNow = _.cloneDeep(res);
         resultNow.lumpsum = $filter('nearest100')(resultNow.lumpsum);
         resultNow.monthly = $filter('nearest100')(resultNow.monthly);
         resultNow.installment = $filter('nearest100')(resultNow.installment);
@@ -687,12 +695,33 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.reflowChart($scope.currentPlan);
             }
         }, function(err) {
-            console.log();
+            console.log(err);
         });
         console.log(resultNow);
     };
-
-
+    $scope.suggestIt= function(suggestions){
+      console.log(suggestions);
+    };
+    $scope.setSliders = function functionName(res) {
+      $scope.lumpsumSlider.options = {
+        ceil:_.find(scenarios,function(sc){
+          return sc.label == 'lumpsum';
+        }).rules.maximum,
+        floor:_.find(scenarios,function(sc){
+          return sc.label == 'lumpsum';
+        }).rules.minimum,
+        showSelectionBarFromValue:res.lumpsum
+      };
+      $scope.monthlySlider.options = {
+        ceil:_.find(scenarios,function(sc){
+          return sc.label == 'monthly';
+        }).rules.maximum,
+        floor:_.find(scenarios,function(sc){
+          return sc.label == 'monthly';
+        }).rules.minimum,
+        showSelectionBarFromValue:res.monthly
+      };
+    };
 })
 
 .controller('headerctrl', function($scope, TemplateService) {
