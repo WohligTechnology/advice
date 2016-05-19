@@ -391,7 +391,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.chats = [];
     $scope.response = {};
     $scope.typing = false;
-    $scope.suggestion = true;
+    $scope.suggestion = false;
     $scope.result = {};
     $scope.sixHundredMonths = [];
     for (i = 0; i < 600; i++) {
@@ -883,6 +883,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
               $scope.reflowChart($scope.currentPlan);
               $scope.setSliders(resultNow);
               $scope.suggestIt($scope.currentPlan.suggestions);
+              $scope.planlinechartconfig.loading = false;
 
           }
           $timeout(function(){
@@ -917,20 +918,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultNow.noOfInstallment = -1 * $filter('monthsSince')(resultNow.endMonth, resultNow.startMonth);
         resultNow.startMonth = -1 * $filter('monthsSince')(resultNow.startMonth);
         resultNow.noOfMonth = -1 * $filter('monthsSince')(resultNow.monthlyuntildate);
-        NavigationService.play(resultNow, function(data) {
-            if (data.value === false) {
-                $scope.currentPlan = data;
-            } else {
-                $scope.currentPlan = data;
-                $scope.planlinechartconfig.loading = false;
-
-                $scope.reflowChart($scope.currentPlan);
-                $scope.setSliders(resultNow);
-                $scope.suggestIt($scope.currentPlan.suggestions);
-            }
-        }, function(err) {
-            console.log(err);
-        });
+        $scope.executeCompute(resultNow);
         console.log(resultNow);
     };
     $scope.computeIt(replyJSON);
@@ -948,7 +936,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.inputs.monthlySlider.value=res.monthly;
       $scope.inputs.monthlyuntildateSlider.value=res.noOfMonth;
       $scope.inputs.startMonthSlider.value=res.startMonth;
-      $scope.inputs.endMonthSlider.value=res.startMonth +res.noOfInstallment;
+      $scope.inputs.endMonthSlider.value=res.startMonth + res.noOfInstallment;
       $scope.inputs.shortinputSlider.value=res.shortinput;
       $scope.inputs.longinputSlider.value=res.longinput;
       $scope.inputs.inflationSlider.value=res.inflation;
