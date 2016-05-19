@@ -661,8 +661,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
     };
     $scope.suggestions = {
-        lumpsum: 10000000,
-        monthly:10
+      installment: 21571,
+      lumpsum: 85011,
+      monthly: 9442,
+      noOfInstallment: 10,
+      noOfMonth: 11,
+      startMonth: 10
     };
     $scope.inputs.lumpsumSlider = {
         value: 25000,
@@ -686,12 +690,79 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             hideLimitLabels: true
         }
     };
-    $scope.inputs.monthlyInvestment = {
+    $scope.inputs.monthlyuntildateSlider = {
         value: 0,
         options: {
             floor: 0,
             ceil: 600,
             showSelectionBarFromValue: $scope.suggestions.noOfMonth,
+            hideLimitLabels: false
+        }
+    };
+    $scope.inputs.installmentSlider = {
+        value: 0,
+        options: {
+            floor: 0,
+            ceil: 600,
+            showSelectionBarFromValue: $scope.suggestions.installment,
+            hideLimitLabels: true
+        }
+    };
+
+    $scope.inputs.withdrawalfrequencySlider = {
+        value: 25000,
+        options: {
+            floor: 25000,
+            ceil: 25000000,
+            step: 25000,
+            //         translate: function(value) {
+            //   return $filter('date')(value,'mediumDate');
+            // },
+            showSelectionBarFromValue: $scope.suggestions.withdrawalfrequency,
+            hideLimitLabels: true
+        }
+    };
+    $scope.inputs.startMonthSlider = {
+        value: 0,
+        options: {
+            floor: 0,
+            ceil: 600,
+            showSelectionBarFromValue: $scope.suggestions.startMonth,
+            hideLimitLabels: true
+        }
+    };
+    $scope.inputs.endMonthSlider = {
+        value: 0,
+        options: {
+            floor: 0,
+            ceil: 600,
+            showSelectionBarFromValue: $scope.suggestions.endMonth,
+
+            hideLimitLabels: false
+        }
+    };
+    $scope.inputs.inflationSlider = {
+        value: 0,
+        options: {
+            floor: 0,
+            ceil: 600,
+            showSelectionBarFromValue: $scope.suggestions.inflation,
+            hideLimitLabels: true
+        }
+    };
+    $scope.inputs.shortinputSlider = {
+        value: 0,
+        options: {
+            floor: 0,
+            ceil: 600,
+            hideLimitLabels: false
+        }
+    };
+    $scope.inputs.longinputSlider = {
+        value: 0,
+        options: {
+            floor: 0,
+            ceil: 600,
             hideLimitLabels: false
         }
     };
