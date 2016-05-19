@@ -70,12 +70,12 @@
   .planner-main {
     margin: 0;
     box-shadow: none;
+    .chat-input {
+      width: 100%;
+      margin: 0 0 0 10px;
+      input { width: 75%; }
+    }
   }
-  .planner-main .chat-input {
-    width: 100%;
-    margin: 0 0 0 10px;
-  }
-  .planner-main .chat-input input { width: 75%; }
   .skip-button { min-width: 60px; }
   .planner-main .planner-chats .planner-receiver .receiver-message span,
   .planner-main .planner-chats .planner-sender .sender-message span {
@@ -131,7 +131,19 @@
       i { padding: 5px; font-size: 20px; }
     }
   }
-  .planner-sidebar .right-bar { padding: 20px !important; }
+  .planner-sidebar {
+    .left-bar {
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      position: relative;
+      box-shadow: none;
+      overflow: auto;
+      .donut-chart { margin: 20px 0 0; }
+    }
+    .right-bar { padding: 20px !important; }
+  }
+
 }
 
 /* Custom, iPhone Retina */
