@@ -702,7 +702,10 @@ md-sidenav.md-sidenav-left {
     .nstSlider .rightGrip, .nstSlider .leftGrip { border: 1px solid; }
     .slider {
       margin: 17px 0;
-      .block { margin-bottom: -11px; }
+      .block {
+        margin-bottom: -11px;
+        md-select { margin: -10px 0 0; }
+      }
       md-input-container {
         width: 70px;
         height: 30px;
@@ -735,45 +738,6 @@ md-sidenav.md-sidenav-left {
       height: 300px;
       margin: 20px 0 50px;
       img { height: 100%; }
-    }
-  }
-  .top-bar {
-    padding: 20px;
-    .slider {
-      margin: 17px 0;
-      .block { margin-bottom: -11px; }
-      md-input-container {
-        width: 70px;
-        height: 30px;
-        margin: 0 10px 0 0;
-        //input { width: 95%; }
-        input.md-input { margin-top: -4px; }
-      }
-    }
-    rzslider {
-      margin: 25px 0 15px 0;
-      .rz-pointer {
-        width: 20px;
-        height: 20px;
-        top: -8px;
-        &:after {
-          width: 4px;
-          height: 4px;
-          top: 8px;
-          left: 8px;
-        }
-      }
-      .rz-pointer.rz-active {
-        &:focus { outline: none; }
-        &:after { background-color: white; }
-      }
-      .rz-bubble { bottom: -30px; }
-    }
-    .donut-chart {
-      width: 100%;
-      height: 300px;
-      margin: 20px 0 0;
-      img { height: 100%; margin: 0 auto; }
     }
   }
   .right-bar {
