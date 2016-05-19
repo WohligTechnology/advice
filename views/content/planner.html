@@ -108,7 +108,16 @@
     <div class="slider slider3">
       <span>Monthly Investment Period</span>
       <span class="pull-right block">
-      <md-input-container><input type="date" class="leftLabelVal" ng-model="inputs.monthlyuntildateSlider.value"></md-input-container>
+
+
+        <md-select ng-model="inputs.monthlyuntildateSlider.value">
+              <md-option ng-repeat="dates in sixHundredMonths" value="{{dates.id}}">
+                {{dates.value}}
+              </md-option>
+            </md-select>
+
+
+
       </span>
       <!-- <div class="nstSlider" data-range_min="-127" data-range_max="127" data-cur_min="40" data-cur_max="0">
         <div class="bar"></div>

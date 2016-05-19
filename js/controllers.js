@@ -393,7 +393,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.typing = false;
     $scope.suggestion = true;
     $scope.result = {};
-
+    $scope.sixHundredMonths = [];
+    for (i = 0; i < 600; i++) {
+        $scope.sixHundredMonths.push({
+            id: i,
+            value: moment().add({
+                months: i
+            }).format("MMM, YYYY")
+        });
+    }
     $scope.planlinechartconfig = {
         options: {
             chart: {
@@ -661,12 +669,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
     };
     $scope.suggestions = {
-      installment: 21571,
-      lumpsum: 85011,
-      monthly: 9442,
-      noOfInstallment: 10,
-      noOfMonth: 11,
-      startMonth: 10
+        installment: 21571,
+        lumpsum: 85011,
+        monthly: 9442,
+        noOfInstallment: 10,
+        noOfMonth: 11,
+        startMonth: 10
     };
     $scope.inputs.lumpsumSlider = {
         value: 25000,
@@ -674,8 +682,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             floor: 25000,
             ceil: 25000000,
             step: 25000,
-            translate:function(value){
-              return "₹ "+value;
+            translate: function(value) {
+                return "₹ " + value;
             },
             showSelectionBarFromValue: $scope.suggestions.lumpsum,
             hideLimitLabels: true
@@ -685,9 +693,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         value: 0,
         options: {
             floor: 5000,
-            ceil:80000,
-            translate:function(value){
-              return "₹ "+value;
+            ceil: 80000,
+            translate: function(value) {
+                return "₹ " + value;
             },
             showSelectionBarFromValue: $scope.suggestions.monthly,
             hideLimitLabels: true
@@ -698,8 +706,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 0,
             ceil: 600,
-            translate:function(value){
-              return moment().add({months:value}).format("MMM, YYYY");
+            translate: function(value) {
+                return moment().add({
+                    months: value
+                }).format("MMM, YYYY");
             },
             showSelectionBarFromValue: $scope.suggestions.noOfMonth
 
@@ -710,8 +720,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 0,
             ceil: 600,
-            translate:function(value){
-              return "₹ "+value;
+            translate: function(value) {
+                return "₹ " + value;
             },
             showSelectionBarFromValue: $scope.suggestions.installment,
             hideLimitLabels: true
@@ -736,8 +746,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 0,
             ceil: 600,
-            translate:function(value){
-              return moment().add({months:value}).format("MMM, YYYY");
+            translate: function(value) {
+                return moment().add({
+                    months: value
+                }).format("MMM, YYYY");
             },
             showSelectionBarFromValue: $scope.suggestions.startMonth,
             hideLimitLabels: true
@@ -748,8 +760,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 0,
             ceil: 600,
-            translate:function(value){
-              return moment().add({months:value}).format("MMM, YYYY");
+            translate: function(value) {
+                return moment().add({
+                    months: value
+                }).format("MMM, YYYY");
             },
             showSelectionBarFromValue: $scope.suggestions.endMonth,
             hideLimitLabels: true
@@ -762,8 +776,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 6,
             ceil: 100,
-            translate:function(value){
-              return value+" %";
+            translate: function(value) {
+                return value + " %";
             },
             showSelectionBarFromValue: $scope.suggestions.inflation,
             hideLimitLabels: true
@@ -774,8 +788,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 0,
             ceil: 100,
-            translate:function(value){
-              return value+" %";
+            translate: function(value) {
+                return value + " %";
             },
             hideLimitLabels: true
 
@@ -786,8 +800,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             floor: 0,
             ceil: 100,
-            translate:function(value){
-              return value+" %";
+            translate: function(value) {
+                return value + " %";
             },
             hideLimitLabels: true
 
