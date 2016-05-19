@@ -391,7 +391,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.chats = [];
     $scope.response = {};
     $scope.typing = false;
-    $scope.suggestion = false;
+    $scope.suggestion = true;
     $scope.result = {};
     $scope.planlinechartconfig = {
         options: {
@@ -416,7 +416,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             data: []
         }],
         title: {
-            text: 'Line'
+            text: ''
         },
         size: {
             height: 520
@@ -655,7 +655,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     //Slider models start
     $scope.lumpsumSlider = {
-        value: $scope.result.lumpsum,
+        value: 0,
         options: {
             floor: 25000,
             ceil: 25000000,
@@ -667,7 +667,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
     };
     $scope.monthlySlider = {
-        value: $scope.result.monthly,
+        value: function(value) {
+            return $filter('nearest100')(value);
+        },
         options: {
             floor: 25000,
             ceil: 25000000,
@@ -678,8 +680,24 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             hideLimitLabels: false
         }
     };
-    //Slider models end
+    var replyJSON = {
+            "goalname": "The Game Plan",
+            "lumpsum": 100210,
+            "monthly": 11000,
+            "monthlyuntildate": "2017-12-04T18:30:00.000Z",
+            "withdrawalfrequency": null,
+            "inflation": 6,
+            "installment": 20000,
+            "startMonth": "2018-02-19T18:30:00.000Z",
+            "endMonth": "2019-02-19T18:30:00.000Z",
+            "shortinput": 10,
+            "longinput": 10
+        };
+        //Slider models end
     $scope.computeIt = function(res) {
+        // $scope.setSliders(res);
+        $scope.planlinechartconfig.loading=true;
+        console.log(JSON.stringify(res));
         resultNow = _.cloneDeep(res);
         resultNow.lumpsum = $filter('nearest100')(resultNow.lumpsum);
         resultNow.monthly = $filter('nearest100')(resultNow.monthly);
@@ -692,35 +710,42 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.currentPlan = data;
             } else {
                 $scope.currentPlan = data;
+                $scope.planlinechartconfig.loading=false;
+
                 $scope.reflowChart($scope.currentPlan);
+
             }
         }, function(err) {
             console.log(err);
         });
         console.log(resultNow);
     };
-    $scope.suggestIt= function(suggestions){
-      console.log(suggestions);
+    $scope.computeIt(replyJSON);
+
+    $scope.suggestIt = function(suggestions) {
+        console.log(suggestions);
     };
     $scope.setSliders = function functionName(res) {
-      $scope.lumpsumSlider.options = {
-        ceil:_.find(scenarios,function(sc){
-          return sc.label == 'lumpsum';
-        }).rules.maximum,
-        floor:_.find(scenarios,function(sc){
-          return sc.label == 'lumpsum';
-        }).rules.minimum,
-        showSelectionBarFromValue:res.lumpsum
-      };
-      $scope.monthlySlider.options = {
-        ceil:_.find(scenarios,function(sc){
-          return sc.label == 'monthly';
-        }).rules.maximum,
-        floor:_.find(scenarios,function(sc){
-          return sc.label == 'monthly';
-        }).rules.minimum,
-        showSelectionBarFromValue:res.monthly
-      };
+        $scope.lumpsumSlider.options = {
+            ceil: _.find(scenarios, function(sc) {
+                return sc.label == 'lumpsum';
+            }).rules.maximum,
+            floor: _.find(scenarios, function(sc) {
+                return sc.label == 'lumpsum';
+            }).rules.minimum,
+            showSelectionBarFromValue: res.lumpsum
+        };
+        $scope.monthlySlider.options = {
+            ceil: _.find(scenarios, function(sc) {
+                return sc.label == 'monthly';
+            }).rules.maximum,
+            floor: _.find(scenarios, function(sc) {
+                return sc.label == 'monthly';
+            }).rules.minimum,
+            showSelectionBarFromValue: res.monthly
+        };
+        console.log($scope.lumpsumSlider);
+        console.log($scope.monthlySlider);
     };
 })
 
