@@ -393,6 +393,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.typing = false;
     $scope.suggestion = true;
     $scope.result = {};
+
     $scope.planlinechartconfig = {
         options: {
             chart: {
@@ -654,49 +655,63 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     //Slider models start
-    $scope.lumpsumSlider = {
-        value: 0,
+    $scope.inputs = {
+        lumpsumSlider: {
+            value: 25000
+        }
+    };
+    $scope.suggestions = {
+        lumpsum: 10000000,
+        monthly:10
+    };
+    $scope.inputs.lumpsumSlider = {
+        value: 25000,
         options: {
             floor: 25000,
             ceil: 25000000,
+            step: 25000,
             //         translate: function(value) {
             //   return $filter('date')(value,'mediumDate');
             // },
-            showSelectionBarFromValue: $scope.result.lumpsum,
+            showSelectionBarFromValue: $scope.suggestions.lumpsum,
             hideLimitLabels: true
         }
     };
-    $scope.monthlySlider = {
-        value: function(value) {
-            return $filter('nearest100')(value);
-        },
+    $scope.inputs.monthlySlider = {
+        value: 0,
         options: {
-            floor: 25000,
-            ceil: 25000000,
-            //         translate: function(value) {
-            //   return $filter('date')(value,'mediumDate');
-            // },
-            showSelectionBarFromValue: $scope.result.monthly,
+            floor: 0,
+            ceil: 600,
+            showSelectionBarFromValue: $scope.suggestions.monthly,
+            hideLimitLabels: true
+        }
+    };
+    $scope.inputs.monthlyInvestment = {
+        value: 0,
+        options: {
+            floor: 0,
+            ceil: 600,
+            showSelectionBarFromValue: $scope.suggestions.noOfMonth,
             hideLimitLabels: false
         }
     };
     var replyJSON = {
-            "goalname": "The Game Plan",
-            "lumpsum": 100210,
-            "monthly": 11000,
-            "monthlyuntildate": "2017-12-04T18:30:00.000Z",
-            "withdrawalfrequency": null,
-            "inflation": 6,
-            "installment": 20000,
-            "startMonth": "2018-02-19T18:30:00.000Z",
-            "endMonth": "2019-02-19T18:30:00.000Z",
-            "shortinput": 10,
-            "longinput": 10
-        };
-        //Slider models end
+        "goalname": "The Game Plan",
+        "lumpsum": 100210,
+        "monthly": 11000,
+        "monthlyuntildate": "2017-12-04T18:30:00.000Z",
+        "withdrawalfrequency": null,
+        "inflation": 6,
+        "installment": 20000,
+        "startMonth": "2018-02-19T18:30:00.000Z",
+        "endMonth": "2019-02-19T18:30:00.000Z",
+        "shortinput": 10,
+        "longinput": 10
+    };
+    //Slider models end
     $scope.computeIt = function(res) {
         // $scope.setSliders(res);
-        $scope.planlinechartconfig.loading=true;
+        $scope.planlinechartconfig.loading = true;
         console.log(JSON.stringify(res));
         resultNow = _.cloneDeep(res);
         resultNow.lumpsum = $filter('nearest100')(resultNow.lumpsum);
@@ -710,7 +725,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.currentPlan = data;
             } else {
                 $scope.currentPlan = data;
-                $scope.planlinechartconfig.loading=false;
+                $scope.planlinechartconfig.loading = false;
 
                 $scope.reflowChart($scope.currentPlan);
 
