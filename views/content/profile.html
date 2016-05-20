@@ -37,10 +37,10 @@
         <div class="nominee-details" ng-show="tabs[1].active">
           <form name="nomineeForm" ng-submit="addNomineeDetails(nomineeForm)">
           <div layout="row" class="nominee-first">
-            <md-checkbox md-no-ink id="nonom" ng-model= "nonominee" ng-true-value="true" ng-false-value="false" ngT ng-change="emptyNominees(nonominee);" aria-label="No Nominee">
+            <md-checkbox md-no-ink id="nonom" ng-model= "nominee.nonominee" ng-true-value="true" ng-false-value="false" ngT ng-change="emptyNominees(nominee.nonominee);" aria-label="No Nominee">
               No Nominee
             </md-checkbox>
-            <md-button ng-click ="addNominees();" class="md-icon-button md-fab md-mini  md-whiteframe-2dp add-nominee" aria-label="Add Nominee" ng-class="{'md-primary':!nonominee}" ng-disabled="nonominee">
+            <md-button ng-click ="addNominees();" class="md-icon-button md-fab md-mini  md-whiteframe-2dp add-nominee" aria-label="Add Nominee" ng-class="{'md-primary':!nominee.nonominee}" ng-disabled="nominee.nonominee">
               <i class="material-icons">add</i>
               <md-tooltip md-direction="top">
                   Add Nominee

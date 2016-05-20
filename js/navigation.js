@@ -2,7 +2,7 @@ var adminURL = "";
 var result = [];
 var skipped = [];
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
-var adminURL = "http://192.168.1.122:1337/";
+var adminURL = "http://192.168.1.137:1337/";
 var scenarios = [{
     id: 0,
     question: 'What would you like to call this portfolio?',
@@ -274,11 +274,31 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }).success(callback).error(err);
         },
+        login: function(request, callback, err) {
+            return $http({
+                url: adminURL + "user/login",
+                method: "POST",
+                data: {
+                    "email": request.email,
+                    "password": request.password
+                }
+            }).success(callback).error(err);
+        },
         saveUserDetails: function(formData, callback, err) {
             return $http({
                 url: adminURL + "user/save",
                 method: "POST",
                 data: formData
+            }).success(callback).error(err);
+        },
+        signupDetails: function(formData, callback, err) {
+            return $http({
+                url: adminURL + "user/save",
+                method: "POST",
+                data: {
+                  "email":formData.email,
+                  "password":formData.password
+                }
             }).success(callback).error(err);
         },
         makeactive: function(menuname) {
