@@ -286,7 +286,7 @@ var navigationservice = angular.module('navigationservice', [])
         },
         saveUserDetails: function(formData, callback, err) {
             return $http({
-                url: adminURL + "user/save",
+                url: adminURL + "user/editProfile",
                 method: "POST",
                 data: formData
             }).success(callback).error(err);

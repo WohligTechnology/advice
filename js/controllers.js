@@ -237,6 +237,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                   $scope.changeTab(2);
                   $scope.changeStatus(1, 0);
               }
+          },function(err){
+            console.log(err);
           });
         } else {
             $scope.changeStatus(1, 1);
@@ -249,7 +251,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.changeTab(3);
                 $scope.changeStatus(2, 0);
               }
-          });
+          },function(err){
+            console.log(err);
+        });
 
         } else {
             $scope.changeStatus(2, 1);
