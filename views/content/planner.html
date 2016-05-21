@@ -1,4 +1,4 @@
-<div class="planner-main" ng-hide="suggestion">
+<div class="planner-main" ng-if="!suggestion" id="toastBounds">
   <div class="blue-back"></div>
   <div class="planner">
     <div class="container">
@@ -81,7 +81,7 @@
 </div>
 
 
-<div class="planner-sidebar" ng-show="suggestion">
+<div class="planner-sidebar" ng-if="suggestion" id="toastBounds">
   <div class="left-bar">
     <div class="slider slider1">
       <span>One Time Investment</span>

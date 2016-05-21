@@ -7,37 +7,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/header.html";
-  //   $.jStorage.set("user",{
-  //      "_id": "573edeace473883f1b1d51d6",
-  //      "email": "vinodwohlig@gmail.com",
-  //      "notification": [],
-  //      "referred": "",
-  //      "points": "",
-  //      "referralCode": "",
-  //      "portfolios": [],
-  //      "documents": {
-  //          "cancelledcheque": "",
-  //          "pan": "",
-  //          "bankname": "",
-  //          "addresstype": "",
-  //          "corraddressproof": "",
-  //          "addressproof": "",
-  //          "photo": ""
-  //      },
-  //      "taxStatus": "",
-  //      "nationality": "",
-  //      "maritalStatus": "",
-  //      "taxResidency": "",
-  //      "politicalViews": "",
-  //      "gender": "",
-  //      "occupation": "",
-  //      "networth": "",
-  //      "grossAnnualIncome": "",
-  //      "country": "",
-  //      "dob": "2016-05-20T09:53:48.320Z",
-  //      "nominee": [],
-  //      "__v": 0
-  //  });
     $scope.section = {
         one: "views/section/section1.html",
         two: "views/section/section2.html",
@@ -421,7 +390,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 })
 
-.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $filter, $interval) {
+.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $filter, $interval,$mdToast,$document) {
     $scope.template = TemplateService.changecontent("planner");
     $scope.menutitle = NavigationService.makeactive("Planner");
     TemplateService.title = $scope.menutitle;
@@ -429,9 +398,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.header = "views/content/header.html";
     $scope.oneAtATime = true;
     $scope.chats = [];
+    $scope.toastText="";
     $scope.response = {};
     $scope.typing = false;
-    $scope.suggestion = false;
+    $scope.suggestion = true;
     $scope.result = {};
     $scope.sixHundredMonths = [];
     for (i = 0; i < 600; i++) {
@@ -687,6 +657,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     $scope.reflowChart = function(currentPlan) {
+      $scope.planlinechartconfig.xAxis.categories=[];
         $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
         $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
         $scope.planlinechartconfig.series[2].data = currentPlan.feasible[0].median99;
@@ -695,9 +666,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.planlinechartconfig.series[2].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.series[3].data = currentPlan.cashflow;
         $scope.planlinechartconfig.title.text = $scope.result.goalname;
-        $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()), 'mediumDate'));
+        $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()), 'MMM, yyyy'));
         _.each(currentPlan.feasible[0].tenures, function(key) {
-            $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key), 'mediumDate'));
+            $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key), 'MMM, yyyy'));
         });
 
     };
@@ -904,30 +875,45 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.executeCompute(resultSlider);
         }
     };
+    var compute = 0;
     $scope.executeCompute = function(resultNow) {
         $scope.executeIt = false;
         console.log(resultNow);
         $scope.planlinechartconfig.loading = true;
 
         NavigationService.play(resultNow, function(data) {
+          console.log("compute :" + compute);
+          console.log(data);
+          compute++;
             if (data.value === false) {
                 $scope.currentPlan = data;
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt($scope.currentPlan.suggestions);
                 }
+                $timeout(function() {
+                    $scope.executeIt = true;
+                }, 1000);
             } else {
                 $scope.currentPlan = data;
                 $scope.planlinechartconfig.loading = false;
                 $scope.reflowChart($scope.currentPlan);
                 $scope.setSliders(resultNow);
-                $scope.suggestIt($scope.currentPlan.suggestions);
+                if($scope.currentPlan.suggestions){
+                  $scope.suggestIt($scope.currentPlan.suggestions);
+                  $timeout(function() {
+                      $scope.executeIt = true;
+                  }, 1000);
+                }else if(!$scope.currentPlan.suggestions && $scope.currentPlan.feasible.length == 1){
+                  $scope.executeIt=false;
+
+                  $scope.toastText = "You have reached your optimum investment plan";
+                  $scope.showCustomToast();
+                }
 
             }
             $scope.planlinechartconfig.loading = false;
 
-            $timeout(function() {
-                $scope.executeIt = true;
-            }, 1000);
+
         }, function(err) {
             console.log(err);
         });
@@ -957,7 +943,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultNow.noOfMonth = -1 * $filter('monthsSince')(resultNow.monthlyuntildate);
         $scope.executeCompute(resultNow);
     };
-    // $scope.computeIt(replyJSON);
+    $scope.computeIt(replyJSON);
     $scope.suggestIt = function(suggestions) {
         $scope.inputs.installmentSlider.options.showSelectionBarFromValue = suggestions.installment;
         $scope.inputs.lumpsumSlider.options.showSelectionBarFromValue = suggestions.lumpsum;
@@ -965,6 +951,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.inputs.installmentSlider.options.showSelectionBarFromValue = suggestions.installment;
         $scope.inputs.startMonthSlider.options.showSelectionBarFromValue = suggestions.startMonth;
         $scope.inputs.endMonthSlider.options.showSelectionBarFromValue = $scope.inputs.startMonthSlider.options.showSelectionBarFromValue + suggestions.noOfMonth;
+        $scope.toastText="Hello! Adjust the sliders on the left to reach their tail ends";
+        $scope.showCustomToast();
     };
     $scope.setSliders = function (res) {
         $scope.inputs.lumpsumSlider.value = res.lumpsum;
@@ -977,6 +965,63 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.inputs.inflationSlider.value = res.inflation;
         $scope.inputs.installmentSlider.value = res.installment;
     };
+    //TOAST
+    var last = {
+          bottom: false,
+          top: true,
+          left: false,
+          right: true
+        };
+      $scope.toastPosition = angular.extend({},last);
+      $scope.getToastPosition = function() {
+        sanitizePosition();
+        return Object.keys($scope.toastPosition)
+          .filter(function(pos) { return $scope.toastPosition[pos]; })
+          .join(' ');
+      };
+      function sanitizePosition() {
+        var current = $scope.toastPosition;
+        if ( current.bottom && last.top ) current.top = false;
+        if ( current.top && last.bottom ) current.bottom = false;
+        if ( current.right && last.left ) current.left = false;
+        if ( current.left && last.right ) current.right = false;
+        last = angular.extend({},current);
+      }
+      $scope.showCustomToast = function() {
+
+        $mdToast.show({
+          scope: $scope.$new(),
+          templateUrl: 'views/toast/toast-template.html',
+          parent : $document[0].querySelector('#toastBounds'),
+          hideDelay: 6000,
+          position: $scope.getToastPosition()
+        });
+      };
+      $scope.closeToast = function() {
+        console.log("close toast");
+    $mdToast.hide();
+  };
+      $scope.showSimpleToast = function() {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Simple Toast!')
+            .position($scope.getToastPosition())
+            .hideDelay(3000)
+        );
+      };
+      $scope.showActionToast = function() {
+        var toast = $mdToast.simple()
+              .textContent('Action Toast!')
+              .action('OK')
+              .highlightAction(false)
+              .position($scope.getToastPosition());
+        $mdToast.show(toast).then(function(response) {
+          if ( response == 'ok' ) {
+            alert('You clicked \'OK\'.');
+          }
+        });
+      };
+    //TOAST END
 })
 
 .controller('headerctrl', function($scope, TemplateService) {
