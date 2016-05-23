@@ -2,7 +2,7 @@ var adminURL = "";
 var result = [];
 var skipped = [];
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
-var adminURL = "http://localhost:1337/";
+var adminURL = "http://192.168.1.111:1337/";
 var scenarios = [{
     id: 0,
     question: 'What would you like to call this portfolio?',
@@ -22,8 +22,11 @@ var scenarios = [{
         messages: ['What would you like to name this portfolio? For example: "Retirement Fund", "My New Car", "Europe Tour", etc.', 'Please suggest a shorter name. For example: "Retirement Fund", "My New Car", "Europe Tour", etc.']
     }, {
         type: 'maxlength',
-        messages: ['the name is too long.', 'Nice. Try better. 25 letters max.', 'one too far. Shorten it.']
-    }]
+        messages: ['Please suggest a shorter name. For example: "Retirement Fund", "My New Car", "Europe Tour", etc.']
+    }],
+    confirm: function(msg) {
+        return 'Okay! Let&apos;s call it "' + msg + '".';
+    }
 }, {
     id: 1,
     question: 'For this portfolio, what would be your initial contribution?',
@@ -65,7 +68,11 @@ var scenarios = [{
     }]
 }, {
     id: 3,
-    question: 'And till when do you plan to contribute?',
+    question: function() {
+        return "Till when would you like to keep contributing Rs." + _.find(result, function(key) {
+            return key.label == 'monthly';
+        }).value + " every month?";
+    },
     canSkip: true,
     hasSelect: false,
     label: 'monthlyuntildate',
@@ -81,37 +88,37 @@ var scenarios = [{
 }, {
     id: 4,
     question: 'How frequently do you plan to withdraw this amount?',
-    canSkip: true,
+    canSkip: false,
     hasSelect: true,
     label: 'withdrawalfrequency',
-    valueDefault: 1,
-    valueType: 'number',
+    valueDefault: 'One Shot',
+    valueType: 'text',
     rules: {
         minimum: 1
     },
-    selectValues: ['One time', 'Monthly', 'Annualy'],
+    selectValues: ['One Shot', 'Monthly', 'Annualy'],
     errors: [{
         type: 'minimum',
         messages: ['Mininum once']
     }]
 }, {
     id: 5,
-    question: 'What will the inflation rate be?',
+    question: "What is your estimated rate of inflation? (Tip: 'Rate of inflation' is the rate at which the prices of goods & services increase every year)",
     canSkip: true,
     hasSelect: false,
     label: 'inflation',
     valueDefault: 6,
     valueType: 'number',
     rules: {
-        minimum: 0
+        maximum: 12
     },
     errors: [{
-        type: 'minimum',
-        messages: ['Minimum 6 percent']
+        type: 'maximum',
+        messages: ['That estimate seems to be very high. Suggest you to lower the estimated rate inflation to 12%.']
     }]
 }, {
     id: 6,
-    question: 'and what about the withdrawal amount?',
+    question: 'From this portfolio, how much would you like to withdraw (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.)',
     canSkip: false,
     hasSelect: false,
     label: 'installment',
@@ -122,15 +129,25 @@ var scenarios = [{
     },
     errors: [{
         type: 'minimum',
-        messages: ['Minimum 0']
+        messages: ['Please enter a positive whole number']
     }]
 }, {
     id: 7,
-    question: 'Till when would you want to keep withdrawing? ',
+    question: function() {
+        var check = _.find(result, function(key) {
+            return key.label == 'withdrawalfrequency';
+        }).value;
+        if (check == 'One Shot') {
+            return 'When would you like to withdraw?';
+        } else {
+            return 'When would you like to start withdrawing?';
+
+        }
+    },
     canSkip: false,
     hasSelect: false,
     label: 'startMonth',
-    valueDefault: '1-1-1970',
+    valueDefault: (new Date()),
     valueType: 'date',
     rules: {
         minimum: '28-5-2016'
@@ -141,7 +158,17 @@ var scenarios = [{
     }]
 }, {
     id: 8,
-    question: 'Till when will you stop withdrawing? ',
+    question: function() {
+        var check = _.find(result, function(key) {
+            return key.label == 'withdrawalfrequency';
+        }).value;
+        if (check == 'One Shot') {
+            this.canSkip = true;
+            return 'Please press skip button';
+        } else {
+            return 'Till when would you want to keep withdrawing?';
+        }
+    },
     canSkip: false,
     hasSelect: false,
     label: 'endMonth',
@@ -156,33 +183,41 @@ var scenarios = [{
     }]
 }, {
     id: 9,
-    question: 'and what about the short-term loss?',
+    question: 'Like any investment, the value of this portfolio will fluctuate during the investment period. These fluctuations may result in notional loss (Theoretical loss). During the investment period of this portfolio how much notional loss can you tolerate on your invested amount?',
     canSkip: false,
     hasSelect: false,
     label: 'shortinput',
     valueDefault: 0,
     valueType: 'number',
     rules: {
-        minimum: 0
+        minimum: 5,
+        maximum: 70
     },
     errors: [{
         type: 'minimum',
-        messages: ['Minimum 0']
+        messages: ['Investments by nature will be volatile. You need to give room for atleast 5% notional loss. Please asnwer within a range of 5% to 70%.']
+    }, {
+        type: 'maximum',
+        messages: ['It is not advisable to take a risk of more than 70% loss . Please asnwer within a range of 5% to 70%.']
     }]
 }, {
     id: 10,
-    question: 'and what about the long-term loss?',
+    question: 'At the end of the investment  period, there is a possibility of losing some of the investment amount. In such a case, what is the maximum realised loss (Real loss) that you are prepared to accept?',
     canSkip: false,
     hasSelect: false,
     label: 'longinput',
     valueDefault: 0,
     valueType: 'number',
     rules: {
-        minimum: 0
+        minimum: 0,
+        maximum: 50
     },
     errors: [{
         type: 'minimum',
-        messages: ['Minimum 0']
+        messages: ['Please enter a positive whole number']
+    }, {
+        type: 'maximum',
+        messages: ['It is not advisable to take a risk of more than 50% loss . Please asnwer within a range of 0% to 50%.']
     }]
 }, {
     id: -1
@@ -196,7 +231,7 @@ var scenarios = [{
 
 var navigationservice = angular.module('navigationservice', [])
 
-.factory('NavigationService', function( $http) {
+.factory('NavigationService', function($http) {
     var navigation = [{
         name: "Overview",
         classis: "active",
@@ -296,8 +331,8 @@ var navigationservice = angular.module('navigationservice', [])
                 url: adminURL + "user/save",
                 method: "POST",
                 data: {
-                  "email":formData.email,
-                  "password":formData.password
+                    "email": formData.email,
+                    "password": formData.password
                 }
             }).success(callback).error(err);
         },

@@ -127,7 +127,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
     $scope.tabs[0].status = $scope.process[0];
     //All except registration 'untouched' end
-
     //change tabs here, cannot change registration
     $scope.changeTab = function(index) {
         if (index !== 0) {
@@ -200,30 +199,28 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.addNomineeDetails = function(formValidate) {
         if (formValidate.$valid) {
 
-          NavigationService.saveUserDetails($scope.user, function(data) {
-              if (data.value) {
-                  $scope.changeTab(2);
-                  $scope.changeStatus(1, 0);
-              } else{
-              }
-          },function(err){
-            console.log(err);
-          });
+            NavigationService.saveUserDetails($scope.user, function(data) {
+                if (data.value) {
+                    $scope.changeTab(2);
+                    $scope.changeStatus(1, 0);
+                } else {}
+            }, function(err) {
+                console.log(err);
+            });
         } else {
             $scope.changeStatus(1, 1);
         }
     };
     $scope.addRegulatoryDetails = function(formValidate) {
         if (formValidate.$valid) {
-          NavigationService.saveUserDetails($scope.user, function(data) {
-              if (data.value) {
-                $scope.changeTab(3);
-                $scope.changeStatus(2, 0);
-              } else{
-              }
-          },function(err){
-            console.log(err);
-        });
+            NavigationService.saveUserDetails($scope.user, function(data) {
+                if (data.value) {
+                    $scope.changeTab(3);
+                    $scope.changeStatus(2, 0);
+                } else {}
+            }, function(err) {
+                console.log(err);
+            });
 
         } else {
             $scope.changeStatus(2, 1);
@@ -379,7 +376,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.showConfirm = function(ev) {
         var confirm = $mdDialog.confirm()
-            .clickOutsideToClose( )
+            .clickOutsideToClose()
             .title('How do you wish to go about creating the portfolio?')
             .ariaLabel('Create Portfolio')
             .targetEvent(ev)
@@ -391,7 +388,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 })
 
-.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $filter, $interval,$mdToast,$document) {
+.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $state, $timeout, $log, $filter, $interval, $mdToast, $document) {
     $scope.template = TemplateService.changecontent("planner");
     $scope.menutitle = NavigationService.makeactive("Planner");
     TemplateService.title = $scope.menutitle;
@@ -399,12 +396,22 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.header = "views/content/header.html";
     $scope.oneAtATime = true;
     $scope.chats = [];
-    $scope.toastText="";
+    $scope.toastText = "";
     $scope.response = {};
     $scope.typing = false;
-    $scope.suggestion = true;
+    $scope.suggestion = false;
     $scope.result = {};
     $scope.sixHundredMonths = [];
+    var current = $state.current;
+
+    $scope.$on('$stateChangeStart', function(event, toState) {
+        if (current.name == toState.name) {
+            var answer = confirm("Are you sure you want to leave this page?");
+            if (!answer) {
+                event.preventDefault();
+            }
+        }
+    });
     for (i = 0; i < 600; i++) {
         $scope.sixHundredMonths.push({
             id: i,
@@ -466,10 +473,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         },
         series: [{
             name: 'Browsers',
-            data: [
-                ["Equity", 6],
-                ["Debt", 4]
-            ],
+            data: [],
             size: '100%',
             innerSize: '30%',
             showInLegend: true,
@@ -516,7 +520,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.typingrec = true;
         $timeout(function() {
             $scope.typingrec = false;
-
             $scope.chats.push({
                 text: msg,
                 type: 'received'
@@ -533,16 +536,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     if (skipped !== undefined && ((skipped[1] === false && skipped[2] === false) || skipped[3] === false || (skipped[1] === false && skipped[2] === false && skipped[3] === false && skipped[6] === false && skipped[7] === false))) {
                         $scope.currentResponse.canSkip = true;
                     }
+                    if (angular.isFunction($scope.currentResponse.question)) {
+                        $scope.currentResponse.question = $scope.currentResponse.question();
+                    }
                     $scope.recievedMessage($scope.currentResponse.question, 1000);
                     errAgain = 0;
                 } else {
-                    $scope.recievedMessage('Please wait while we crunch the numbers ..', 500);
-                    $scope.recievedMessage('Fine tune your plan in 3..', 1500);
-                    $scope.recievedMessage('2..', 2500);
-                    $scope.recievedMessage('1..', 3500);
+                    $scope.recievedMessage('Thank you for your answers!', 500);
+                    $scope.recievedMessage('I will now redirect you to your plan. You might be required to fine tune your inputs to create a feasible & optimum plan. Please wait…', 1500);
                     $timeout(function() {
                         $scope.changeToObject(result);
-                    }, 4000);
+                    }, 5000);
                 }
             }
         }, function(err) {
@@ -604,8 +608,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
         } else {
-            var confirmMessages = ['Got it.', 'Okay!', 'Thanks', 'Thank you', 'Confirmed'];
-
+            var confirmMessages = [];
+            if ($scope.currentResponse.confirm) {
+                confirmMessages.push($scope.currentResponse.confirm(msg));
+            } else {
+                confirmMessages = ['Got it.', 'Okay!', 'Thanks', 'Thank you', 'Confirmed'];
+            }
             $scope.recievedMessage(confirmMessages[Math.floor(Math.random() * (confirmMessages.length - 1))], 500);
             if ($scope.currentResponse.valueType == 'number') {
                 msg = parseInt(msg);
@@ -658,7 +666,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     $scope.reflowChart = function(currentPlan) {
-      $scope.planlinechartconfig.xAxis.categories=[];
+        $scope.planlinechartconfig.xAxis.categories = [];
         $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
         $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
         $scope.planlinechartconfig.series[2].data = currentPlan.feasible[0].median99;
@@ -672,6 +680,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key), 'MMM, yyyy'));
         });
 
+    };
+    $scope.reflowChartED = function(currentPlan) {
+        $scope.EDdonutchartConfig.series.data = [];
+        $scope.EDdonutchartConfig.series.data[0] = [];
+        $scope.EDdonutchartConfig.series.data[0].push('Equity');
+        $scope.EDdonutchartConfig.series.data[0].push(currentPlan.feasible[0].type);
+        $scope.EDdonutchartConfig.series.data[1] = [];
+        $scope.EDdonutchartConfig.series.data[1].push('Debt');
+        $scope.EDdonutchartConfig.series.data[1].push(10 - currentPlan.feasible[0].type);
+        console.log($scope.EDdonutchartConfig);
     };
 
     //Slider models start
@@ -881,13 +899,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.executeIt = false;
         console.log(resultNow);
         $scope.planlinechartconfig.loading = true;
+        $scope.EDdonutchartConfig.loading = true;
 
         NavigationService.play(resultNow, function(data) {
-          console.log("compute :" + compute);
-          console.log(data);
-          compute++;
+            console.log("compute :" + compute);
+            console.log(data);
+            compute++;
             if (data.value === false) {
                 $scope.currentPlan = data;
+                $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt($scope.currentPlan.suggestions);
                 }
@@ -900,23 +920,25 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.currentPlan = data;
                 $scope.planlinechartconfig.loading = false;
                 $scope.reflowChart($scope.currentPlan);
+                $scope.reflowChartED($scope.currentPlan);
                 $scope.setSliders(resultNow);
-                if($scope.currentPlan.suggestions){
-                  $scope.suggestIt($scope.currentPlan.suggestions);
-                  $timeout(function() {
-                      $scope.executeIt = true;
-                  }, 1000);
-                }else if(!$scope.currentPlan.suggestions && $scope.currentPlan.feasible.length == 1){
-                  $scope.executeIt=false;
-                  $scope.toastText = "DONE! You have reached your optimum investment plan";
-                  $scope.showCustomToast();
-                  // $scope.inputs.lumpsumSlider.options.readOnly = true;
-                  // $scope.inputs.monthlySlider.options.readOnly = true;
-                  // $scope.inputs.installmentSlider.options.readOnly = true;
+                if ($scope.currentPlan.suggestions) {
+                    $scope.suggestIt($scope.currentPlan.suggestions);
+                    $timeout(function() {
+                        $scope.executeIt = true;
+                    }, 1000);
+                } else if (!$scope.currentPlan.suggestions && $scope.currentPlan.feasible.length == 1) {
+                    $scope.executeIt = false;
+                    $scope.toastText = "DONE! You have reached your optimum investment plan";
+                    $scope.showCustomToast();
+                    // $scope.inputs.lumpsumSlider.options.readOnly = true;
+                    // $scope.inputs.monthlySlider.options.readOnly = true;
+                    // $scope.inputs.installmentSlider.options.readOnly = true;
                 }
 
             }
             $scope.planlinechartconfig.loading = false;
+            $scope.EDdonutchartConfig.loading = false;
 
 
         }, function(err) {
@@ -948,7 +970,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultNow.noOfMonth = -1 * $filter('monthsSince')(resultNow.monthlyuntildate);
         $scope.executeCompute(resultNow);
     };
-    $scope.computeIt(replyJSON);
     $scope.suggestIt = function(suggestions) {
         $scope.inputs.installmentSlider.options.showSelectionBarFromValue = suggestions.installment;
         $scope.inputs.lumpsumSlider.options.showSelectionBarFromValue = suggestions.lumpsum;
@@ -956,10 +977,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.inputs.installmentSlider.options.showSelectionBarFromValue = suggestions.installment;
         $scope.inputs.startMonthSlider.options.showSelectionBarFromValue = suggestions.startMonth;
         $scope.inputs.endMonthSlider.options.showSelectionBarFromValue = $scope.inputs.startMonthSlider.options.showSelectionBarFromValue + suggestions.noOfMonth;
-        $scope.toastText="Adjust the sliders on the left to reach their tail ends";
+        $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
         $scope.showCustomToast();
     };
-    $scope.setSliders = function (res) {
+    $scope.setSliders = function(res) {
         $scope.inputs.lumpsumSlider.value = res.lumpsum;
         $scope.inputs.monthlySlider.value = res.monthly;
         $scope.inputs.monthlyuntildateSlider.value = res.noOfMonth;
@@ -972,60 +993,63 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     //TOAST
     var last = {
-          bottom: false,
-          top: true,
-          left: false,
-          right: true
-        };
-      $scope.toastPosition = angular.extend({},last);
-      $scope.getToastPosition = function() {
+        bottom: false,
+        top: true,
+        left: false,
+        right: true
+    };
+    $scope.toastPosition = angular.extend({}, last);
+    $scope.getToastPosition = function() {
         sanitizePosition();
         return Object.keys($scope.toastPosition)
-          .filter(function(pos) { return $scope.toastPosition[pos]; })
-          .join(' ');
-      };
-      function sanitizePosition() {
+            .filter(function(pos) {
+                return $scope.toastPosition[pos];
+            })
+            .join(' ');
+    };
+
+    function sanitizePosition() {
         var current = $scope.toastPosition;
-        if ( current.bottom && last.top ) current.top = false;
-        if ( current.top && last.bottom ) current.bottom = false;
-        if ( current.right && last.left ) current.left = false;
-        if ( current.left && last.right ) current.right = false;
-        last = angular.extend({},current);
-      }
-      $scope.showCustomToast = function() {
+        if (current.bottom && last.top) current.top = false;
+        if (current.top && last.bottom) current.bottom = false;
+        if (current.right && last.left) current.left = false;
+        if (current.left && last.right) current.right = false;
+        last = angular.extend({}, current);
+    }
+    $scope.showCustomToast = function() {
 
         $mdToast.show({
-          scope: $scope.$new(),
-          templateUrl: 'views/toast/toast-template.html',
-          parent : $document[0].querySelector('#toastBounds'),
-          hideDelay: 6000,
-          position: $scope.getToastPosition()
+            scope: $scope.$new(),
+            templateUrl: 'views/toast/toast-template.html',
+            parent: $document[0].querySelector('#toastBounds'),
+            hideDelay: 6000,
+            position: $scope.getToastPosition()
         });
-      };
-      $scope.closeToast = function() {
+    };
+    $scope.closeToast = function() {
         console.log("close toast");
-    $mdToast.hide();
-  };
-      $scope.showSimpleToast = function() {
+        $mdToast.hide();
+    };
+    $scope.showSimpleToast = function() {
         $mdToast.show(
-          $mdToast.simple()
+            $mdToast.simple()
             .textContent('Simple Toast!')
             .position($scope.getToastPosition())
             .hideDelay(3000)
         );
-      };
-      $scope.showActionToast = function() {
+    };
+    $scope.showActionToast = function() {
         var toast = $mdToast.simple()
-              .textContent('Action Toast!')
-              .action('OK')
-              .highlightAction(false)
-              .position($scope.getToastPosition());
+            .textContent('Action Toast!')
+            .action('OK')
+            .highlightAction(false)
+            .position($scope.getToastPosition());
         $mdToast.show(toast).then(function(response) {
-          if ( response == 'ok' ) {
-            alert('You clicked \'OK\'.');
-          }
+            if (response == 'ok') {
+                alert('You clicked \'OK\'.');
+            }
         });
-      };
+    };
     //TOAST END
 })
 
