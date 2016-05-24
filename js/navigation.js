@@ -5,6 +5,9 @@ var skipped = [];
 var adminURL = "http://192.168.1.111:1337/";
 var scenarios = [{
     id: 0,
+    status:function(){
+return true;
+    },
     question: 'What would you like to call this portfolio?',
     canSkip: false,
     hasSelect: false,
@@ -29,6 +32,9 @@ var scenarios = [{
     }
 }, {
     id: 1,
+    status:function(){
+return true;
+    },
     question: 'For this portfolio, what would be your initial contribution?',
     canSkip: true,
     hasSelect: false,
@@ -50,6 +56,9 @@ var scenarios = [{
     }]
 }, {
     id: 2,
+    status:function(){
+return true;
+    },
     question: 'For this portfolio, how much are you willing to contribute every month?',
     canSkip: true,
     hasSelect: false,
@@ -68,12 +77,15 @@ var scenarios = [{
     }]
 }, {
     id: 3,
+    status:function(){
+      return (skipped[2] === true)?false : true;
+    },
     question: function() {
         return "Till when would you like to keep contributing Rs." + _.find(result, function(key) {
             return key.label == 'monthly';
         }).value + " every month?";
     },
-    canSkip: true,
+    canSkip: false,
     hasSelect: false,
     label: 'monthlyuntildate',
     valueDefault: '1-1-1970',
@@ -87,6 +99,9 @@ var scenarios = [{
     }]
 }, {
     id: 4,
+    status:function(){
+return true;
+    },
     question: 'How frequently do you plan to withdraw this amount?',
     canSkip: false,
     hasSelect: true,
@@ -94,7 +109,7 @@ var scenarios = [{
     valueDefault: 'One Shot',
     valueType: 'text',
     rules: {
-        minimum: 1
+        minimum: undefined
     },
     selectValues: ['One Shot', 'Monthly', 'Annualy'],
     errors: [{
@@ -103,6 +118,9 @@ var scenarios = [{
     }]
 }, {
     id: 5,
+    status:function(){
+return true;
+    },
     question: "What is your estimated rate of inflation? (Tip: 'Rate of inflation' is the rate at which the prices of goods & services increase every year)",
     canSkip: true,
     hasSelect: false,
@@ -118,6 +136,9 @@ var scenarios = [{
     }]
 }, {
     id: 6,
+    status:function(){
+return true;
+    },
     question: 'From this portfolio, how much would you like to withdraw (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.)',
     canSkip: false,
     hasSelect: false,
@@ -133,6 +154,12 @@ var scenarios = [{
     }]
 }, {
     id: 7,
+    status:function(){
+      var check = _.find(result, function(key) {
+          return key.label == 'withdrawalfrequency';
+      }).value;
+return (check == 'One Shot')? false:true;
+    },
     question: function() {
         var check = _.find(result, function(key) {
             return key.label == 'withdrawalfrequency';
@@ -158,6 +185,12 @@ var scenarios = [{
     }]
 }, {
     id: 8,
+    status:function(){
+      var check = _.find(result, function(key) {
+          return key.label == 'withdrawalfrequency';
+      }).value;
+return (check == 'One Shot')? false:true;
+    },
     question: function() {
         var check = _.find(result, function(key) {
             return key.label == 'withdrawalfrequency';
@@ -183,6 +216,9 @@ var scenarios = [{
     }]
 }, {
     id: 9,
+    status:function(){
+return true;
+    },
     question: 'Like any investment, the value of this portfolio will fluctuate during the investment period. These fluctuations may result in notional loss (Theoretical loss). During the investment period of this portfolio how much notional loss can you tolerate on your invested amount?',
     canSkip: false,
     hasSelect: false,
@@ -202,6 +238,9 @@ var scenarios = [{
     }]
 }, {
     id: 10,
+    status:function(){
+return true;
+    },
     question: 'At the end of the investment  period, there is a possibility of losing some of the investment amount. In such a case, what is the maximum realised loss (Real loss) that you are prepared to accept?',
     canSkip: false,
     hasSelect: false,
@@ -220,7 +259,10 @@ var scenarios = [{
         messages: ['It is not advisable to take a risk of more than 50% loss . Please asnwer within a range of 0% to 50%.']
     }]
 }, {
-    id: -1
+    id: -1,
+    status:function(){
+return true;
+    }
 }];
 //
 // if (isproduction) {

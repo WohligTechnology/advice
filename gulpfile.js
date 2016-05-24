@@ -17,7 +17,7 @@ var jsArray = [
     './bower_components/angular-flexslider/angular-flexslider.js',
     './bower_components/lodash/lodash.js',
     './bower_components/moment/min/moment.min.js',
-
+    './bower_components/angularjs-slider/dist/rzslider.min.js',
     './js/app.js',
     './js/controllers.js',
     './js/templateservice.js',

@@ -532,15 +532,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
             if (data) {
                 if (data.id !== -1) {
-                    $scope.currentResponse = data;
-                    if (skipped !== undefined && ((skipped[1] === false && skipped[2] === false) || skipped[3] === false || (skipped[1] === false && skipped[2] === false && skipped[3] === false && skipped[6] === false && skipped[7] === false))) {
-                        $scope.currentResponse.canSkip = true;
+                    if(data.status()){
+                      $scope.currentResponse = data;
+                      if (skipped !== undefined && ((skipped[1] === false && skipped[2] === false) || skipped[3] === false || (skipped[1] === false && skipped[2] === false && skipped[3] === false && skipped[6] === false && skipped[7] === false))) {
+                          $scope.currentResponse.canSkip = true;
+                      }
+                      if (angular.isFunction($scope.currentResponse.question)) {
+                          $scope.currentResponse.question = $scope.currentResponse.question();
+                      }
+                      $scope.recievedMessage($scope.currentResponse.question, 1000);
+                      errAgain = 0;
+                    }else{
+                      $scope.replyMessage(data.valueDefault, data.id, true);
                     }
-                    if (angular.isFunction($scope.currentResponse.question)) {
-                        $scope.currentResponse.question = $scope.currentResponse.question();
-                    }
-                    $scope.recievedMessage($scope.currentResponse.question, 1000);
-                    errAgain = 0;
                 } else {
                     $scope.recievedMessage('Thank you for your answers!', 500);
                     $scope.recievedMessage('I will now redirect you to your plan. You might be required to fine tune your inputs to create a feasible & optimum plan. Please wait…', 1500);
@@ -580,7 +584,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         } else if ($scope.currentResponse.rules.maxlength && angular.isString(msg) && msg.length > $scope.currentResponse.rules.maxlength) {
 
             errMsg = _.find($scope.currentResponse.errors, function(o) {
-                return o.type == 'minlength';
+                return o.type == 'maxlength';
             }).messages;
 
             $scope.recievedMessage((errMsg[errAgain] === undefined) ? errMsg[errMsg.length - 1] : errMsg[errAgain], 500);
