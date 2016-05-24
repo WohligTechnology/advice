@@ -91,11 +91,19 @@ return true;
     valueDefault: '1-1-1970',
     valueType: 'date',
     rules: {
-        minimum: '2016-05-28'
+        minimum: function(select){
+          return (select <= (new Date()).setMonth((new Date()).getMonth()+6))?true:false;
+        },
+        maximum:function(select){
+          return (select >= (new Date()).setMonth((new Date()).getMonth()+600))?true:false;
+        }
     },
     errors: [{
         type: 'minimum',
-        messages: ['It cannot start on or before ' + new Date('2016-05-28'), 'start it after ' + new Date('2016-05-28')]
+        messages: ['We need to contribute atleast for 6 months. Please provide a date after 6 months.']
+    },{
+        type: 'maximum',
+        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "'+moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
     }]
 }, {
     id: 4,
@@ -177,11 +185,22 @@ return (check == 'One Shot')? false:true;
     valueDefault: (new Date()),
     valueType: 'date',
     rules: {
-        minimum: '28-5-2016'
+        minimum: function(select){
+          var check = _.find(result, function(key) {
+              return key.label == 'monthlyuntildate';
+          }).value;
+          return (select <= check)?true:false;
+        },
+        maximum:function(select){
+          return (select >= (new Date()).setMonth((new Date()).getMonth()+600))?true:false;
+        }
     },
     errors: [{
         type: 'minimum',
-        messages: ['It cannot start on or before ' + new Date('28-5-2016')]
+        messages: ['Cannot withdraw before Monthly Contribution date. Please provide a later date.']
+    },{
+        type: 'maximum',
+        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "'+moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
     }]
 }, {
     id: 8,
@@ -208,11 +227,22 @@ return (check == 'One Shot')? false:true;
     valueDefault: (new Date()),
     valueType: 'date',
     rules: {
-        minimum: '28-5-2016'
+        minimum: function(select){
+          var check = _.find(result, function(key) {
+              return key.label == 'startMonth';
+          }).value;
+          return (select <= check)?true:false;
+        },
+        maximum:function(select){
+          return (select >= (new Date()).setMonth((new Date()).getMonth()+600))?true:false;
+        }
     },
     errors: [{
         type: 'minimum',
-        messages: ['It cannot start on or before ' + new Date('28-5-2016')]
+        messages: ['Cannot withdraw before Withdrawal start date. Please provide a later date.']
+    },{
+        type: 'maximum',
+        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "'+moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
     }]
 }, {
     id: 9,

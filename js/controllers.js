@@ -566,9 +566,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.validateMessage = function(msg, qid) {
         if ($scope.currentResponse.valueType == 'date') {
             msg = new Date(msg);
-            if ($scope.currentResponse.rules.minimum && !angular.isDate($scope.currentResponse.rules.minimum)) {
-                $scope.currentResponse.rules.minimum = new Date($scope.currentResponse.rules.minimum);
-            }
+
         }
         console.log(angular.isDate(msg));
         if ($scope.currentResponse.rules.minlength && angular.isString(msg) && msg.length < $scope.currentResponse.rules.minlength) {
@@ -591,7 +589,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             errAgain++;
 
 
-        } else if ($scope.currentResponse.rules.maximum && msg > $scope.currentResponse.rules.maximum) {
+        } else if ($scope.currentResponse.rules.maximum && ((angular.isFunction($scope.currentResponse.rules.maximum) && $scope.currentResponse.rules.maximum(msg)) || (msg > $scope.currentResponse.rules.maximum) )) {
 
             errMsg = _.find($scope.currentResponse.errors, function(o) {
                 return o.type == 'maximum';
@@ -601,7 +599,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             errAgain++;
 
 
-        } else if ($scope.currentResponse.rules.minimum && msg < $scope.currentResponse.rules.minimum) {
+        } else if ($scope.currentResponse.rules.minimum && ((angular.isFunction($scope.currentResponse.rules.minimum) && $scope.currentResponse.rules.minimum(msg)) || (msg < $scope.currentResponse.rules.minimum) )) {
 
             errMsg = _.find($scope.currentResponse.errors, function(o) {
                 return o.type == 'minimum';
