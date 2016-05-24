@@ -42,17 +42,13 @@ return true;
     valueDefault: 0,
     valueType: 'number',
     rules: {
-        minimum: 25000,
         maximum: 25000000,
         minlength: undefined,
         maxlength: undefined
     },
-    errors: [{
-        type: 'minimum',
-        messages: ['To create a well-diversified portfolio we will need at least Rs.25,000. Increase your initial contribution if possible; else, you may skip this question.', 'Okay! I will take that as Rs.XXX00 to round it off.']
-    }, {
+    errors: [ {
         type: 'maximum',
-        messages: ['To create a well-diversified portfolio we will need at least Rs.25,000. Increase your initial contribution if possible; else, you may skip this question.', 'Okay! I will take that as Rs.XXX00 to round it off.']
+        messages: ['To create a well-diversified portfolio we will need at least Rs.25,000. Increase your initial contribution if possible; else, you may skip this question.']
     }]
 }, {
     id: 2,
@@ -85,10 +81,10 @@ return true;
             return key.label == 'monthly';
         }).value + " every month?";
     },
-    canSkip: false,
+    canSkip: true,
     hasSelect: false,
     label: 'monthlyuntildate',
-    valueDefault: '1-1-1970',
+    valueDefault: new Date().setMonth((new Date()).getMonth()+12),
     valueType: 'date',
     rules: {
         minimum: function(select){
@@ -110,20 +106,15 @@ return true;
     status:function(){
 return true;
     },
-    question: 'How frequently do you plan to withdraw this amount?',
-    canSkip: false,
+    question: 'How do you wish to withdraw this investment?',
+    canSkip: true,
     hasSelect: true,
     label: 'withdrawalfrequency',
     valueDefault: 'One Shot',
     valueType: 'text',
-    rules: {
-        minimum: undefined
-    },
+    rules: {},
     selectValues: ['One Shot', 'Monthly', 'Annualy'],
-    errors: [{
-        type: 'minimum',
-        messages: ['Mininum once']
-    }]
+    errors: []
 }, {
     id: 5,
     status:function(){
@@ -179,7 +170,7 @@ return (check == 'One Shot')? false:true;
 
         }
     },
-    canSkip: false,
+    canSkip: true,
     hasSelect: false,
     label: 'startMonth',
     valueDefault: (new Date()),
@@ -221,7 +212,7 @@ return (check == 'One Shot')? false:true;
             return 'Till when would you want to keep withdrawing?';
         }
     },
-    canSkip: false,
+    canSkip: true,
     hasSelect: false,
     label: 'endMonth',
     valueDefault: (new Date()),
@@ -261,10 +252,10 @@ return true;
     },
     errors: [{
         type: 'minimum',
-        messages: ['Investments by nature will be volatile. You need to give room for atleast 5% notional loss. Please asnwer within a range of 5% to 70%.']
+        messages: ['Investments by nature will be volatile. You need to give room for atleast 5% notional loss. Please answer within a range of 5% to 70%.']
     }, {
         type: 'maximum',
-        messages: ['It is not advisable to take a risk of more than 70% loss . Please asnwer within a range of 5% to 70%.']
+        messages: ['It is not advisable to take a risk of more than 70% loss . Please answer within a range of 5% to 70%.']
     }]
 }, {
     id: 10,
@@ -286,7 +277,7 @@ return true;
         messages: ['Please enter a positive whole number']
     }, {
         type: 'maximum',
-        messages: ['It is not advisable to take a risk of more than 50% loss . Please asnwer within a range of 0% to 50%.']
+        messages: ['It is not advisable to take a risk of more than 50% loss . Please answer within a range of 0% to 50%.']
     }]
 }, {
     id: -1,

@@ -534,9 +534,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 if (data.id !== -1) {
                     if(data.status()){
                       $scope.currentResponse = data;
-                      if (skipped !== undefined && ((skipped[1] === false && skipped[2] === false) || skipped[3] === false || (skipped[1] === false && skipped[2] === false && skipped[3] === false && skipped[6] === false && skipped[7] === false))) {
-                          $scope.currentResponse.canSkip = true;
-                      }
                       if (angular.isFunction($scope.currentResponse.question)) {
                           $scope.currentResponse.question = $scope.currentResponse.question();
                       }
