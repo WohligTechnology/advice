@@ -118,42 +118,6 @@ return true;
 }, {
     id: 5,
     status:function(){
-return true;
-    },
-    question: "What is your estimated rate of inflation? (Tip: 'Rate of inflation' is the rate at which the prices of goods & services increase every year)",
-    canSkip: true,
-    hasSelect: false,
-    label: 'inflation',
-    valueDefault: 6,
-    valueType: 'number',
-    rules: {
-        maximum: 12
-    },
-    errors: [{
-        type: 'maximum',
-        messages: ['That estimate seems to be very high. Suggest you to lower the estimated rate inflation to 12%.']
-    }]
-}, {
-    id: 6,
-    status:function(){
-return true;
-    },
-    question: 'From this portfolio, how much would you like to withdraw (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.)',
-    canSkip: false,
-    hasSelect: false,
-    label: 'installment',
-    valueDefault: 0,
-    valueType: 'number',
-    rules: {
-        minimum: 0
-    },
-    errors: [{
-        type: 'minimum',
-        messages: ['Please enter a positive whole number']
-    }]
-}, {
-    id: 7,
-    status:function(){
       var check = _.find(result, function(key) {
           return key.label == 'withdrawalfrequency';
       }).value;
@@ -193,8 +157,8 @@ return (check == 'One Shot')? false:true;
         type: 'maximum',
         messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "'+moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
     }]
-}, {
-    id: 8,
+},{
+    id: 6,
     status:function(){
       var check = _.find(result, function(key) {
           return key.label == 'withdrawalfrequency';
@@ -235,7 +199,43 @@ return (check == 'One Shot')? false:true;
         type: 'maximum',
         messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "'+moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
     }]
+},{
+    id: 7,
+    status:function(){
+return true;
+    },
+    question: 'From this portfolio, how much would you like to withdraw (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.)',
+    canSkip: false,
+    hasSelect: false,
+    label: 'installment',
+    valueDefault: 0,
+    valueType: 'number',
+    rules: {
+        minimum: 0
+    },
+    errors: [{
+        type: 'minimum',
+        messages: ['Please enter a positive whole number']
+    }]
 }, {
+    id: 8,
+    status:function(){
+return true;
+    },
+    question: "What is your estimated rate of inflation? (Tip: 'Rate of inflation' is the rate at which the prices of goods & services increase every year)",
+    canSkip: true,
+    hasSelect: false,
+    label: 'inflation',
+    valueDefault: 6,
+    valueType: 'number',
+    rules: {
+        maximum: 12
+    },
+    errors: [{
+        type: 'maximum',
+        messages: ['That estimate seems to be very high. Suggest you to lower the estimated rate inflation to 12%.']
+    }]
+},  {
     id: 9,
     status:function(){
 return true;
