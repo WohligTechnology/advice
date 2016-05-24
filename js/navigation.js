@@ -15,10 +15,7 @@ return true;
     valueDefault: 0,
     valueType: 'text',
     rules: {
-        minlength: 10,
-        maxlength: 25,
-        minimum: undefined,
-        maximum: undefined
+        maxlength: 25
     },
     errors: [{
         type: 'minlength',
@@ -39,15 +36,16 @@ return true;
     canSkip: true,
     hasSelect: false,
     label: 'lumpsum',
+    filter:'currency',
     valueDefault: 0,
     valueType: 'number',
     rules: {
-        maximum: 25000000,
+        minimum: 25000,
         minlength: undefined,
         maxlength: undefined
     },
     errors: [ {
-        type: 'maximum',
+        type: 'minimum',
         messages: ['To create a well-diversified portfolio we will need at least Rs.25,000. Increase your initial contribution if possible; else, you may skip this question.']
     }]
 }, {
@@ -59,6 +57,7 @@ return true;
     canSkip: true,
     hasSelect: false,
     label: 'monthly',
+    filter:'currency',
     valueDefault: 0,
     valueType: 'number',
     rules: {
@@ -77,14 +76,14 @@ return true;
       return (skipped[2] === true)?false : true;
     },
     question: function() {
-        return "Till when would you like to keep contributing Rs." + _.find(result, function(key) {
+        return "Till when would you like to keep contributing ₹ " + _.find(result, function(key) {
             return key.label == 'monthly';
         }).value + " every month?";
     },
     canSkip: true,
     hasSelect: false,
     label: 'monthlyuntildate',
-    valueDefault: new Date().setMonth((new Date()).getMonth()+12),
+    valueDefault: new Date().setMonth((new Date()).getMonth()+1),
     valueType: 'date',
     rules: {
         minimum: function(select){
@@ -113,7 +112,7 @@ return true;
     valueDefault: 'One Shot',
     valueType: 'text',
     rules: {},
-    selectValues: ['One Shot', 'Monthly', 'Annualy'],
+    selectValues: ['One Shot', 'Monthly', 'Annually'],
     errors: []
 }, {
     id: 5,
@@ -204,10 +203,22 @@ return (check == 'One Shot')? false:true;
     status:function(){
 return true;
     },
-    question: 'From this portfolio, how much would you like to withdraw (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.)',
+    question: function () {
+      var check = _.find(result, function(key) {
+          return key.label == 'withdrawalfrequency';
+      }).value;
+      if(check == 'One Shot'){
+        return 'From this portfolio, how much would you like to withdraw (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.)';
+      }else if (check == 'Monthly') {
+        return 'From this portfolio, how much would you like to withdraw every month? (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.) ';
+      }else{
+        return 'From this portfolio, how much would you like to withdraw every year? (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.) ';
+      }
+    },
     canSkip: false,
     hasSelect: false,
     label: 'installment',
+    filter:'currency',
     valueDefault: 0,
     valueType: 'number',
     rules: {
@@ -226,6 +237,7 @@ return true;
     canSkip: true,
     hasSelect: false,
     label: 'inflation',
+    filter:'percentage',
     valueDefault: 6,
     valueType: 'number',
     rules: {
@@ -244,6 +256,7 @@ return true;
     canSkip: false,
     hasSelect: false,
     label: 'shortinput',
+    filter:'percentage',
     valueDefault: 0,
     valueType: 'number',
     rules: {
@@ -266,6 +279,7 @@ return true;
     canSkip: false,
     hasSelect: false,
     label: 'longinput',
+    filter:'percentage',
     valueDefault: 0,
     valueType: 'number',
     rules: {

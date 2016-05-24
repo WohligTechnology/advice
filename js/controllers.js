@@ -496,15 +496,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.sendMessage = function(msg) {
         console.log($scope.chats[$scope.chats.length - 1].type !== 'sent');
         if (msg !== undefined && $scope.chats[$scope.chats.length - 1].type !== 'sent') {
+          clonedmsg= _.cloneDeep(msg);
             $scope.typing = false;
             if ($scope.currentResponse.valueType == 'date') {
                 msg = $filter('date')(new Date(msg), 'mediumDate');
+            }
+            if($scope.currentResponse.filter){
+              msg = $filter($scope.currentResponse.filter)(msg);
             }
             $scope.chats.push({
                 text: msg,
                 type: 'sent'
             });
-            $scope.validateMessage(_.cloneDeep(msg), $scope.currentResponse.id);
+            $scope.validateMessage(clonedmsg, $scope.currentResponse.id);
         }
         $scope.response.reply = undefined;
         console.log($scope.reply);
@@ -527,8 +531,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }, interval);
     };
 
-    $scope.replyMessage = function(input, qid, skipped) {
-        NavigationService.autoresponder(input, qid, skipped, function(data) {
+    $scope.replyMessage = function(input, qid, skips) {
+      console.log("difference " + (scenarios.length -  qid));
+      if((scenarios.length -  qid) == 4){
+        console.log("The casual message");
+        $scope.recievedMessage('Great! Last two questions to understand your risk tolerance.',600);
+      }
+        NavigationService.autoresponder(input, qid, skips, function(data) {
 
             if (data) {
                 if (data.id !== -1) {
@@ -537,13 +546,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                       if (angular.isFunction($scope.currentResponse.question)) {
                           $scope.currentResponse.question = $scope.currentResponse.question();
                       }
+                      console.log(skipped);
+                      if (skipped && skipped[1] === false && skipped[2] === false && $scope.currentResponse.id === 7){
+                          $scope.currentResponse.canSkip = true;
+                      }
                       $scope.recievedMessage($scope.currentResponse.question, 1000);
                       errAgain = 0;
                     }else{
                       $scope.replyMessage(data.valueDefault, data.id, true);
                     }
                 } else {
-                    $scope.recievedMessage('Thank you for your answers!', 500);
+                    // $scope.recievedMessage('Thank you for your answers!', 500);
                     $scope.recievedMessage('I will now redirect you to your plan. You might be required to fine tune your inputs to create a feasible & optimum plan. Please wait…', 1500);
                     $timeout(function() {
                         $scope.changeToObject(result);

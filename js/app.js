@@ -1,81 +1,81 @@
 // JavaScript Document
 var firstapp = angular.module('firstapp', [
-  'ui.router',
-  'phonecatControllers',
-  'templateservicemod',
-  'navigationservice'
+    'ui.router',
+    'phonecatControllers',
+    'templateservicemod',
+    'navigationservice'
 ]);
 
-firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider,$logProvider,highchartsNGProvider) {
-  // for http request with session
-        $logProvider.debugEnabled(false);
-         highchartsNGProvider.lazyLoad();
+firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $logProvider, highchartsNGProvider) {
+    // for http request with session
+    $logProvider.debugEnabled(false);
+    highchartsNGProvider.lazyLoad();
 
-  $httpProvider.defaults.withCredentials = true;
-  $stateProvider
-    .state('home', {
-      url: "/home",
-      templateUrl: "views/template.html",
-      controller: 'HomeCtrl'
-    })
-    .state('profile', {
-      url: "/profile",
-      templateUrl: "views/template.html",
-      controller: 'ProfileCtrl'
-    })
-    .state('referral', {
-      url: "/referral",
-      templateUrl: "views/template.html",
-      controller: 'ReferralCtrl'
-    })
-    .state('notification', {
-      url: "/notification",
-      templateUrl: "views/template.html",
-      controller: 'NotificationCtrl'
-    })
-    .state('overview', {
-      url: "/overview",
-      templateUrl: "views/template.html",
-      controller: 'OverviewCtrl'
-    })
-    .state('portfolio', {
-      url: "/portfolio",
-      templateUrl: "views/template.html",
-      controller: 'PortfolioCtrl'
-    })
-    .state('planner', {
-      url: "/planner",
-      templateUrl: "views/template.html",
-      controller: 'PlannerCtrl'
-    })
-    .state('archive', {
-      url: "/home",
-      templateUrl: "views/template.html",
-      controller: 'HomeCtrl'
-    });
-  $urlRouterProvider.otherwise("/home");
-  $locationProvider.html5Mode(isproduction);
+    $httpProvider.defaults.withCredentials = true;
+    $stateProvider
+        .state('home', {
+            url: "/home",
+            templateUrl: "views/template.html",
+            controller: 'HomeCtrl'
+        })
+        .state('profile', {
+            url: "/profile",
+            templateUrl: "views/template.html",
+            controller: 'ProfileCtrl'
+        })
+        .state('referral', {
+            url: "/referral",
+            templateUrl: "views/template.html",
+            controller: 'ReferralCtrl'
+        })
+        .state('notification', {
+            url: "/notification",
+            templateUrl: "views/template.html",
+            controller: 'NotificationCtrl'
+        })
+        .state('overview', {
+            url: "/overview",
+            templateUrl: "views/template.html",
+            controller: 'OverviewCtrl'
+        })
+        .state('portfolio', {
+            url: "/portfolio",
+            templateUrl: "views/template.html",
+            controller: 'PortfolioCtrl'
+        })
+        .state('planner', {
+            url: "/planner",
+            templateUrl: "views/template.html",
+            controller: 'PlannerCtrl'
+        })
+        .state('archive', {
+            url: "/home",
+            templateUrl: "views/template.html",
+            controller: 'HomeCtrl'
+        });
+    $urlRouterProvider.otherwise("/home");
+    $locationProvider.html5Mode(isproduction);
 });
 
 
 firstapp.directive('img', function($compile, $parse) {
-  return {
-    restrict: 'E',
-    replace: false,
-    link: function($scope, element, attrs) {
-      var $element = $(element);
-      if (!attrs.noloading) {
-        $element.after("<img src='img/loading.gif' class='loading' />");
-        var $loading = $element.next(".loading");
-        $element.load(function() {
-          $loading.remove();
-          $(this).addClass("doneLoading");
-        });
-      } else {
-        $($element).addClass("doneLoading");
-      }
-    }
-  };
+    return {
+        restrict: 'E',
+        replace: false,
+        link: function($scope, element, attrs) {
+            var $element = $(element);
+            if (!attrs.noloading) {
+                $element.after("<img src='img/loading.gif' class='loading' />");
+                var $loading = $element.next(".loading");
+                $element.load(function() {
+                    $loading.remove();
+                    $(this).addClass("doneLoading");
+                });
+            } else {
+                $($element).addClass("doneLoading");
+            }
+        }
+    };
 });
 firstapp.filter('uploadpath', function() {
     return function(input, width, height, style) {
@@ -95,20 +95,36 @@ firstapp.filter('uploadpath', function() {
     };
 });
 firstapp.filter('nearest100', function() {
-  return function(value) {
-    return parseInt((value+50)/100)*100;
-  };
+    return function(value) {
+        return parseInt((value + 50) / 100) * 100;
+    };
+});
+firstapp.filter('currency', function() {
+    return function(value) {
+        value = value.toString();
+        var lastThree = value.substring(value.length - 3);
+        var otherNumbers = value.substring(0, value.length - 3);
+        if (otherNumbers !== '')
+            lastThree = ',' + lastThree;
+        var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+        return "₹ " + res;
+    };
+});
+firstapp.filter('percentage', function() {
+    return function(value) {
+        return value + " %";
+    };
 });
 firstapp.filter('monthsSince', function() {
-  return function(value,value2) {
-var temp=null;
-  if(value2){
-    temp=moment.duration( moment(new Date(value2)).diff(moment(new Date(value))));
-  }else{
-    temp=moment.duration( moment(new Date()).diff(moment(new Date(value))));
-  }
-  return temp.years()*12+temp.months();
-  };
+    return function(value, value2) {
+        var temp = null;
+        if (value2) {
+            temp = moment.duration(moment(new Date(value2)).diff(moment(new Date(value))));
+        } else {
+            temp = moment.duration(moment(new Date()).diff(moment(new Date(value))));
+        }
+        return temp.years() * 12 + temp.months();
+    };
 });
 firstapp.directive('uploadImage', function($http) {
     return {
@@ -164,20 +180,19 @@ firstapp.directive('uploadImage', function($http) {
         }
     };
 });
-firstapp.directive('schrollBottom', function () {
-  return {
-    scope: {
-      schrollBottom: "="
-    },
-    link: function (scope, element) {
-      scope.$watchCollection('schrollBottom', function (newValue) {
-        if (newValue)
-        {
-          $(element).scrollTop($(element)[0].scrollHeight);
+firstapp.directive('schrollBottom', function() {
+    return {
+        scope: {
+            schrollBottom: "="
+        },
+        link: function(scope, element) {
+            scope.$watchCollection('schrollBottom', function(newValue) {
+                if (newValue) {
+                    $(element).scrollTop($(element)[0].scrollHeight);
+                }
+            });
         }
-      });
-    }
-  };
+    };
 });
 firstapp.directive('fancyboxBox', function($document) {
     return {
@@ -187,7 +202,7 @@ firstapp.directive('fancyboxBox', function($document) {
             var $element = $(element);
             var target;
             if (attr.rel) {
-               target = $("[rel='" + attr.rel + "']");
+                target = $("[rel='" + attr.rel + "']");
             } else {
                 target = element;
             }
@@ -204,13 +219,13 @@ firstapp.directive('fancyboxBox', function($document) {
     };
 });
 firstapp.directive('autoHeight', function($compile, $parse) {
-  return {
-    restrict: 'EA',
-    replace: false,
-    link: function($scope, element, attrs) {
-      var $element = $(element);
-      var windowHeight = $(window).height();
-      $element.css("height", windowHeight);
-    }
-  };
+    return {
+        restrict: 'EA',
+        replace: false,
+        link: function($scope, element, attrs) {
+            var $element = $(element);
+            var windowHeight = $(window).height();
+            $element.css("height", windowHeight);
+        }
+    };
 });
