@@ -423,7 +423,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 borderColor: '#1d71b8',
                 type: 'line',
                 reflow: true
-            }
+            },
+            tooltip: {
+                valuePrefix: '₹ '
+            },
         },
         series: [{
             data: [],
@@ -470,7 +473,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         },
         series: [{
             name: 'Browsers',
-            data: [],
+            data: [["Equity", 6],
+            ["Debt", 4]],
             size: '100%',
             innerSize: '30%',
             showInLegend: true,
@@ -692,13 +696,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     };
     $scope.reflowChartED = function(currentPlan) {
-        $scope.EDdonutchartConfig.series.data = [];
-        $scope.EDdonutchartConfig.series.data[0] = [];
-        $scope.EDdonutchartConfig.series.data[0].push('Equity');
-        $scope.EDdonutchartConfig.series.data[0].push(currentPlan.feasible[0].type);
-        $scope.EDdonutchartConfig.series.data[1] = [];
-        $scope.EDdonutchartConfig.series.data[1].push('Debt');
-        $scope.EDdonutchartConfig.series.data[1].push(10 - currentPlan.feasible[0].type);
+        $scope.EDdonutchartConfig.series[0].data[0]= [];
+        $scope.EDdonutchartConfig.series[0].data[0].push('Equity');
+        $scope.EDdonutchartConfig.series[0].data[0].push(currentPlan.feasible[0].type);
+        $scope.EDdonutchartConfig.series[0].data[1] = [];
+        $scope.EDdonutchartConfig.series[0].data[1].push('Debt');
+        $scope.EDdonutchartConfig.series[0].data[1].push(10 - currentPlan.feasible[0].type);
+        console.log($scope.EDdonutchartConfig);
     };
 
     //Slider models start
