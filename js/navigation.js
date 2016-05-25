@@ -2,7 +2,7 @@ var adminURL = "";
 var result = [];
 var skipped = [];
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
-var adminURL = "http://192.168.1.111:1337/";
+var adminURL = "http://localhost:1337/";
 var scenarios = [{
     id: 0,
     status:function(){
@@ -103,7 +103,7 @@ return true;
 }, {
     id: 4,
     status:function(){
-return true;
+      return true;
     },
     question: 'How do you wish to withdraw this investment?',
     canSkip: true,

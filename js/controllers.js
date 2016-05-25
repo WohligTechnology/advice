@@ -18,7 +18,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     $scope.changeFullPage = function(no) {
-        console.log(no);
         $.fn.fullpage.moveTo(no);
     };
 
@@ -26,7 +25,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $timeout(function() {
             $('.fullpage').fullpage();
             // $('#scene').parallax();
-            console.log($stateParams.name);
             $scope.homeval = $stateParams.name;
             switch ($scope.homeval) {
                 case "contact":
@@ -188,7 +186,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.changeStatus(1, 0);
             $scope.nominee.nonominee = true;
 
-            console.log($scope.nominee.nonominee);
         } else {
             $scope.changeStatus(1, 1);
         }
@@ -399,7 +396,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.toastText = "";
     $scope.response = {};
     $scope.typing = false;
-    $scope.suggestion = false;
+    $scope.suggestion = true;
     $scope.result = {};
     $scope.sixHundredMonths = [];
     var current = $state.current;
@@ -494,15 +491,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.response.reply = undefined;
     $scope.sendMessage = function(msg) {
-        console.log($scope.chats[$scope.chats.length - 1].type !== 'sent');
         if (msg !== undefined && $scope.chats[$scope.chats.length - 1].type !== 'sent') {
-          clonedmsg= _.cloneDeep(msg);
+            clonedmsg = _.cloneDeep(msg);
             $scope.typing = false;
             if ($scope.currentResponse.valueType == 'date') {
                 msg = $filter('date')(new Date(msg), 'mediumDate');
             }
-            if($scope.currentResponse.filter){
-              msg = $filter($scope.currentResponse.filter)(msg);
+            if ($scope.currentResponse.filter) {
+                msg = $filter($scope.currentResponse.filter)(msg);
             }
             $scope.chats.push({
                 text: msg,
@@ -511,7 +507,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.validateMessage(clonedmsg, $scope.currentResponse.id);
         }
         $scope.response.reply = undefined;
-        console.log($scope.reply);
     };
     $scope.typingIt = function(check) {
         if (check === null || check === undefined || check === "") {
@@ -532,34 +527,33 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     $scope.replyMessage = function(input, qid, skips) {
-      console.log("difference " + (scenarios.length -  qid));
-      if((scenarios.length -  qid) == 4){
-        console.log("The casual message");
-        $scope.recievedMessage('Great! Last two questions to understand your risk tolerance.',600);
-      }
+        console.log("difference " + (scenarios.length - qid));
+        if ((scenarios.length - qid) == 4) {
+            console.log("The casual message");
+            $scope.recievedMessage('Great! Last two questions to understand your risk tolerance.', 600);
+        }
         NavigationService.autoresponder(input, qid, skips, function(data) {
 
             if (data) {
                 if (data.id !== -1) {
-                    if(data.status()){
-                      $scope.currentResponse = data;
-                      if (angular.isFunction($scope.currentResponse.question)) {
-                          $scope.currentResponse.question = $scope.currentResponse.question();
-                      }
-                      console.log(skipped);
-                      if (skipped && skipped[1] === false && skipped[2] === false && $scope.currentResponse.id === 7){
-                          $scope.currentResponse.canSkip = true;
-                      }
-                      if(skipped && skipped[1] === false && skipped[2] === false && skipped[3] === false && skipped[5] === false && skipped[6] === false && skipped[7] === false){
-                        $scope.currentResponse.canSkip = true;
-                      }
-                      if(skipped && skipped[0] === false && skipped[1] === false && skipped[2] === false && skipped[3] === false){
-                        $scope.currentResponse.canSkip = true;
-                      }
-                      $scope.recievedMessage($scope.currentResponse.question, 1000);
-                      errAgain = 0;
-                    }else{
-                      $scope.replyMessage(data.valueDefault, data.id, true);
+                    if (data.status()) {
+                        $scope.currentResponse = data;
+                        if (angular.isFunction($scope.currentResponse.question)) {
+                            $scope.currentResponse.question = $scope.currentResponse.question();
+                        }
+                        if (skipped && skipped[1] === false && skipped[2] === false && $scope.currentResponse.id === 7) {
+                            $scope.currentResponse.canSkip = true;
+                        }
+                        if (skipped && skipped[1] === false && skipped[2] === false && skipped[3] === false && skipped[5] === false && skipped[6] === false && skipped[7] === false) {
+                            $scope.currentResponse.canSkip = true;
+                        }
+                        if (skipped && skipped[0] === false && skipped[1] === false && skipped[2] === false && skipped[3] === false) {
+                            $scope.currentResponse.canSkip = true;
+                        }
+                        $scope.recievedMessage($scope.currentResponse.question, 1000);
+                        errAgain = 0;
+                    } else {
+                        $scope.replyMessage(data.valueDefault, data.id, true);
                     }
                 } else {
                     // $scope.recievedMessage('Thank you for your answers!', 500);
@@ -584,7 +578,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             msg = new Date(msg);
 
         }
-        console.log(angular.isDate(msg));
         if ($scope.currentResponse.rules.minlength && angular.isString(msg) && msg.length < $scope.currentResponse.rules.minlength) {
 
             errMsg = _.find($scope.currentResponse.errors, function(o) {
@@ -605,7 +598,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             errAgain++;
 
 
-        } else if ($scope.currentResponse.rules.maximum && ((angular.isFunction($scope.currentResponse.rules.maximum) && $scope.currentResponse.rules.maximum(msg)) || (msg > $scope.currentResponse.rules.maximum) )) {
+        } else if ($scope.currentResponse.rules.maximum && ((angular.isFunction($scope.currentResponse.rules.maximum) && $scope.currentResponse.rules.maximum(msg)) || (msg > $scope.currentResponse.rules.maximum))) {
 
             errMsg = _.find($scope.currentResponse.errors, function(o) {
                 return o.type == 'maximum';
@@ -615,7 +608,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             errAgain++;
 
 
-        } else if ($scope.currentResponse.rules.minimum && ((angular.isFunction($scope.currentResponse.rules.minimum) && $scope.currentResponse.rules.minimum(msg)) || (msg < $scope.currentResponse.rules.minimum) )) {
+        } else if ($scope.currentResponse.rules.minimum && ((angular.isFunction($scope.currentResponse.rules.minimum) && $scope.currentResponse.rules.minimum(msg)) || (msg < $scope.currentResponse.rules.minimum))) {
 
             errMsg = _.find($scope.currentResponse.errors, function(o) {
                 return o.type == 'minimum';
@@ -679,7 +672,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         _.each(res, function(key) {
             $scope.result[key.label] = key.value;
         });
-        console.log($scope.result);
         $scope.computeIt($scope.result);
     };
 
@@ -707,7 +699,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.EDdonutchartConfig.series.data[1] = [];
         $scope.EDdonutchartConfig.series.data[1].push('Debt');
         $scope.EDdonutchartConfig.series.data[1].push(10 - currentPlan.feasible[0].type);
-        console.log($scope.EDdonutchartConfig);
     };
 
     //Slider models start
@@ -888,7 +879,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.executeIt = true;
     $scope.validateSliders = function() {
-        console.log($scope.inputs);
         if ($scope.inputs.startMonthSlider.value < $scope.inputs.monthlyuntildateSlider.value) {
             $scope.inputs.startMonthSlider.options.floor = $scope.inputs.monthlyuntildateSlider.value + 1;
         }
@@ -915,19 +905,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     var compute = 0;
     $scope.executeCompute = function(resultNow) {
         $scope.executeIt = false;
-        console.log(resultNow);
         $scope.planlinechartconfig.loading = true;
         $scope.EDdonutchartConfig.loading = true;
 
         NavigationService.play(resultNow, function(data) {
-            console.log("compute :" + compute);
-            console.log(data);
             compute++;
             if (data.value === false) {
                 $scope.currentPlan = data;
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
-                    $scope.suggestIt($scope.currentPlan.suggestions);
+                    $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
                 }
                 $scope.toastText = "We couldn't find a feasible investment plan. Adjust the sliders!";
                 $scope.showCustomToast();
@@ -941,14 +928,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.reflowChartED($scope.currentPlan);
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
-                    $scope.suggestIt($scope.currentPlan.suggestions);
+                    $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
                     $timeout(function() {
                         $scope.executeIt = true;
                     }, 1000);
                 } else if (!$scope.currentPlan.suggestions && $scope.currentPlan.feasible.length == 1) {
-                    $scope.executeIt = false;
+
                     $scope.toastText = "DONE! You have reached your optimum investment plan";
                     $scope.showCustomToast();
+                    $timeout(function() {
+                        $scope.executeIt = true;
+                    }, 1000);
                     // $scope.inputs.lumpsumSlider.options.readOnly = true;
                     // $scope.inputs.monthlySlider.options.readOnly = true;
                     // $scope.inputs.installmentSlider.options.readOnly = true;
@@ -988,15 +978,38 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultNow.noOfMonth = -1 * $filter('monthsSince')(resultNow.monthlyuntildate);
         $scope.executeCompute(resultNow);
     };
-    $scope.suggestIt = function(suggestions) {
-        $scope.inputs.installmentSlider.options.showSelectionBarFromValue = suggestions.installment;
-        $scope.inputs.lumpsumSlider.options.showSelectionBarFromValue = suggestions.lumpsum;
-        $scope.inputs.monthlySlider.options.showSelectionBarFromValue = suggestions.monthly;
-        $scope.inputs.installmentSlider.options.showSelectionBarFromValue = suggestions.installment;
-        $scope.inputs.startMonthSlider.options.showSelectionBarFromValue = suggestions.startMonth;
-        $scope.inputs.endMonthSlider.options.showSelectionBarFromValue = $scope.inputs.startMonthSlider.options.showSelectionBarFromValue + suggestions.noOfMonth;
+    $scope.computeIt(replyJSON);
+    $scope.suggestIt = function(current, suggestions) {
+      console.log(current);
+        $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment);
+        $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum);
+        $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly);
+        $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
+        $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
+        $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth+ current.noOfInstallment, suggestions.startMonth+suggestions.noOfInstallment);
+
         $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
         $scope.showCustomToast();
+        console.log("Slider");
+        console.log($scope.inputs);
+    };
+    $scope.parseSuggestions = function(options, current, suggestion) {
+      console.log(suggestion);
+        if (current < suggestion) {
+            options.floor = suggestion - ((suggestion - current) * 1.3);
+            options.floor = $filter('nearest100')(Math.abs(options.floor));
+            options.ceil = suggestion + ((suggestion - current) * 1.3);
+            options.ceil = $filter('nearest100')(Math.abs(options.ceil));
+
+        } else {
+            options.floor = suggestion + ((suggestion - current) * 1.3);
+            options.floor = $filter('nearest100')(Math.abs(options.floor));
+            options.ceil = suggestion - ((suggestion - current) * 1.3);
+            options.ceil = $filter('nearest100')(Math.abs(options.ceil));
+
+        }
+        options.showSelectionBarFromValue = Math.abs(suggestion);
+        return options;
     };
     $scope.setSliders = function(res) {
         $scope.inputs.lumpsumSlider.value = res.lumpsum;
@@ -1045,7 +1058,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     };
     $scope.closeToast = function() {
-        console.log("close toast");
         $mdToast.hide();
     };
     $scope.showSimpleToast = function() {
