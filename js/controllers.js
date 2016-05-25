@@ -781,17 +781,24 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     $scope.inputs.withdrawalfrequencySlider = {
-        value: 25000,
+        value: 1,
         options: {
             onChange: function() {
                 $scope.validateSliders();
             },
-            floor: 25000,
-            ceil: 25000000,
-            step: 25000,
-            //         translate: function(value) {
-            //   return $filter('date')(value,'mediumDate');
-            // },
+            floor: 1,
+            ceil: 3,
+            step: 1,
+                    translate: function(value) {
+              if(value===1){
+                return 'One Shot';
+              }else if(value === 2){
+                return 'Monthly';
+              }else{
+                return 'Annually';
+
+              }
+            },
             showSelectionBarFromValue: $scope.suggestions.withdrawalfrequency,
             hideLimitLabels: true
         }
@@ -981,9 +988,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.computeIt(replyJSON);
     $scope.suggestIt = function(current, suggestions) {
       console.log(current);
-        $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment);
-        $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum);
-        $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly);
+        $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment,true);
+        $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum,true);
+        $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly,true);
         $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
         $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
         $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth+ current.noOfInstallment, suggestions.startMonth+suggestions.noOfInstallment);
@@ -993,22 +1000,26 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         console.log("Slider");
         console.log($scope.inputs);
     };
-    $scope.parseSuggestions = function(options, current, suggestion) {
-      console.log(suggestion);
+    $scope.parseSuggestions = function(options, current, suggestion,nearest100) {
+
         if (current < suggestion) {
             options.floor = suggestion - ((suggestion - current) * 1.3);
-            options.floor = $filter('nearest100')(Math.abs(options.floor));
             options.ceil = suggestion + ((suggestion - current) * 1.3);
-            options.ceil = $filter('nearest100')(Math.abs(options.ceil));
 
         } else {
+          console.log(options + " "+ current);
             options.floor = suggestion + ((suggestion - current) * 1.3);
-            options.floor = $filter('nearest100')(Math.abs(options.floor));
             options.ceil = suggestion - ((suggestion - current) * 1.3);
-            options.ceil = $filter('nearest100')(Math.abs(options.ceil));
 
         }
+        options.floor = Math.round(options.floor);
+        options.ceil = Math.round(options.ceil);
         options.showSelectionBarFromValue = Math.abs(suggestion);
+        if(nearest100){
+          options.floor =$filter('nearest100')(options.floor);
+          options.ceil =$filter('nearest100')(options.ceil);
+          options.showSelectionBarFromValue = $filter('nearest100')(suggestion);
+        }
         return options;
     };
     $scope.setSliders = function(res) {
