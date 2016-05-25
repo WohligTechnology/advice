@@ -550,6 +550,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                       if (skipped && skipped[1] === false && skipped[2] === false && $scope.currentResponse.id === 7){
                           $scope.currentResponse.canSkip = true;
                       }
+                      if(skipped && skipped[1] === false && skipped[2] === false && skipped[3] === false && skipped[5] === false && skipped[6] === false && skipped[7] === false){
+                        $scope.currentResponse.canSkip = true;
+                      }
+                      if(skipped && skipped[0] === false && skipped[1] === false && skipped[2] === false && skipped[3] === false){
+                        $scope.currentResponse.canSkip = true;
+                      }
                       $scope.recievedMessage($scope.currentResponse.question, 1000);
                       errAgain = 0;
                     }else{
@@ -560,7 +566,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     $scope.recievedMessage('I will now redirect you to your plan. You might be required to fine tune your inputs to create a feasible & optimum plan. Please wait…', 1500);
                     $timeout(function() {
                         $scope.changeToObject(result);
-                    }, 5000);
+                    }, 7000);
                 }
             }
         }, function(err) {

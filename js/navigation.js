@@ -151,7 +151,7 @@ return (check == 'One Shot')? false:true;
     },
     errors: [{
         type: 'minimum',
-        messages: ['Cannot withdraw before Monthly Contribution date. Please provide a later date.']
+        messages: ['Cannot start withdrawing until all monthly contributions are made. Please provide a later date.']
     },{
         type: 'maximum',
         messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "'+moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
@@ -193,15 +193,15 @@ return (check == 'One Shot')? false:true;
     },
     errors: [{
         type: 'minimum',
-        messages: ['Cannot withdraw before Withdrawal start date. Please provide a later date.']
+        messages: ['Cannot end withdrawals before they start! Please provide a later date.']
     },{
         type: 'maximum',
-        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "'+moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
+        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "' + moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
     }]
 },{
     id: 7,
     status:function(){
-return true;
+      return true;
     },
     question: function () {
       var check = _.find(result, function(key) {
