@@ -117,10 +117,7 @@ return true;
 }, {
     id: 5,
     status:function(){
-      var check = _.find(result, function(key) {
-          return key.label == 'withdrawalfrequency';
-      }).value;
-return (check == 'One Shot')? false:true;
+      return (skipped[4] === true)?false : true;
     },
     question: function() {
         var check = _.find(result, function(key) {
