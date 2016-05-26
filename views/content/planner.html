@@ -162,7 +162,7 @@
       </div> -->
       <rzslider rz-slider-model="inputs.startMonthSlider.value" rz-slider-options="inputs.startMonthSlider.options"></rzslider>
     </div>
-    <div class="slider slider7">
+    <div class="slider slider7" ng-hide="hideendMonthSlider">
       <span>Withdrawal End</span>
       <span class="pull-right block">
         <md-select ng-change="validateSliders()" ng-model="inputs.endMonthSlider.value">
@@ -211,7 +211,7 @@
       <rzslider rz-slider-model="inputs.longinputSlider.value" rz-slider-options="inputs.longinputSlider.options"></rzslider>
     </div>
 
-    <div class="donut-chart">
+    <div class="donut-chart" ng-if="showdonut">
       <!-- <img src="http://dummyimage.com/500x500/ccc/ccc" alt="" class="img-responsive" /> -->
       <highchart id="chart3" config="EDdonutchartConfig"></highchart>
 
@@ -219,9 +219,9 @@
   </div>
 
   <div class="right-bar">
-    <div class="spline-graph">
+    <div class="spline-graph" ng-if="showchart">
       <!-- <img src="http://dummyimage.com/500x500/ccc/ccc" alt="" class="img-responsive" /> -->
-      <highchart id="chart3" config="planlinechartconfig"></highchart>
+      <highchart id="chart3" config="planlinechartconfig" ></highchart>
 
     </div>
 

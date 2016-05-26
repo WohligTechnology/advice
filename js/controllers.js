@@ -398,6 +398,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.typing = false;
     $scope.suggestion = true;
     $scope.result = {};
+    $scope.showchart = false;
+    $scope.showdonut = false;
     $scope.sixHundredMonths = [];
     var current = $state.current;
 
@@ -473,8 +475,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         },
         series: [{
             name: 'Browsers',
-            data: [["Equity", 6],
-            ["Debt", 4]],
+            data: [
+                ["Equity", 6],
+                ["Debt", 4]
+            ],
             size: '100%',
             innerSize: '30%',
             showInLegend: true,
@@ -696,7 +700,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     };
     $scope.reflowChartED = function(currentPlan) {
-        $scope.EDdonutchartConfig.series[0].data[0]= [];
+        $scope.EDdonutchartConfig.series[0].data[0] = [];
         $scope.EDdonutchartConfig.series[0].data[0].push('Equity');
         $scope.EDdonutchartConfig.series[0].data[0].push(currentPlan.feasible[0].type);
         $scope.EDdonutchartConfig.series[0].data[1] = [];
@@ -736,6 +740,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             hideLimitLabels: true
         }
     };
+    $scope.withdrawalfrequencyChange = function() {
+        if ($scope.inputs.withdrawalfrequencySlider.value = 2) {
+            $scope.inputs.withdrawalfrequencySlider.value = 'monthly';
+        }
+        console.log($scope.inputs.withdrawalfrequencySlider);
+    };
     $scope.inputs.monthlySlider = {
         value: 0,
         options: {
@@ -755,6 +765,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         value: 0,
         options: {
             onChange: function() {
+
                 $scope.validateSliders();
             },
             floor: 0,
@@ -787,21 +798,26 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.withdrawalfrequencySlider = {
         value: 1,
         options: {
-            onChange: function() {
+            onChange: function(id, value) {
+                $scope.hideendMonthSlider = false;
+                if (value === 1) {
+                    $scope.hideendMonthSlider = true;
+                    $scope.inputs.endMonthSlider.value = $scope.inputs.startMonthSlider.value + 1;
+                }
                 $scope.validateSliders();
             },
             floor: 1,
             ceil: 3,
             step: 1,
-                    translate: function(value) {
-              if(value===1){
-                return 'One Shot';
-              }else if(value === 2){
-                return 'Monthly';
-              }else{
-                return 'Annually';
+            translate: function(value) {
+                if (value === 1) {
+                    return 'One Shot';
+                } else if (value === 2) {
+                    return 'Monthly';
+                } else {
+                    return 'Annually';
 
-              }
+                }
             },
             showSelectionBarFromValue: $scope.suggestions.withdrawalfrequency,
             hideLimitLabels: true
@@ -929,6 +945,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 }
                 $scope.toastText = "We couldn't find a feasible investment plan. Adjust the sliders!";
                 $scope.showCustomToast();
+                $scope.showchart = false;
+                $scope.showdonut = false;
                 $timeout(function() {
                     $scope.executeIt = true;
                 }, 1000);
@@ -940,12 +958,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
+                    $scope.showchart = true;
+                    $scope.showdonut = false;
                     $timeout(function() {
                         $scope.executeIt = true;
                     }, 1000);
                 } else if (!$scope.currentPlan.suggestions && $scope.currentPlan.feasible.length == 1) {
 
                     $scope.toastText = "DONE! You have reached your optimum investment plan";
+                    $scope.showchart = true;
+                    $scope.showdonut = true;
                     $scope.showCustomToast();
                     $timeout(function() {
                         $scope.executeIt = true;
@@ -969,7 +991,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         "lumpsum": 100210,
         "monthly": 11000,
         "monthlyuntildate": "2017-12-04T18:30:00.000Z",
-        "withdrawalfrequency": null,
+        "withdrawalfrequency": 'Monthly',
         "inflation": 6,
         "installment": 20000,
         "startMonth": "2018-02-19T18:30:00.000Z",
@@ -991,27 +1013,27 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.computeIt(replyJSON);
     $scope.suggestIt = function(current, suggestions) {
-      console.log(current);
-        $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment,true);
-        $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum,true);
-        $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly,true);
+        console.log(current);
+        $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
+        $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum, true);
+        $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly, true);
         $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
         $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
-        $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth+ current.noOfInstallment, suggestions.startMonth+suggestions.noOfInstallment);
+        $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
 
         $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
         $scope.showCustomToast();
         console.log("Slider");
         console.log($scope.inputs);
     };
-    $scope.parseSuggestions = function(options, current, suggestion,nearest100) {
+    $scope.parseSuggestions = function(options, current, suggestion, nearest100) {
 
         if (current < suggestion) {
             options.floor = suggestion - ((suggestion - current) * 1.3);
             options.ceil = suggestion + ((suggestion - current) * 1.3);
 
         } else {
-          console.log(options + " "+ current);
+            console.log(options + " " + current);
             options.floor = suggestion + ((suggestion - current) * 1.3);
             options.ceil = suggestion - ((suggestion - current) * 1.3);
 
@@ -1019,10 +1041,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options.floor = Math.round(options.floor);
         options.ceil = Math.round(options.ceil);
         options.showSelectionBarFromValue = Math.abs(suggestion);
-        if(nearest100){
-          options.floor =$filter('nearest100')(options.floor);
-          options.ceil =$filter('nearest100')(options.ceil);
-          options.showSelectionBarFromValue = $filter('nearest100')(suggestion);
+        if (nearest100) {
+            options.floor = $filter('nearest100')(options.floor);
+            options.ceil = $filter('nearest100')(options.ceil);
+            options.showSelectionBarFromValue = $filter('nearest100')(suggestion);
         }
         return options;
     };
@@ -1036,6 +1058,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.inputs.longinputSlider.value = res.longinput;
         $scope.inputs.inflationSlider.value = res.inflation;
         $scope.inputs.installmentSlider.value = res.installment;
+        if (res.withdrawalfrequency == 'One Shot') {
+            $scope.inputs.withdrawalfrequencySlider.value = 1;
+        } else if (res.withdrawalfrequency == 'Monthly') {
+            $scope.inputs.withdrawalfrequencySlider.value = 2;
+        }
     };
     //TOAST
     var last = {
