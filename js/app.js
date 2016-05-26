@@ -48,6 +48,11 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
             templateUrl: "views/template.html",
             controller: 'PlannerCtrl'
         })
+        .state('planned', {
+            url: "/planner/:id",
+            templateUrl: "views/template.html",
+            controller: 'PlannerCtrl'
+        })
         .state('archive', {
             url: "/home",
             templateUrl: "views/template.html",

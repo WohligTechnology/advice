@@ -301,7 +301,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         },
         series: [{
-            name: 'Browsers',
+            name: 'Distribution',
             data: [
                 ["Equity", 6],
                 ["Debt", 4]
@@ -385,7 +385,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 })
 
-.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $state, $timeout, $log, $filter, $interval, $mdToast, $document) {
+.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $state,$stateParams, $timeout, $log, $filter, $interval, $mdToast, $document) {
     $scope.template = TemplateService.changecontent("planner");
     $scope.menutitle = NavigationService.makeactive("Planner");
     TemplateService.title = $scope.menutitle;
@@ -396,13 +396,26 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.toastText = "";
     $scope.response = {};
     $scope.typing = false;
-    $scope.suggestion = true;
+    $scope.suggestion = false ;
     $scope.result = {};
     $scope.showchart = false;
     $scope.showdonut = false;
     $scope.sixHundredMonths = [];
     var current = $state.current;
+    if($stateParams.id){
+      NavigationService.getOnePortfolio($stateParams,function(data){
+        if(data.value){
+          $scope.executeCompute(data.data);
+          $scope.suggestion=true;
+        }else{
+          console.log("invalid ID");
+        }
+      },function(err){
 
+      });
+    }else{
+      $scope.suggestion=false;
+    }
     $scope.$on('$stateChangeStart', function(event, toState) {
         if (current.name == toState.name) {
             var answer = confirm("Are you sure you want to leave this page?");
@@ -741,7 +754,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
     };
     $scope.withdrawalfrequencyChange = function() {
-        if ($scope.inputs.withdrawalfrequencySlider.value = 2) {
+        if ($scope.inputs.withdrawalfrequencySlider.value == 2) {
             $scope.inputs.withdrawalfrequencySlider.value = 'monthly';
         }
         console.log($scope.inputs.withdrawalfrequencySlider);
@@ -787,6 +800,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             },
             floor: 6000,
             ceil: 50000,
+            step:100,
             translate: function(value) {
                 return "₹ " + value;
             },
@@ -909,9 +923,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         if ($scope.inputs.startMonthSlider.value < $scope.inputs.monthlyuntildateSlider.value) {
             $scope.inputs.startMonthSlider.options.floor = $scope.inputs.monthlyuntildateSlider.value + 1;
         }
-        if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value) {
+        if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value || ($scope.inputs.withdrawalfrequencySlider.value === 1)) {
             $scope.inputs.endMonthSlider.options.floor = $scope.inputs.startMonthSlider.value + 1;
         }
+
         $scope.parseSliders();
     };
     var resultSlider = {};
@@ -1009,7 +1024,21 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultNow.noOfInstallment = -1 * $filter('monthsSince')(resultNow.endMonth, resultNow.startMonth);
         resultNow.startMonth = -1 * $filter('monthsSince')(resultNow.startMonth);
         resultNow.noOfMonth = -1 * $filter('monthsSince')(resultNow.monthlyuntildate);
-        $scope.executeCompute(resultNow);
+        // $scope.executeCompute(resultNow);
+    };
+    $scope.savePortfolio=function(res){
+      NavigationService.savePortfolio(res,function(data){
+        if(data.value){
+          $state.$go("planned",{
+            id:data.data._id
+          });
+
+        }else{
+          console.log("Not logged in");
+        }
+      },function(){
+
+      });
     };
     $scope.computeIt(replyJSON);
     $scope.suggestIt = function(current, suggestions) {

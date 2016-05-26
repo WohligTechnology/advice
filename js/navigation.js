@@ -383,12 +383,40 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }).success(callback).error(err);
         },
+        savePortfolio: function(request, callback, err) {
+            return $http({
+                url: adminURL + "portfolio/save",
+                method: "POST",
+                data: {
+                    "lumpsum": request.lumpsum,
+                    "monthly": request.monthly,
+                    "noOfMonth": request.noOfMonth,
+                    "startMonth": request.startMonth,
+                    "noOfInstallment": request.noOfInstallment,
+                    "installment": request.installment,
+                    "inflation": request.inflation,
+                    "shortinput": request.shortinput,
+                    "longinput": request.longinput,
+                    "withDrawalFreq":request.goalname
+                }
+            }).success(callback).error(err);
+        },
         login: function(request, callback, err) {
             return $http({
                 url: adminURL + "user/login",
                 method: "POST",
                 data: {
                     "email": request.email,
+                    "password": request.password
+                }
+            }).success(callback).error(err);
+        },
+        getOnePortfolio: function(request, callback, err) {
+            return $http({
+                url: adminURL + "portfolio/getOne",
+                method: "POST",
+                data: {
+                    "_id": request.id,
                     "password": request.password
                 }
             }).success(callback).error(err);
