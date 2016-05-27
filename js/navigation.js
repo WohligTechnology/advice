@@ -397,7 +397,8 @@ var navigationservice = angular.module('navigationservice', [])
                     "inflation": request.inflation,
                     "shortinput": request.shortinput,
                     "longinput": request.longinput,
-                    "withDrawalFreq":request.goalname
+                    "withdrawalfrequency":request.withdrawalfrequency,
+                    "goalname":request.goalname
                 }
             }).success(callback).error(err);
         },
@@ -435,6 +436,15 @@ var navigationservice = angular.module('navigationservice', [])
                 data: {
                     "email": formData.email,
                     "password": formData.password
+                }
+            }).success(callback).error(err);
+        },
+        getPlanFunds: function(formData, callback, err) {
+            return $http({
+                url: adminURL + "investmenttype/getPlanFunds",
+                method: "POST",
+                data: {
+                    "name": formData.type
                 }
             }).success(callback).error(err);
         },

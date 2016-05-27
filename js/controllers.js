@@ -7,6 +7,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/header.html";
+    $scope.login = {
+      email:'rohanwohlig@gmail.com',
+      password:'wohlig123'
+    };
+    NavigationService.login($scope.login,function(data){
+      if(data.value){
+        console.log("login done");
+      }
+    },function(err){
+
+    });
     $scope.section = {
         one: "views/section/section1.html",
         two: "views/section/section2.html",
@@ -20,6 +31,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.changeFullPage = function(no) {
         $.fn.fullpage.moveTo(no);
     };
+
 
     $scope.$on('$viewContentLoaded', function() {
         $timeout(function() {
@@ -393,12 +405,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.header = "views/content/header.html";
     $scope.oneAtATime = true;
     $scope.chats = [];
+    $scope.funds = [];
     $scope.toastText = "";
     $scope.response = {};
     $scope.typing = false;
     $scope.suggestion = false ;
     $scope.result = {};
     $scope.showchart = false;
+    $scope.showfunds =false;
     $scope.showdonut = false;
     $scope.sixHundredMonths = [];
     var current = $state.current;
@@ -407,6 +421,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       NavigationService.getOnePortfolio($stateParams,function(data){
         if(data.value){
           $scope.executeCompute(data.data);
+          if(data.data.withdrawalfrequency == 'One Shot'){
+            $scope.hideendMonthSlider=true;
+          }
         }else{
           console.log("invalid ID");
         }
@@ -487,7 +504,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         },
         series: [{
-            name: 'Browsers',
+            name: 'Distribution',
             data: [
                 ["Equity", 6],
                 ["Debt", 4]
@@ -656,6 +673,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         }
     };
+    $scope.getFunds = function(type){
+      $scope.funds = [];
+      console.log("Type here is "+ type);
+      NavigationService.getPlanFunds(type,function(data){
+        if(data.value){
+          $scope.funds = data.data;
+        }
+      },function(err){
+
+      });
+    };
     $scope.skipIt = function() {
         var skiptexts = ['Let&apos;s skip it.', 'I would like to skip it', 'Skip it'];
         $scope.chats.push({
@@ -740,6 +768,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.lumpsumSlider = {
         value: 25000,
         options: {
+          hidePointerLabels:true,
             onChange: function() {
                 $scope.validateSliders();
             },
@@ -765,6 +794,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.monthlySlider = {
         value: 0,
         options: {
+          hidePointerLabels:true,
             onChange: function() {
                 $scope.validateSliders();
             },
@@ -780,6 +810,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.monthlyuntildateSlider = {
         value: 0,
         options: {
+          hidePointerLabels:true,
             onChange: function() {
 
                 $scope.validateSliders();
@@ -798,6 +829,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.installmentSlider = {
         value: 0,
         options: {
+          hidePointerLabels:true,
             onChange: function() {
                 $scope.validateSliders();
             },
@@ -815,6 +847,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.withdrawalfrequencySlider = {
         value: 1,
         options: {
+          hidePointerLabels:true,
             onChange: function(id, value) {
                 $scope.hideendMonthSlider = false;
                 if (value === 1) {
@@ -843,6 +876,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.startMonthSlider = {
         value: 0,
         options: {
+          hidePointerLabels:true,
             onChange: function() {
                 $scope.validateSliders();
             },
@@ -860,6 +894,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.endMonthSlider = {
         value: 0,
         options: {
+          hidePointerLabels:true,
             onChange: function() {
                 $scope.validateSliders();
             },
@@ -879,6 +914,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.inflationSlider = {
         value: 0,
         options: {
+          hidePointerLabels:true,
             onChange: function() {
                 $scope.validateSliders();
             },
@@ -894,6 +930,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.shortinputSlider = {
         value: 0,
         options: {
+          hidePointerLabels:true,
             onChange: function() {
                 $scope.validateSliders();
             },
@@ -909,6 +946,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.inputs.longinputSlider = {
         value: 0,
         options: {
+          hidePointerLabels:true,
             onChange: function() {
                 $scope.validateSliders();
             },
@@ -950,6 +988,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     var compute = 0;
     $scope.executeCompute = function(resultNow) {
         $scope.executeIt = false;
+        $scope.showfunds =false;
+
         $scope.planlinechartconfig.loading = true;
         $scope.EDdonutchartConfig.loading = true;
 
@@ -986,10 +1026,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     $scope.toastText = "DONE! You have reached your optimum investment plan";
                     $scope.showchart = true;
                     $scope.showdonut = true;
+                    $scope.showfunds =true;
+
                     $scope.showCustomToast();
                     $timeout(function() {
                         $scope.executeIt = true;
                     }, 1000);
+                    $scope.getFunds($scope.currentPlan.feasible[0].type);
                     // $scope.inputs.lumpsumSlider.options.readOnly = true;
                     // $scope.inputs.monthlySlider.options.readOnly = true;
                     // $scope.inputs.installmentSlider.options.readOnly = true;
@@ -1019,8 +1062,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     //Slider models end
     $scope.computeIt = function(res) {
+
         $scope.planlinechartconfig.loading = true;
         resultNow = _.cloneDeep(res);
+
         resultNow.lumpsum = $filter('nearest100')(resultNow.lumpsum);
         resultNow.monthly = $filter('nearest100')(resultNow.monthly);
         resultNow.installment = $filter('nearest100')(resultNow.installment);
@@ -1028,11 +1073,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultNow.startMonth = -1 * $filter('monthsSince')(resultNow.startMonth);
         resultNow.noOfMonth = -1 * $filter('monthsSince')(resultNow.monthlyuntildate);
         // $scope.executeCompute(resultNow);
+        if(resultNow.withdrawalfrequency == 'One Shot'){
+          resultNow.noOfInstallment =1;
+
+        }
+        $scope.savePortfolio(resultNow);
     };
     $scope.savePortfolio=function(res){
       NavigationService.savePortfolio(res,function(data){
         if(data.value){
-          $state.$go("planned",{
+          console.log(data);
+          $state.go("planned",{
             id:data.data._id
           });
 
@@ -1043,7 +1094,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
       });
     };
-    $scope.computeIt(replyJSON);
     $scope.suggestIt = function(current, suggestions) {
         console.log(current);
         $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
