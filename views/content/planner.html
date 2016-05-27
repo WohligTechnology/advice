@@ -139,7 +139,17 @@
     <div class="slider slider5">
       <span>Withdrawal Frequency</span>
       <span class="pull-right block">
-      <md-input-container><input type="text" disabled class="leftLabelVal" ng-change="validateSliders()" ng-model="inputs.withdrawalfrequencySlider.value"></md-input-container>
+        <md-select ng-change="withdrawalfrequencyChange()" ng-model="inputs.withdrawalfrequencySlider.value">
+              <md-option value="1">
+                One Shot
+              </md-option>
+              <md-option value="2">
+                Monthly
+              </md-option>
+              <md-option value="3">
+                Annually
+              </md-option>
+            </md-select>
       </span>
       <!-- <div class="nstSlider" data-range_min="15000" data-range_max="25000" data-cur_min="20000" data-cur_max="20000">
         <div class="bar"></div>

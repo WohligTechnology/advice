@@ -403,10 +403,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.sixHundredMonths = [];
     var current = $state.current;
     if($stateParams.id){
+      $scope.suggestion=true;
       NavigationService.getOnePortfolio($stateParams,function(data){
         if(data.value){
           $scope.executeCompute(data.data);
-          $scope.suggestion=true;
         }else{
           console.log("invalid ID");
         }
@@ -754,10 +754,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
     };
     $scope.withdrawalfrequencyChange = function() {
-        if ($scope.inputs.withdrawalfrequencySlider.value == 2) {
-            $scope.inputs.withdrawalfrequencySlider.value = 'monthly';
-        }
-        console.log($scope.inputs.withdrawalfrequencySlider);
+      $scope.hideendMonthSlider = false;
+      console.log("select change withdrawalfrequencySlider"+$scope.inputs.withdrawalfrequencySlider.value);
+      if (parseInt($scope.inputs.withdrawalfrequencySlider.value) === 1) {
+          $scope.hideendMonthSlider = true;
+          $scope.inputs.endMonthSlider.value = $scope.inputs.startMonthSlider.value + 1;
+      }
+      $scope.validateSliders();
     };
     $scope.inputs.monthlySlider = {
         value: 0,
@@ -1057,16 +1060,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.parseSuggestions = function(options, current, suggestion, nearest100) {
 
-        if (current < suggestion) {
-            options.floor = suggestion - ((suggestion - current) * 1.3);
-            options.ceil = suggestion + ((suggestion - current) * 1.3);
+          if (current < suggestion) {
+              options.floor = suggestion - ((suggestion - current) * 1.3);
+              options.ceil = suggestion + ((suggestion - current) * 1.3);
 
-        } else {
-            console.log(options + " " + current);
-            options.floor = suggestion + ((suggestion - current) * 1.3);
-            options.ceil = suggestion - ((suggestion - current) * 1.3);
+          } else {
+              console.log(options + " " + current);
+              options.floor = suggestion + ((suggestion - current) * 1.3);
+              options.ceil = suggestion - ((suggestion - current) * 1.3);
 
-        }
+          }
         options.floor = Math.round(options.floor);
         options.ceil = Math.round(options.ceil);
         options.showSelectionBarFromValue = Math.abs(suggestion);
