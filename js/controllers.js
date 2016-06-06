@@ -16,7 +16,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         console.log("login done");
       }
     },function(err){
-
     });
     $scope.section = {
         one: "views/section/section1.html",
@@ -462,13 +461,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         },
         series: [{
             data: [],
-            name: 'Projection 1'
+            name: 'Best'
         }, {
             data: [],
-            name: 'Projection 50'
+            name: 'Base'
         }, {
             data: [],
-            name: 'Projection 99'
+            name: 'Worst'
         }, {
             type: 'column',
             name: 'Cashflow',
@@ -496,6 +495,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 borderColor: '#1d71b8',
                 type: 'pie',
                 reflow: true
+            },tooltip: {
+                valueSuffix: '0%'
             }
         },
         plotOptions: {
@@ -734,9 +735,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.planlinechartconfig.series[2].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.series[3].data = currentPlan.cashflow;
         $scope.planlinechartconfig.title.text = $scope.result.goalname;
-        $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()), 'MMM, yyyy'));
+        $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()), "MMM, '''yy"));
         _.each(currentPlan.feasible[0].tenures, function(key) {
-            $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key), 'MMM, yyyy'));
+            $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key), "MMM, '''yy"));
         });
 
     };
@@ -800,6 +801,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             },
             floor: 5000,
             ceil: 80000,
+            step:100,
             translate: function(value) {
                 return "₹ " + value;
             },
@@ -1000,6 +1002,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
+                    $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
+                    $scope.showCustomToast();
                 }
                 $scope.toastText = "We couldn't find a feasible investment plan. Adjust the sliders!";
                 $scope.showCustomToast();
@@ -1016,6 +1020,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
+                    $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
+                    $scope.showCustomToast();
                     $scope.showchart = true;
                     $scope.showdonut = false;
                     $timeout(function() {
@@ -1027,6 +1033,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     $scope.showchart = true;
                     $scope.showdonut = true;
                     $scope.showfunds =true;
+                    $scope.suggestIt(resultNow, resultNow);
 
                     $scope.showCustomToast();
                     $timeout(function() {
@@ -1103,10 +1110,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
         $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
 
-        $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
-        $scope.showCustomToast();
+
         console.log("Slider");
-        console.log($scope.inputs);
+
     };
     $scope.parseSuggestions = function(options, current, suggestion, nearest100) {
 
@@ -1114,12 +1120,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
               options.floor = suggestion - ((suggestion - current) * 1.3);
               options.ceil = suggestion + ((suggestion - current) * 1.3);
 
-          } else {
+          } else{
               console.log(options + " " + current);
               options.floor = suggestion + ((suggestion - current) * 1.3);
               options.ceil = suggestion - ((suggestion - current) * 1.3);
 
           }
+          if(Math.abs(suggestion -  current) < (0.05 * current)){
+            console.log("exception case aaya");
+            options.floor = current - 0.3*suggestion;
+            options.ceil = current + 0.3*suggestion;
+          }
+          console.log($scope.inputs);
         options.floor = Math.round(options.floor);
         options.ceil = Math.round(options.ceil);
         options.showSelectionBarFromValue = Math.abs(suggestion);
@@ -1139,6 +1151,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.inputs.shortinputSlider.value = res.shortinput;
         $scope.inputs.longinputSlider.value = res.longinput;
         $scope.inputs.inflationSlider.value = res.inflation;
+        $scope.inputs.inflationSlider.options.ceil = res.inflation+5;
+        $scope.inputs.inflationSlider.options.floor = res.inflation-5;
         $scope.inputs.installmentSlider.value = res.installment;
         if (res.withdrawalfrequency == 'One Shot') {
             $scope.inputs.withdrawalfrequencySlider.value = 1;
