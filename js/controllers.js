@@ -972,6 +972,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         $scope.parseSliders();
     };
+    $scope.letCall = true;
+    $scope.changeInputs = function(){
+      if($scope.letCall){
+        $scope.letCall = false;
+        $scope.validateSliders();
+        
+        $timeout(function(){
+          $scope.letCall=true;
+        },1000);
+      }
+    };
     var resultSlider = {};
     $scope.parseSliders = function() {
         resultSlider.noOfInstallment = $scope.inputs.endMonthSlider.value - $scope.inputs.startMonthSlider.value;
