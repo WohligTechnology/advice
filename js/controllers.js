@@ -977,7 +977,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       if($scope.letCall){
         $scope.letCall = false;
         $scope.validateSliders();
-        
+
         $timeout(function(){
           $scope.letCall=true;
         },1000);
@@ -1114,14 +1114,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.suggestIt = function(current, suggestions) {
         console.log(current);
+      if(suggestions.lumpsum){
         $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
         $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum, true);
         $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly, true);
         $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
         $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
         $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
-
-
+      }
+      $scope.inputs.shortinputSlider.options =  $scope.parseSuggestions($scope.inputs.shortinputSlider.options,current.shortinput,suggestions.shortinput);
+      $scope.inputs.longinputSlider.options =  $scope.parseSuggestions($scope.inputs.longinputSlider.options,current.longinput,suggestions.longinput);
         console.log("Slider");
 
     };
