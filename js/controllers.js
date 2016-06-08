@@ -674,15 +674,75 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         }
     };
-    $scope.getFunds = function(type){
-      $scope.funds = [];
-      console.log("Type here is "+ type);
-      NavigationService.getPlanFunds(type,function(data){
+    $scope.getFunds = function(type,tenure,result){
+      console.log(type);
+      NavigationService.getPlanFunds(type.toString(),function(data){
         if(data.value){
           $scope.funds = data.data;
+          $scope.calculateFunds(type,$scope.funds,tenure,result);
         }
       },function(err){
 
+      });
+    };
+    $scope.fundstable= [];
+    $scope.calculateFunds = function(type,funds,tenures,result){
+      // result.
+      $scope.fundstable= [];
+      $scope.fundstable[0]={};
+      $scope.fundstable[1]={};
+      $scope.fundstable[2]={};
+      $scope.fundstable[3]={};
+      var lumpeq = result.lumpsum*(type/10);
+      var lumpdt = result.lumpsum*(Math.abs(10-type)/10);
+      var monthlyeq = result.monthly*(type/10);
+      var monthlydt = result.monthly*(Math.abs(10-type)/10);
+
+      if(parseInt(tenures.length/12)>3){
+        $scope.fundstable[0].name=funds.morethan3equity1fund.name;
+        $scope.fundstable[0].lump=(funds.morethan3equity1percent/100)*lumpeq;
+        $scope.fundstable[0].monthly=(funds.morethan3equity1percent/100)*monthlyeq;
+
+        $scope.fundstable[1].name=funds.morethan3equity2fund.name;
+        $scope.fundstable[1].lump=(funds.morethan3equity2percent/100)*lumpeq;
+        $scope.fundstable[1].monthly=(funds.morethan3equity2percent/100)*monthlyeq;
+
+
+        $scope.fundstable[2].name=funds.morethan3debt1fund.name;
+        $scope.fundstable[2].lump=(funds.morethan3debt1percent/100)*lumpdt;
+        $scope.fundstable[2].monthly=(funds.morethan3debt1percent/100)*monthlydt;
+
+
+        $scope.fundstable[3].name=funds.morethan3debt2fund.name;
+        $scope.fundstable[3].lump=(funds.morethan3debt2percent/100)*lumpdt;
+        $scope.fundstable[3].monthly=(funds.morethan3debt2percent/100)*monthlydt;
+
+
+
+      }else{
+        $scope.fundstable[0].name=funds.lessthan3equity1fund.name;
+        $scope.fundstable[0].lump=(funds.lessthan3equity1percent/100)*lumpeq;
+        $scope.fundstable[0].monthly=(funds.lessthan3equity1percent/100)*monthlyeq;
+
+        $scope.fundstable[1].name=funds.lessthan3equity2fund.name;
+        $scope.fundstable[1].lump=(funds.lessthan3equity2percent/100)*lumpeq;
+        $scope.fundstable[1].monthly=(funds.lessthan3equity2percent/100)*monthlyeq;
+
+
+        $scope.fundstable[2].name=funds.lessthan3debt1fund.name;
+        $scope.fundstable[2].lump=(funds.lessthan3debt1percent/100)*lumpdt;
+        $scope.fundstable[2].monthly=(funds.lessthan3debt1percent/100)*monthlydt;
+
+
+        $scope.fundstable[3].name=funds.lessthan3debt2fund.name;
+        $scope.fundstable[3].lump=(funds.lessthan3debt2percent/100)*lumpdt;
+        $scope.fundstable[3].monthly=(funds.lessthan3debt2percent/100)*monthlydt;
+      }
+      $scope.fundtotallump = 0;
+      $scope.fundtotalmonthly = 0;
+      _.each($scope.fundstable,function(key){
+        $scope.fundtotallump=$scope.fundtotallump+key.lump;
+        $scope.fundtotalmonthly=$scope.fundtotalmonthly+key.monthly;
       });
     };
     $scope.skipIt = function() {
@@ -1002,6 +1062,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.executeCompute = function(resultNow) {
         $scope.executeIt = false;
         $scope.showfunds =false;
+        $scope.fundstable= [];
 
         $scope.planlinechartconfig.loading = true;
         $scope.EDdonutchartConfig.loading = true;
@@ -1050,7 +1111,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     $timeout(function() {
                         $scope.executeIt = true;
                     }, 1000);
-                    $scope.getFunds($scope.currentPlan.feasible[0].type);
+                    $scope.getFunds($scope.currentPlan.feasible[0].type,$scope.currentPlan.feasible[0].tenures,resultNow);
                     // $scope.inputs.lumpsumSlider.options.readOnly = true;
                     // $scope.inputs.monthlySlider.options.readOnly = true;
                     // $scope.inputs.installmentSlider.options.readOnly = true;

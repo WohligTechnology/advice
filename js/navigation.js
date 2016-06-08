@@ -2,11 +2,12 @@ var adminURL = "";
 var result = [];
 var skipped = [];
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
-var adminURL = "http://104.199.142.53/";
+var adminURL = "http://localhost:1337/";
+// var adminURL = "http://104.199.142.53/";
 var scenarios = [{
     id: 0,
-    status:function(){
-return true;
+    status: function() {
+        return true;
     },
     question: 'What would you like to call this portfolio?',
     canSkip: false,
@@ -29,14 +30,14 @@ return true;
     }
 }, {
     id: 1,
-    status:function(){
-return true;
+    status: function() {
+        return true;
     },
     question: 'For this portfolio, what would be your initial contribution?',
     canSkip: true,
     hasSelect: false,
     label: 'lumpsum',
-    filter:'currency',
+    filter: 'currency',
     valueDefault: 0,
     valueType: 'number',
     rules: {
@@ -44,20 +45,20 @@ return true;
         minlength: undefined,
         maxlength: undefined
     },
-    errors: [ {
+    errors: [{
         type: 'minimum',
         messages: ['To create a well-diversified portfolio we will need at least Rs.25,000. Increase your initial contribution if possible; else, you may skip this question.']
     }]
 }, {
     id: 2,
-    status:function(){
-return true;
+    status: function() {
+        return true;
     },
     question: 'For this portfolio, how much are you willing to contribute every month?',
     canSkip: true,
     hasSelect: false,
     label: 'monthly',
-    filter:'currency',
+    filter: 'currency',
     valueDefault: 0,
     valueType: 'number',
     rules: {
@@ -72,8 +73,8 @@ return true;
     }]
 }, {
     id: 3,
-    status:function(){
-      return (skipped[2] === true)?false : true;
+    status: function() {
+        return (skipped[2] === true) ? false : true;
     },
     question: function() {
         return "Till when would you like to keep contributing ₹ " + _.find(result, function(key) {
@@ -83,27 +84,27 @@ return true;
     canSkip: true,
     hasSelect: false,
     label: 'monthlyuntildate',
-    valueDefault: new Date().setMonth((new Date()).getMonth()+1),
+    valueDefault: new Date().setMonth((new Date()).getMonth() + 1),
     valueType: 'date',
     rules: {
-        minimum: function(select){
-          return (select <= (new Date()).setMonth((new Date()).getMonth()+6))?true:false;
+        minimum: function(select) {
+            return (select <= (new Date()).setMonth((new Date()).getMonth() + 6)) ? true : false;
         },
-        maximum:function(select){
-          return (select >= (new Date()).setMonth((new Date()).getMonth()+600))?true:false;
+        maximum: function(select) {
+            return (select >= (new Date()).setMonth((new Date()).getMonth() + 600)) ? true : false;
         }
     },
     errors: [{
         type: 'minimum',
         messages: ['We need to contribute atleast for 6 months. Please provide a date after 6 months.']
-    },{
+    }, {
         type: 'maximum',
-        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "'+moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
+        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "' + moment((new Date()).setMonth((new Date()).getMonth() + 600)).format('MMM YYYY') + '".']
     }]
 }, {
     id: 4,
-    status:function(){
-      return true;
+    status: function() {
+        return true;
     },
     question: 'How do you wish to withdraw this investment?',
     canSkip: true,
@@ -116,8 +117,8 @@ return true;
     errors: []
 }, {
     id: 5,
-    status:function(){
-      return (skipped[4] === true)?false : true;
+    status: function() {
+        return (skipped[4] === true) ? false : true;
     },
     question: function() {
         var check = _.find(result, function(key) {
@@ -136,30 +137,30 @@ return true;
     valueDefault: (new Date()),
     valueType: 'date',
     rules: {
-        minimum: function(select){
-          var check = _.find(result, function(key) {
-              return key.label == 'monthlyuntildate';
-          }).value;
-          return (select <= check)?true:false;
+        minimum: function(select) {
+            var check = _.find(result, function(key) {
+                return key.label == 'monthlyuntildate';
+            }).value;
+            return (select <= check) ? true : false;
         },
-        maximum:function(select){
-          return (select >= (new Date()).setMonth((new Date()).getMonth()+600))?true:false;
+        maximum: function(select) {
+            return (select >= (new Date()).setMonth((new Date()).getMonth() + 600)) ? true : false;
         }
     },
     errors: [{
         type: 'minimum',
         messages: ['Cannot start withdrawing until all monthly contributions are made. Please provide a later date.']
-    },{
+    }, {
         type: 'maximum',
-        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "'+moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
+        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "' + moment((new Date()).setMonth((new Date()).getMonth() + 600)).format('MMM YYYY') + '".']
     }]
-},{
+}, {
     id: 6,
-    status:function(){
-      var check = _.find(result, function(key) {
-          return key.label == 'withdrawalfrequency';
-      }).value;
-return (check == 'One Shot')? false:true;
+    status: function() {
+        var check = _.find(result, function(key) {
+            return key.label == 'withdrawalfrequency';
+        }).value;
+        return (check == 'One Shot') ? false : true;
     },
     question: function() {
         var check = _.find(result, function(key) {
@@ -178,44 +179,44 @@ return (check == 'One Shot')? false:true;
     valueDefault: (new Date()),
     valueType: 'date',
     rules: {
-        minimum: function(select){
-          var check = _.find(result, function(key) {
-              return key.label == 'startMonth';
-          }).value;
-          return (select <= check)?true:false;
+        minimum: function(select) {
+            var check = _.find(result, function(key) {
+                return key.label == 'startMonth';
+            }).value;
+            return (select <= check) ? true : false;
         },
-        maximum:function(select){
-          return (select >= (new Date()).setMonth((new Date()).getMonth()+600))?true:false;
+        maximum: function(select) {
+            return (select >= (new Date()).setMonth((new Date()).getMonth() + 600)) ? true : false;
         }
     },
     errors: [{
         type: 'minimum',
         messages: ['Cannot end withdrawals before they start! Please provide a later date.']
-    },{
+    }, {
         type: 'maximum',
-        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "' + moment((new Date()).setMonth((new Date()).getMonth()+600)).format('MMM YYYY')+'".']
+        messages: ['Oh! We can plan for a maximum of 50 Years only. Please provide a date before "' + moment((new Date()).setMonth((new Date()).getMonth() + 600)).format('MMM YYYY') + '".']
     }]
-},{
+}, {
     id: 7,
-    status:function(){
-      return true;
+    status: function() {
+        return true;
     },
-    question: function () {
-      var check = _.find(result, function(key) {
-          return key.label == 'withdrawalfrequency';
-      }).value;
-      if(check == 'One Shot'){
-        return 'From this portfolio, how much would you like to withdraw (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.)';
-      }else if (check == 'Monthly') {
-        return 'From this portfolio, how much would you like to withdraw every month? (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.) ';
-      }else{
-        return 'From this portfolio, how much would you like to withdraw every year? (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.) ';
-      }
+    question: function() {
+        var check = _.find(result, function(key) {
+            return key.label == 'withdrawalfrequency';
+        }).value;
+        if (check == 'One Shot') {
+            return 'From this portfolio, how much would you like to withdraw (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.)';
+        } else if (check == 'Monthly') {
+            return 'From this portfolio, how much would you like to withdraw every month? (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.) ';
+        } else {
+            return 'From this portfolio, how much would you like to withdraw every year? (For a while, assume that the prices of all goods & services related to this goal will stay the same forever.) ';
+        }
     },
     canSkip: false,
     hasSelect: false,
     label: 'installment',
-    filter:'currency',
+    filter: 'currency',
     valueDefault: 0,
     valueType: 'number',
     rules: {
@@ -227,14 +228,14 @@ return (check == 'One Shot')? false:true;
     }]
 }, {
     id: 8,
-    status:function(){
-return true;
+    status: function() {
+        return true;
     },
     question: "What is your estimated rate of inflation? (Tip: 'Rate of inflation' is the rate at which the prices of goods & services increase every year)",
     canSkip: true,
     hasSelect: false,
     label: 'inflation',
-    filter:'percentage',
+    filter: 'percentage',
     valueDefault: 6,
     valueType: 'number',
     rules: {
@@ -244,16 +245,16 @@ return true;
         type: 'maximum',
         messages: ['That estimate seems to be very high. Suggest you to lower the estimated rate inflation to 12%.']
     }]
-},  {
+}, {
     id: 9,
-    status:function(){
-return true;
+    status: function() {
+        return true;
     },
     question: 'Like any investment, the value of this portfolio will fluctuate during the investment period. These fluctuations may result in notional loss (Theoretical loss). During the investment period of this portfolio how much notional loss can you tolerate on your invested amount?',
     canSkip: false,
     hasSelect: false,
     label: 'shortinput',
-    filter:'percentage',
+    filter: 'percentage',
     valueDefault: 0,
     valueType: 'number',
     rules: {
@@ -269,14 +270,14 @@ return true;
     }]
 }, {
     id: 10,
-    status:function(){
-return true;
+    status: function() {
+        return true;
     },
     question: 'At the end of the investment  period, there is a possibility of losing some of the investment amount. In such a case, what is the maximum realised loss (Real loss) that you are prepared to accept?',
     canSkip: false,
     hasSelect: false,
     label: 'longinput',
-    filter:'percentage',
+    filter: 'percentage',
     valueDefault: 0,
     valueType: 'number',
     rules: {
@@ -292,8 +293,8 @@ return true;
     }]
 }, {
     id: -1,
-    status:function(){
-return true;
+    status: function() {
+        return true;
     }
 }];
 //
@@ -397,8 +398,8 @@ var navigationservice = angular.module('navigationservice', [])
                     "inflation": request.inflation,
                     "shortinput": request.shortinput,
                     "longinput": request.longinput,
-                    "withdrawalfrequency":request.withdrawalfrequency,
-                    "goalname":request.goalname
+                    "withdrawalfrequency": request.withdrawalfrequency,
+                    "goalname": request.goalname
                 }
             }).success(callback).error(err);
         },
@@ -439,12 +440,12 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }).success(callback).error(err);
         },
-        getPlanFunds: function(formData, callback, err) {
+        getPlanFunds: function(type, callback, err) {
             return $http({
                 url: adminURL + "investmenttype/getPlanFunds",
                 method: "POST",
                 data: {
-                    "name": formData.type
+                    "name": type
                 }
             }).success(callback).error(err);
         },
