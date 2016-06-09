@@ -389,6 +389,9 @@ var navigationservice = angular.module('navigationservice', [])
                 url: adminURL + "portfolio/save",
                 method: "POST",
                 data: {
+                  "_id":request.id,
+                  "status":request.status,
+                  "funds":request.funds,
                     "lumpsum": request.lumpsum,
                     "monthly": request.monthly,
                     "noOfMonth": request.noOfMonth,
@@ -402,6 +405,16 @@ var navigationservice = angular.module('navigationservice', [])
                     "goalname": request.goalname
                 }
             }).success(callback).error(err);
+        },
+        deletePortfolio: function(request,callback,err){
+          return $http({
+              url: adminURL + "portfolio/delete",
+              method: "POST",
+              data: {
+                  "_id": request.id
+              }
+          }).success(callback).error(err);
+
         },
         login: function(request, callback, err) {
             return $http({

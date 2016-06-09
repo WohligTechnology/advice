@@ -396,7 +396,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 })
 
-.controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $state,$stateParams, $timeout, $log, $filter, $interval, $mdToast, $document) {
+.controller('PlannerCtrl', function($scope, TemplateService, NavigationService,$mdDialog, $state,$stateParams, $timeout, $log, $filter, $interval, $mdToast, $document) {
     $scope.template = TemplateService.changecontent("planner");
     $scope.menutitle = NavigationService.makeactive("Planner");
     TemplateService.title = $scope.menutitle;
@@ -419,9 +419,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.suggestion=true;
       NavigationService.getOnePortfolio($stateParams,function(data){
         if(data.value){
-          $scope.executeCompute(data.data);
-          if(data.data.withdrawalfrequency == 'One Shot'){
-            $scope.hideendMonthSlider=true;
+          if(data.data.lumpsum !== undefined){
+            $scope.executeCompute(data.data);
+            if(data.data.withdrawalfrequency == 'One Shot'){
+              $scope.hideendMonthSlider=true;
+            }
           }
         }else{
           console.log("invalid ID");
@@ -699,21 +701,26 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       var monthlydt = result.monthly*(Math.abs(10-type)/10);
 
       if(parseInt(tenures.length/12)>3){
+
         $scope.fundstable[0].name=funds.morethan3equity1fund.name;
+        $scope.fundstable[0]._id=funds.morethan3equity1fund._id;
         $scope.fundstable[0].lump=(funds.morethan3equity1percent/100)*lumpeq;
         $scope.fundstable[0].monthly=(funds.morethan3equity1percent/100)*monthlyeq;
 
         $scope.fundstable[1].name=funds.morethan3equity2fund.name;
+        $scope.fundstable[1]._id=funds.morethan3equity2fund._id;
         $scope.fundstable[1].lump=(funds.morethan3equity2percent/100)*lumpeq;
         $scope.fundstable[1].monthly=(funds.morethan3equity2percent/100)*monthlyeq;
 
 
         $scope.fundstable[2].name=funds.morethan3debt1fund.name;
+        $scope.fundstable[2]._id=funds.morethan3debt1fund._id;
         $scope.fundstable[2].lump=(funds.morethan3debt1percent/100)*lumpdt;
         $scope.fundstable[2].monthly=(funds.morethan3debt1percent/100)*monthlydt;
 
 
         $scope.fundstable[3].name=funds.morethan3debt2fund.name;
+        $scope.fundstable[3]._id=funds.morethan3debt2fund._id;
         $scope.fundstable[3].lump=(funds.morethan3debt2percent/100)*lumpdt;
         $scope.fundstable[3].monthly=(funds.morethan3debt2percent/100)*monthlydt;
 
@@ -721,20 +728,24 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
       }else{
         $scope.fundstable[0].name=funds.lessthan3equity1fund.name;
+        $scope.fundstable[0]._id=funds.lessthan3equity1fund._id;
         $scope.fundstable[0].lump=(funds.lessthan3equity1percent/100)*lumpeq;
         $scope.fundstable[0].monthly=(funds.lessthan3equity1percent/100)*monthlyeq;
 
         $scope.fundstable[1].name=funds.lessthan3equity2fund.name;
+        $scope.fundstable[1]._id=funds.lessthan3equity2fund._id;
         $scope.fundstable[1].lump=(funds.lessthan3equity2percent/100)*lumpeq;
         $scope.fundstable[1].monthly=(funds.lessthan3equity2percent/100)*monthlyeq;
 
 
         $scope.fundstable[2].name=funds.lessthan3debt1fund.name;
+        $scope.fundstable[2]._id=funds.lessthan3debt1fund._id;
         $scope.fundstable[2].lump=(funds.lessthan3debt1percent/100)*lumpdt;
         $scope.fundstable[2].monthly=(funds.lessthan3debt1percent/100)*monthlydt;
 
 
         $scope.fundstable[3].name=funds.lessthan3debt2fund.name;
+        $scope.fundstable[3]._id=funds.lessthan3debt2fund._id;
         $scope.fundstable[3].lump=(funds.lessthan3debt2percent/100)*lumpdt;
         $scope.fundstable[3].monthly=(funds.lessthan3debt2percent/100)*monthlydt;
       }
@@ -744,6 +755,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.fundtotallump=$scope.fundtotallump+key.lump;
         $scope.fundtotalmonthly=$scope.fundtotalmonthly+key.monthly;
       });
+
     };
     $scope.skipIt = function() {
         var skiptexts = ['Let&apos;s skip it.', 'I would like to skip it', 'Skip it'];
@@ -1063,7 +1075,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.executeIt = false;
         $scope.showfunds =false;
         $scope.fundstable= [];
-
+        $scope.feasibleresult=null;
         $scope.planlinechartconfig.loading = true;
         $scope.EDdonutchartConfig.loading = true;
 
@@ -1105,6 +1117,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     $scope.showchart = true;
                     $scope.showdonut = true;
                     $scope.showfunds =true;
+                    $scope.feasibleresult=resultNow;
                     $scope.suggestIt(resultNow, resultNow);
 
                     $scope.showCustomToast();
@@ -1174,7 +1187,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     };
     $scope.suggestIt = function(current, suggestions) {
-        console.log(current);
       if(suggestions.lumpsum){
         $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
         $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum, true);
@@ -1205,7 +1217,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             options.floor = current - 0.3*suggestion;
             options.ceil = current + 0.3*suggestion;
           }
-          console.log($scope.inputs);
         options.floor = Math.round(options.floor);
         options.ceil = Math.round(options.ceil);
         options.showSelectionBarFromValue = Math.abs(suggestion);
@@ -1293,6 +1304,99 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     };
     //TOAST END
+    $scope.DeletePlan = function(ev) {
+    // Appending dialog to document.body to cover sidenav in docs app
+    var confirm = $mdDialog.confirm()
+          .title('Are you sure you want to delete?')
+          .ariaLabel('Lucky day')
+          .targetEvent(ev)
+          .ok('Confirm')
+          .cancel('Cancel');
+    $mdDialog.show(confirm).then(function() {
+      $scope.DeleteIt();
+    }, function() {
+    });
+  };
+  $scope.SavePlan = function(ev){
+    var request=null;
+    request =  $scope.feasibleresult;
+    request.status=false;
+    request.funds = [];
+    var iterate = 0;
+     _.each($scope.fundstable,function (key) {
+
+      request.funds[iterate]={
+        fundid:key._id
+      };
+      iterate++;
+    });
+    console.log($scope.fundstable);
+    console.log(request.funds);
+    request.id = $stateParams.id;
+    NavigationService.savePortfolio(request,function (data) {
+      if(data.value){
+
+        $mdDialog.show(
+          $mdDialog.alert()
+            .parent(angular.element(document.querySelector('#popupContainer')))
+            .clickOutsideToClose(true)
+            .title('Saved successfully')
+            .ok('Okay')
+            .targetEvent(ev)
+        )
+        .then(function (result) {
+          $state.go('portfolio');
+        });
+      }
+    },function (err) {
+
+    });
+  };
+    /// SAVE DELETE AND EXECUTE
+    $scope.DeleteIt = function(){
+    NavigationService.deletePortfolio({
+      id:$stateParams.id
+    },function (data) {
+      if(data.value){
+        $state.go("planner");
+      }else{
+      }
+    },function (err) {
+      console.log(err);
+    });
+    };
+    $scope.ExecutePlan = function(ev){
+      var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to make the plan live?')
+            .ariaLabel('Lucky day')
+            .targetEvent(ev)
+            .ok('Confirm')
+            .cancel('Cancel');
+      $mdDialog.show(confirm).then(function() {
+        var request=null;
+        request =  $scope.feasibleresult;
+        request.status=true;
+        request.funds = [];
+        var iterate = 0;
+         _.each($scope.fundstable,function (key) {
+
+          request.funds[iterate]={
+            fundid:key._id
+          };
+          iterate++;
+        });
+        request.id = $stateParams.id;
+        NavigationService.savePortfolio(request,function (data) {
+          if(data.value){
+              $state.go('portfolio');
+          }
+        },function (err) {
+
+        });
+      }, function() {
+      });
+    };
+    ///END DELETE AND EXECUTE
 })
 
 .controller('headerctrl', function($scope, TemplateService) {
