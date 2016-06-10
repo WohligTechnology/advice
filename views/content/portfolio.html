@@ -10,9 +10,9 @@
         <md-divider></md-divider>
 
         <div class="live-portfolios">
-          <div class="row" ng-repeat="portfolio in portfolios">
-            <div class="col-sm-6 col-xs-12" ng-if="port.status == true" ui-sref="planned({id:port._id})" ng-repeat="port in portfolio">
-              <md-card class="pull-right" md-ink-ripple="#ffffff">
+          <div class="row" ng-repeat="portfolio in liveportfolios">
+            <div class="col-sm-6 col-xs-12"  ui-sref="planned({id:port._id})" ng-repeat="port in portfolio">
+              <md-card class="" md-ink-ripple="#ffffff" ng-class="{'pull-right':{{$index}} == 0,'pull-left':$index !== 0}">
                 <img src="img/portfolios/house.png" class="md-card-image" alt="">
                 <span><i class="material-icons">camera_alt</i></span>
                 <md-card-actions layout="row" layout-align="start center">
@@ -22,7 +22,6 @@
                 </md-card-actions>
               </md-card>
             </div>
-
           </div>
         </div>
 
@@ -34,9 +33,9 @@
         <md-divider></md-divider>
 
         <div class="saved-portfolios">
-          <div class="row" ng-repeat="portfolio in portfolios">
-            <div class="col-sm-6 col-xs-12" ng-if="port.status == false" ui-sref="planned({id:port._id})" ng-repeat="port in portfolio">
-              <md-card class="pull-right" md-ink-ripple="#ffffff">
+          <div class="row" ng-repeat="portfolio in savedportfolios">
+            <div class="col-sm-6 col-xs-12"  ui-sref="planned({id:port._id})" ng-repeat="port in portfolio">
+              <md-card class="" md-ink-ripple="#ffffff" ng-class="{'pull-right':$index == 0,'pull-left':$index !== 0}">
                 <img src="img/portfolios/house.png" class="md-card-image" alt="">
                 <span><i class="material-icons">camera_alt</i></span>
                 <md-card-actions layout="row" layout-align="start center">
@@ -46,7 +45,6 @@
                 </md-card-actions>
               </md-card>
             </div>
-
           </div>
         </div>
       </div>

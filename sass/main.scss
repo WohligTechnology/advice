@@ -460,6 +460,13 @@ md-backdrop.md-sidenav-backdrop {
 }
 //md-backdrop.md-opaque { background-color: transparent; }
 // Header
+.backdrop-extra {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    min-height: 150%;
+    z-index: 10000000;
+}
 md-toolbar {
     min-height: 50px;
     padding: 0 2px;
@@ -863,7 +870,7 @@ md-sidenav.md-sidenav-left {
             border: 1px solid;
         }
         .slider {
-            margin: 17px 0;
+            margin: 0;
             .block {
                 margin-bottom: -11px;
                 md-select {

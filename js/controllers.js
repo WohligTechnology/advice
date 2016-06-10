@@ -381,7 +381,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/content/header.html";
     $scope.portfolios=[];
-
+    $scope.savedportfolios=[];
+    $scope.liveportfolios=[];
 
     $scope.getPortfolios = function() {
         NavigationService.getPortfolio(function(data) {
@@ -389,7 +390,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             if (data.value) {
                 if (data.data) {
                     $scope.portfolios = data.data;
-                    $scope.portfolios = _.chunk($scope.portfolios,2);
+                    _.each($scope.portfolios,function(key){
+                      if (key.status === true) {
+                        $scope.liveportfolios.push(key);
+                      } else {
+                        $scope.savedportfolios.push(key);
+                      }
+                    });
+                    $scope.savedportfolios = _.chunk($scope.savedportfolios,2);
+                    $scope.liveportfolios = _.chunk($scope.liveportfolios,2);
                 }
             }
         }, function(err) {
@@ -398,7 +407,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.getPortfolios();
 
-    
+
     $scope.showConfirm = function(ev) {
         var confirm = $mdDialog.confirm()
             .clickOutsideToClose()
@@ -422,6 +431,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.oneAtATime = true;
     $scope.chats = [];
     $scope.funds = [];
+    $scope.progress = {};
+    $scope.progress.loading=false;
     $scope.toastText = "";
     $scope.response = {};
     $scope.typing = false;
@@ -914,7 +925,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     months: value
                 }).format("MMM, YYYY");
             },
-            showSelectionBarFromValue: $scope.suggestions.noOfMonth
+            showSelectionBarFromValue: $scope.suggestions.noOfMonth,
+            hideLimitLabels: true
 
         }
     };
@@ -1093,12 +1105,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.executeIt = false;
         $scope.showfunds = false;
         $scope.fundstable = [];
+        $scope.progress.loading=true;
         $scope.feasibleresult = null;
         $scope.planlinechartconfig.loading = true;
         $scope.EDdonutchartConfig.loading = true;
 
         NavigationService.play(resultNow, function(data) {
             compute++;
+            $scope.progress.loading=false;
             if (data.value === false) {
                 $scope.currentPlan = data;
                 $scope.setSliders(resultNow);
