@@ -1375,6 +1375,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         console.log($scope.fundstable);
         console.log(request.funds);
         request.id = $stateParams.id;
+        console.log("Result");
+        console.log(request);
         NavigationService.savePortfolio(request, function(data) {
             if (data.value) {
 
@@ -1427,6 +1429,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 iterate++;
             });
             request.id = $stateParams.id;
+            request.executiontime = new Date();
             NavigationService.savePortfolio(request, function(data) {
                 if (data.value) {
                     $state.go('portfolio');

@@ -392,6 +392,7 @@ var navigationservice = angular.module('navigationservice', [])
                   "_id":request.id,
                   "status":request.status,
                   "funds":request.funds,
+                  "executiontime":request.executiontime,
                     "lumpsum": request.lumpsum,
                     "monthly": request.monthly,
                     "noOfMonth": request.noOfMonth,
