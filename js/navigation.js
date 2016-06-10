@@ -406,6 +406,13 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }).success(callback).error(err);
         },
+        getPortfolio: function(callback, err) {
+            return $http({
+                url: adminURL + "portfolio/getPortfolio",
+                method: "POST",
+                data: {}
+            }).success(callback).error(err);
+        },
         deletePortfolio: function(request,callback,err){
           return $http({
               url: adminURL + "portfolio/delete",
