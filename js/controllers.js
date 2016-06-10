@@ -1,3 +1,4 @@
+var loading = {};
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule'])
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams) {
@@ -380,9 +381,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/content/header.html";
-    $scope.portfolios=[];
-    $scope.savedportfolios=[];
-    $scope.liveportfolios=[];
+    $scope.portfolios = [];
+    $scope.savedportfolios = [];
+    $scope.liveportfolios = [];
 
     $scope.getPortfolios = function() {
         NavigationService.getPortfolio(function(data) {
@@ -390,15 +391,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             if (data.value) {
                 if (data.data) {
                     $scope.portfolios = data.data;
-                    _.each($scope.portfolios,function(key){
-                      if (key.status === true) {
-                        $scope.liveportfolios.push(key);
-                      } else {
-                        $scope.savedportfolios.push(key);
-                      }
+                    _.each($scope.portfolios, function(key) {
+                        if (key.status === true) {
+                            $scope.liveportfolios.push(key);
+                        } else {
+                            $scope.savedportfolios.push(key);
+                        }
                     });
-                    $scope.savedportfolios = _.chunk($scope.savedportfolios,2);
-                    $scope.liveportfolios = _.chunk($scope.liveportfolios,2);
+                    $scope.savedportfolios = _.chunk($scope.savedportfolios, 2);
+                    $scope.liveportfolios = _.chunk($scope.liveportfolios, 2);
                 }
             }
         }, function(err) {
@@ -421,6 +422,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }, function() {});
     };
 })
+.controller('loadingCtrl', function($scope, TemplateService, NavigationService, $timeout, $mdDialog, $mdMedia, $state) {
+
+  $scope.progress = {};
+  $scope.progress.loading = false;
+  loading.start = function(){
+    $scope.progress.loading = true;
+  };
+  loading.stop = function(){
+    $scope.progress.loading = false;
+  };
+})
 
 .controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $mdDialog, $state, $stateParams, $timeout, $log, $filter, $interval, $mdToast, $document) {
     $scope.template = TemplateService.changecontent("planner");
@@ -432,7 +444,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.chats = [];
     $scope.funds = [];
     $scope.progress = {};
-    $scope.progress.loading=false;
     $scope.toastText = "";
     $scope.response = {};
     $scope.typing = false;
@@ -1105,14 +1116,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.executeIt = false;
         $scope.showfunds = false;
         $scope.fundstable = [];
-        $scope.progress.loading=true;
+        loading.start();
         $scope.feasibleresult = null;
         $scope.planlinechartconfig.loading = true;
         $scope.EDdonutchartConfig.loading = true;
 
         NavigationService.play(resultNow, function(data) {
             compute++;
-            $scope.progress.loading=false;
+            loading.stop();
             if (data.value === false) {
                 $scope.currentPlan = data;
                 $scope.setSliders(resultNow);
