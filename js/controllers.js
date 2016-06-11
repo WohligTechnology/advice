@@ -115,7 +115,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.deleteNominee = function(index) {
         $scope.user.nominees.splice(index, 1);
         if ($scope.user.nominees.length === 0) {
-
             $scope.emptyNominees(true);
         }
     };
@@ -130,13 +129,21 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }, {
         active: false
     }];
+
     //All except registration 'untouched'
+
     _.each($scope.tabs, function(key) {
         key.status = $scope.process[2];
     });
     $scope.tabs[0].status = $scope.process[0];
+
+    $scope.verification = function () {
+
+    };
+
     //All except registration 'untouched' end
     //change tabs here, cannot change registration
+
     $scope.changeTab = function(index) {
         if (index !== 0) {
             _.each($scope.tabs, function(key) {
@@ -182,7 +189,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             i++;
         });
         $scope.progress = (contActive.length - 1) * 25;
+
     };
+
     $scope.changeStatus(1, 0);
     $scope.addNominees = function() {
         if ($scope.user.nominees.length <= 2) {
@@ -211,7 +220,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 if (data.value) {
                     $scope.changeTab(2);
                     $scope.changeStatus(1, 0);
-                } else {}
+                } else {
+
+                }
             }, function(err) {
                 console.log(err);
             });
@@ -481,6 +492,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         }
     });
+
+    $scope.selectConvert = function (){
+      $scope.inputs.monthlyuntildateSlider.value = parseInt($scope.inputs.monthlyuntildateSlider.value);
+      $scope.inputs.startMonthSlider.value = parseInt($scope.inputs.startMonthSlider.value);
+      $scope.inputs.endMonthSlider.value = parseInt($scope.inputs.endMonthSlider.value);
+
+      $scope.validateSliders();
+      console.log("here in selectConvert");
+    };
+
     for (i = 0; i < 600; i++) {
         $scope.sixHundredMonths.push({
             id: i,

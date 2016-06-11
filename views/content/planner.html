@@ -88,7 +88,7 @@
       <span class="pull-right block"><i class="fa fa-inr"></i>
       <md-input-container><input type="number" class="leftLabelVal" ng-change="changeInputs()" ng-model="inputs.lumpsumSlider.value"></md-input-container>
       </span>
-      
+
       <rzslider rz-slider-model="inputs.lumpsumSlider.value" rz-slider-options="inputs.lumpsumSlider.options"></rzslider>
     </div>
     <div class="slider slider2">
@@ -107,7 +107,7 @@
       <span class="pull-right block">
 
 
-        <md-select ng-change="validateSliders()" ng-model="inputs.monthlyuntildateSlider.value">
+        <md-select ng-change="selectConvert()" ng-model="inputs.monthlyuntildateSlider.value">
               <md-option ng-repeat="dates in sixHundredMonths" value="{{dates.id}}" >
                 {{dates.value}}
               </md-option>
@@ -157,7 +157,7 @@
     <div class="slider slider6">
       <span>Withdrawal Start</span>
       <span class="pull-right block">
-        <md-select ng-change="validateSliders()" ng-model="inputs.startMonthSlider.value">
+        <md-select ng-change="selectConvert()" ng-model="inputs.startMonthSlider.value">
               <md-option ng-repeat="dates in sixHundredMonths" value="{{dates.id}}" ng-show="dates.id >= inputs.startMonthSlider.options.floor">
                 {{dates.value}}
               </md-option>
@@ -172,7 +172,7 @@
     <div class="slider slider7" ng-hide="hideendMonthSlider">
       <span>Withdrawal End</span>
       <span class="pull-right block">
-        <md-select ng-change="validateSliders()" ng-model="inputs.endMonthSlider.value">
+        <md-select ng-change="selectConvert()" ng-model="inputs.endMonthSlider.value">
               <md-option ng-repeat="dates in sixHundredMonths" value="{{dates.id}}" ng-if="dates.id >= inputs.endMonthSlider.options.floor" >
                 {{dates.value}}
               </md-option>
