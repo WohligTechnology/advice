@@ -1,0 +1,64 @@
+<md-tabs md-dynamic-height md-stretch-tabs="always">
+  <md-tab label="Login">
+    <md-content class="md-padding text-center">
+      <form name="login">
+        <div class="form-group">
+          <md-input-container class="md-block">
+            <label class="text-uppercase">Email</label>
+            <input ng-model="formlogin.email" id="email" name="email" required>
+          </md-input-container>
+        </div>
+
+        <div class="form-group">
+          <md-input-container class="md-block">
+            <label class="text-uppercase">Password</label>
+            <input ng-model="formlogin.password" id="password" name="password" required>
+          </md-input-container>
+        </div>
+
+        <md-button class="md-raised md-primary">Submit</md-button>
+      </form>
+  </md-tab>
+  <md-tab label="Signup">
+    <md-content class="md-padding">
+      <form name="signup">
+        <div class="form-group">
+          <md-input-container class="md-block">
+            <label class="text-uppercase">Name</label>
+            <input ng-model="formsignup.name" id="name" name="name" required>
+          </md-input-container>
+        </div>
+
+        <div class="form-group">
+          <md-input-container class="md-block">
+            <label class="text-uppercase">Email</label>
+            <input ng-model="formsignup.email" id="email" name="email" required>
+          </md-input-container>
+        </div>
+
+        <div class="form-group">
+          <md-input-container class="md-block">
+            <label class="text-uppercase">Phone</label>
+            <input ng-model="formsignup.phone" id="phone" name="phone" required>
+          </md-input-container>
+        </div>
+
+        <div class="form-group">
+          <md-input-container class="md-block">
+            <label class="text-uppercase">Referral Code</label>
+            <input ng-model="formsignup.referral" id="referral" name="referral" required>
+          </md-input-container>
+        </div>
+
+        <div class="form-group">
+          <md-input-container class="md-block">
+            <label class="text-uppercase">Password</label>
+            <input ng-model="formsignup.password" id="password" name="password" required>
+          </md-input-container>
+        </div>
+
+        <md-button class="md-raised md-primary">Submit</md-button>
+      </form>
+    </md-content>
+  </md-tab>
+</md-tabs>

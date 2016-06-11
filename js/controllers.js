@@ -1463,11 +1463,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     ///END DELETE AND EXECUTE
 })
 
-.controller('headerctrl', function($scope, TemplateService) {
+.controller('headerctrl', function($scope, TemplateService, $mdDialog) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
         $(window).scrollTop(0);
     });
+
+    $scope.registrationDialog = function() {
+        $mdDialog.show({
+            templateUrl: 'views/modal/registration.html',
+            clickOutsideToClose: true,
+            scope: $scope.$new()
+        });
+    };
 
     $scope.getclass = "menu-in";
     $scope.one = "";
