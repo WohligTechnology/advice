@@ -11,13 +11,13 @@
 
         <div class="live-portfolios">
           <div class="row" ng-repeat="portfolio in liveportfolios">
-            <div class="col-sm-6 col-xs-12"  ui-sref="planned({id:port._id})" ng-repeat="port in portfolio">
+            <div class="col-sm-6 col-xs-12"  ui-sref="planned({id:port._id,exec:port.execepoch})" ng-repeat="port in portfolio">
               <md-card class="" md-ink-ripple="#ffffff" ng-class="{'pull-right':{{$index}} == 0,'pull-left':$index !== 0}">
                 <img src="img/portfolios/house.png" class="md-card-image" alt="">
                 <span><i class="material-icons">camera_alt</i></span>
                 <md-card-actions layout="row" layout-align="start center">
                   <span flex="50" class="title">{{port.goalname}}</span>
-                  <span flex="20" class="price">$34560</span>
+                  <span flex="20" class="price">{{port.lumpsum | currency}}</span>
                   <span flex="35" class="time">6 Years 9 Months</span>
                 </md-card-actions>
               </md-card>
@@ -40,8 +40,6 @@
                 <span><i class="material-icons">camera_alt</i></span>
                 <md-card-actions layout="row" layout-align="start center">
                   <span flex="50" class="title">{{port.goalname}}</span>
-                  <span flex="20" class="price">$34560</span>
-                  <span flex="35" class="time">6 Years 9 Months</span>
                 </md-card-actions>
               </md-card>
             </div>

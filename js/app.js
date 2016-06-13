@@ -49,7 +49,7 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
             controller: 'PlannerCtrl'
         })
         .state('planned', {
-            url: "/planner/:id",
+            url: "/planner/:id/:exec",
             templateUrl: "views/template.html",
             controller: 'PlannerCtrl'
         })

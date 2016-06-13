@@ -403,6 +403,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 if (data.data) {
                     $scope.portfolios = data.data;
                     _.each($scope.portfolios, function(key) {
+                      console.log(new Date(key.executiontime).getTime());
+                        if(key.executiontime){
+                          key.execepoch = new Date(key.executiontime).getTime();
+                        }
                         if (key.status === true) {
                             $scope.liveportfolios.push(key);
                         } else {
@@ -459,6 +463,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.response = {};
     $scope.typing = false;
     $scope.suggestion = false;
+    $scope.isLive =false;
     $scope.result = {};
     $scope.showchart = false;
     $scope.showfunds = false;
@@ -470,10 +475,26 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.getOnePortfolio($stateParams, function(data) {
             if (data.value) {
                 if (data.data.lumpsum !== undefined) {
+
+                  if(data.data.executiontime !== null && data.data.executiontime !== undefined){
+                    if(new Date(data.data.executiontime).getTime() == $stateParams.exec){
+                      $scope.isLive=true;
+                      $scope.executeCompute(data.data);
+                      if (data.data.withdrawalfrequency == 'One Shot') {
+                          $scope.hideendMonthSlider = true;
+                      }
+                    }else{
+                      $state.go("portfolio");
+                    }
+                  }else{
+                    $scope.isLive = false;
                     $scope.executeCompute(data.data);
                     if (data.data.withdrawalfrequency == 'One Shot') {
                         $scope.hideendMonthSlider = true;
                     }
+                  }
+                }else{
+                  $state.go("portfolio");
                 }
             } else {
                 console.log("invalid ID");
@@ -1103,6 +1124,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value || ($scope.inputs.withdrawalfrequencySlider.value === 1)) {
             $scope.inputs.endMonthSlider.options.floor = $scope.inputs.startMonthSlider.value + 1;
         }
+        if($scope.inputs.withdrawalfrequencySlider.value == 1 ){
+          // $scope.inputs.endMonthSlider.value =
+        }
 
         $scope.parseSliders();
     };
@@ -1230,6 +1254,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultNow.noOfMonth = -1 * $filter('monthsSince')(resultNow.monthlyuntildate);
         // $scope.executeCompute(resultNow);
         if (resultNow.withdrawalfrequency == 'One Shot') {
+          console.log("One shot - true that");
             resultNow.noOfInstallment = 1;
 
         }
