@@ -776,6 +776,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     };
     $scope.fundstable = [];
+    $scope.calculateFunds2 = function(type, funds, tenures, result){};
     $scope.calculateFunds = function(type, funds, tenures, result) {
         // result.
         $scope.fundstable = [];
@@ -1130,8 +1131,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value || ($scope.inputs.withdrawalfrequencySlider.value === 1)) {
             $scope.inputs.endMonthSlider.options.floor = $scope.inputs.startMonthSlider.value + 1;
         }
-        if($scope.inputs.withdrawalfrequencySlider.value == 1 ){
-          // $scope.inputs.endMonthSlider.value =
+        if($scope.inputs.withdrawalfrequencySlider.value == 'One Shot' ){
+          $scope.inputs.endMonthSlider.value= $scope.inputs.startMonthSlider.value+1;
         }
 
         $scope.parseSliders();
