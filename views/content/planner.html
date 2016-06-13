@@ -84,7 +84,8 @@
 <div class="planner-sidebar" ng-if="suggestion" id="toastBounds" >
   <div class="left-bar">
     <div class="slider slider1">
-      <span>One Time Investment</span>
+      <span ng-hide="isLive" >One Time Investment</span>
+      <span ng-show="isLive" >Current Value</span>
       <span class="pull-right block"><i class="fa fa-inr"></i>
       <md-input-container><input type="number" class="leftLabelVal" ng-change="changeInputs()" ng-model="inputs.lumpsumSlider.value"></md-input-container>
       </span>

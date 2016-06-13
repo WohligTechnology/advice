@@ -34,7 +34,7 @@
 
         <div class="saved-portfolios">
           <div class="row" ng-repeat="portfolio in savedportfolios">
-            <div class="col-sm-6 col-xs-12"  ui-sref="planned({id:port._id})" ng-repeat="port in portfolio">
+            <div class="col-sm-6 col-xs-12"  ui-sref="planned({id:port._id,exec:null})" ng-repeat="port in portfolio">
               <md-card class="" md-ink-ripple="#ffffff" ng-class="{'pull-right':$index == 0,'pull-left':$index !== 0}">
                 <img src="img/portfolios/house.png" class="md-card-image" alt="">
                 <span><i class="material-icons">camera_alt</i></span>

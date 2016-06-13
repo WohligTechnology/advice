@@ -470,15 +470,21 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.showdonut = false;
     $scope.sixHundredMonths = [];
     var current = $state.current;
+    console.log($stateParams);
     if ($stateParams.id) {
         $scope.suggestion = true;
         NavigationService.getOnePortfolio($stateParams, function(data) {
             if (data.value) {
                 if (data.data.lumpsum !== undefined) {
-
                   if(data.data.executiontime !== null && data.data.executiontime !== undefined){
-                    if(new Date(data.data.executiontime).getTime() == $stateParams.exec){
+                    if($stateParams.exec !== "" && new Date(data.data.executiontime).getTime() == $stateParams.exec){
                       $scope.isLive=true;
+                      $scope.executeCompute(data.data);
+                      if (data.data.withdrawalfrequency == 'One Shot') {
+                          $scope.hideendMonthSlider = true;
+                      }
+                    } else if($stateParams.exec === ""){
+                      $scope.isLive = false;
                       $scope.executeCompute(data.data);
                       if (data.data.withdrawalfrequency == 'One Shot') {
                           $scope.hideendMonthSlider = true;
