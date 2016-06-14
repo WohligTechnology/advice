@@ -407,8 +407,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                         if(key.executiontime){
                           key.execepoch = new Date(key.executiontime).getTime();
                         }
-                        if (key.status === true) {
-                          console.log("here");
+                        if (key.status === true){
                           key.timetostart ={};
                            key.timetostart = $scope.calcTimeToStart(key.executiontime,key.startMonth);
                            console.log(key.timetostart);
@@ -796,77 +795,86 @@ margin:10
         });
     };
     $scope.fundstable = [];
-    $scope.calculateFunds2 = function(type, funds, tenures, result){};
-    $scope.calculateFunds = function(type, funds, tenures, result) {
-        // result.
-        $scope.fundstable = [];
-        $scope.fundstable[0] = {};
-        $scope.fundstable[1] = {};
-        $scope.fundstable[2] = {};
-        $scope.fundstable[3] = {};
-        var lumpeq = result.lumpsum * (type / 10);
-        var lumpdt = result.lumpsum * (Math.abs(10 - type) / 10);
-        var monthlyeq = result.monthly * (type / 10);
-        var monthlydt = result.monthly * (Math.abs(10 - type) / 10);
+    $scope.calculateFunds = function(type, funds, tenures, result){
+      $scope.fundstable = [];
+      $scope.fundstable[0] = {};
+      $scope.fundstable[1] = {};
+      $scope.fundstable[2] = {};
+      $scope.fundstable[3] = {};
 
-        if (parseInt(tenures.length / 12) > 3) {
+      // var lumpeq = result.lumpsum * (type / 10);
+      // var lumpdt = result.lumpsum * (Math.abs(10 - type) / 10);
+      // var monthlyeq = result.monthly * (type / 10);
+      // var monthlydt = result.monthly * (Math.abs(10 - type) / 10);
+      var eq1,eq2,dt1,dt2;
+      if (parseInt(tenures.length / 12) > 3) {
+        eq1 = $filter('nearest10')((funds.morethan3equity1percent/10)*type);
+        eq2 = $filter('nearest10')((funds.morethan3equity2percent/10)*type);
+        dt1 = $filter('nearest10')((funds.morethan3debt1percent/10)*(10-type));
+        dt2 = $filter('nearest10')((funds.morethan3debt2percent/10)*(10-type));
+        console.log(eq1 + eq2+ dt1+ dt2);
+        $scope.fundstable[0].name = funds.morethan3equity1fund.name;
+        $scope.fundstable[0]._id = funds.morethan3equity1fund._id;
+        $scope.fundstable[0].lump = (eq1/100) * result.lumpsum;
+        $scope.fundstable[0].monthly = (eq1/100) * result.monthly;
 
-            $scope.fundstable[0].name = funds.morethan3equity1fund.name;
-            $scope.fundstable[0]._id = funds.morethan3equity1fund._id;
-            $scope.fundstable[0].lump = (funds.morethan3equity1percent / 100) * lumpeq;
-            $scope.fundstable[0].monthly = (funds.morethan3equity1percent / 100) * monthlyeq;
-
-            $scope.fundstable[1].name = funds.morethan3equity2fund.name;
-            $scope.fundstable[1]._id = funds.morethan3equity2fund._id;
-            $scope.fundstable[1].lump = (funds.morethan3equity2percent / 100) * lumpeq;
-            $scope.fundstable[1].monthly = (funds.morethan3equity2percent / 100) * monthlyeq;
-
-
-            $scope.fundstable[2].name = funds.morethan3debt1fund.name;
-            $scope.fundstable[2]._id = funds.morethan3debt1fund._id;
-            $scope.fundstable[2].lump = (funds.morethan3debt1percent / 100) * lumpdt;
-            $scope.fundstable[2].monthly = (funds.morethan3debt1percent / 100) * monthlydt;
+        $scope.fundstable[1].name = funds.morethan3equity2fund.name;
+        $scope.fundstable[1]._id = funds.morethan3equity2fund._id;
+        $scope.fundstable[1].lump = (eq2/100) * result.lumpsum;
+        $scope.fundstable[1].monthly = (eq2/100) * result.monthly;
 
 
-            $scope.fundstable[3].name = funds.morethan3debt2fund.name;
-            $scope.fundstable[3]._id = funds.morethan3debt2fund._id;
-            $scope.fundstable[3].lump = (funds.morethan3debt2percent / 100) * lumpdt;
-            $scope.fundstable[3].monthly = (funds.morethan3debt2percent / 100) * monthlydt;
+        $scope.fundstable[2].name = funds.morethan3debt1fund.name;
+        $scope.fundstable[2]._id = funds.morethan3debt1fund._id;
+        $scope.fundstable[2].lump = (dt1/100) * result.lumpsum;
+        $scope.fundstable[2].monthly = (dt1/100) * result.monthly;
+
+
+        $scope.fundstable[3].name = funds.morethan3debt2fund.name;
+        $scope.fundstable[3]._id = funds.morethan3debt2fund._id;
+        $scope.fundstable[3].lump = (dt2/100) * result.lumpsum;
+        $scope.fundstable[3].monthly = (dt2/100) * result.monthly;
 
 
 
-        } else {
-            $scope.fundstable[0].name = funds.lessthan3equity1fund.name;
-            $scope.fundstable[0]._id = funds.lessthan3equity1fund._id;
-            $scope.fundstable[0].lump = (funds.lessthan3equity1percent / 100) * lumpeq;
-            $scope.fundstable[0].monthly = (funds.lessthan3equity1percent / 100) * monthlyeq;
+      } else {
+        eq1 = $filter('nearest10')((funds.lessthan3equity1percent/10)*type);
+        eq2 = $filter('nearest10')((funds.lessthan3equity2percent/10)*type);
+        dt1 = $filter('nearest10')((funds.lessthan3debt1percent/10)*(10-type));
+        dt2 = $filter('nearest10')((funds.lessthan3debt2percent/10)*(10-type));
+        console.log(eq1+" " + eq2+" "+ dt1+" "+ dt2);
 
-            $scope.fundstable[1].name = funds.lessthan3equity2fund.name;
-            $scope.fundstable[1]._id = funds.lessthan3equity2fund._id;
-            $scope.fundstable[1].lump = (funds.lessthan3equity2percent / 100) * lumpeq;
-            $scope.fundstable[1].monthly = (funds.lessthan3equity2percent / 100) * monthlyeq;
+          $scope.fundstable[0].name = funds.lessthan3equity1fund.name;
+          $scope.fundstable[0]._id = funds.lessthan3equity1fund._id;
+          $scope.fundstable[0].lump = (eq1/100) * result.lumpsum;
+          $scope.fundstable[0].monthly = (eq1/100) * result.monthly;
+
+          $scope.fundstable[1].name = funds.lessthan3equity2fund.name;
+          $scope.fundstable[1]._id = funds.lessthan3equity2fund._id;
+          $scope.fundstable[1].lump = (eq2/100) * result.lumpsum;
+          $scope.fundstable[1].monthly = (eq2/100) * result.monthly;
 
 
-            $scope.fundstable[2].name = funds.lessthan3debt1fund.name;
-            $scope.fundstable[2]._id = funds.lessthan3debt1fund._id;
-            $scope.fundstable[2].lump = (funds.lessthan3debt1percent / 100) * lumpdt;
-            $scope.fundstable[2].monthly = (funds.lessthan3debt1percent / 100) * monthlydt;
+          $scope.fundstable[2].name = funds.lessthan3debt1fund.name;
+          $scope.fundstable[2]._id = funds.lessthan3debt1fund._id;
+          $scope.fundstable[2].lump = (dt1/100) * result.lumpsum;
+          $scope.fundstable[2].monthly = (dt1/100) * result.monthly;
 
 
-            $scope.fundstable[3].name = funds.lessthan3debt2fund.name;
-            $scope.fundstable[3]._id = funds.lessthan3debt2fund._id;
-            $scope.fundstable[3].lump = (funds.lessthan3debt2percent / 100) * lumpdt;
-            $scope.fundstable[3].monthly = (funds.lessthan3debt2percent / 100) * monthlydt;
-        }
-        $scope.fundtotallump = 0;
-        $scope.fundtotalmonthly = 0;
-        _.each($scope.fundstable, function(key) {
-            $scope.fundtotallump = $scope.fundtotallump + key.lump;
-            $scope.fundtotalmonthly = $scope.fundtotalmonthly + key.monthly;
-        });
+          $scope.fundstable[3].name = funds.lessthan3debt2fund.name;
+          $scope.fundstable[3]._id = funds.lessthan3debt2fund._id;
+          $scope.fundstable[3].lump = (dt2/100) * result.lumpsum;
+          $scope.fundstable[3].monthly = (dt2/100) * result.monthly;
+      }
+      $scope.fundtotallump = 0;
+      $scope.fundtotalmonthly = 0;
+      _.each($scope.fundstable, function(key) {
+          $scope.fundtotallump = $scope.fundtotallump + key.lump;
+          $scope.fundtotalmonthly = $scope.fundtotalmonthly + key.monthly;
+      });
 
     };
-    $scope.skipIt = function() {
+  $scope.skipIt = function() {
         var skiptexts = ['Let&apos;s skip it.', 'I would like to skip it', 'Skip it'];
         $scope.chats.push({
             text: skiptexts[Math.floor(Math.random() * (skiptexts.length - 1))],
@@ -1151,7 +1159,7 @@ margin:10
         if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value || ($scope.inputs.withdrawalfrequencySlider.value === 1)) {
             $scope.inputs.endMonthSlider.options.floor = $scope.inputs.startMonthSlider.value + 1;
         }
-        if($scope.inputs.withdrawalfrequencySlider.value == 'One Shot' ){
+        if($scope.inputs.withdrawalfrequencySlider.value === 1 ){
           $scope.inputs.endMonthSlider.value= $scope.inputs.startMonthSlider.value+1;
         }
 

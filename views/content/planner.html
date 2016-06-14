@@ -244,7 +244,7 @@
         </table>
       </div>
       <uib-accordion close-others="oneAtATime">
-        <uib-accordion-group ng-repeat="fund in fundstable">
+        <uib-accordion-group ng-repeat="fund in fundstable" ng-if="fund.lump !== 0">
           <uib-accordion-heading>
             <table>
               <tr>

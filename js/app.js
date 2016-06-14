@@ -104,6 +104,11 @@ firstapp.filter('nearest100', function() {
         return parseInt((value + 50) / 100) * 100;
     };
 });
+firstapp.filter('nearest10', function() {
+    return function(value) {
+        return parseInt((value + 5) / 10) * 10;
+    };
+});
 firstapp.filter('currency', function() {
     return function(value) {
         value = value.toString();
