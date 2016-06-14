@@ -408,6 +408,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                           key.execepoch = new Date(key.executiontime).getTime();
                         }
                         if (key.status === true) {
+                          console.log("here");
+                          key.timetostart ={};
+                           key.timetostart = $scope.calcTimeToStart(key.executiontime,key.startMonth);
+                           console.log(key.timetostart);
                             $scope.liveportfolios.push(key);
                         } else {
                             $scope.savedportfolios.push(key);
@@ -423,7 +427,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.getPortfolios();
 
+    $scope.calcTimeToStart=function(exec,startMonth){
 
+      var execnew =new Date(exec).setMonth(new Date(exec).getMonth()+startMonth);
+
+      var differenceTime = execnew-new Date();
+      var duration = moment.duration(differenceTime, 'milliseconds');
+      duration = moment.duration(duration - 1000, 'milliseconds');
+
+      return duration._data;
+    };
     $scope.showConfirm = function(ev) {
         var confirm = $mdDialog.confirm()
             .clickOutsideToClose()
@@ -547,6 +560,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             tooltip: {
                 valuePrefix: '₹ '
             },
+            legend:{
+              align:"center",
+              verticalAlign:"top"
+            }
         },
         series: [{
             data: [],
@@ -563,7 +580,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             data: []
         }],
         title: {
-            text: ''
+            text: '',
+            align:"left",
+            verticalAlign:"bottom",
+margin:10
         },
         size: {
             height: 520
@@ -886,7 +906,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.computeIt($scope.result);
     };
 
-    $scope.reflowChart = function(currentPlan) {
+    $scope.reflowChart = function(currentPlan,result) {
         $scope.planlinechartconfig.xAxis.categories = [];
         $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
         $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
@@ -895,7 +915,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.planlinechartconfig.series[1].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.series[2].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.series[3].data = currentPlan.cashflow;
-        $scope.planlinechartconfig.title.text = $scope.result.goalname;
+        $scope.planlinechartconfig.title.text = "Goal : "+result.goalname;
         $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()), "MMM, '''yy"));
         _.each(currentPlan.feasible[0].tenures, function(key) {
             $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key), "MMM, '''yy"));
@@ -1194,7 +1214,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             } else {
                 $scope.currentPlan = data;
                 $scope.planlinechartconfig.loading = false;
-                $scope.reflowChart($scope.currentPlan);
+                $scope.reflowChart($scope.currentPlan,resultNow);
                 $scope.reflowChartED($scope.currentPlan);
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
