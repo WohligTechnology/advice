@@ -1,5 +1,7 @@
 var loading = {};
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule'])
+var globalfunction = {};
+
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule','angularFileUpload'])
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams) {
     //Used to name the .html file
@@ -297,9 +299,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             data: [100000, 107530, 115994, 124968, 135405, 144954, 155076, 164319, 174310, 185358, 194219, 191374, 189531, 187628, 164795, 144522, 122122, 102236, 80731, 59444, 37888, 15632, -6342, -28705],
             name: 'Projection 1'
         }],
-        title: {
-            text: 'Line'
-        },
         size: {
             height: 520
         },
@@ -395,7 +394,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.portfolios = [];
     $scope.savedportfolios = [];
     $scope.liveportfolios = [];
-
+    $scope.upload={};
+    $scope.uploadFile = function(){
+      console.log("here");
+      console.log(angular.element);
+       document.getElementById('selector').click();
+       $timeout(function(){
+         console.log($scope.upload.thisfile);
+       },8000);
+    };
     $scope.getPortfolios = function() {
         NavigationService.getPortfolio(function(data) {
             console.log();
@@ -428,12 +435,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.calcTimeToStart=function(exec,startMonth){
 
-      var execnew =new Date(exec).setMonth(new Date(exec).getMonth()+startMonth);
+      var execnew = new Date(exec).setMonth(new Date(exec).getMonth()+startMonth);
 
       var differenceTime = execnew-new Date();
       var duration = moment.duration(differenceTime, 'milliseconds');
       duration = moment.duration(duration - 1000, 'milliseconds');
-
       return duration._data;
     };
     $scope.showConfirm = function(ev) {
@@ -448,6 +454,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $state.go("planner");
         }, function() {});
     };
+
 })
 .controller('loadingCtrl', function($scope, TemplateService, NavigationService, $timeout, $mdDialog, $mdMedia, $state) {
 
@@ -578,12 +585,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             name: 'Cashflow',
             data: []
         }],
-        title: {
-            text: '',
-            align:"left",
-            verticalAlign:"bottom",
-margin:10
-        },
         size: {
             height: 520
         },
@@ -915,6 +916,7 @@ margin:10
     };
 
     $scope.reflowChart = function(currentPlan,result) {
+      console.log(result);
         $scope.planlinechartconfig.xAxis.categories = [];
         $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
         $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
@@ -923,7 +925,7 @@ margin:10
         $scope.planlinechartconfig.series[1].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.series[2].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.series[3].data = currentPlan.cashflow;
-        $scope.planlinechartconfig.title.text = "Goal : "+result.goalname;
+        // $scope.planlinechartconfig.title.text = "Goal : "+result.goalname;
         $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()), "MMM, '''yy"));
         _.each(currentPlan.feasible[0].tenures, function(key) {
             $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key), "MMM, '''yy"));
@@ -1158,9 +1160,6 @@ margin:10
         }
         if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value || ($scope.inputs.withdrawalfrequencySlider.value === 1)) {
             $scope.inputs.endMonthSlider.options.floor = $scope.inputs.startMonthSlider.value + 1;
-        }
-        if($scope.inputs.withdrawalfrequencySlider.value === 1 ){
-          $scope.inputs.endMonthSlider.value= $scope.inputs.startMonthSlider.value+1;
         }
 
         $scope.parseSliders();
@@ -1552,6 +1551,41 @@ margin:10
             $scope.one = "first";
             $scope.two = "second";
             $scope.three = "three";
+        }
+    };
+    globalfunction.onFileSelect = function($files, callback) {
+        $scope.selectedFiles = [];
+        $scope.progress = [];
+        console.log($files);
+        if ($scope.upload && $scope.upload.length > 0) {
+            for (var i = 0; i < $scope.upload.length; i++) {
+                if ($scope.upload[i] != null) {
+                    $scope.upload[i].abort();
+                }
+            }
+        }
+        $scope.upload = [];
+        $scope.uploadResult = uploadres;
+        $scope.selectedFiles = $files;
+        $scope.dataUrls = [];
+        arrLength = $files.length;
+        for (var i = 0; i < $files.length; i++) {
+            var $file = $files[i];
+            if ($scope.fileReaderSupported && $file.type.indexOf('image') > -1) {
+                var fileReader = new FileReader();
+                fileReader.readAsDataURL($files[i]);
+                var loadFile = function(fileReader, index) {
+                    fileReader.onload = function(e) {
+                        $timeout(function() {
+                            $scope.dataUrls[index] = e.target.result;
+                        });
+                    }
+                }(fileReader, i);
+            }
+            $scope.progress[i] = -1;
+            if ($scope.uploadRightAway) {
+                $scope.start(i, callback);
+            }
         }
     };
     $(window).scroll(function(event) {

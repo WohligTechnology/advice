@@ -1,4 +1,4 @@
-var adminURL = "";
+// var adminURL = "";
 var result = [];
 var skipped = [];
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
