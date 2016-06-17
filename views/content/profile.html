@@ -1,5 +1,7 @@
 <div class="blue-back"></div>
 <div class="profile">
+  <div ng-init='httpMethod=POST;howToSend = 1;'></div>
+  
   <div class="user-profile">
     <div class="container">
       <div class="user-detail" layout="row">
@@ -269,7 +271,7 @@
           <div class="document-one row">
             <div class="passport-photo col-md-4">
               <md-button class="md-primary" aria-label="File">
-                <input type="file">
+                <input type="file" ng-file-select="">
                 <span class="text-uppercase white">Passport size photograph</span>
               </md-button>
             </div>
