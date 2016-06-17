@@ -1222,8 +1222,21 @@ md-sidenav.md-sidenav-left {
 }
 
 // registration dialog
-.registration {
-
+md-dialog {
+  .registration {
+    width: 500px;
+    md-ink-bar {
+      color: $brand-blue !important;
+      background-color: $brand-blue !important;
+    }
+    md-content {
+      padding: 50px;
+    }
+    .md-blue {
+      background-color: $brand-blue !important;
+      color: white !important;
+    }
+  }
 }
 
 .md-toast-content {

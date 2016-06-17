@@ -1577,6 +1577,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     //END UPLOADER CODE
     $scope.registrationDialog = function() {
         $mdDialog.show({
+            template: '<md-dialog class="myClass"></md-dialog>',
             templateUrl: 'views/modal/registration.html',
             clickOutsideToClose: true,
             scope: $scope.$new()
