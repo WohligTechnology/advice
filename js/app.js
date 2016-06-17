@@ -129,7 +129,7 @@ firstapp.filter('portfolioserverimage', function() {
     } else {
       // return "img/logo.png";
       console.log("default");
-      return "img/portfolios/house.png";
+      return "img/placeholders/portfolio.jpg";
     }
   };
 });

@@ -405,7 +405,7 @@ var navigationservice = angular.module('navigationservice', [])
                     "longinput": request.longinput,
                     "withdrawalfrequency": request.withdrawalfrequency,
                     "goalname": request.goalname,
-                    "image":request.image
+                    "image": request.image
                 }
             }).success(callback).error(err);
         },
@@ -433,6 +433,18 @@ var navigationservice = angular.module('navigationservice', [])
                 data: {
                     "email": request.email,
                     "password": request.password
+                }
+            }).success(callback).error(err);
+        },
+        signup: function(request, callback, err) {
+            return $http({
+                url: adminURL + "user/save",
+                method: "POST",
+                data: {
+                    "email": request.email,
+                    "password": request.password,
+                    "phone":request.phone,
+                    "referral":request.referral
                 }
             }).success(callback).error(err);
         },

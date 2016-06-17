@@ -11,15 +11,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/header.html";
-    $scope.login = {
-        email: 'rohanwohlig@gmail.com',
-        password: 'wohlig123'
-    };
-    NavigationService.login($scope.login, function(data) {
-        if (data.value) {
-            console.log("login done");
-        }
-    }, function(err) {});
+
+
     $scope.section = {
         one: "views/section/section1.html",
         two: "views/section/section2.html",
@@ -1549,13 +1542,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     ///END DELETE AND EXECUTE
 })
 
-.controller('headerctrl', function($scope, TemplateService, $mdDialog,$upload,$timeout) {
+.controller('headerctrl', function($scope, TemplateService,NavigationService,$state, $mdDialog,$upload,$timeout) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
         $(window).scrollTop(0);
     });
+    $scope.login={};
+
     //UPLOADER CODE
-    window.uploadUrl = 'http://localhost:1337/upload/';
+    window.uploadUrl = adminURL+'upload/';
     var imagejstupld = "";
     $scope.images = [];
     $scope.usingFlash = FileAPI && FileAPI.upload !== null;
@@ -1563,12 +1558,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.uploadRightAway = true;
     $scope.httpMethod="POST";
     $scope.howToSend = 1;
+    $scope.signup={};
     $scope.changeAngularVersion = function() {
         window.location.hash = $scope.angularVersion;
         window.location.reload(true);
     };
     $scope.hasUploader = function(index) {
-        return $scope.upload[index] != null;
+        return $scope.upload[index] !== null;
     };
     $scope.abort = function(index) {
         $scope.upload[index].abort();
@@ -1583,7 +1579,36 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             scope: $scope.$new()
         });
     };
+    $scope.doLogin = function(input){
+      NavigationService.login(input, function(data) {
+          if (data.value) {
+            $state.go("profile");
+          }else{
+            // handle invalid login
+          }
+      }, function(err) {});
+    };
+    $scope.doSignup = function(input,formValidate){
+      if(formValidate.$valid){
+        if (input.password == input.cfpassword) {
+          NavigationService.signup(input, function(data) {
+              if (data.value) {
+                console.log(data);
+                $state.go("profile");
+              }else{
+                // handle invalid signup
+              }
+          }, function(err) {});
+        } else {
+          console.log("2");
+          formValidate.cfpassword.$invalid=true;
+          formValidate.cfpassword.$touched=true;
+          $scope.signup.cfpassword=undefined;
+        }
+      }else{
 
+      }
+    };
     $scope.getclass = "menu-in";
     $scope.one = "";
     $scope.two = "";
@@ -1607,7 +1632,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         console.log($files);
         if ($scope.upload && $scope.upload.length > 0) {
             for (var i = 0; i < $scope.upload.length; i++) {
-                if ($scope.upload[i] != null) {
+                if ($scope.upload[i] !== null) {
                     $scope.upload[i].abort();
                 }
             }
