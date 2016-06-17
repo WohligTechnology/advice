@@ -4,6 +4,7 @@ var skipped = [];
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
 var adminURL = "http://localhost:1337/";
 // var adminURL = "http://104.199.142.53/";
+var imgurl=adminURL+ "upload/readFile?file=";
 var scenarios = [{
     id: 0,
     status: function() {
@@ -403,7 +404,8 @@ var navigationservice = angular.module('navigationservice', [])
                     "shortinput": request.shortinput,
                     "longinput": request.longinput,
                     "withdrawalfrequency": request.withdrawalfrequency,
-                    "goalname": request.goalname
+                    "goalname": request.goalname,
+                    "image":request.image
                 }
             }).success(callback).error(err);
         },

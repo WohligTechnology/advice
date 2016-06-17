@@ -1,4 +1,5 @@
 var loading = {};
+var uploadres = [];
 var globalfunction = {};
 
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule','angularFileUpload'])
@@ -385,7 +386,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 })
 
-.controller('PortfolioCtrl', function($scope, TemplateService, NavigationService, $timeout, $mdDialog, $mdMedia, $state) {
+.controller('PortfolioCtrl', function($scope, TemplateService, NavigationService, $timeout, $upload,$mdDialog, $mdMedia, $state) {
     $scope.template = TemplateService.changecontent("portfolio");
     $scope.menutitle = NavigationService.makeactive("Portfolio");
     TemplateService.title = $scope.menutitle;
@@ -395,15 +396,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.savedportfolios = [];
     $scope.liveportfolios = [];
     $scope.upload={};
-    $scope.uploadFile = function(){
-      console.log("here");
-      console.log(angular.element);
-       document.getElementById('selector').click();
+    $scope.uploadFile = function(index){
+       document.getElementById('selector'+index).click();
        $timeout(function(){
          console.log($scope.upload.thisfile);
        },8000);
     };
     $scope.getPortfolios = function() {
+      $scope.liveportfolios = [];
+      $scope.savedportfolios = [];
         NavigationService.getPortfolio(function(data) {
             console.log();
             if (data.value) {
@@ -453,6 +454,32 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $mdDialog.show(confirm).then(function() {
             $state.go("planner");
         }, function() {});
+    };
+    $scope.onFileSelect = function($files, whichone, uploadtype,id) {
+      console.log(id);
+
+        globalfunction.onFileSelect($files, function(image) {
+          console.log(image);
+            if (whichone == 1) {
+
+              NavigationService.savePortfolio({
+                id:id,
+                image:image[0]
+              }, function(data) {
+                  if (data.value) {
+                    $scope.getPortfolios();
+                  } else {
+                      console.log("Not logged in");
+                  }
+              }, function() {
+
+              });
+              // console.log();
+                if (uploadtype == 'single') {
+
+                }
+            }
+        });
     };
 
 })
@@ -1522,12 +1549,32 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     ///END DELETE AND EXECUTE
 })
 
-.controller('headerctrl', function($scope, TemplateService, $mdDialog) {
+.controller('headerctrl', function($scope, TemplateService, $mdDialog,$upload,$timeout) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
         $(window).scrollTop(0);
     });
-
+    //UPLOADER CODE
+    window.uploadUrl = 'http://localhost:1337/upload/';
+    var imagejstupld = "";
+    $scope.images = [];
+    $scope.usingFlash = FileAPI && FileAPI.upload !== null;
+    $scope.fileReaderSupported = window.FileReader !== null && (window.FileAPI === null || FileAPI.html5 !== false);
+    $scope.uploadRightAway = true;
+    $scope.httpMethod="POST";
+    $scope.howToSend = 1;
+    $scope.changeAngularVersion = function() {
+        window.location.hash = $scope.angularVersion;
+        window.location.reload(true);
+    };
+    $scope.hasUploader = function(index) {
+        return $scope.upload[index] != null;
+    };
+    $scope.abort = function(index) {
+        $scope.upload[index].abort();
+        $scope.upload[index] = null;
+    };
+    //END UPLOADER CODE
     $scope.registrationDialog = function() {
         $mdDialog.show({
             templateUrl: 'views/modal/registration.html',
@@ -1588,6 +1635,69 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         }
     };
+
+    $scope.start = function(index, callback) {
+      loading.start();
+        $scope.progress[index] = 0;
+        $scope.errorMsg = null;
+        console.log($scope.howToSend = 1);
+        if ($scope.howToSend == 1) {
+            $scope.upload[index] = $upload.upload({
+                url: uploadUrl,
+                method: $scope.httpMethod,
+                headers: {
+                    'Content-Type': 'Content-Type'
+                },
+                data: {
+                    myModel: $scope.myModel
+                },
+                file: $scope.selectedFiles[index],
+                fileFormDataName: 'file'
+            });
+            $scope.upload[index].then(function(response) {
+              loading.stop();
+                $timeout(function() {
+                  console.log(response);
+                    $scope.uploadResult.push(response.data);
+                    imagejstupld = response.data;
+
+                    if (imagejstupld !== "") {
+                        $scope.images.push(imagejstupld.data[0]);
+
+                        imagejstupld = "";
+                        if (arrLength == $scope.images.length) {
+                            callback($scope.images);
+                            $scope.images = [];
+                        }
+                    }
+                });
+            }, function(response) {
+                if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
+            }, function(evt) {
+                $scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            });
+            $scope.upload[index].xhr(function(xhr) {});
+        } else {
+            var fileReader = new FileReader();
+            fileReader.onload = function(e) {
+                $scope.upload[index] = $upload.http({
+                    url: uploadUrl,
+                    headers: {
+                        'Content-Type': $scope.selectedFiles[index].type
+                    },
+                    data: e.target.result
+                }).then(function(response) {
+                    $scope.uploadResult.push(response.data);
+                }, function(response) {
+                    if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
+                }, function(evt) {
+                    $scope.progress[index] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                });
+            };
+            fileReader.readAsArrayBuffer($scope.selectedFiles[index]);
+        }
+    };
+
     $(window).scroll(function(event) {
         var y = $(this).scrollTop();
 

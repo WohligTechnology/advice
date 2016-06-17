@@ -120,6 +120,19 @@ firstapp.filter('currency', function() {
         return "₹ " + res;
     };
 });
+firstapp.filter('portfolioserverimage', function() {
+  return function(input) {
+    if (input) {
+      console.log("herre is the input");
+      console.log(input);
+      return  imgurl + input;
+    } else {
+      // return "img/logo.png";
+      console.log("default");
+      return "img/portfolios/house.png";
+    }
+  };
+});
 firstapp.filter('percentage', function() {
     return function(value) {
         return value + " %";

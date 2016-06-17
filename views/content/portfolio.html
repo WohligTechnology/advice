@@ -1,4 +1,6 @@
 <div class="portfolio">
+  <div ng-init='httpMethod=POST;howToSend = 1;'></div>
+
   <div class="container">
     <div class="row">
       <div class="portfolio-main">
@@ -11,11 +13,10 @@
 
         <div class="live-portfolios">
           <div class="row" ng-repeat="portfolio in liveportfolios">
-            <div class="col-sm-6 col-xs-12"   ng-repeat="port in portfolio">
+            <div class="col-sm-6 col-xs-12"  ng-repeat="port in portfolio">
               <md-card class="" md-ink-ripple="#ffffff" ng-class="{'pull-right':{{$index}} == 0,'pull-left':$index !== 0}">
-                <img src="img/portfolios/house.png" class="md-card-image" alt="">
-                <div ng-init='httpMethod=POST;howToSend = 1;'></div>
-                <span ng-click="uploadFile()"> <i class="material-icons">camera_alt</i><input style="display:none;" ng-model="upload.thisfile" type="file" id="selector"/></span>
+                <img ng-src="{{port.image | portfolioserverimage}}" class="md-card-image" alt="">
+                <span ng-click="uploadFile(port._id)"> <i class="material-icons">camera_alt</i><input style="display:none;"  ng-file-select='onFileSelect($files,1,"single",port._id)' onclick='this.value=null' type="file" id="selector{{port._id}}"/></span>
                 <md-card-actions ui-sref="planned({id:port._id,exec:port.execepoch})" layout="row" layout-align="start center">
                   <span flex="50" class="title">{{port.goalname}}</span>
                   <span flex="20" class="price">{{port.lumpsum | currency}}</span>
@@ -39,7 +40,7 @@
             <div class="col-sm-6 col-xs-12"  ui-sref="planned({id:port._id,exec:null})" ng-repeat="port in portfolio">
               <md-card class="" md-ink-ripple="#ffffff" ng-class="{'pull-right':$index == 0,'pull-left':$index !== 0}">
                 <img src="img/portfolios/house.png" class="md-card-image" alt="">
-                <span><i class="material-icons">camera_alt</i></span>
+                <span ng-click="uploadFile(port._id)"><i class="material-icons">camera_alt</i><input style="display:none;"  ng-file-select='onFileSelect($files,1,"single",port._id)' onclick='this.value=null' type="file" id="selector{{port._id}}"/></span>
                 <md-card-actions layout="row" layout-align="start center">
                   <span flex="50" class="title">{{port.goalname}}</span>
                 </md-card-actions>
