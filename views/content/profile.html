@@ -1,7 +1,7 @@
 <div class="blue-back"></div>
 <div class="profile">
   <div ng-init='httpMethod=POST;howToSend = 1;'></div>
-  
+
   <div class="user-profile">
     <div class="container">
       <div class="user-detail" layout="row">
@@ -271,19 +271,19 @@
           <div class="document-one row">
             <div class="passport-photo col-md-4">
               <md-button class="md-primary" aria-label="File">
-                <input type="file" ng-file-select="">
+                <input type="file" ng-file-select="onFileSelect($files,1,'single',"")" onclick='this.value=null'>
                 <span class="text-uppercase white">Passport size photograph</span>
               </md-button>
             </div>
             <div class="address-per col-md-4">
               <md-button class="md-primary" aria-label="File">
-                <input type="file">
+                <input type="file" ng-file-select="onFileSelect($files,1,'single',"")" onclick='this.value=null'>
                 <span class="text-uppercase white">Address Proof (Permanant)</span>
               </md-button>
             </div>
             <div class="address-cor col-md-4">
               <md-button class="md-primary" aria-label="File">
-                <input type="file">
+                <input type="file" ng-file-select="onFileSelect($files,1,'single',"")" onclick='this.value=null'>
                 <span class="text-uppercase white">Address Proof (Corresponance)</span>
               </md-button>
               <md-checkbox md-no-ink aria-label="Same as Permanant Address" class="same" layout="row">
@@ -315,13 +315,13 @@
           <div class="row">
             <div class="pan-card col-md-6">
               <md-button class="md-primary" aria-label="File">
-                <input type="file">
+                <input type="file" ng-file-select="onFileSelect($files,1,'single',port._id)" onclick='this.value=null'>
                 <span class="text-uppercase white">PAN Card</span>
               </md-button>
             </div>
             <div class="cancelled-cheque col-md-6">
               <md-button class="md-primary" aria-label="File">
-                <input type="file">
+                <input type="file" ng-file-select="onFileSelect($files,1,'single',port._id)" onclick='this.value=null'>
                 <span class="text-uppercase white">Cancelled Cheque</span>
               </md-button>
             </div>

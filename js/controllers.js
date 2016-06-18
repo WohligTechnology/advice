@@ -83,7 +83,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }];
 })
 
-.controller('ProfileCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $window, $mdDialog) {
+.controller('ProfileCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $window, $mdDialog,$upload) {
     $scope.template = TemplateService.changecontent("profile");
     $scope.menutitle = NavigationService.makeactive("Profile");
     TemplateService.title = $scope.menutitle;
@@ -208,6 +208,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     //ALL form submits
+    $scope.onFileSelect = function($files, whichone, uploadtype,property) {
+      console.log(id);
+
+        globalfunction.onFileSelect($files, function(image) {
+          console.log(image);
+            if (whichone == 1) {
+              $scope.user.document[property]=image[0];
+                if (uploadtype == 'single') {
+
+                }
+            }
+        });
+    };
 
     $scope.addNomineeDetails = function(formValidate) {
         if (formValidate.$valid) {
