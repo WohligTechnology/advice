@@ -186,6 +186,10 @@ md-checkbox.md-checked.blue .md-icon {
 .md-primary {
     background-color: #4285F4 !important;
 }
+.md-success {
+    background-color: $brand-success !important;
+    color:white;
+}
 md-dialog .md-primary {
     color: #4285F4;
     background-color: white !important;
@@ -1220,7 +1224,10 @@ md-sidenav.md-sidenav-left {
         }
     }
 }
-
+.document-success {
+  font-size: 20px;
+  vertical-align: sub;
+}
 // registration dialog
 md-dialog {
   .registration {

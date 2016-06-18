@@ -2,7 +2,7 @@ var loading = {};
 var uploadres = [];
 var globalfunction = {};
 
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule','angularFileUpload'])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload'])
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams) {
     //Used to name the .html file
@@ -83,7 +83,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }];
 })
 
-.controller('ProfileCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $window, $mdDialog,$upload) {
+.controller('ProfileCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $window, $mdDialog, $upload) {
     $scope.template = TemplateService.changecontent("profile");
     $scope.menutitle = NavigationService.makeactive("Profile");
     TemplateService.title = $scope.menutitle;
@@ -95,6 +95,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.user = {};
     $scope.user.nominees = [];
     $scope.progress = 0;
+    $scope.user.document = {};
+    $scope.checkbox = {};
     $scope.process = [{
         status: 'done',
         fontname: 'done',
@@ -133,13 +135,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
     $scope.tabs[0].status = $scope.process[0];
 
-    $scope.verification = function () {
+    $scope.verification = function() {
 
     };
 
     //All except registration 'untouched' end
     //change tabs here, cannot change registration
+    $scope.samePermanentAddress = function(flag) {
+        $scope.user.document.corraddressproof = "";
 
+        if (flag) {
+            $scope.user.document.corraddressproof = $scope.user.document.addressproof;
+        }
+    };
     $scope.changeTab = function(index) {
         if (index !== 0) {
             _.each($scope.tabs, function(key) {
@@ -208,18 +216,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     //ALL form submits
-    $scope.onFileSelect = function($files, whichone, uploadtype,property) {
-      console.log(id);
+    $scope.onFileSelect = function($files, whichone, uploadtype, property) {
+        // console.log(id);
 
         globalfunction.onFileSelect($files, function(image) {
-          console.log(image);
+            console.log(image);
             if (whichone == 1) {
-              $scope.user.document[property]=image[0];
+                $scope.user.document[property] = image[0];
                 if (uploadtype == 'single') {
 
                 }
             }
         });
+        console.log($scope.user);
     };
 
     $scope.addNomineeDetails = function(formValidate) {
@@ -392,114 +401,114 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 })
 
-.controller('PortfolioCtrl', function($scope, TemplateService, NavigationService, $timeout, $upload,$mdDialog, $mdMedia, $state) {
-    $scope.template = TemplateService.changecontent("portfolio");
-    $scope.menutitle = NavigationService.makeactive("Portfolio");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-    TemplateService.header = "views/content/header.html";
-    $scope.portfolios = [];
-    $scope.savedportfolios = [];
-    $scope.liveportfolios = [];
-    $scope.upload={};
-    $scope.uploadFile = function(index){
-       document.getElementById('selector'+index).click();
-       $timeout(function(){
-         console.log($scope.upload.thisfile);
-       },8000);
-    };
-    $scope.getPortfolios = function() {
-      $scope.liveportfolios = [];
-      $scope.savedportfolios = [];
-        NavigationService.getPortfolio(function(data) {
-            console.log();
-            if (data.value) {
-                if (data.data) {
-                    $scope.portfolios = data.data;
-                    _.each($scope.portfolios, function(key) {
-                      console.log(new Date(key.executiontime).getTime());
-                        if(key.executiontime){
-                          key.execepoch = new Date(key.executiontime).getTime();
-                        }
-                        if (key.status === true){
-                          key.timetostart ={};
-                           key.timetostart = $scope.calcTimeToStart(key.executiontime,key.startMonth);
-                           console.log(key.timetostart);
-                            $scope.liveportfolios.push(key);
+.controller('PortfolioCtrl', function($scope, TemplateService, NavigationService, $timeout, $upload, $mdDialog, $mdMedia, $state) {
+        $scope.template = TemplateService.changecontent("portfolio");
+        $scope.menutitle = NavigationService.makeactive("Portfolio");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        TemplateService.header = "views/content/header.html";
+        $scope.portfolios = [];
+        $scope.savedportfolios = [];
+        $scope.liveportfolios = [];
+        $scope.upload = {};
+        $scope.uploadFile = function(index) {
+            document.getElementById('selector' + index).click();
+            $timeout(function() {
+                console.log($scope.upload.thisfile);
+            }, 8000);
+        };
+        $scope.getPortfolios = function() {
+            $scope.liveportfolios = [];
+            $scope.savedportfolios = [];
+            NavigationService.getPortfolio(function(data) {
+                console.log();
+                if (data.value) {
+                    if (data.data) {
+                        $scope.portfolios = data.data;
+                        _.each($scope.portfolios, function(key) {
+                            console.log(new Date(key.executiontime).getTime());
+                            if (key.executiontime) {
+                                key.execepoch = new Date(key.executiontime).getTime();
+                            }
+                            if (key.status === true) {
+                                key.timetostart = {};
+                                key.timetostart = $scope.calcTimeToStart(key.executiontime, key.startMonth);
+                                console.log(key.timetostart);
+                                $scope.liveportfolios.push(key);
+                            } else {
+                                $scope.savedportfolios.push(key);
+                            }
+                        });
+                        $scope.savedportfolios = _.chunk($scope.savedportfolios, 2);
+                        $scope.liveportfolios = _.chunk($scope.liveportfolios, 2);
+                    }
+                }
+            }, function(err) {
+
+            });
+        };
+        $scope.getPortfolios();
+
+        $scope.calcTimeToStart = function(exec, startMonth) {
+
+            var execnew = new Date(exec).setMonth(new Date(exec).getMonth() + startMonth);
+
+            var differenceTime = execnew - new Date();
+            var duration = moment.duration(differenceTime, 'milliseconds');
+            duration = moment.duration(duration - 1000, 'milliseconds');
+            return duration._data;
+        };
+        $scope.showConfirm = function(ev) {
+            var confirm = $mdDialog.confirm()
+                .clickOutsideToClose()
+                .title('How do you wish to go about creating the portfolio?')
+                .ariaLabel('Create Portfolio')
+                .targetEvent(ev)
+                .ok('CREATE ADVISED PORTFOLIO')
+                .cancel('CREATE OWN PORTFOLIO');
+            $mdDialog.show(confirm).then(function() {
+                $state.go("planner");
+            }, function() {});
+        };
+        $scope.onFileSelect = function($files, whichone, uploadtype, id) {
+            console.log(id);
+
+            globalfunction.onFileSelect($files, function(image) {
+                console.log(image);
+                if (whichone == 1) {
+
+                    NavigationService.savePortfolio({
+                        id: id,
+                        image: image[0]
+                    }, function(data) {
+                        if (data.value) {
+                            $scope.getPortfolios();
                         } else {
-                            $scope.savedportfolios.push(key);
+                            console.log("Not logged in");
                         }
+                    }, function() {
+
                     });
-                    $scope.savedportfolios = _.chunk($scope.savedportfolios, 2);
-                    $scope.liveportfolios = _.chunk($scope.liveportfolios, 2);
+                    // console.log();
+                    if (uploadtype == 'single') {
+
+                    }
                 }
-            }
-        }, function(err) {
+            });
+        };
 
-        });
-    };
-    $scope.getPortfolios();
+    })
+    .controller('loadingCtrl', function($scope, TemplateService, NavigationService, $timeout, $mdDialog, $mdMedia, $state) {
 
-    $scope.calcTimeToStart=function(exec,startMonth){
-
-      var execnew = new Date(exec).setMonth(new Date(exec).getMonth()+startMonth);
-
-      var differenceTime = execnew-new Date();
-      var duration = moment.duration(differenceTime, 'milliseconds');
-      duration = moment.duration(duration - 1000, 'milliseconds');
-      return duration._data;
-    };
-    $scope.showConfirm = function(ev) {
-        var confirm = $mdDialog.confirm()
-            .clickOutsideToClose()
-            .title('How do you wish to go about creating the portfolio?')
-            .ariaLabel('Create Portfolio')
-            .targetEvent(ev)
-            .ok('CREATE ADVISED PORTFOLIO')
-            .cancel('CREATE OWN PORTFOLIO');
-        $mdDialog.show(confirm).then(function() {
-            $state.go("planner");
-        }, function() {});
-    };
-    $scope.onFileSelect = function($files, whichone, uploadtype,id) {
-      console.log(id);
-
-        globalfunction.onFileSelect($files, function(image) {
-          console.log(image);
-            if (whichone == 1) {
-
-              NavigationService.savePortfolio({
-                id:id,
-                image:image[0]
-              }, function(data) {
-                  if (data.value) {
-                    $scope.getPortfolios();
-                  } else {
-                      console.log("Not logged in");
-                  }
-              }, function() {
-
-              });
-              // console.log();
-                if (uploadtype == 'single') {
-
-                }
-            }
-        });
-    };
-
-})
-.controller('loadingCtrl', function($scope, TemplateService, NavigationService, $timeout, $mdDialog, $mdMedia, $state) {
-
-  $scope.progress = {};
-  $scope.progress.loading = false;
-  loading.start = function(){
-    $scope.progress.loading = true;
-  };
-  loading.stop = function(){
-    $scope.progress.loading = false;
-  };
-})
+        $scope.progress = {};
+        $scope.progress.loading = false;
+        loading.start = function() {
+            $scope.progress.loading = true;
+        };
+        loading.stop = function() {
+            $scope.progress.loading = false;
+        };
+    })
 
 .controller('PlannerCtrl', function($scope, TemplateService, NavigationService, $mdDialog, $state, $stateParams, $timeout, $log, $filter, $interval, $mdToast, $document) {
     $scope.template = TemplateService.changecontent("planner");
@@ -515,7 +524,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.response = {};
     $scope.typing = false;
     $scope.suggestion = false;
-    $scope.isLive =false;
+    $scope.isLive = false;
     $scope.result = {};
     $scope.showchart = false;
     $scope.showfunds = false;
@@ -528,31 +537,31 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.getOnePortfolio($stateParams, function(data) {
             if (data.value) {
                 if (data.data.lumpsum !== undefined) {
-                  if(data.data.executiontime !== null && data.data.executiontime !== undefined){
-                    if($stateParams.exec !== "" && new Date(data.data.executiontime).getTime() == $stateParams.exec){
-                      $scope.isLive=true;
-                      $scope.executeCompute(data.data);
-                      if (data.data.withdrawalfrequency == 'One Shot') {
-                          $scope.hideendMonthSlider = true;
-                      }
-                    } else if($stateParams.exec === ""){
-                      $scope.isLive = false;
-                      $scope.executeCompute(data.data);
-                      if (data.data.withdrawalfrequency == 'One Shot') {
-                          $scope.hideendMonthSlider = true;
-                      }
-                    }else{
-                      $state.go("portfolio");
+                    if (data.data.executiontime !== null && data.data.executiontime !== undefined) {
+                        if ($stateParams.exec !== "" && new Date(data.data.executiontime).getTime() == $stateParams.exec) {
+                            $scope.isLive = true;
+                            $scope.executeCompute(data.data);
+                            if (data.data.withdrawalfrequency == 'One Shot') {
+                                $scope.hideendMonthSlider = true;
+                            }
+                        } else if ($stateParams.exec === "") {
+                            $scope.isLive = false;
+                            $scope.executeCompute(data.data);
+                            if (data.data.withdrawalfrequency == 'One Shot') {
+                                $scope.hideendMonthSlider = true;
+                            }
+                        } else {
+                            $state.go("portfolio");
+                        }
+                    } else {
+                        $scope.isLive = false;
+                        $scope.executeCompute(data.data);
+                        if (data.data.withdrawalfrequency == 'One Shot') {
+                            $scope.hideendMonthSlider = true;
+                        }
                     }
-                  }else{
-                    $scope.isLive = false;
-                    $scope.executeCompute(data.data);
-                    if (data.data.withdrawalfrequency == 'One Shot') {
-                        $scope.hideendMonthSlider = true;
-                    }
-                  }
-                }else{
-                  $state.go("portfolio");
+                } else {
+                    $state.go("portfolio");
                 }
             } else {
                 console.log("invalid ID");
@@ -572,13 +581,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
     });
 
-    $scope.selectConvert = function (){
-      $scope.inputs.monthlyuntildateSlider.value = parseInt($scope.inputs.monthlyuntildateSlider.value);
-      $scope.inputs.startMonthSlider.value = parseInt($scope.inputs.startMonthSlider.value);
-      $scope.inputs.endMonthSlider.value = parseInt($scope.inputs.endMonthSlider.value);
+    $scope.selectConvert = function() {
+        $scope.inputs.monthlyuntildateSlider.value = parseInt($scope.inputs.monthlyuntildateSlider.value);
+        $scope.inputs.startMonthSlider.value = parseInt($scope.inputs.startMonthSlider.value);
+        $scope.inputs.endMonthSlider.value = parseInt($scope.inputs.endMonthSlider.value);
 
-      $scope.validateSliders();
-      console.log("here in selectConvert");
+        $scope.validateSliders();
+        console.log("here in selectConvert");
     };
 
     for (i = 0; i < 600; i++) {
@@ -599,9 +608,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             tooltip: {
                 valuePrefix: '₹ '
             },
-            legend:{
-              align:"center",
-              verticalAlign:"top"
+            legend: {
+                align: "center",
+                verticalAlign: "top"
             }
         },
         series: [{
@@ -829,86 +838,86 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     };
     $scope.fundstable = [];
-    $scope.calculateFunds = function(type, funds, tenures, result){
-      $scope.fundstable = [];
-      $scope.fundstable[0] = {};
-      $scope.fundstable[1] = {};
-      $scope.fundstable[2] = {};
-      $scope.fundstable[3] = {};
+    $scope.calculateFunds = function(type, funds, tenures, result) {
+        $scope.fundstable = [];
+        $scope.fundstable[0] = {};
+        $scope.fundstable[1] = {};
+        $scope.fundstable[2] = {};
+        $scope.fundstable[3] = {};
 
-      // var lumpeq = result.lumpsum * (type / 10);
-      // var lumpdt = result.lumpsum * (Math.abs(10 - type) / 10);
-      // var monthlyeq = result.monthly * (type / 10);
-      // var monthlydt = result.monthly * (Math.abs(10 - type) / 10);
-      var eq1,eq2,dt1,dt2;
-      if (parseInt(tenures.length / 12) > 3) {
-        eq1 = $filter('nearest10')((funds.morethan3equity1percent/10)*type);
-        eq2 = $filter('nearest10')((funds.morethan3equity2percent/10)*type);
-        dt1 = $filter('nearest10')((funds.morethan3debt1percent/10)*(10-type));
-        dt2 = $filter('nearest10')((funds.morethan3debt2percent/10)*(10-type));
-        console.log(eq1 + eq2+ dt1+ dt2);
-        $scope.fundstable[0].name = funds.morethan3equity1fund.name;
-        $scope.fundstable[0]._id = funds.morethan3equity1fund._id;
-        $scope.fundstable[0].lump = (eq1/100) * result.lumpsum;
-        $scope.fundstable[0].monthly = (eq1/100) * result.monthly;
+        // var lumpeq = result.lumpsum * (type / 10);
+        // var lumpdt = result.lumpsum * (Math.abs(10 - type) / 10);
+        // var monthlyeq = result.monthly * (type / 10);
+        // var monthlydt = result.monthly * (Math.abs(10 - type) / 10);
+        var eq1, eq2, dt1, dt2;
+        if (parseInt(tenures.length / 12) > 3) {
+            eq1 = $filter('nearest10')((funds.morethan3equity1percent / 10) * type);
+            eq2 = $filter('nearest10')((funds.morethan3equity2percent / 10) * type);
+            dt1 = $filter('nearest10')((funds.morethan3debt1percent / 10) * (10 - type));
+            dt2 = $filter('nearest10')((funds.morethan3debt2percent / 10) * (10 - type));
+            console.log(eq1 + eq2 + dt1 + dt2);
+            $scope.fundstable[0].name = funds.morethan3equity1fund.name;
+            $scope.fundstable[0]._id = funds.morethan3equity1fund._id;
+            $scope.fundstable[0].lump = (eq1 / 100) * result.lumpsum;
+            $scope.fundstable[0].monthly = (eq1 / 100) * result.monthly;
 
-        $scope.fundstable[1].name = funds.morethan3equity2fund.name;
-        $scope.fundstable[1]._id = funds.morethan3equity2fund._id;
-        $scope.fundstable[1].lump = (eq2/100) * result.lumpsum;
-        $scope.fundstable[1].monthly = (eq2/100) * result.monthly;
-
-
-        $scope.fundstable[2].name = funds.morethan3debt1fund.name;
-        $scope.fundstable[2]._id = funds.morethan3debt1fund._id;
-        $scope.fundstable[2].lump = (dt1/100) * result.lumpsum;
-        $scope.fundstable[2].monthly = (dt1/100) * result.monthly;
+            $scope.fundstable[1].name = funds.morethan3equity2fund.name;
+            $scope.fundstable[1]._id = funds.morethan3equity2fund._id;
+            $scope.fundstable[1].lump = (eq2 / 100) * result.lumpsum;
+            $scope.fundstable[1].monthly = (eq2 / 100) * result.monthly;
 
 
-        $scope.fundstable[3].name = funds.morethan3debt2fund.name;
-        $scope.fundstable[3]._id = funds.morethan3debt2fund._id;
-        $scope.fundstable[3].lump = (dt2/100) * result.lumpsum;
-        $scope.fundstable[3].monthly = (dt2/100) * result.monthly;
+            $scope.fundstable[2].name = funds.morethan3debt1fund.name;
+            $scope.fundstable[2]._id = funds.morethan3debt1fund._id;
+            $scope.fundstable[2].lump = (dt1 / 100) * result.lumpsum;
+            $scope.fundstable[2].monthly = (dt1 / 100) * result.monthly;
+
+
+            $scope.fundstable[3].name = funds.morethan3debt2fund.name;
+            $scope.fundstable[3]._id = funds.morethan3debt2fund._id;
+            $scope.fundstable[3].lump = (dt2 / 100) * result.lumpsum;
+            $scope.fundstable[3].monthly = (dt2 / 100) * result.monthly;
 
 
 
-      } else {
-        eq1 = $filter('nearest10')((funds.lessthan3equity1percent/10)*type);
-        eq2 = $filter('nearest10')((funds.lessthan3equity2percent/10)*type);
-        dt1 = $filter('nearest10')((funds.lessthan3debt1percent/10)*(10-type));
-        dt2 = $filter('nearest10')((funds.lessthan3debt2percent/10)*(10-type));
-        console.log(eq1+" " + eq2+" "+ dt1+" "+ dt2);
+        } else {
+            eq1 = $filter('nearest10')((funds.lessthan3equity1percent / 10) * type);
+            eq2 = $filter('nearest10')((funds.lessthan3equity2percent / 10) * type);
+            dt1 = $filter('nearest10')((funds.lessthan3debt1percent / 10) * (10 - type));
+            dt2 = $filter('nearest10')((funds.lessthan3debt2percent / 10) * (10 - type));
+            console.log(eq1 + " " + eq2 + " " + dt1 + " " + dt2);
 
-          $scope.fundstable[0].name = funds.lessthan3equity1fund.name;
-          $scope.fundstable[0]._id = funds.lessthan3equity1fund._id;
-          $scope.fundstable[0].lump = (eq1/100) * result.lumpsum;
-          $scope.fundstable[0].monthly = (eq1/100) * result.monthly;
+            $scope.fundstable[0].name = funds.lessthan3equity1fund.name;
+            $scope.fundstable[0]._id = funds.lessthan3equity1fund._id;
+            $scope.fundstable[0].lump = (eq1 / 100) * result.lumpsum;
+            $scope.fundstable[0].monthly = (eq1 / 100) * result.monthly;
 
-          $scope.fundstable[1].name = funds.lessthan3equity2fund.name;
-          $scope.fundstable[1]._id = funds.lessthan3equity2fund._id;
-          $scope.fundstable[1].lump = (eq2/100) * result.lumpsum;
-          $scope.fundstable[1].monthly = (eq2/100) * result.monthly;
-
-
-          $scope.fundstable[2].name = funds.lessthan3debt1fund.name;
-          $scope.fundstable[2]._id = funds.lessthan3debt1fund._id;
-          $scope.fundstable[2].lump = (dt1/100) * result.lumpsum;
-          $scope.fundstable[2].monthly = (dt1/100) * result.monthly;
+            $scope.fundstable[1].name = funds.lessthan3equity2fund.name;
+            $scope.fundstable[1]._id = funds.lessthan3equity2fund._id;
+            $scope.fundstable[1].lump = (eq2 / 100) * result.lumpsum;
+            $scope.fundstable[1].monthly = (eq2 / 100) * result.monthly;
 
 
-          $scope.fundstable[3].name = funds.lessthan3debt2fund.name;
-          $scope.fundstable[3]._id = funds.lessthan3debt2fund._id;
-          $scope.fundstable[3].lump = (dt2/100) * result.lumpsum;
-          $scope.fundstable[3].monthly = (dt2/100) * result.monthly;
-      }
-      $scope.fundtotallump = 0;
-      $scope.fundtotalmonthly = 0;
-      _.each($scope.fundstable, function(key) {
-          $scope.fundtotallump = $scope.fundtotallump + key.lump;
-          $scope.fundtotalmonthly = $scope.fundtotalmonthly + key.monthly;
-      });
+            $scope.fundstable[2].name = funds.lessthan3debt1fund.name;
+            $scope.fundstable[2]._id = funds.lessthan3debt1fund._id;
+            $scope.fundstable[2].lump = (dt1 / 100) * result.lumpsum;
+            $scope.fundstable[2].monthly = (dt1 / 100) * result.monthly;
+
+
+            $scope.fundstable[3].name = funds.lessthan3debt2fund.name;
+            $scope.fundstable[3]._id = funds.lessthan3debt2fund._id;
+            $scope.fundstable[3].lump = (dt2 / 100) * result.lumpsum;
+            $scope.fundstable[3].monthly = (dt2 / 100) * result.monthly;
+        }
+        $scope.fundtotallump = 0;
+        $scope.fundtotalmonthly = 0;
+        _.each($scope.fundstable, function(key) {
+            $scope.fundtotallump = $scope.fundtotallump + key.lump;
+            $scope.fundtotalmonthly = $scope.fundtotalmonthly + key.monthly;
+        });
 
     };
-  $scope.skipIt = function() {
+    $scope.skipIt = function() {
         var skiptexts = ['Let&apos;s skip it.', 'I would like to skip it', 'Skip it'];
         $scope.chats.push({
             text: skiptexts[Math.floor(Math.random() * (skiptexts.length - 1))],
@@ -948,8 +957,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.computeIt($scope.result);
     };
 
-    $scope.reflowChart = function(currentPlan,result) {
-      console.log(result);
+    $scope.reflowChart = function(currentPlan, result) {
+        console.log(result);
         $scope.planlinechartconfig.xAxis.categories = [];
         $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
         $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
@@ -1254,7 +1263,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             } else {
                 $scope.currentPlan = data;
                 $scope.planlinechartconfig.loading = false;
-                $scope.reflowChart($scope.currentPlan,resultNow);
+                $scope.reflowChart($scope.currentPlan, resultNow);
                 $scope.reflowChartED($scope.currentPlan);
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
@@ -1321,7 +1330,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultNow.noOfMonth = -1 * $filter('monthsSince')(resultNow.monthlyuntildate);
         // $scope.executeCompute(resultNow);
         if (resultNow.withdrawalfrequency == 'One Shot') {
-          console.log("One shot - true that");
+            console.log("One shot - true that");
             resultNow.noOfInstallment = 1;
 
         }
@@ -1555,23 +1564,23 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     ///END DELETE AND EXECUTE
 })
 
-.controller('headerctrl', function($scope, TemplateService,NavigationService,$state, $mdDialog,$upload,$timeout) {
+.controller('headerctrl', function($scope, TemplateService, NavigationService, $state, $mdDialog, $upload, $timeout) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
         $(window).scrollTop(0);
     });
-    $scope.login={};
+    $scope.login = {};
 
     //UPLOADER CODE
-    window.uploadUrl = adminURL+'upload/';
+    window.uploadUrl = adminURL + 'upload/';
     var imagejstupld = "";
     $scope.images = [];
     $scope.usingFlash = FileAPI && FileAPI.upload !== null;
     $scope.fileReaderSupported = window.FileReader !== null && (window.FileAPI === null || FileAPI.html5 !== false);
     $scope.uploadRightAway = true;
-    $scope.httpMethod="POST";
+    $scope.httpMethod = "POST";
     $scope.howToSend = 1;
-    $scope.signup={};
+    $scope.signup = {};
     $scope.changeAngularVersion = function() {
         window.location.hash = $scope.angularVersion;
         window.location.reload(true);
@@ -1592,35 +1601,35 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             scope: $scope.$new()
         });
     };
-    $scope.doLogin = function(input){
-      NavigationService.login(input, function(data) {
-          if (data.value) {
-            $state.go("profile");
-          }else{
-            // handle invalid login
-          }
-      }, function(err) {});
-    };
-    $scope.doSignup = function(input,formValidate){
-      if(formValidate.$valid){
-        if (input.password == input.cfpassword) {
-          NavigationService.signup(input, function(data) {
-              if (data.value) {
-                console.log(data);
+    $scope.doLogin = function(input) {
+        NavigationService.login(input, function(data) {
+            if (data.value) {
                 $state.go("profile");
-              }else{
-                // handle invalid signup
-              }
-          }, function(err) {});
+            } else {
+                // handle invalid login
+            }
+        }, function(err) {});
+    };
+    $scope.doSignup = function(input, formValidate) {
+        if (formValidate.$valid) {
+            if (input.password == input.cfpassword) {
+                NavigationService.signup(input, function(data) {
+                    if (data.value) {
+                        console.log(data);
+                        $state.go("profile");
+                    } else {
+                        // handle invalid signup
+                    }
+                }, function(err) {});
+            } else {
+                console.log("2");
+                formValidate.cfpassword.$invalid = true;
+                formValidate.cfpassword.$touched = true;
+                $scope.signup.cfpassword = undefined;
+            }
         } else {
-          console.log("2");
-          formValidate.cfpassword.$invalid=true;
-          formValidate.cfpassword.$touched=true;
-          $scope.signup.cfpassword=undefined;
-        }
-      }else{
 
-      }
+        }
     };
     $scope.getclass = "menu-in";
     $scope.one = "";
@@ -1676,7 +1685,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     $scope.start = function(index, callback) {
-      loading.start();
+        loading.start();
         $scope.progress[index] = 0;
         $scope.errorMsg = null;
         console.log($scope.howToSend = 1);
@@ -1694,9 +1703,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 fileFormDataName: 'file'
             });
             $scope.upload[index].then(function(response) {
-              loading.stop();
+                loading.stop();
                 $timeout(function() {
-                  console.log(response);
+                    console.log(response);
                     $scope.uploadResult.push(response.data);
                     imagejstupld = response.data;
 

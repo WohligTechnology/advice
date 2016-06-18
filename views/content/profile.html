@@ -270,23 +270,23 @@
           <!-- <h4 layout-align="start" class="text-uppercase blue">Document Upload</h4> -->
           <div class="document-one row">
             <div class="passport-photo col-md-4">
-              <md-button class="md-primary" aria-label="File">
-                <input type="file" ng-file-select="onFileSelect($files,1,'single',"")" onclick='this.value=null'>
-                <span class="text-uppercase white">Passport size photograph</span>
+              <md-button class="" ng-class="{'md-success':user.document.photo,'md-primary':!user.document.photo}" aria-label="File">
+                <input type="file" ng-file-select="onFileSelect($files,1,'single','photo')" onclick='this.value=null'>
+                <span class="text-uppercase white">Passport size photograph <i ng-if="user.document.photo" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
             <div class="address-per col-md-4">
-              <md-button class="md-primary" aria-label="File">
-                <input type="file" ng-file-select="onFileSelect($files,1,'single',"")" onclick='this.value=null'>
-                <span class="text-uppercase white">Address Proof (Permanant)</span>
+              <md-button class="" ng-class="{'md-success':user.document.addressproof,'md-primary':!user.document.addressproof}" aria-label="File">
+                <input type="file" ng-file-select="onFileSelect($files,1,'single','addressproof')" onclick='this.value=null'>
+                <span class="text-uppercase white">Address Proof (Permanant)<i ng-if="user.document.addressproof" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
             <div class="address-cor col-md-4">
-              <md-button class="md-primary" aria-label="File">
-                <input type="file" ng-file-select="onFileSelect($files,1,'single',"")" onclick='this.value=null'>
-                <span class="text-uppercase white">Address Proof (Corresponance)</span>
+              <md-button class="" ng-class="{'md-success':user.document.corraddressproof,'md-primary':!user.document.corraddressproof}"  aria-label="File">
+                <input type="file" ng-file-select="onFileSelect($files,1,'single','corraddressproof')" onclick='this.value=null'>
+                <span class="text-uppercase white">Address Proof (Corresponance)<i ng-if="user.document.corraddressproof" class="material-icons document-success">done</i></span>
               </md-button>
-              <md-checkbox md-no-ink aria-label="Same as Permanant Address" class="same" layout="row">
+              <md-checkbox ng-model="checkbox.sameaddress" ng-change="samePermanentAddress(checkbox.sameaddress)" md-no-ink aria-label="Same as Permanant Address" class="same" layout="row">
                 Same as Permanant Address
               </md-checkbox>
             </div>
@@ -295,7 +295,7 @@
             <div class="address-type col-md-6">
               <md-input-container>
                 <label>Address Type</label>
-                <md-select ng-model="ctrl.userAddress">
+                <md-select ng-model="user.document.addresstype">
                   <md-option value="residential">Residential</md-option>
                   <md-option value="commercial">Commercial</md-option>
                 </md-select>
@@ -304,7 +304,7 @@
             <div class="bank-name col-md-6">
               <md-input-container>
                 <label>Bank Name</label>
-                <md-select ng-model="ctrl.userBank">
+                <md-select ng-model="user.document.bankname">
                   <md-option value="axis">AXIS</md-option>
                   <md-option value="hdfc">HDFC</md-option>
                 </md-select>
@@ -314,21 +314,21 @@
 
           <div class="row">
             <div class="pan-card col-md-6">
-              <md-button class="md-primary" aria-label="File">
-                <input type="file" ng-file-select="onFileSelect($files,1,'single',port._id)" onclick='this.value=null'>
-                <span class="text-uppercase white">PAN Card</span>
+              <md-button class="" ng-class="{'md-success':user.document.pan,'md-primary':!user.document.pan}" aria-label="File">
+                <input type="file" ng-file-select="onFileSelect($files,1,'single','pan')" onclick='this.value=null'>
+                <span class="text-uppercase white">PAN Card<i ng-if="user.document.pan" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
             <div class="cancelled-cheque col-md-6">
-              <md-button class="md-primary" aria-label="File">
-                <input type="file" ng-file-select="onFileSelect($files,1,'single',port._id)" onclick='this.value=null'>
-                <span class="text-uppercase white">Cancelled Cheque</span>
+              <md-button class="" ng-class="{'md-success':user.document.cancelledcheque,'md-primary':!user.document.cancelledcheque}" aria-label="File">
+                <input type="file" ng-file-select="onFileSelect($files,1,'single','cancelledcheque')" onclick='this.value=null'>
+                <span class="text-uppercase white">Cancelled Cheque<i ng-if="user.document.cancelledcheque" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
           </div>
           <div class="next-button text-right">
             <span flex></span>
-            <md-button class="md-raised md-primary" ng-click="summaryDialog();">Submit</md-button>
+            <md-button class="md-raised md-primary"  ng-click="summaryDialog();">Submit</md-button>
           </div>
         </div>
 
