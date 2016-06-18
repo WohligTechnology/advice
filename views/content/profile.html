@@ -116,10 +116,7 @@
           <label>Country</label>
           <md-select  required ng-change="inProcess(1)" ng-model="nominee.country">
 
-            <md-option value="IN">IN</md-option>
-            <md-option value="US">US</md-option>
-            <md-option value="UK">UK</md-option>
-            <md-option value="SP">SP</md-option>
+            <md-option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</md-option>
           </md-select>
         </md-input-container>
       </div>
@@ -163,10 +160,7 @@
               <md-input-container name="country">
                 <label>Country</label>
                 <md-select required ng-model="user.country" ng-model="ctrl.userCountry">
-                  <md-option value="IN">IN</md-option>
-                  <md-option value="US">US</md-option>
-                  <md-option value="UK">UK</md-option>
-                  <md-option value="SP">SP</md-option>
+                  <md-option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</md-option>
                 </md-select>
               </md-input-container>
             </div>
@@ -184,8 +178,8 @@
           <div class="row">
             <div class="net-worth col-md-4">
               <md-input-container name="networthoccupation">
-                <span class="inr"><i class="fa fa-inr"></i></span>
-                <input ng-model="user.networthoccupation" type="number" placeholder="Net Worth (Optional):" aria-label="Net Worth">
+                <!-- <span class="inr"><i class="fa fa-inr"></i></span> -->
+                <input ng-model="user.networthoccupation" type="number" placeholder="Net Worth in ₹ (Optional):" aria-label="Net Worth">
               </md-input-container>
             </div>
             <div class="occupation col-md-4">
@@ -306,8 +300,7 @@
               <md-input-container>
                 <label>Bank Name</label>
                 <md-select name="bankname" required ng-model="user.documents.bankname">
-                  <md-option value="axis">AXIS</md-option>
-                  <md-option value="hdfc">HDFC</md-option>
+                  <md-option ng-repeat="bank in banks" value="{{bank.name}}">{{bank.name}}</md-option>
                 </md-select>
               </md-input-container>
             </div>

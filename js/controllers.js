@@ -128,8 +128,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         active: false
     }];
     $scope.banks = [{
-        name: "BANK NAME"
-    }, {
         name: "Abhyudaya Co-Operative Bank"
     }, {
         name: "Abu Dhabi Commercial Bank"

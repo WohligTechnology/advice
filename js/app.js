@@ -82,6 +82,22 @@ firstapp.directive('img', function($compile, $parse) {
         }
     };
 });
+
+firstapp.directive('equalHeight', function($compile, $parse) {
+    return {
+        restrict: 'EA',
+        replace: false,
+        link: function($scope, element, attrs) {
+            var $element = $(element);
+            var wid = $element.width();
+            $element.css({'height': wid});
+            $( window ).resize(function() {
+              var wid = $element.width();
+              $element.css({'height': wid});
+            });
+        }
+    };
+});
 firstapp.filter('uploadpath', function() {
     return function(input, width, height, style) {
         var other = "";
