@@ -267,7 +267,7 @@
         </div>
 
         <div class="document-upload" ng-show="tabs[3].active">
-          <form name="documentForm" ng-submit="documentForm">
+          <form name="documentForm" ng-submit="addDocumentDetails(documentForm,$event)">
           <!-- <h4 layout-align="start" class="text-uppercase blue">Document Upload</h4> -->
           <div class="document-one row">
             <div class="passport-photo col-md-4">

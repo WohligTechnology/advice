@@ -193,9 +193,32 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             i++;
         });
         $scope.progress = (contActive.length - 1) * 25;
-
+        console.log($scope.tabs);
     };
+    $scope.getStatus = function(){
+      var i =0;
+      var letIn =true;
+      var tab=0;
+      _.each($scope.tabs,function(key){
+        if (letIn) {
+          if(key.status.status == "done"){
+            if(i==$scope.tabs.length-2){
+              letIn=true;
+            }
+          }else{
+            letIn=false;
+            tab=i;
+          }
+        }
+        i++;
+      });
+      console.log($scope.tabs);
 
+      return {
+        status:letIn,
+        tab:tab
+      };
+    };
     $scope.changeStatus(1, 0);
     $scope.addNominees = function() {
         if ($scope.user.nominees.length <= 2) {
@@ -263,7 +286,39 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.changeStatus(2, 1);
         }
     };
+    $scope.addDocumentDetails=function (formValidate,ev) {
+      if(formValidate.$valid){
+        NavigationService.saveUserDetails($scope.user, function(data) {
+            if (data.value) {
+                // $scope.changeTab(4);
+                $scope.changeStatus(3, 0);
+                var formStatus = $scope.getStatus();
+                console.log(formStatus);
+                if(formStatus.status){
+                  $scope.summaryDialog();
+                }else{
+                  $scope.changeStatus(formStatus.tab,1);
+                  $mdDialog.show(
+                          $mdDialog.alert()
+                          .parent(angular.element(document.querySelector('#popupContainer')))
+                          .clickOutsideToClose(true)
+                          .title('Please Complete the entire process')
+                          .ok('Okay')
+                          .targetEvent(ev)
+                      )
+                      .then(function(result) {
+                          $scope.changeTab(formStatus.tab);
+                      });
+                }
+            } else {}
+        }, function(err) {
+            console.log(err);
+        });
+      }else{
+        $scope.changeStatus(2, 1);
 
+      }
+    };
     //ALL form submits end
 
     $scope.birthDay = [
