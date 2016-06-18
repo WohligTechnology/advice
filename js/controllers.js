@@ -93,9 +93,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.nominee = {};
     $scope.nominee.nonominee = true;
     $scope.user = {};
-    $scope.user.nominees = [];
+    $scope.user.nominee = [];
     $scope.progress = 0;
-    $scope.user.document = {};
+    $scope.user.documents = {};
     $scope.checkbox = {};
     $scope.process = [{
         status: 'done',
@@ -111,8 +111,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         colorclass: 'color-gray'
     }];
     $scope.deleteNominee = function(index) {
-        $scope.user.nominees.splice(index, 1);
-        if ($scope.user.nominees.length === 0) {
+        $scope.user.nominee.splice(index, 1);
+        if ($scope.user.nominee.length === 0) {
             $scope.emptyNominees(true);
         }
     };
@@ -127,25 +127,1044 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }, {
         active: false
     }];
-
+    $scope.banks = [{
+        name: "BANK NAME"
+    }, {
+        name: "Abhyudaya Co-Operative Bank"
+    }, {
+        name: "Abu Dhabi Commercial Bank"
+    }, {
+        name: "Adarniya P.D. Patilsaheb Sahakari Bank Ltd."
+    }, {
+        name: "Adarsh Co-Operative Bank Ltd"
+    }, {
+        name: "Ahmednagar Shahar Sahakari Bank Maryadit"
+    }, {
+        name: "Allahabad Bank"
+    }, {
+        name: "Allahabad Bank"
+    }, {
+        name: "Ambarnath Jai-Hind Co-Op.Bank Ltd."
+    }, {
+        name: "Andhra Bank"
+    }, {
+        name: "Andhra Bank"
+    }, {
+        name: "Andhra Pragathi Grameena Bank"
+    }, {
+        name: "Apna Sahakari Bank Ltd."
+    }, {
+        name: "Ashok Sahakari Bank Ltd"
+    }, {
+        name: "Assam Gramin Vikash Bank"
+    }, {
+        name: "Axis Bank"
+    }, {
+        name: "Axis Bank Ltd"
+    }, {
+        name: "Bank Of America"
+    }, {
+        name: "Bank Of Bahrain & Kuwait"
+    }, {
+        name: "Bank of Bahrain and Kuwait"
+    }, {
+        name: "Bank Of Baroda"
+    }, {
+        name: "Bank of Baroda - Corporate Banking"
+    }, {
+        name: "Bank of Baroda - Retail Banking"
+    }, {
+        name: "Bank Of Ceylon"
+    }, {
+        name: "Bank of India"
+    }, {
+        name: "Bank Of India"
+    }, {
+        name: "Bank of Maharashtra"
+    }, {
+        name: "Bank Of Maharashtra"
+    }, {
+        name: "Barclays Bank Plc"
+    }, {
+        name: "Bassein Catholic Co-Op Bank Ltd"
+    }, {
+        name: "Bhagini Nivedita Sahakari Bank Ltd."
+    }, {
+        name: "Bnp Paribas"
+    }, {
+        name: "Canara Bank"
+    }, {
+        name: "Canara Bank"
+    }, {
+        name: "Capital Local Area Bank"
+    }, {
+        name: "Catholic Syrian Bank"
+    }, {
+        name: "Central Bank of India"
+    }, {
+        name: "Central Bank Of India"
+    }, {
+        name: "Citibank N A"
+    }, {
+        name: "City Union Bank"
+    }, {
+        name: "Corporation Bank"
+    }, {
+        name: "Corporation Bank"
+    }, {
+        name: "Cosmos Bank"
+    }, {
+        name: "Credit Agricole Corporate & Investment Bank"
+    }, {
+        name: "Dcb Bank Ltd"
+    }, {
+        name: "Delhi Nagrik Sehkari Bank Ltd"
+    }, {
+        name: "Dena Bank"
+    }, {
+        name: "Dena Bank Net Banking"
+    }, {
+        name: "Deutsche Bank"
+    }, {
+        name: "Deutsche Bank Ag"
+    }, {
+        name: "Development Credit Bank"
+    }, {
+        name: "Development Credit Bank - Corporate"
+    }, {
+        name: "Dhanalaxmi Bank"
+    }, {
+        name: "Dhanlakshmi Bank"
+    }, {
+        name: "Dindigul Central Co-Operative Bank Ltd"
+    }, {
+        name: "Dmk Jaoli Bank"
+    }, {
+        name: "Dombivili Nagari Sahakari Bank Ltd."
+    }, {
+        name: "Federal Bank"
+    }, {
+        name: "Federal Bank"
+    }, {
+        name: "Fingrowth Co-Operative Bank Ltd"
+    }, {
+        name: "George Town Co-Operative Bank Ltd."
+    }, {
+        name: "Gopinath Patil Parsik Janata Sahakari Bank"
+    }, {
+        name: "Guardian Souharda Sahakari Bank Niyamita"
+    }, {
+        name: "Gurgaon Gramin Bank"
+    }, {
+        name: "HDFC Bank Ltd"
+    }, {
+        name: "Hdfc Bank Ltd"
+    }, {
+        name: "ICICI Bank Ltd"
+    }, {
+        name: "Icici Bank Ltd"
+    }, {
+        name: "IDBI Bank"
+    }, {
+        name: "Idbi Bank"
+    }, {
+        name: "Indian Bank"
+    }, {
+        name: "Indian Bank"
+    }, {
+        name: "Indian Overseas Bank"
+    }, {
+        name: "Indraprastha Sehkari Bank Ltd"
+    }, {
+        name: "IndusInd Bank"
+    }, {
+        name: "Indusind Bank"
+    }, {
+        name: "ING Vysya Bank"
+    }, {
+        name: "Ing Vysya Bank Ltd"
+    }, {
+        name: "Jalgaon Janata Sahkari Bank Ltd"
+    }, {
+        name: "Jamia Co-Operative Bank Ltd"
+    }, {
+        name: "Jammu Bank"
+    }, {
+        name: "Janakalyan Sahakari Bank"
+    }, {
+        name: "Janaseva Sahakari Bank (Borivli) Ltd"
+    }, {
+        name: "Janata Co-Op. Bank Ltd, Malegaon."
+    }, {
+        name: "Janata Sahakari Bank Ltd."
+    }, {
+        name: "Jodhpur Nagrik Sahakari Bank Limited"
+    }, {
+        name: "Kallappanna Awade Ichalkaranji Janatasahakari Bank"
+    }, {
+        name: "Karnataka Bank Ltd"
+    }, {
+        name: "Karnataka Vikas Grameena Bank"
+    }, {
+        name: "Karur Vysa Bank"
+    }, {
+        name: "Kotak Bank"
+    }, {
+        name: "Kotak Mahindra Bank Ltd"
+    }, {
+        name: "Kurla Nagarik Sahakari Bank Ltd"
+    }, {
+        name: "Laxmi Vilas Bank - Corporate Net Banking"
+    }, {
+        name: "Laxmi Vilas Bank - Retail Net Banking"
+    }, {
+        name: "Maharashtra Gramin Bank"
+    }, {
+        name: "Manipur Rural Bank"
+    }, {
+        name: "Mizuho Bank Ltd."
+    }, {
+        name: "Mumbai District Central Co-Op Bank Ltd"
+    }, {
+        name: "Nagpur Nagarik Sahakari Bank Ltd."
+    }, {
+        name: "Narmada Jhabua Gramin Bank"
+    }, {
+        name: "Navabharat Co-Op. Urban Bank Ltd."
+    }, {
+        name: "New India Co-Op Bank Ltd"
+    }, {
+        name: "Nkgsb Co-Op. Bank Ltd."
+    }, {
+        name: "North Malabar Gramin Bank"
+    }, {
+        name: "Nutan Nagarik Sahakari Bank Ltd"
+    }, {
+        name: "Oriental Bank of Commerce"
+    }, {
+        name: "Oriental Bank Of Commerce"
+    }, {
+        name: "Parshwanath Co-Operative Bank Ltd"
+    }, {
+        name: "Prathama Bank"
+    }, {
+        name: "Prime Co-Operative Bank Ltd."
+    }, {
+        name: "Priyadarshani Nagari Sahakari Bank Ltd., Jalna."
+    }, {
+        name: "Pudukottai District Central Cooperative Bank Ltd"
+    }, {
+        name: "Punjab & Maharashtra Co-Operative Bank"
+    }, {
+        name: "Punjab & Sind Bank"
+    }, {
+        name: "Punjab Bank"
+    }, {
+        name: "Punjab Co-op Bank"
+    }, {
+        name: "Punjab National Bank"
+    }, {
+        name: "Punjab National Bank - Corporate Banking"
+    }, {
+        name: "Punjab National Bank - Retail Banking"
+    }, {
+        name: "Pusad Urban Co-Op,Bank Ltd."
+    }, {
+        name: "Rajgurunagar Sahakari Bank Ltd"
+    }, {
+        name: "Rajkot Nagarik Sahakari Bank Ltd."
+    }, {
+        name: "Ratnakar Bank"
+    }, {
+        name: "Ratnakar Bank"
+    }, {
+        name: "Sangli Urban Co-Operative Bank Ltd"
+    }, {
+        name: "Sant Sopankaka Sahakari Bank Ltd."
+    }, {
+        name: "Saraswat Bank"
+    }, {
+        name: "Saraswat Bank"
+    }, {
+        name: "SCB Net Banking"
+    }, {
+        name: "Shamrao Vitthal Co-operative Bank"
+    }, {
+        name: "Shree Mahalaxmi Urban Co-Op Credit Bank Ltd."
+    }, {
+        name: "Shree Warana Sahakari Bank Ltd."
+    }, {
+        name: "Shri Chhatrapati Rajarshi Shahu Urban Co-Op Bank"
+    }, {
+        name: "Shri Veershaiv Co-Op Bank Ltd."
+    }, {
+        name: "Sindhudurg District Central Cooperative Bank Ltd"
+    }, {
+        name: "Sir M Visvesvaraya Co-Operative Bank Ltd"
+    }, {
+        name: "South Indian Bank"
+    }, {
+        name: "South Indian Bank"
+    }, {
+        name: "Standard Chartered Bank"
+    }, {
+        name: "State Bank of Bikaner"
+    }, {
+        name: "State Bank of Hyderabad"
+    }, {
+        name: "State Bank of India"
+    }, {
+        name: "State Bank Of India"
+    }, {
+        name: "State Bank Of Mauritus Ltd."
+    }, {
+        name: "State Bank of Mysore"
+    }, {
+        name: "State Bank of Patiala"
+    }, {
+        name: "State Bank of Travancore"
+    }, {
+        name: "Suco Souharda Sahakari Bank"
+    }, {
+        name: "Sumitomo Mitsui Banking Corporation"
+    }, {
+        name: "Suvarnayug Sahakari Bank Ltd."
+    }, {
+        name: "Syndicate Bank"
+    }, {
+        name: "Syndicate Bank"
+    }, {
+        name: "Tamilnad Mercantile Bank Ltd."
+    }, {
+        name: "Tamilnad Mercantile Bank Ltd."
+    }, {
+        name: "Tamilnadu State Apex Co-Op Bank Ltd"
+    }, {
+        name: "Tamluk-Ghatal Central Co-Operative Bank Ltd"
+    }, {
+        name: "Textile Traders Co-Operative Bank Limited"
+    }, {
+        name: "Thane Bharat Sahakari Bank Ltd."
+    }, {
+        name: "The Abhinav Sahakari Bank Limited"
+    }, {
+        name: "The Adarsh Cooperative Urban Bank Limited"
+    }, {
+        name: "The Agrasen Co-Operative Urban Bank Ltd"
+    }, {
+        name: "The Ahmedabad Mercantile Co-Op Bank Ltd"
+    }, {
+        name: "The Amritsar Central Cooperative Bank Limited."
+    }, {
+        name: "The Annasaheb Savant Co-Op Urban Bank Mahad Ltd"
+    }, {
+        name: "The Aryapuram Cooperative Urban Bank Ltd"
+    }, {
+        name: "The Bank Of Nova Scotia"
+    }, {
+        name: "The Baramati Sahakari Bank Ltd"
+    }, {
+        name: "The Bathinda Central Co-Operative Bank Ltd."
+    }, {
+        name: "The Bharat Co-Operative Bank Ltd"
+    }, {
+        name: "The Bicholim Urban Co-Operative Bank Ltd"
+    }, {
+        name: "The Catholic Syrian Bank"
+    }, {
+        name: "The Chembur Nagarik Sahakari Bank"
+    }, {
+        name: "The Chengelpattu Co-Op Urban Bank Ltd"
+    }, {
+        name: "The Chiplun Urban Cooperative Bank Ltd"
+    }, {
+        name: "The Citizen Cooperative Bank Limited"
+    }, {
+        name: "The Citizens Urban Cooperative Bank Ltd."
+    }, {
+        name: "The Coimbatore District Central Co-Op Bank Limited"
+    }, {
+        name: "The Cosmos Co-Operative Bank Ltd"
+    }, {
+        name: "The Delhi State Cooperative Bank Limited"
+    }, {
+        name: "The Erode District Central Co-Operative Bank Ltd"
+    }, {
+        name: "The Faridkot Central Co-Operative Bank Ltd."
+    }, {
+        name: "The Fatehgrah Sahib Central Cooperative Bank"
+    }, {
+        name: "The Fazilka Central Coop. Bank Ltd"
+    }, {
+        name: "The Ferozepur Central Coop. Bank Ltd"
+    }, {
+        name: "The Gadchiroli District Central Cooperative Bank"
+    }, {
+        name: "The Gayatri Cooperative Urban Bank Ltd"
+    }, {
+        name: "The Goa State Co-Operative Bank Ltd"
+    }, {
+        name: "The Goa Urban Co-Operative Bank Ltd."
+    }, {
+        name: "The Greater Bombay Co-Operative Bank Limited"
+    }, {
+        name: "The Gurdaspur Central Cooperative Bank Ltd"
+    }, {
+        name: "The Hasti Co-Op. Bank Ltd."
+    }, {
+        name: "The Hongkong & Shanghai Banking Corporation Ltd"
+    }, {
+        name: "The Hoshiarpur Central Co-Operative Bank Ltd"
+    }, {
+        name: "The Jalandhar Central Cooperative Bank Limited"
+    }, {
+        name: "The Jalgaon Peoples Co Op Bank Ltd"
+    }, {
+        name: "The Kalupur Commercial Co-Operative Bank"
+    }, {
+        name: "The Kalyan Janata Sahakari Bank Ltd."
+    }, {
+        name: "The Kangra Central Co-Operative Bank Ltd"
+    }, {
+        name: "The Kangra Co-Operative Bank Ltd"
+    }, {
+        name: "The Kapol Co-Operative Bank Ltd."
+    }, {
+        name: "The Kapurthala Central Cooperative Bank Ltd"
+    }, {
+        name: "The Karad Urban Co-Op Bank Ltd"
+    }, {
+        name: "The Karnataka State Co-Operative Apex Bank Ltd."
+    }, {
+        name: "The Kottayam District Co-Operative Bank Ltd."
+    }, {
+        name: "The Lakshmi Vilas Bank Ltd."
+    }, {
+        name: "The Ludhiana Central Cooperative Bank Ltd"
+    }, {
+        name: "The Madgaum Urban Cooperative Bank Ltd"
+    }, {
+        name: "The Madurai District Central Cooperative Bank Ltd"
+    }, {
+        name: "The Mahanagar Co-Op. Bank Ltd."
+    }, {
+        name: "The Malkapur Urban Co-Op Bank Ltd"
+    }, {
+        name: "The Mapusa Urban Cooperative Bank Of Goa Ltd"
+    }, {
+        name: "The Mehsana Urban Co-Operative Bank"
+    }, {
+        name: "The Moga Central Cooperative Bank Ltd"
+    }, {
+        name: "The Mugberia Central Co-Operative Bank Ltd"
+    }, {
+        name: "The Muktsar Central Co-Operated Bank Ltd"
+    }, {
+        name: "The Municipal Co-Op Bank Ltd"
+    }, {
+        name: "The Nainital Bank Limited"
+    }, {
+        name: "The Nasik Merchants Cooperative Bank Ltd"
+    }, {
+        name: "The Nav Jeevan Co-Op Bank Ltd"
+    }, {
+        name: "The Nawanshahr Central Cooperative Bank Ltd."
+    }, {
+        name: "The Odisha State Co-Operative Bank Ltd"
+    }, {
+        name: "The Panchkula Central Co-Operative Bank Ltd"
+    }, {
+        name: "The Patiala Central Cooperative Bank Ltd."
+    }, {
+        name: "The Pochampally Cooperative Urban Bank Ltd"
+    }, {
+        name: "The Punjab State Cooperative Bank Ltd"
+    }, {
+        name: "The Rajasthan State Co-Operative Bank Ltd"
+    }, {
+        name: "The Ropar Central Cooperative Bank"
+    }, {
+        name: "The Royal Bank of Scotland"
+    }, {
+        name: "The Royal Bank Of Scotland"
+    }, {
+        name: "The S.A.S Nagar Central Cooperative Bank Ltd."
+    }, {
+        name: "The Sahebrao Deshmukh Co-Op. Bank Ltd."
+    }, {
+        name: "The Sahyadri Sahakari Bank Ltd"
+    }, {
+        name: "The Saidapet Co-Op Urban Bank Ltd"
+    }, {
+        name: "The Salem District Central Co-Operative Bank Ltd"
+    }, {
+        name: "The Sangrur Central Co-Operative Bank Ltd."
+    }, {
+        name: "The Shamrao Vital Co-Operative Bank"
+    }, {
+        name: "The Surat People'S Co-Op. Bank Ltd."
+    }, {
+        name: "The Sutex Co-Op.Bank Ltd."
+    }, {
+        name: "The Tamilnadu Industrial Cooperative Bank Ltd"
+    }, {
+        name: "The Tarn Taran Central Cooperative Bank Ltd"
+    }, {
+        name: "The Thane Dist. Central Co-Op. Bank Ltd"
+    }, {
+        name: "The Thiruvannamalai District Central Coop Bank Ltd"
+    }, {
+        name: "The Tirunelveli District Central Co-Op Bank Ltd"
+    }, {
+        name: "The Udaipur Mahila Urban Co-Op Bank Ltd"
+    }, {
+        name: "The Udaipur Urban Co-Op Bank Ltd"
+    }, {
+        name: "The Varachha Co-Op Bank Ltd"
+    }, {
+        name: "The Vellala Co-Operative Bank Limited"
+    }, {
+        name: "The Vellore District Central Co-Op Bank Ltd."
+    }, {
+        name: "The Virudhunagar District Central Co-Op Bank Ltd.,"
+    }, {
+        name: "The Vishweshwar Sahakari Bank Ltd"
+    }, {
+        name: "The Wayanad District Co-Operative Bank Ltd."
+    }, {
+        name: "The West Bengal State Co-Op Bank Ltd"
+    }, {
+        name: "Tiruvallur Co-Operative Urban Bank Limited"
+    }, {
+        name: "Tjsb Sahakari Bank Ltd"
+    }, {
+        name: "TNSC Bank"
+    }, {
+        name: "Tripura Gramin Bank"
+    }, {
+        name: "Tumkur Grain Merchant'S Co-Operate Bank Ltd"
+    }, {
+        name: "UCO Bank"
+    }, {
+        name: "Uco Bank"
+    }, {
+        name: "Union Bank of India"
+    }, {
+        name: "Union Bank Of India"
+    }, {
+        name: "United Bank of India"
+    }, {
+        name: "United Bank Of India"
+    }, {
+        name: "Vasai Vikas Sahakari Bank Ltd"
+    }, {
+        name: "Vijaya Bank"
+    }, {
+        name: "Vijaya Bank"
+    }, {
+        name: "Vivekanand Nagrik Sahkari Bank Mydt"
+    }, {
+        name: "Yavatmal District Central Co-Operative Bank Ltd"
+    }, {
+        name: "Yes Bank"
+    }, {
+        name: "Yes Bank Lt"
+    }];
     //All except registration 'untouched'
-
+    $scope.countries = [{
+        name: "Afghanistan"
+    }, {
+        name: "Albania"
+    }, {
+        name: "Algeria"
+    }, {
+        name: "American Samoa"
+    }, {
+        name: "Andorra"
+    }, {
+        name: "Angola"
+    }, {
+        name: "Anguilla"
+    }, {
+        name: "Antigua and Barbuda"
+    }, {
+        name: "Argentina"
+    }, {
+        name: "Armenia"
+    }, {
+        name: "Aruba"
+    }, {
+        name: "Australia"
+    }, {
+        name: "Austria"
+    }, {
+        name: "Azerbaijan"
+    }, {
+        name: "Bahamas"
+    }, {
+        name: "Bahrain"
+    }, {
+        name: "Bangladesh"
+    }, {
+        name: "Barbados"
+    }, {
+        name: "Belarus"
+    }, {
+        name: "Belgium"
+    }, {
+        name: "Belize"
+    }, {
+        name: "Benin"
+    }, {
+        name: "Bermuda"
+    }, {
+        name: "Bhutan"
+    }, {
+        name: "Bolivia"
+    }, {
+        name: "Bonaire"
+    }, {
+        name: "Bosnia-Herzegovina"
+    }, {
+        name: "Botswana"
+    }, {
+        name: "Bouvet Island"
+    }, {
+        name: "Brazil"
+    }, {
+        name: "Brunei"
+    }, {
+        name: "Bulgaria"
+    }, {
+        name: "Burkina Faso"
+    }, {
+        name: "Burundi"
+    }, {
+        name: "Cambodia"
+    }, {
+        name: "Cameroon"
+    }, {
+        name: "Canada"
+    }, {
+        name: "Cape Verde"
+    }, {
+        name: "Cayman Islands"
+    }, {
+        name: "Central African Republic"
+    }, {
+        name: "Chad"
+    }, {
+        name: "Chile"
+    }, {
+        name: "China"
+    }, {
+        name: "Christmas Island"
+    }, {
+        name: "Cocos (Keeling) Islands"
+    }, {
+        name: "Colombia"
+    }, {
+        name: "Comoros"
+    }, {
+        name: "Congo, Democratic Republic of the (Zaire)"
+    }, {
+        name: "Congo, Republic of"
+    }, {
+        name: "Cook Islands"
+    }, {
+        name: "Costa Rica"
+    }, {
+        name: "Croatia"
+    }, {
+        name: "Cuba"
+    }, {
+        name: "Curacao"
+    }, {
+        name: "Cyprus"
+    }, {
+        name: "Czech Republic"
+    }, {
+        name: "Denmark"
+    }, {
+        name: "Djibouti"
+    }, {
+        name: "Dominica"
+    }, {
+        name: "Dominican Republic"
+    }, {
+        name: "Ecuador"
+    }, {
+        name: "Egypt"
+    }, {
+        name: "El Salvador"
+    }, {
+        name: "Equatorial Guinea"
+    }, {
+        name: "Eritrea"
+    }, {
+        name: "Estonia"
+    }, {
+        name: "Ethiopia"
+    }, {
+        name: "Falkland Islands"
+    }, {
+        name: "Faroe Islands"
+    }, {
+        name: "Fiji"
+    }, {
+        name: "Finland"
+    }, {
+        name: "France"
+    }, {
+        name: "French Guiana"
+    }, {
+        name: "Gabon"
+    }, {
+        name: "Gambia"
+    }, {
+        name: "Georgia"
+    }, {
+        name: "Germany"
+    }, {
+        name: "Ghana"
+    }, {
+        name: "Gibraltar"
+    }, {
+        name: "Greece"
+    }, {
+        name: "Greenland"
+    }, {
+        name: "Grenada"
+    }, {
+        name: "Guadeloupe (French)"
+    }, {
+        name: "Guam (USA)"
+    }, {
+        name: "Guatemala"
+    }, {
+        name: "Guinea"
+    }, {
+        name: "Guinea Bissau"
+    }, {
+        name: "Guyana"
+    }, {
+        name: "Haiti"
+    }, {
+        name: "Holy See"
+    }, {
+        name: "Honduras"
+    }, {
+        name: "Hong Kong"
+    }, {
+        name: "Hungary"
+    }, {
+        name: "Iceland"
+    }, {
+        name: "India"
+    }, {
+        name: "Indonesia"
+    }, {
+        name: "Iran"
+    }, {
+        name: "Iraq"
+    }, {
+        name: "Ireland"
+    }, {
+        name: "Israel"
+    }, {
+        name: "Italy"
+    }, {
+        name: "Ivory Coast (Cote D`Ivoire)"
+    }, {
+        name: "Jamaica"
+    }, {
+        name: "Japan"
+    }, {
+        name: "Jordan"
+    }, {
+        name: "Kazakhstan"
+    }, {
+        name: "Kenya"
+    }, {
+        name: "Kiribati"
+    }, {
+        name: "Kosovo"
+    }, {
+        name: "Kuwait"
+    }, {
+        name: "Kyrgyzstan"
+    }, {
+        name: "Laos"
+    }, {
+        name: "Latvia"
+    }, {
+        name: "Lebanon"
+    }, {
+        name: "Lesotho"
+    }, {
+        name: "Liberia"
+    }, {
+        name: "Libya"
+    }, {
+        name: "Liechtenstein"
+    }, {
+        name: "Lithuania"
+    }, {
+        name: "Luxembourg"
+    }, {
+        name: "Macau"
+    }, {
+        name: "Macedonia"
+    }, {
+        name: "Madagascar"
+    }, {
+        name: "Malawi"
+    }, {
+        name: "Malaysia"
+    }, {
+        name: "Maldives"
+    }, {
+        name: "Mali"
+    }, {
+        name: "Malta"
+    }, {
+        name: "Marshall Islands"
+    }, {
+        name: "Martinique (French)"
+    }, {
+        name: "Mauritania"
+    }, {
+        name: "Mauritius"
+    }, {
+        name: "Mayotte"
+    }, {
+        name: "Mexico"
+    }, {
+        name: "Micronesia"
+    }, {
+        name: "Moldova"
+    }, {
+        name: "Monaco"
+    }, {
+        name: "Mongolia"
+    }, {
+        name: "Montenegro"
+    }, {
+        name: "Montserrat"
+    }, {
+        name: "Morocco"
+    }, {
+        name: "Mozambique"
+    }, {
+        name: "Myanmar"
+    }, {
+        name: "Namibia"
+    }, {
+        name: "Nauru"
+    }, {
+        name: "Nepal"
+    }, {
+        name: "Netherlands"
+    }, {
+        name: "Netherlands Antilles"
+    }, {
+        name: "New Caledonia (French)"
+    }, {
+        name: "New Zealand"
+    }, {
+        name: "Nicaragua"
+    }, {
+        name: "Niger"
+    }, {
+        name: "Nigeria"
+    }, {
+        name: "Niue"
+    }, {
+        name: "Norfolk Island"
+    }, {
+        name: "North Korea"
+    }, {
+        name: "Northern Mariana Islands"
+    }, {
+        name: "Norway"
+    }, {
+        name: "Oman"
+    }, {
+        name: "Pakistan"
+    }, {
+        name: "Palau"
+    }, {
+        name: "Panama"
+    }, {
+        name: "Papua New Guinea"
+    }, {
+        name: "Paraguay"
+    }, {
+        name: "Peru"
+    }, {
+        name: "Philippines"
+    }, {
+        name: "Pitcairn Island"
+    }, {
+        name: "Poland"
+    }, {
+        name: "Polynesia (French)"
+    }, {
+        name: "Portugal"
+    }, {
+        name: "Puerto Rico"
+    }, {
+        name: "Qatar"
+    }, {
+        name: "Reunion"
+    }, {
+        name: "Romania"
+    }, {
+        name: "Russia"
+    }, {
+        name: "Rwanda"
+    }, {
+        name: "Saint Helena"
+    }, {
+        name: "Saint Kitts and Nevis"
+    }, {
+        name: "Saint Lucia"
+    }, {
+        name: "Saint Pierre and Miquelon"
+    }, {
+        name: "Saint Vincent and Grenadines"
+    }, {
+        name: "Samoa"
+    }, {
+        name: "San Marino"
+    }, {
+        name: "Sao Tome and Principe"
+    }, {
+        name: "Saudi Arabia"
+    }, {
+        name: "Senegal"
+    }, {
+        name: "Serbia"
+    }, {
+        name: "Seychelles"
+    }, {
+        name: "Sierra Leone"
+    }, {
+        name: "Singapore"
+    }, {
+        name: "Sint Maarten"
+    }, {
+        name: "Slovakia"
+    }, {
+        name: "Slovenia"
+    }, {
+        name: "Solomon Islands"
+    }, {
+        name: "Somalia"
+    }, {
+        name: "South Africa"
+    }, {
+        name: "South Georgia and South Sandwich Islands"
+    }, {
+        name: "South Korea"
+    }, {
+        name: "South Sudan"
+    }, {
+        name: "South Sudan"
+    }, {
+        name: "Spain"
+    }, {
+        name: "Sri Lanka"
+    }, {
+        name: "Sudan"
+    }, {
+        name: "Suriname"
+    }, {
+        name: "Svalbard and Jan Mayen Islands"
+    }, {
+        name: "Swaziland"
+    }, {
+        name: "Sweden"
+    }, {
+        name: "Switzerland"
+    }, {
+        name: "Syria"
+    }, {
+        name: "Taiwan"
+    }, {
+        name: "Tajikistan"
+    }, {
+        name: "Tanzania"
+    }, {
+        name: "Thailand"
+    }, {
+        name: "Timor-Leste (East Timor)"
+    }, {
+        name: "Togo"
+    }, {
+        name: "Tokelau"
+    }, {
+        name: "Tonga"
+    }, {
+        name: "Trinidad and Tobago"
+    }, {
+        name: "Tunisia"
+    }, {
+        name: "Turkey"
+    }, {
+        name: "Turkmenistan"
+    }, {
+        name: "Turks and Caicos Islands"
+    }, {
+        name: "Tuvalu"
+    }, {
+        name: "Uganda"
+    }, {
+        name: "Ukraine"
+    }, {
+        name: "United Arab Emirates"
+    }, {
+        name: "United Kingdom"
+    }, {
+        name: "United States"
+    }, {
+        name: "Uruguay"
+    }, {
+        name: "Uzbekistan"
+    }, {
+        name: "Vanuatu"
+    }, {
+        name: "Venezuela"
+    }, {
+        name: "Vietnam"
+    }, {
+        name: "Virgin Islands"
+    }, {
+        name: "Wallis and Futuna Islands"
+    }, {
+        name: "Yemen"
+    }, {
+        name: "Zambia"
+    }, {
+        name: "Zimbabwe"
+    }];
     _.each($scope.tabs, function(key) {
         key.status = $scope.process[2];
     });
     $scope.tabs[0].status = $scope.process[0];
 
-    $scope.verification = function() {
-
-    };
-
+    // $scope.verification = function() {
+    //
+    // };
+    console.log("check tabs status");
+    console.log($scope.tabs);
     //All except registration 'untouched' end
     //change tabs here, cannot change registration
     $scope.samePermanentAddress = function(flag) {
-        $scope.user.document.corraddressproof = "";
+        $scope.user.documents.corraddressproof = "";
 
         if (flag) {
-            $scope.user.document.corraddressproof = $scope.user.document.addressproof;
+            $scope.user.documents.corraddressproof = $scope.user.documents.addressproof;
         }
     };
     $scope.changeTab = function(index) {
@@ -170,6 +1189,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.closeDialog = function() {
             $mdDialog.hide();
             $scope.changeTab(4);
+            $scope.changeStatus(4, 0);
         };
         $scope.editDetails = function() {
             $mdDialog.hide();
@@ -193,43 +1213,50 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             i++;
         });
         $scope.progress = (contActive.length - 1) * 25;
+        console.log("status change");
         console.log($scope.tabs);
     };
-    $scope.getStatus = function(){
-      var i =0;
-      var letIn =true;
-      var tab=0;
-      _.each($scope.tabs,function(key){
-        if (letIn) {
-          if(key.status.status == "done"){
-            if(i==$scope.tabs.length-2){
-              letIn=true;
-            }
-          }else{
-            letIn=false;
-            tab=i;
-          }
-        }
-        i++;
-      });
-      console.log($scope.tabs);
+    $scope.inProcess = function(tab) {
+        console.log(tab);
+        console.log("here");
+        $scope.changeStatus(tab, 2);
+    };
+    $scope.getStatus = function() {
+        var i = 0;
+        var letIn = true;
+        var tab = 0;
+        _.each($scope.tabs, function(key) {
+            if (letIn) {
+                if (key.status.status == "done" || i == $scope.tabs.length - 1) {
+                    if (i == $scope.tabs.length - 2) {
+                        letIn = true;
+                    }
+                } else {
 
-      return {
-        status:letIn,
-        tab:tab
-      };
+                    letIn = false;
+                    tab = i;
+                }
+            }
+            i++;
+        });
+        console.log($scope.tabs);
+
+        return {
+            status: letIn,
+            tab: tab
+        };
     };
     $scope.changeStatus(1, 0);
     $scope.addNominees = function() {
-        if ($scope.user.nominees.length <= 2) {
-            $scope.user.nominees.push({});
+        if ($scope.user.nominee.length <= 2) {
+            $scope.user.nominee.push({});
             // $window.scrollBy(100, 0);
             $scope.changeStatus(1, 1);
         }
     };
     $scope.emptyNominees = function(flag) {
         if (flag === true) {
-            $scope.user.nominees = [];
+            $scope.user.nominee = [];
             $scope.changeStatus(1, 0);
             $scope.nominee.nonominee = true;
 
@@ -245,7 +1272,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         globalfunction.onFileSelect($files, function(image) {
             console.log(image);
             if (whichone == 1) {
-                $scope.user.document[property] = image[0];
+                $scope.user.documents[property] = image[0];
                 if (uploadtype == 'single') {
 
                 }
@@ -286,38 +1313,38 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.changeStatus(2, 1);
         }
     };
-    $scope.addDocumentDetails=function (formValidate,ev) {
-      if(formValidate.$valid){
-        NavigationService.saveUserDetails($scope.user, function(data) {
-            if (data.value) {
-                // $scope.changeTab(4);
-                $scope.changeStatus(3, 0);
-                var formStatus = $scope.getStatus();
-                console.log(formStatus);
-                if(formStatus.status){
-                  $scope.summaryDialog();
-                }else{
-                  $scope.changeStatus(formStatus.tab,1);
-                  $mdDialog.show(
-                          $mdDialog.alert()
-                          .parent(angular.element(document.querySelector('#popupContainer')))
-                          .clickOutsideToClose(true)
-                          .title('Please Complete the entire process')
-                          .ok('Okay')
-                          .targetEvent(ev)
-                      )
-                      .then(function(result) {
-                          $scope.changeTab(formStatus.tab);
-                      });
-                }
-            } else {}
-        }, function(err) {
-            console.log(err);
-        });
-      }else{
-        $scope.changeStatus(2, 1);
+    $scope.addDocumentDetails = function(formValidate, ev) {
+        if (formValidate.$valid) {
+            NavigationService.saveUserDetails($scope.user, function(data) {
+                if (data.value) {
+                    // $scope.changeTab(4);
+                    $scope.changeStatus(3, 0);
+                    var formStatus = $scope.getStatus();
+                    console.log(formStatus);
+                    if (formStatus.status) {
+                        $scope.summaryDialog();
+                    } else {
+                        $scope.changeStatus(formStatus.tab, 1);
+                        $mdDialog.show(
+                                $mdDialog.alert()
+                                .parent(angular.element(document.querySelector('#popupContainer')))
+                                .clickOutsideToClose(true)
+                                .title('Please Complete the entire process')
+                                .ok('Okay')
+                                .targetEvent(ev)
+                            )
+                            .then(function(result) {
+                                $scope.changeTab(formStatus.tab);
+                            });
+                    }
+                } else {}
+            }, function(err) {
+                console.log(err);
+            });
+        } else {
+            $scope.changeStatus(2, 1);
 
-      }
+        }
     };
     //ALL form submits end
 

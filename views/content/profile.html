@@ -51,8 +51,8 @@
 
           </div>
 
-  <div class="nominee-form"  ng-if="user.nominees.length !== 0">
-  <div ng-repeat= "nominee in user.nominees">
+  <div class="nominee-form"  ng-if="user.nominee.length !== 0">
+  <div ng-repeat= "nominee in user.nominee">
     <div class="nominee-top">
       <span>Nominee {{$index + 1}}</span>
       <md-button class="md-raised md-delete pull-right" ng-click="deleteNominee($index)">Delete</md-button>
@@ -61,7 +61,7 @@
       <div class="col-sm-4">
         <md-input-container name="name"  class="md-block">
           <label>Name </label>
-          <input required ng-model="nominee.name">
+          <input required ng-change="inProcess(1)" ng-model="nominee.name">
         </md-input-container>
 
       </div>
@@ -70,19 +70,19 @@
         </md-datepicker> -->
         <md-input-container name="birthday" layout="column" flex="33">
           <label>Day</label>
-          <md-select required ng-model="nominee.birthday">
+          <md-select required ng-change="inProcess()" ng-model="nominee.birthday">
             <md-option value="{{day}}" ng-repeat="day in birthDay">{{day}}</md-option>
           </md-select>
         </md-input-container>
         <md-input-container name="birthmonth" layout="column" flex="33">
           <label>Month</label>
-          <md-select required ng-model="nominee.birthmonth" ng-change="onChangeMonth()">
+          <md-select required ng-change="inProcess(1)" ng-model="nominee.birthmonth" >
             <md-option value="{{month}}" ng-repeat="month in birthMonth">{{month}}</md-option>
           </md-select>
         </md-input-container>
         <md-input-container name="birthyear" layout="column" flex="33">
           <label>Year</label>
-          <md-select  required ng-model="nominee.birthyear">
+          <md-select  required ng-change="inProcess(1)" ng-model="nominee.birthyear">
             <md-option value="{{year}}" ng-repeat="year in birthYear">{{year}}</md-option>
           </md-select>
         </md-input-container>
@@ -90,31 +90,31 @@
       <div class="col-sm-4">
         <md-input-container name="relationship" class="md-block">
           <label>Relationship</label>
-          <input required ng-model="nominee.relationship">
+          <input required ng-change="inProcess(1)" ng-model="nominee.relationship">
         </md-input-container>
       </div>
     </div>
     <md-input-container name="address" class="md-block">
       <label>Address</label>
-      <input required ng-model="nominee.address">
+      <input required ng-change="inProcess(1)" ng-model="nominee.address">
     </md-input-container>
     <div class="row">
       <div class="col-sm-4">
         <md-input-container name="city" class="md-block">
           <label>City</label>
-          <input required ng-model="nominee.city">
+          <input required ng-change="inProcess(1)" ng-model="nominee.city">
         </md-input-container>
       </div>
       <div class="col-sm-4">
         <md-input-container name="pincode"  class="md-block">
           <label>Pincode</label>
-          <input type="number" required ng-model="nominee.pincode">
+          <input type="number" required ng-change="inProcess(1)" ng-model="nominee.pincode">
         </md-input-container>
       </div>
       <div class="col-sm-4">
         <md-input-container name="country" class="md-block">
           <label>Country</label>
-          <md-select  required ng-model="nominee.country">
+          <md-select  required ng-change="inProcess(1)" ng-model="nominee.country">
 
             <md-option value="IN">IN</md-option>
             <md-option value="US">US</md-option>
@@ -127,15 +127,15 @@
     <div class="guardian-form">
       <div class="row">
         <div class="col-sm-6">
-          <md-input-container name="guardianname" class="md-block">
+          <md-input-container name="guardianName" class="md-block">
             <label>Guardian Name</label>
-            <input required ng-model="nominee.guardianname">
+            <input required ng-change="inProcess(1)" ng-model="nominee.guardianName">
           </md-input-container>
         </div>
         <div class="col-sm-6">
-          <md-input-container name="guardianpan" class="md-block">
+          <md-input-container name="guardianPan" class="md-block">
             <label>Guardian PAN</label>
-            <input required ng-model="nominee.guardianpan">
+            <input required ng-change="inProcess(1)" ng-model="nominee.guardianPan">
           </md-input-container>
         </div>
       </div>
@@ -171,9 +171,9 @@
               </md-input-container>
             </div>
             <div class="gross-income col-md-4">
-              <md-input-container name="grossannualincome">
+              <md-input-container name="grossAnnualIncome">
                 <label>Gross Annual Income</label>
-                <md-select required ng-model="user.grossannualincome" ng-model="ctrl.userIncome">
+                <md-select required ng-model="user.grossAnnualIncome" ng-model="ctrl.userIncome">
                   <md-option value="10000">10,000</md-option>
                   <md-option value="15000">15,000</md-option>
                   <md-option value="20000">20,000</md-option>
@@ -232,9 +232,9 @@
 
           <div class="row">
             <div class="marital-status col-md-4">
-              <md-input-container name="maritalstatus">
+              <md-input-container name="maritalStatus">
                 <label>Marital Status</label>
-                <md-select required ng-model="user.maritalstatus" ng-model="ctrl.userMarital">
+                <md-select required ng-model="user.maritalStatus" ng-model="ctrl.userMarital">
                   <md-option value="single">Single</md-option>
                   <md-option value="married">Married</md-option>
                 </md-select>
@@ -271,21 +271,21 @@
           <!-- <h4 layout-align="start" class="text-uppercase blue">Document Upload</h4> -->
           <div class="document-one row">
             <div class="passport-photo col-md-4">
-              <md-button class="" ng-class="{'md-success':user.document.photo,'md-primary':!user.document.photo}" aria-label="File">
-                <input ng-model="user.document.photo" name="photo" required type="file" ng-file-select="onFileSelect($files,1,'single','photo')" onclick='this.value=null'>
-                <span class="text-uppercase white">Passport size photograph <i ng-if="user.document.photo" class="material-icons document-success">done</i></span>
+              <md-button class="" ng-class="{'md-success':user.documents.photo,'md-primary':!user.documents.photo}" aria-label="File">
+                <input ng-model="user.documents.photo" name="photo" required type="file" ng-file-select="onFileSelect($files,1,'single','photo')" onclick='this.value=null'>
+                <span class="text-uppercase white">Passport size photograph <i ng-if="user.documents.photo" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
             <div class="address-per col-md-4">
-              <md-button class="" ng-class="{'md-success':user.document.addressproof,'md-primary':!user.document.addressproof}" aria-label="File">
-                <input ng-model="user.document.addressproof" name="addressproof" required type="file" ng-file-select="onFileSelect($files,1,'single','addressproof')" onclick='this.value=null'>
-                <span class="text-uppercase white">Address Proof (Permanant)<i ng-if="user.document.addressproof" class="material-icons document-success">done</i></span>
+              <md-button class="" ng-class="{'md-success':user.documents.addressproof,'md-primary':!user.documents.addressproof}" aria-label="File">
+                <input ng-model="user.documents.addressproof" name="addressproof" required type="file" ng-file-select="onFileSelect($files,1,'single','addressproof')" onclick='this.value=null'>
+                <span class="text-uppercase white">Address Proof (Permanant)<i ng-if="user.documents.addressproof" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
             <div class="address-cor col-md-4">
-              <md-button class="" ng-class="{'md-success':user.document.corraddressproof,'md-primary':!user.document.corraddressproof}"  aria-label="File">
-                <input ng-model="user.document.corraddressproof" name="corraddressproof" required type="file" ng-required = "!checkbox.sameaddress" ng-file-select="onFileSelect($files,1,'single','corraddressproof')" >
-                <span class="text-uppercase white">Address Proof (Corresponance)<i ng-if="user.document.corraddressproof" class="material-icons document-success">done</i></span>
+              <md-button class="" ng-class="{'md-success':user.documents.corraddressproof,'md-primary':!user.documents.corraddressproof}"  aria-label="File">
+                <input ng-model="user.documents.corraddressproof" name="corraddressproof" required type="file" ng-required = "!checkbox.sameaddress" ng-file-select="onFileSelect($files,1,'single','corraddressproof')" >
+                <span class="text-uppercase white">Address Proof (Corresponance)<i ng-if="user.documents.corraddressproof" class="material-icons document-success">done</i></span>
               </md-button>
               <md-checkbox ng-model="checkbox.sameaddress" ng-change="samePermanentAddress(checkbox.sameaddress)" md-no-ink aria-label="Same as Permanant Address" class="same" layout="row">
                 Same as Permanant Address
@@ -296,7 +296,7 @@
             <div class="address-type col-md-6">
               <md-input-container>
                 <label>Address Type</label>
-                <md-select name="addresstype" required ng-model="user.document.addresstype">
+                <md-select name="addresstype" required ng-model="user.documents.addresstype">
                   <md-option value="residential">Residential</md-option>
                   <md-option value="commercial">Commercial</md-option>
                 </md-select>
@@ -305,7 +305,7 @@
             <div class="bank-name col-md-6">
               <md-input-container>
                 <label>Bank Name</label>
-                <md-select name="bankname" required ng-model="user.document.bankname">
+                <md-select name="bankname" required ng-model="user.documents.bankname">
                   <md-option value="axis">AXIS</md-option>
                   <md-option value="hdfc">HDFC</md-option>
                 </md-select>
@@ -315,15 +315,15 @@
 
           <div class="row">
             <div class="pan-card col-md-6">
-              <md-button class="" ng-class="{'md-success':user.document.pan,'md-primary':!user.document.pan}" aria-label="File">
-                <input ng-model="user.document.pan" name="pan" required type="file" ng-file-select="onFileSelect($files,1,'single','pan')" onclick='this.value=null'>
-                <span class="text-uppercase white">PAN Card<i ng-if="user.document.pan" class="material-icons document-success">done</i></span>
+              <md-button class="" ng-class="{'md-success':user.documents.pan,'md-primary':!user.documents.pan}" aria-label="File">
+                <input ng-model="user.documents.pan" name="pan" required type="file" ng-file-select="onFileSelect($files,1,'single','pan')" onclick='this.value=null'>
+                <span class="text-uppercase white">PAN Card<i ng-if="user.documents.pan" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
             <div class="cancelled-cheque col-md-6">
-              <md-button class="" ng-class="{'md-success':user.document.cancelledcheque,'md-primary':!user.document.cancelledcheque}" aria-label="File">
-                <input ng-model="user.document.cancelledcheque" name="cancelledcheque" required type="file" ng-file-select="onFileSelect($files,1,'single','cancelledcheque')" onclick='this.value=null'>
-                <span class="text-uppercase white">Cancelled Cheque<i ng-if="user.document.cancelledcheque" class="material-icons document-success">done</i></span>
+              <md-button class="" ng-class="{'md-success':user.documents.cancelledcheque,'md-primary':!user.documents.cancelledcheque}" aria-label="File">
+                <input ng-model="user.documents.cancelledcheque" name="cancelledcheque" required type="file" ng-file-select="onFileSelect($files,1,'single','cancelledcheque')" onclick='this.value=null'>
+                <span class="text-uppercase white">Cancelled Cheque<i ng-if="user.documents.cancelledcheque" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
           </div>
