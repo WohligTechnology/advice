@@ -168,9 +168,12 @@
               <md-input-container name="grossAnnualIncome">
                 <label>Gross Annual Income</label>
                 <md-select required ng-model="user.grossAnnualIncome" ng-model="ctrl.userIncome">
-                  <md-option value="10000">10,000</md-option>
-                  <md-option value="15000">15,000</md-option>
-                  <md-option value="20000">20,000</md-option>
+                  <md-option value="Below 1 Lac">Below 1 Lac</md-option>
+                  <md-option value="1-5 Lacs">1-5 Lacs</md-option>
+                  <md-option value="5-10 Lacs">5-10 Lacs</md-option>
+                  <md-option value="10-25 Lacs">10-25 Lacs</md-option>
+                  <md-option value="25 Lacs - 1 Cr">25 Lacs - 1 Cr</md-option>
+                  <md-option value="> 1 Crore">> 1 Crore</md-option>
                 </md-select>
               </md-input-container>
             </div>
@@ -186,10 +189,17 @@
               <md-input-container name="occupation">
                 <label>Occupation</label>
                 <md-select required ng-model="user.occupation" ng-model="ctrl.userOccupation">
-                  <md-option value="IN">IN</md-option>
-                  <md-option value="US">US</md-option>
-                  <md-option value="UK">UK</md-option>
-                  <md-option value="SP">SP</md-option>
+                  <md-option value="Business">Business</md-option>
+                  <md-option value="Professional">Professional</md-option>
+                  <md-option value="Public Sector">Public Sector</md-option>
+                  <md-option value="Private Sector">Private Sector</md-option>
+                  <md-option value="Government Service">Government Service</md-option>
+                  <md-option value="Agriculturist">Agriculturist</md-option>
+                  <md-option value="Housewife">Housewife</md-option>
+                  <md-option value="Student">Student</md-option>
+                  <md-option value="Retired">Retired</md-option>
+                  <md-option value="Forex Dealer ">Forex Dealer </md-option>
+                  <md-option value="Others [Please specify]">Others [Please specify]</md-option>
                 </md-select>
               </md-input-container>
             </div>
@@ -208,8 +218,9 @@
               <md-input-container name="political">
                 <label>Are you a Politically Exposed Person?</label>
                 <md-select required ng-model="user.political" ng-model="ctrl.userPolitical">
-                  <md-option value="yes">Yes</md-option>
-                  <md-option value="no">No</md-option>
+                  <md-option value="Yes">Yes</md-option>
+                  <md-option value="Not Applicable">Not Applicable</md-option>
+                  <md-option value="Related to Politically Exposed Person">Related to Politically Exposed Person</md-option>
                 </md-select>
               </md-input-container>
             </div>
@@ -235,11 +246,10 @@
               </md-input-container>
             </div>
             <div class="natioanlity col-md-4">
-              <md-input-container name="nationality">
-                <label>Nationality</label>
+              <md-input-container name="nationality"
+>                <label>Nationality</label>
                 <md-select required ng-model="user.nationality" ng-model="ctrl.userNationality">
-                  <md-option value="indian">Indian</md-option>
-                  <md-option value="american">American</md-option>
+                  <md-option value="{{country.name}}" ng-repeat="country in countries">{{country.name}}</md-option>
                 </md-select>
               </md-input-container>
             </div>
@@ -247,8 +257,8 @@
               <md-input-container name="taxstatus">
                 <label>Tax Status</label>
                 <md-select required ng-model="user.taxstatus" ng-model="ctrl.userTaxStatus">
-                  <md-option value="1">1</md-option>
-                  <md-option value="2">2</md-option>
+                  <md-option value="Resident Individual">Resident Individual</md-option>
+                  <md-option value="Non-Resident">Non-Resident</md-option>
                 </md-select>
               </md-input-container>
             </div>
@@ -291,8 +301,10 @@
               <md-input-container>
                 <label>Address Type</label>
                 <md-select name="addresstype" required ng-model="user.documents.addresstype">
-                  <md-option value="residential">Residential</md-option>
-                  <md-option value="commercial">Commercial</md-option>
+                  <md-option value="Residential">Residential</md-option>
+                  <md-option value="Business">Business</md-option>
+                  <md-option value="Residential/Business">Residential/Business</md-option>
+                  <md-option value="Registered Office">Registered Office</md-option>
                 </md-select>
               </md-input-container>
             </div>

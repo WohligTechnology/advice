@@ -2289,11 +2289,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.letCall = true;
     $scope.changeInputs = function() {
         if ($scope.letCall) {
-            $scope.letCall = false;
-            $scope.validateSliders();
-
+          $scope.letCall=false;
             $timeout(function() {
-                $scope.letCall = true;
+
+                $scope.validateSliders();
+                $scope.letCall=true;
+
             }, 1000);
         }
     };
