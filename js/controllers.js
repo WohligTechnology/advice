@@ -1264,19 +1264,44 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     //ALL form submits
-    $scope.onFileSelect = function($files, whichone, uploadtype, property) {
+    var namebreak = [];
+    var extension = "";
+    var allowedTypes = ["jpg", "jpeg", "png", "docx", "doc", "pdf"];
+    $scope.onFileSelect = function($files, whichone, uploadtype, property, ev) {
         // console.log(id);
-
-        globalfunction.onFileSelect($files, function(image) {
-            console.log(image);
-            if (whichone == 1) {
-                $scope.user.documents[property] = image[0];
-                if (uploadtype == 'single') {
-
+        console.log($files);
+        namebreak = $files[0].name.split('.');
+        extension = namebreak[namebreak.length - 1];
+        $scope.letIn = true;
+        _.each(allowedTypes, function(key) {
+            if ($scope.letIn) {
+                if (extension.toUpperCase() === key.toUpperCase()) {
+                    $scope.letIn = false;
                 }
             }
         });
-        console.log($scope.user);
+        if (!$scope.letIn) {
+            globalfunction.onFileSelect($files, function(image) {
+                console.log(image);
+                if (whichone == 1) {
+                    $scope.user.documents[property] = image[0];
+                    if (uploadtype == 'single') {
+
+                    }
+                }
+            });
+        } else {
+            $mdDialog.show(
+                    $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Please upload ' + allowedTypes.join('/') + " files only")
+                    .ok('Okay')
+                    .targetEvent(ev)
+                )
+                .then(function(result) {});
+        }
+
     };
 
     $scope.addNomineeDetails = function(formValidate) {
@@ -1550,9 +1575,22 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $state.go("planner");
             }, function() {});
         };
-        $scope.onFileSelect = function($files, whichone, uploadtype, id) {
+        var namebreak = [];
+        var extension = "";
+        var allowedTypes = ["jpg", "jpeg", "png"];
+        $scope.onFileSelect = function($files, whichone, uploadtype, id,ev) {
             console.log(id);
-
+            namebreak = $files[0].name.split('.');
+            extension = namebreak[namebreak.length - 1];
+            $scope.letIn = true;
+            _.each(allowedTypes, function(key) {
+                if ($scope.letIn) {
+                    if (extension.toUpperCase() === key.toUpperCase()) {
+                        $scope.letIn = false;
+                    }
+                }
+            });
+            if (!$scope.letIn) {
             globalfunction.onFileSelect($files, function(image) {
                 console.log(image);
                 if (whichone == 1) {
@@ -1575,6 +1613,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     }
                 }
             });
+          } else {
+              $mdDialog.show(
+                      $mdDialog.alert()
+                      .parent(angular.element(document.querySelector('#popupContainer')))
+                      .clickOutsideToClose(true)
+                      .title('Please upload ' + allowedTypes.join('/') + " files only")
+                      .ok('Okay')
+                      .targetEvent(ev)
+                  )
+                  .then(function(result) {});
+          }
         };
 
     })
@@ -2289,11 +2338,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.letCall = true;
     $scope.changeInputs = function() {
         if ($scope.letCall) {
-          $scope.letCall=false;
+            $scope.letCall = false;
             $timeout(function() {
 
                 $scope.validateSliders();
-                $scope.letCall=true;
+                $scope.letCall = true;
 
             }, 1000);
         }
