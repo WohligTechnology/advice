@@ -140,8 +140,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }, {
         name: "Allahabad Bank"
     }, {
-        name: "Allahabad Bank"
-    }, {
         name: "Ambarnath Jai-Hind Co-Op.Bank Ltd."
     }, {
         name: "Andhra Bank"
@@ -1065,8 +1063,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         name: "South Georgia and South Sandwich Islands"
     }, {
         name: "South Korea"
-    }, {
-        name: "South Sudan"
     }, {
         name: "South Sudan"
     }, {

@@ -116,7 +116,7 @@
           <label>Country</label>
           <md-select  required ng-change="inProcess(1)" ng-model="nominee.country">
 
-            <md-option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</md-option>
+            <md-option ng-repeat="country in countries track by country.name" value="{{country.name}}">{{country.name}}</md-option>
           </md-select>
         </md-input-container>
       </div>
@@ -160,7 +160,7 @@
               <md-input-container name="country">
                 <label>Country</label>
                 <md-select required ng-model="user.country" ng-model="ctrl.userCountry">
-                  <md-option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</md-option>
+                  <md-option ng-repeat="country in countries track by country.name" value="{{country.name}}">{{country.name}}</md-option>
                 </md-select>
               </md-input-container>
             </div>
@@ -249,7 +249,7 @@
               <md-input-container name="nationality"
 >                <label>Nationality</label>
                 <md-select required ng-model="user.nationality" ng-model="ctrl.userNationality">
-                  <md-option value="{{country.name}}" ng-repeat="country in countries">{{country.name}}</md-option>
+                  <md-option value="{{country.name}}" ng-repeat="country in countries track by country.name">{{country.name}}</md-option>
                 </md-select>
               </md-input-container>
             </div>
@@ -312,7 +312,7 @@
               <md-input-container>
                 <label>Bank Name</label>
                 <md-select name="bankname" required ng-model="user.documents.bankname">
-                  <md-option ng-repeat="bank in banks" value="{{bank.name}}">{{bank.name}}</md-option>
+                  <md-option ng-repeat="bank in banks track by bank.name" value="{{bank.name}}">{{bank.name}}</md-option>
                 </md-select>
               </md-input-container>
             </div>
