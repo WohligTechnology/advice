@@ -144,8 +144,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }, {
         name: "Andhra Bank"
     }, {
-        name: "Andhra Bank"
-    }, {
         name: "Andhra Pragathi Grameena Bank"
     }, {
         name: "Apna Sahakari Bank Ltd."
@@ -190,8 +188,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }, {
         name: "Canara Bank"
     }, {
-        name: "Canara Bank"
-    }, {
         name: "Capital Local Area Bank"
     }, {
         name: "Catholic Syrian Bank"
@@ -203,8 +199,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         name: "Citibank N A"
     }, {
         name: "City Union Bank"
-    }, {
-        name: "Corporation Bank"
     }, {
         name: "Corporation Bank"
     }, {
@@ -240,8 +234,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }, {
         name: "Federal Bank"
     }, {
-        name: "Federal Bank"
-    }, {
         name: "Fingrowth Co-Operative Bank Ltd"
     }, {
         name: "George Town Co-Operative Bank Ltd."
@@ -263,8 +255,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         name: "IDBI Bank"
     }, {
         name: "Idbi Bank"
-    }, {
-        name: "Indian Bank"
     }, {
         name: "Indian Bank"
     }, {
@@ -372,13 +362,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }, {
         name: "Ratnakar Bank"
     }, {
-        name: "Ratnakar Bank"
-    }, {
         name: "Sangli Urban Co-Operative Bank Ltd"
     }, {
         name: "Sant Sopankaka Sahakari Bank Ltd."
-    }, {
-        name: "Saraswat Bank"
     }, {
         name: "Saraswat Bank"
     }, {
@@ -397,8 +383,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         name: "Sindhudurg District Central Cooperative Bank Ltd"
     }, {
         name: "Sir M Visvesvaraya Co-Operative Bank Ltd"
-    }, {
-        name: "South Indian Bank"
     }, {
         name: "South Indian Bank"
     }, {
@@ -427,10 +411,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         name: "Suvarnayug Sahakari Bank Ltd."
     }, {
         name: "Syndicate Bank"
-    }, {
-        name: "Syndicate Bank"
-    }, {
-        name: "Tamilnad Mercantile Bank Ltd."
     }, {
         name: "Tamilnad Mercantile Bank Ltd."
     }, {
@@ -653,8 +633,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         name: "United Bank Of India"
     }, {
         name: "Vasai Vikas Sahakari Bank Ltd"
-    }, {
-        name: "Vijaya Bank"
     }, {
         name: "Vijaya Bank"
     }, {

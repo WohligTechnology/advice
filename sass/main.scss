@@ -1029,11 +1029,9 @@ md-sidenav.md-sidenav-left {
                 margin-bottom: 50px;
             }
             .navigation-tabs {
-                position: absolute;
-                width: 650px;
+                position: relative;;
+                width: 100%;
                 height: 20px;
-                top: -35px;
-                left: 400px;
                 .progress-bar {
                     position: relative;
                     height: 4px;
@@ -1069,8 +1067,8 @@ md-sidenav.md-sidenav-left {
                     }
                     i {
                         padding: 10px;
-                        background-color: white;
-                        color: #009E55;
+                        background-color: #4285F4;
+                        color: white !important;
                         border-radius: 50%;
                     }
                 }
@@ -1094,7 +1092,7 @@ md-sidenav.md-sidenav-left {
                 background-color: #4285F4;
             }
             .nominee-details {
-                margin-top: 30px;
+                margin-top: 80px;
                 .nominee-first {
                     display: block;
                     text-align: right;
@@ -1138,7 +1136,7 @@ md-sidenav.md-sidenav-left {
             }
             .document-upload,
             .regulatory-details {
-                margin-top: 50px;
+                margin-top: 100px;
                 md-input-container {
                     width: 100%;
                 }
@@ -1152,7 +1150,7 @@ md-sidenav.md-sidenav-left {
                 }
             }
             .document-upload {
-                margin-top: 50px;
+                margin-top: 100px;
                 .document-one {
                     margin-bottom: 15px;
                 }
