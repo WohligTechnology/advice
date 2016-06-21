@@ -150,13 +150,15 @@ nav li:hover .dropdown-menu {
     @include button-variant(white, $brand-primary-light, $brand-primary-light);
 }
 .color-danger {
-    color: $brand-danger !important;
+    // color: $brand-danger !important;
+    background-color: #4285F4 !important;
 }
 .color-gray {
-    color: $brand-gray-lighter !important;
+    // color: $brand-gray-lighter !important;
+    background-color: #4285F4 !important;
 }
 .color-success {
-    color: $brand-success !important;
+    background-color: $brand-success !important;
 }
 .material-icons {
     font-family: 'Material Icons';

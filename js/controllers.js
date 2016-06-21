@@ -1204,7 +1204,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                         letIn = true;
                     }
                 } else {
-
                     letIn = false;
                     tab = i;
                 }
@@ -1278,7 +1277,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     };
 
-    $scope.addNomineeDetails = function(formValidate) {
+    $scope.addNomineeDetails = function(formValidate,ev) {
         if (formValidate.$valid) {
 
             NavigationService.saveUserDetails($scope.user, function(data) {
@@ -1286,7 +1285,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     $scope.changeTab(2);
                     $scope.changeStatus(1, 0);
                 } else {
-
+                  $mdDialog.show(
+                          $mdDialog.alert()
+                          .parent(angular.element(document.querySelector('#popupContainer')))
+                          .clickOutsideToClose(true)
+                          .title(data.data)
+                          .ok('Okay')
+                          .targetEvent(ev)
+                      )
+                      .then(function(result) {
+                      });
                 }
             }, function(err) {
                 console.log(err);
@@ -1301,7 +1309,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 if (data.value) {
                     $scope.changeTab(3);
                     $scope.changeStatus(2, 0);
-                } else {}
+                } else {
+                  $mdDialog.show(
+                          $mdDialog.alert()
+                          .parent(angular.element(document.querySelector('#popupContainer')))
+                          .clickOutsideToClose(true)
+                          .title(data.data)
+                          .ok('Okay')
+                          .targetEvent(ev)
+                      )
+                      .then(function(result) {
+                      });
+                }
             }, function(err) {
                 console.log(err);
             });
@@ -1314,7 +1333,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         if (formValidate.$valid) {
             NavigationService.saveUserDetails($scope.user, function(data) {
                 if (data.value) {
-                    // $scope.changeTab(4);
                     $scope.changeStatus(3, 0);
                     var formStatus = $scope.getStatus();
                     console.log(formStatus);
@@ -1334,7 +1352,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                                 $scope.changeTab(formStatus.tab);
                             });
                     }
-                } else {}
+                } else {
+                  $mdDialog.show(
+                          $mdDialog.alert()
+                          .parent(angular.element(document.querySelector('#popupContainer')))
+                          .clickOutsideToClose(true)
+                          .title(data.data)
+                          .ok('Okay')
+                          .targetEvent(ev)
+                      )
+                      .then(function(result) {
+                      });
+                }
             }, function(err) {
                 console.log(err);
             });
@@ -2684,7 +2713,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.uploadRightAway = true;
     $scope.httpMethod = "POST";
     $scope.howToSend = 1;
-    $scope.signup = {};
     $scope.changeAngularVersion = function() {
         window.location.hash = $scope.angularVersion;
         window.location.reload(true);
@@ -2705,16 +2733,26 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             scope: $scope.$new()
         });
     };
-    $scope.doLogin = function(input) {
+    $scope.doLogin = function(input,ev) {
         NavigationService.login(input, function(data) {
             if (data.value) {
                 $state.go("profile");
             } else {
-                // handle invalid login
+              $mdDialog.show(
+                      $mdDialog.alert()
+                      .parent(angular.element(document.querySelector('#popupContainer')))
+                      .clickOutsideToClose(true)
+                      .title(data.data.message)
+                      .ok('Okay')
+                      .targetEvent(ev)
+                  )
+                  .then(function(result) {
+                    $scope.registrationDialog();
+                  });
             }
         }, function(err) {});
     };
-    $scope.doSignup = function(input, formValidate) {
+    $scope.doSignup = function(input, formValidate,ev) {
         if (formValidate.$valid) {
             if (input.password == input.cfpassword) {
                 NavigationService.signup(input, function(data) {
@@ -2722,7 +2760,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                         console.log(data);
                         $state.go("profile");
                     } else {
-                        // handle invalid signup
+                      $mdDialog.show(
+                              $mdDialog.alert()
+                              .parent(angular.element(document.querySelector('#popupContainer')))
+                              .clickOutsideToClose(true)
+                              .title(data.data.message)
+                              .ok('Okay')
+                              .targetEvent(ev)
+                          )
+                          .then(function(result) {
+                            $scope.registrationDialog();
+                          });
                     }
                 }, function(err) {});
             } else {
@@ -2732,7 +2780,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.signup.cfpassword = undefined;
             }
         } else {
-
+          $mdDialog.show(
+                  $mdDialog.alert()
+                  .parent(angular.element(document.querySelector('#popupContainer')))
+                  .clickOutsideToClose(true)
+                  .title('Please input all required fields')
+                  .ok('Okay')
+                  .targetEvent(ev)
+              )
+              .then(function(result) {});
         }
     };
     $scope.getclass = "menu-in";

@@ -443,8 +443,8 @@ var navigationservice = angular.module('navigationservice', [])
                 data: {
                     "email": request.email,
                     "password": request.password,
-                    "phone":request.phone,
-                    "referral":request.referral
+                    "mobile":request.mobile,
+                    "refferedCode":request.refferedCode
                 }
             }).success(callback).error(err);
         },
@@ -471,7 +471,9 @@ var navigationservice = angular.module('navigationservice', [])
                 method: "POST",
                 data: {
                     "email": formData.email,
-                    "password": formData.password
+                    "password": formData.password,
+                    "mobile":formData.mobile,
+                    "refferedCode":formData.referral
                 }
             }).success(callback).error(err);
         },
