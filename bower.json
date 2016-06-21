@@ -35,6 +35,7 @@
     "fullpage.js": "https://github.com/alvarotrigo/fullPage.js.git#^2.7.9",
     "highcharts": "^4.2.5",
     "highcharts-ng": "^0.0.11",
-    "angularjs-slider": "^2.13.0"
+    "angularjs-slider": "^2.13.0",
+    "ngclipboard": "^1.1.1"
   }
 }

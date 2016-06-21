@@ -4,34 +4,17 @@
       <div class="row">
         <!-- <span class="text-uppercase referral-title blue">My Referrals</span> -->
         <md-button class="md-primary md-raised pull-right" md-ink-ripple="#ffffff" aria-label="Redeem">Redeem</md-button>
-        <md-button class="md-primary md-raised pull-right" md-ink-ripple="#ffffff" aria-label="Points">Points: 5600</md-button>
+        <md-button class="md-primary md-raised pull-right" md-ink-ripple="#ffffff" aria-label="Points">Points: {{user.points}}</md-button>
       </div>
       <div class="all-referrals">
         <div class="row">
-          <div class="col-sm-3 col-xs-6">
+          <div class="col-sm-3 col-xs-6" ng-repeat="ref in user.referred">
             <div class="referral-image text-center">
               <img src="img/referrals/1.png" alt="" class="img-responsive img-circle" />
-              <p>Jackie	Morton</p>
+              <p>{{ref.user.email}}</p>
             </div>
           </div>
-          <div class="col-sm-3 col-xs-6">
-            <div class="referral-image text-center">
-              <img src="img/referrals/2.png" alt="" class="img-responsive img-circle" />
-              <p>Norman	Hardy</p>
-            </div>
-          </div>
-          <div class="col-sm-3 col-xs-6">
-            <div class="referral-image text-center">
-              <img src="img/referrals/3.png" alt="" class="img-responsive img-circle" />
-              <p>Kyle	Peterson</p>
-            </div>
-          </div>
-          <div class="col-sm-3 col-xs-6">
-            <div class="referral-image text-center">
-              <img src="img/referrals/4.png" alt="" class="img-responsive img-circle" />
-              <p>Pat	Erickson</p>
-            </div>
-          </div>
+
         </div>
       </div>
       <div class="row">
@@ -39,7 +22,11 @@
           <p>Use my code <span class="text-bold">pun7594</span> to sign up &amp; get Rs. 2000 points!</p>
           <p>Share the link <a href="http://goo.gl/TGF08b">http://goo.gl/TGF08b</a> to get points.</p>
           <div class="copy-button text-right">
-            <md-button class="md-primary md-raised" md-ink-ripple="#ffffff" aria-label="Copy">Copy</md-button>
+            <md-button ngclipboard data-clipboard-text="http://goo.gl/TGF08b" class="md-primary md-raised" md-ink-ripple="#ffffff" aria-label="Copy" ng-click="copied=true">Copy
+              <md-tooltip md-visible="copied" md-direction="top">
+                  Copied
+              </md-tooltip>
+            </md-button>
           </div>
         </div>
       </div>

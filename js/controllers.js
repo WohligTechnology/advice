@@ -2,7 +2,7 @@ var loading = {};
 var uploadres = [];
 var globalfunction = {};
 
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload'])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload','ngclipboard'])
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams) {
     //Used to name the .html file
@@ -1395,6 +1395,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/content/header.html";
+    $scope.user = {};
+    NavigationService.getSession(function(data){
+if(data.value){
+  $scope.user =  data.data;
+}
+    },function(err){
+
+    });
 })
 
 .controller('NotificationCtrl', function($scope, TemplateService, NavigationService, $timeout) {
@@ -2918,13 +2926,21 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('headerCtrl', function($scope, TemplateService, $mdSidenav, $timeout, $log) {
+.controller('headerCtrl', function($scope, TemplateService, $mdSidenav, $timeout,$state, $log,NavigationService) {
     $scope.template = TemplateService;
 
     var array = window.location.hash.split('/');
     $scope.headerText = array[1];
     $scope.toggleLeft = buildDelayedToggler('left');
+    NavigationService.getSession(function(data){
+      if(data.value){
 
+      }else{
+        $state.go('home');
+      }
+    },function (err) {
+      console.log(err);
+    });
     function debounce(func, wait, context) {
         var timer;
         return function debounced() {
@@ -2937,7 +2953,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }, wait || 10);
         };
     }
+    $scope.logout=function(){
 
+      NavigationService.logout(function(data){
+        $state.reload();
+      },function (err) {
+        console.log(err);
+      });
+    };
     function buildDelayedToggler(navID) {
         return debounce(function() {
             $mdSidenav(navID)

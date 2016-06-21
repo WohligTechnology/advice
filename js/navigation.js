@@ -416,6 +416,20 @@ var navigationservice = angular.module('navigationservice', [])
                 data: {}
             }).success(callback).error(err);
         },
+        logout: function(callback, err) {
+            return $http({
+                url: adminURL + "user/logout",
+                method: "POST",
+                data: {}
+            }).success(callback).error(err);
+        },
+        getSession: function(callback, err) {
+            return $http({
+                url: adminURL + "user/getSession",
+                method: "POST",
+                data: {}
+            }).success(callback).error(err);
+        },
         deletePortfolio: function(request,callback,err){
           return $http({
               url: adminURL + "portfolio/delete",
@@ -444,7 +458,7 @@ var navigationservice = angular.module('navigationservice', [])
                     "email": request.email,
                     "password": request.password,
                     "mobile":request.mobile,
-                    "refferedCode":request.refferedCode
+                    "referralCode":request.referralCode
                 }
             }).success(callback).error(err);
         },
@@ -473,7 +487,7 @@ var navigationservice = angular.module('navigationservice', [])
                     "email": formData.email,
                     "password": formData.password,
                     "mobile":formData.mobile,
-                    "refferedCode":formData.referral
+                    "referralCode":formData.referralCode
                 }
             }).success(callback).error(err);
         },

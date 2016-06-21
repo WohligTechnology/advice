@@ -15,7 +15,8 @@
       <md-list class="headerList">
         <md-list-item class="{{menu.classis}}" ng-repeat="menu in navigation" ui-sref="{{menu.anchor}}" ui-sref-active="active" md-no-ink>
             <span class="menu-icon"><i class="material-icons">{{menu.icon}}</i></span>
-            <span>{{menu.name}}</span>
+            <span ng-if="menu.name !=='Logout'">{{menu.name}}</span>
+            <span ng-if="menu.name =='Logout'" ng-click="logout()">{{menu.name}}</span>
         </md-list-item>
       </md-list>
     </div>

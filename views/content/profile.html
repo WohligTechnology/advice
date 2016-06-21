@@ -158,7 +158,7 @@
             <div class="birth-country col-md-4">
               <md-input-container name="country">
                 <label>Country</label>
-                <md-select required ng-model="user.country" ng-model="ctrl.userCountry">
+                <md-select required ng-model="user.country" >
                   <md-option ng-repeat="country in countries track by country.name" value="{{country.name}}">{{country.name}}</md-option>
                 </md-select>
               </md-input-container>
@@ -166,7 +166,7 @@
             <div class="gross-income col-md-4">
               <md-input-container name="grossAnnualIncome">
                 <label>Gross Annual Income</label>
-                <md-select required ng-model="user.grossAnnualIncome" ng-model="ctrl.userIncome">
+                <md-select required ng-model="user.grossAnnualIncome" >
                   <md-option value="Below 1 Lac">Below 1 Lac</md-option>
                   <md-option value="1-5 Lacs">1-5 Lacs</md-option>
                   <md-option value="5-10 Lacs">5-10 Lacs</md-option>
@@ -187,7 +187,7 @@
             <div class="occupation col-md-4">
               <md-input-container name="occupation">
                 <label>Occupation</label>
-                <md-select required ng-model="user.occupation" ng-model="ctrl.userOccupation">
+                <md-select required ng-model="user.occupation" >
                   <md-option value="Business">Business</md-option>
                   <md-option value="Professional">Professional</md-option>
                   <md-option value="Public Sector">Public Sector</md-option>
@@ -205,7 +205,7 @@
             <div class="gender col-md-4">
               <md-input-container name="gender">
                 <label>Gender</label>
-                <md-select required ng-model="user.gender" ng-model="ctrl.userGender">
+                <md-select required ng-model="user.gender" >
                   <md-option value="male">Male</md-option>
                   <md-option value="female">Female</md-option>
                 </md-select>
@@ -214,9 +214,9 @@
           </div>
           <div class="row">
             <div class="politically-exposed col-md-6">
-              <md-input-container name="political">
+              <md-input-container name="politicalViews">
                 <label>Are you a Politically Exposed Person?</label>
-                <md-select required ng-model="user.political" ng-model="ctrl.userPolitical">
+                <md-select required ng-model="user.politicalViews">
                   <md-option value="Yes">Yes</md-option>
                   <md-option value="Not Applicable">Not Applicable</md-option>
                   <md-option value="Related to Politically Exposed Person">Related to Politically Exposed Person</md-option>
@@ -226,7 +226,7 @@
             <div class="tax-country col-md-6">
               <md-input-container name="taxcountry">
                 <label>Is your Country of Tax Residency other than India?</label>
-                <md-select required ng-model="user.taxcountry" ng-model="ctrl.userTax">
+                <md-select required ng-model="user.taxcountry" >
                   <md-option value="yes">Yes</md-option>
                   <md-option value="no">No</md-option>
                 </md-select>
@@ -238,7 +238,7 @@
             <div class="marital-status col-md-4">
               <md-input-container name="maritalStatus">
                 <label>Marital Status</label>
-                <md-select required ng-model="user.maritalStatus" ng-model="ctrl.userMarital">
+                <md-select required ng-model="user.maritalStatus" >
                   <md-option value="single">Single</md-option>
                   <md-option value="married">Married</md-option>
                 </md-select>
@@ -247,15 +247,15 @@
             <div class="natioanlity col-md-4">
               <md-input-container name="nationality"
 >                <label>Nationality</label>
-                <md-select required ng-model="user.nationality" ng-model="ctrl.userNationality">
+                <md-select required ng-model="user.nationality" >
                   <md-option value="{{country.name}}" ng-repeat="country in countries track by country.name">{{country.name}}</md-option>
                 </md-select>
               </md-input-container>
             </div>
             <div class="tax-status col-md-4">
-              <md-input-container name="taxstatus">
+              <md-input-container name="taxStatus">
                 <label>Tax Status</label>
-                <md-select required ng-model="user.taxstatus" ng-model="ctrl.userTaxStatus">
+                <md-select required ng-model="user.taxStatus" >
                   <md-option value="Resident Individual">Resident Individual</md-option>
                   <md-option value="Non-Resident">Non-Resident</md-option>
                 </md-select>
