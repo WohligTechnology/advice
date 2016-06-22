@@ -1176,6 +1176,7 @@ if(data.value){
             $mdDialog.hide();
             $scope.changeTab(4);
             $scope.changeStatus(4, 0);
+            
         };
         $scope.editDetails = function() {
             $mdDialog.hide();

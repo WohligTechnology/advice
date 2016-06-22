@@ -22,9 +22,9 @@
         <span class="bold">Country:</span>
         <span class=right-space>{{nominee.country}}</span>
         <span class="bold">Guardian Name:</span>
-        <span class=right-space>{{nominee.guardianname}}</span>
+        <span class=right-space>{{nominee.guardianName}}</span>
         <span class="bold">Guardian PAN:</span>
-        <span class=right-space>{{nominee.guardianpan}}</span>
+        <span class=right-space>{{nominee.guardianPan}}</span>
       </div>
     </div>
 
@@ -33,54 +33,54 @@
       <span class="bold">Place of Birth:</span>
       <span class="right-space">{{user.placeofbirth}}</span>
       <span class="bold">Country of Birth:</span>
-      <span class="right-space">India</span>
+      <span class="right-space">{{user.country}}</span>
       <span class="bold">Gross Annual Income:</span>
-      <span class="right-space">5-10 lacs</span>
+      <span class="right-space">{{user.grossAnnualIncome}}</span>
       <span class="bold">Net Worth (Optional):</span>
-      <span class="right-space"><i class="fa fa-inr"></i>60,000</span>
+      <span class="right-space"><i class="fa fa-inr"></i>{{user.networth || 'N/A'}}</span>
       <span class="bold">Occupation:</span>
-      <span class="right-space">Business</span>
+      <span class="right-space">{{user.occupation}}</span>
       <span class="bold">Are you a Politically Exposed Person?</span>
-      <span class="right-space">No</span>
+      <span class="right-space">{{user.politicalViews}}</span>
       <span class="bold">Is your Country of Tax Residency other than India?</span>
-      <span class="right-space">No</span>
+      <span class="right-space">{{user.taxResidency}}</span>
       <span class="bold">Gender:</span>
-      <span class="right-space">Male</span>
+      <span class="right-space">{{user.gender}}</span>
       <span class="bold">Marital Status:</span>
-      <span class="right-space">Single</span>
+      <span class="right-space">{{user.maritalStatus}}</span>
       <span class="bold">Nationality:</span>
-      <span class="right-space">India</span>
+      <span class="right-space">{{user.nationality}}</span>
       <span class="bold">Tax Status:</span>
-      <span class="right-space">Yes</span>
+      <span class="right-space">{{user.taxStatus}}</span>
     </div>
 
     <div class="document-upload-summary">
       <h4 class="blue text-uppercase">Document Upload</h4>
       <span class="bold">Passport Style Photograph:</span>
-      <span class="right-space"><i class="material-icons color-success">done</i></span>
+      <span class="right-space"><i class="material-icons success-color">done</i></span>
       <span class="bold">Address Proof (Permanant):</span>
-      <span class="right-space"><i class="material-icons color-success">done</i></span>
+      <span class="right-space"><i class="material-icons success-color">done</i></span>
       <span class="bold">Address Proof (Correspondant):</span>
-      <span class="right-space"><i class="material-icons color-success">done</i></span>
+      <span class="right-space"><i class="material-icons success-color">done</i></span>
       <span class="bold">Address Type:</span>
       <span class="right-space">Residential</span>
       <span class="bold">PAN Card:</span>
-      <span class="right-space"><i class="material-icons color-success">done</i></span>
+      <span class="right-space"><i class="material-icons success-color">done</i></span>
       <span class="bold">Bank Name:</span>
       <span class="right-space">HDFC Bank</span>
       <span class="bold">Cancelled Cheque:</span>
-      <span class="right-space"><i class="material-icons color-success">done</i></span>
+      <span class="right-space"><i class="material-icons success-color">done</i></span>
     </div>
 
     <div class="summary-terms">
-      <md-checkbox md-no-ink aria-label="" class="terms">
+      <md-checkbox ng-model="profile.verify" md-no-ink aria-label="" class="terms">
         <span>The information provided here in is true my knowledge. I take full responsibility of any information given by me here.</span>
       </md-checkbox>
     </div>
 
     <div class="summary-buttons text-right">
       <md-button type="submit" class="md-raised md-blue text-uppercase" ng-click="editDetails();">Edit</md-button>
-      <md-button type="submit" class="md-raised md-blue text-uppercase" ng-click="closeDialog();">Confirm</md-button>
+      <md-button type="submit" class="md-raised md-blue text-uppercase" ng-click="closeDialog();" ng-show="profile.verify">Confirm</md-button>
     </div>
   </div>
   <!-- <button type="button" name="button" ng-click="closeDialog();"></button> -->
