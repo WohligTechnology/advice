@@ -2957,6 +2957,7 @@ if(data.value){
       if(data.value){
 
       }else{
+        if($state.current.name !== "referralsignup")
         $state.go('home');
       }
     },function (err) {
