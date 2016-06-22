@@ -76,7 +76,7 @@
         <md-input-container name="birthmonth" layout="column" flex="33">
           <label>Month</label>
           <md-select required ng-change="inProcess(1)" ng-model="nominee.birthmonth" >
-            <md-option value="{{month}}" ng-repeat="month in birthMonth">{{month}}</md-option>
+            <md-option value="{{$index+1}}" ng-repeat="month in birthMonth">{{month}}</md-option>
           </md-select>
         </md-input-container>
         <md-input-container name="birthyear" layout="column" flex="33">
@@ -107,7 +107,7 @@
       <div class="col-sm-4">
         <md-input-container name="pincode"  class="md-block">
           <label>Pincode</label>
-          <input type="number" required ng-change="inProcess(1)" ng-model="nominee.pincode">
+          <input type="text" required ng-change="inProcess(1)" ng-model="nominee.pincode">
         </md-input-container>
       </div>
       <div class="col-sm-4">
@@ -275,19 +275,19 @@
           <div class="document-one row">
             <div class="passport-photo col-md-4">
               <md-button class="" ng-class="{'md-success':user.documents.photo,'md-primary':!user.documents.photo}" aria-label="File">
-                <input ng-model="user.documents.photo" name="photo" required type="file" ng-file-select="onFileSelect($files,1,'single','photo',$event)" onclick='this.value=null'>
+                <input ng-model="user.documents.photo" name="photo" required type="file" ng-required="!user.documents.photo" ng-file-select="onFileSelect($files,1,'single','photo',$event)" onclick='this.value=null'>
                 <span class="text-uppercase white">Passport size photograph <i ng-if="user.documents.photo" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
             <div class="address-per col-md-4">
               <md-button class="" ng-class="{'md-success':user.documents.addressproof,'md-primary':!user.documents.addressproof}" aria-label="File">
-                <input ng-model="user.documents.addressproof" name="addressproof" required type="file" ng-file-select="onFileSelect($files,1,'single','addressproof',$event)" onclick='this.value=null'>
+                <input ng-model="user.documents.addressproof" name="addressproof" required type="file" ng-required="!user.documents.addressproof" ng-file-select="onFileSelect($files,1,'single','addressproof',$event)" onclick='this.value=null'>
                 <span class="text-uppercase white">Address Proof (Permanant)<i ng-if="user.documents.addressproof" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
             <div class="address-cor col-md-4">
               <md-button class="" ng-class="{'md-success':user.documents.corraddressproof,'md-primary':!user.documents.corraddressproof}"  aria-label="File">
-                <input ng-model="user.documents.corraddressproof" name="corraddressproof" required type="file" ng-required = "!checkbox.sameaddress" ng-file-select="onFileSelect($files,1,'single','corraddressproof',$event)" >
+                <input ng-model="user.documents.corraddressproof" name="corraddressproof" required type="file"  ng-required = "!user.documents.corraddressproof" ng-file-select="onFileSelect($files,1,'single','corraddressproof',$event)" >
                 <span class="text-uppercase white">Address Proof (Corresponance)<i ng-if="user.documents.corraddressproof" class="material-icons document-success">done</i></span>
               </md-button>
               <md-checkbox ng-model="checkbox.sameaddress" ng-change="samePermanentAddress(checkbox.sameaddress)" md-no-ink aria-label="Same as Permanant Address" class="same" layout="row">
@@ -320,13 +320,13 @@
           <div class="row">
             <div class="pan-card col-md-6">
               <md-button class="" ng-class="{'md-success':user.documents.pan,'md-primary':!user.documents.pan}" aria-label="File">
-                <input ng-model="user.documents.pan" name="pan" required type="file" ng-file-select="onFileSelect($files,1,'single','pan',$event)" onclick='this.value=null'>
+                <input ng-model="user.documents.pan" name="pan" required type="file" ng-required="!user.documents.pan" ng-file-select="onFileSelect($files,1,'single','pan',$event)" onclick='this.value=null'>
                 <span class="text-uppercase white">PAN Card<i ng-if="user.documents.pan" class="material-icons document-success">done</i></span>
               </md-button>
             </div>
             <div class="cancelled-cheque col-md-6">
               <md-button class="" ng-class="{'md-success':user.documents.cancelledcheque,'md-primary':!user.documents.cancelledcheque}" aria-label="File">
-                <input ng-model="user.documents.cancelledcheque" name="cancelledcheque" required type="file" ng-file-select="onFileSelect($files,1,'single','cancelledcheque',$event)" onclick='this.value=null'>
+                <input ng-model="user.documents.cancelledcheque" name="cancelledcheque" required type="file" ng-required="!user.documents.cancelledcheque" ng-file-select="onFileSelect($files,1,'single','cancelledcheque',$event)" onclick='this.value=null'>
                 <span class="text-uppercase white">Cancelled Cheque<i ng-if="user.documents.cancelledcheque" class="material-icons document-success">done</i></span>
               </md-button>
             </div>

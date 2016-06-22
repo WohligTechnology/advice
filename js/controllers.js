@@ -113,6 +113,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     NavigationService.getSession(function(data){
 if(data.value){
   $scope.user =  data.data;
+  _.each($scope.user.nominee,function (key) {
+    var d = new Date(key.dob);
+    console.log(d.getYear()+" heyeye "+d.getDate());
+    key.birthyear=d.getFullYear().toString();
+    key.birthmonth=(d.getMonth()+1).toString();
+    key.birthday=d.getDate().toString();
+  });
 }
     },function(err){
 
@@ -1285,7 +1292,9 @@ if(data.value){
 
     $scope.addNomineeDetails = function(formValidate,ev) {
         if (formValidate.$valid) {
-
+            _.each($scope.user.nominee,function(key){
+              key.dob=new Date(key.birthyear+'-'+key.birthmonth+'-'+key.birthday);
+            });
             NavigationService.saveUserDetails($scope.user, function(data) {
                 if (data.value) {
                     $scope.changeTab(2);
