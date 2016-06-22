@@ -19,11 +19,11 @@
       </div>
       <div class="row">
         <div class="referral-code md-whiteframe-2dp">
-          <p>Use my code <span class="text-bold">pun7594</span> to sign up &amp; get Rs. 2000 points!</p>
-          <p>Share the link <a href="http://goo.gl/TGF08b">http://goo.gl/TGF08b</a> to get points.</p>
+          <p>Use my code <span class="text-bold">{{user.mobile}}</span> to sign up &amp; get Rs. 2000 points!</p>
+          <p>Share the link <a href="{{origin}}/#/{{user.mobile}}">{{origin}}/#/{{user.mobile}}</a> to get points.</p>
           <div class="copy-button text-right">
-            <md-button ngclipboard data-clipboard-text="http://goo.gl/TGF08b" class="md-primary md-raised" md-ink-ripple="#ffffff" aria-label="Copy" ng-click="copied=true">Copy
-              <md-tooltip md-visible="copied" md-direction="top">
+            <md-button ngclipboard data-clipboard-text="Use my code {{user.mobile}} to sign up & get Rs. 2000 points!Share the link {{origin}}/#/{{user.mobile}} to get points." class="md-primary md-raised" md-ink-ripple="#ffffff" aria-label="Copy" ngclipboard-success="onSuccess(e);">Copy
+              <md-tooltip md-visible="copy.copied" md-direction="top">
                   Copied
               </md-tooltip>
             </md-button>

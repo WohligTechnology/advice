@@ -110,6 +110,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         fontname: 'more_horiz',
         colorclass: 'color-gray'
     }];
+    NavigationService.getSession(function(data){
+if(data.value){
+  $scope.user =  data.data;
+}
+    },function(err){
+
+    });
     $scope.deleteNominee = function(index) {
         $scope.user.nominee.splice(index, 1);
         if ($scope.user.nominee.length === 0) {
@@ -1185,8 +1192,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             i++;
         });
         $scope.progress = (contActive.length - 1) * 25;
-        console.log("status change");
-        console.log($scope.tabs);
+
     };
     $scope.inProcess = function(tab) {
         console.log(tab);
@@ -1396,6 +1402,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/content/header.html";
     $scope.user = {};
+    $scope.copy={};
+    $scope.copy.copied=false;
+    $scope.origin=window.location.origin;
+    console.log($scope.origin);
+    $scope.onSuccess=function(e){
+      console.log(e);
+      $scope.copy.copied=true;
+      e.clearSelection();
+    };
     NavigationService.getSession(function(data){
 if(data.value){
   $scope.user =  data.data;
@@ -2705,13 +2720,26 @@ if(data.value){
     ///END DELETE AND EXECUTE
 })
 
-.controller('headerctrl', function($scope, TemplateService, NavigationService, $state, $mdDialog, $upload, $timeout) {
+.controller('headerctrl', function($scope, TemplateService, NavigationService, $state, $mdDialog, $upload, $timeout,$stateParams) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
         $(window).scrollTop(0);
     });
     $scope.login = {};
-
+    $scope.signup={};
+    $scope.registrationDialog = function() {
+        $mdDialog.show({
+            template: '<md-dialog class="myClass"></md-dialog>',
+            templateUrl: 'views/modal/registration.html',
+            clickOutsideToClose: true,
+            scope: $scope.$new()
+        });
+    };
+    if($state.current.name == "referralsignup"){
+      console.log($stateParams.number);
+      $scope.signup.referralCode=$stateParams.number;
+      $scope.registrationDialog();
+    }
     //UPLOADER CODE
     window.uploadUrl = adminURL + 'upload/';
     var imagejstupld = "";
@@ -2733,14 +2761,7 @@ if(data.value){
         $scope.upload[index] = null;
     };
     //END UPLOADER CODE
-    $scope.registrationDialog = function() {
-        $mdDialog.show({
-            template: '<md-dialog class="myClass"></md-dialog>',
-            templateUrl: 'views/modal/registration.html',
-            clickOutsideToClose: true,
-            scope: $scope.$new()
-        });
-    };
+
     $scope.doLogin = function(input,ev) {
         NavigationService.login(input, function(data) {
             if (data.value) {

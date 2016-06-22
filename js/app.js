@@ -57,6 +57,11 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
             url: "/home",
             templateUrl: "views/template.html",
             controller: 'HomeCtrl'
+        })
+        .state('referralsignup', {
+            url: "/:number",
+            templateUrl: "views/template.html",
+            controller: 'HomeCtrl'
         });
     $urlRouterProvider.otherwise("/home");
     $locationProvider.html5Mode(isproduction);

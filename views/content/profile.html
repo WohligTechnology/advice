@@ -179,9 +179,9 @@
           </div>
           <div class="row">
             <div class="net-worth col-md-4">
-              <md-input-container name="networthoccupation">
+              <md-input-container name="networth">
                 <!-- <span class="inr"><i class="fa fa-inr"></i></span> -->
-                <input ng-model="user.networthoccupation" type="number" placeholder="Net Worth in ₹ (Optional):" aria-label="Net Worth">
+                <input ng-model="user.networth" type="number" placeholder="Net Worth in ₹ (Optional):" aria-label="Net Worth">
               </md-input-container>
             </div>
             <div class="occupation col-md-4">
@@ -224,11 +224,11 @@
               </md-input-container>
             </div>
             <div class="tax-country col-md-6">
-              <md-input-container name="taxcountry">
+              <md-input-container name="taxResidency">
                 <label>Is your Country of Tax Residency other than India?</label>
-                <md-select required ng-model="user.taxcountry" >
-                  <md-option value="yes">Yes</md-option>
-                  <md-option value="no">No</md-option>
+                <md-select required ng-model="user.taxResidency" >
+                  <md-option value="Yes">Yes</md-option>
+                  <md-option value="No">No</md-option>
                 </md-select>
               </md-input-container>
             </div>
