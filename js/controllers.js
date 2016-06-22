@@ -1176,7 +1176,7 @@ if(data.value){
             $mdDialog.hide();
             $scope.changeTab(4);
             $scope.changeStatus(4, 0);
-            
+
         };
         $scope.editDetails = function() {
             $mdDialog.hide();
@@ -2140,6 +2140,7 @@ if(data.value){
 
     };
     $scope.reflowChartED = function(currentPlan) {
+      console.log("currentPlan");
         $scope.EDdonutchartConfig.series[0].data[0] = [];
         $scope.EDdonutchartConfig.series[0].data[0].push('Equity');
         $scope.EDdonutchartConfig.series[0].data[0].push(currentPlan.feasible[0].type);
@@ -2428,16 +2429,19 @@ if(data.value){
                 }, 1000);
             } else {
                 $scope.currentPlan = data;
+
                 $scope.planlinechartconfig.loading = false;
                 $scope.reflowChart($scope.currentPlan, resultNow);
                 $scope.reflowChartED($scope.currentPlan);
+
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
                     $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
                     $scope.showCustomToast();
+                    $scope.showdonut = true;
                     $scope.showchart = true;
-                    $scope.showdonut = false;
+                    
                     $timeout(function() {
                         $scope.executeIt = true;
                     }, 1000);
