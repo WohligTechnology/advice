@@ -2727,7 +2727,10 @@ if(data.value){
     });
     $scope.login = {};
     $scope.signup={};
+    $scope.open={};
     $scope.registrationDialog = function() {
+      $scope.open.selectedIndex= 0;
+
         $mdDialog.show({
             template: '<md-dialog class="myClass"></md-dialog>',
             templateUrl: 'views/modal/registration.html',
@@ -2739,6 +2742,8 @@ if(data.value){
       console.log($stateParams.number);
       $scope.signup.referralCode=$stateParams.number;
       $scope.registrationDialog();
+      $scope.open.selectedIndex= 1;
+
     }
     //UPLOADER CODE
     window.uploadUrl = adminURL + 'upload/';
