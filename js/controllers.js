@@ -1417,7 +1417,6 @@ if(data.value){
     $scope.origin=window.location.origin;
     console.log($scope.origin);
     $scope.onSuccess=function(e){
-      console.log(e);
       $scope.copy.copied=true;
       e.clearSelection();
     };
@@ -2369,7 +2368,6 @@ if(data.value){
         if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value || ($scope.inputs.withdrawalfrequencySlider.value === 1)) {
             $scope.inputs.endMonthSlider.options.floor = $scope.inputs.startMonthSlider.value + 1;
         }
-
         $scope.parseSliders();
     };
     $scope.letCall = true;
@@ -2441,7 +2439,7 @@ if(data.value){
                     $scope.showCustomToast();
                     $scope.showdonut = true;
                     $scope.showchart = true;
-                    
+
                     $timeout(function() {
                         $scope.executeIt = true;
                     }, 1000);
@@ -2796,6 +2794,7 @@ if(data.value){
                   )
                   .then(function(result) {
                     $scope.registrationDialog();
+                    $scope.open.selectedIndex= 0;
                   });
             }
         }, function(err) {});
@@ -2818,6 +2817,7 @@ if(data.value){
                           )
                           .then(function(result) {
                             $scope.registrationDialog();
+                            $scope.open.selectedIndex= 1;
                           });
                     }
                 }, function(err) {});
