@@ -2371,8 +2371,8 @@ if(data.value){
         if ($scope.inputs.startMonthSlider.value < $scope.inputs.monthlyuntildateSlider.value) {
             $scope.inputs.startMonthSlider.options.floor = $scope.inputs.monthlyuntildateSlider.value + 1;
         }
-        if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value || ($scope.inputs.withdrawalfrequencySlider.value === 1)) {
-            $scope.inputs.endMonthSlider.options.floor = $scope.inputs.startMonthSlider.value + 1;
+        if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value ) {
+            $scope.inputs.endMonthSlider.value = $scope.inputs.startMonthSlider.value + 1;
         }
         if (parseInt($scope.inputs.withdrawalfrequencySlider.value) === 1) {
             $scope.hideendMonthSlider = true;
