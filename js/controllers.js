@@ -2536,28 +2536,27 @@ if(data.value){
     };
     $scope.suggestIt = function(current, suggestions) {
       console.log(current,suggestions);
-            if(suggestions.installment !== 0 ){
+            if(suggestions.installment !== 0  && suggestions.installment !== undefined && suggestions.installment !== null){
               $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
             }
-            if(suggestions.lumpsum !== 0){
+            if(suggestions.lumpsum !== 0 && suggestions.lumpsum !== undefined && suggestions.lumpsum !== null){
               $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum, true);
             }
-            if(suggestions.monthly !== 0){
+            if(suggestions.monthly !== 0 && suggestions.monthly !== undefined && suggestions.monthly !== null){
               $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly, true);
             }
-            if(suggestions.noOfMonth !== 0){
+            if(suggestions.noOfMonth !== 0 && suggestions.noOfMonth !== undefined && suggestions.noOfMonth !== null){
               $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
             }
-            if(suggestions.startMonth !== 0){
+            if(suggestions.startMonth !== 0 && suggestions.startMonth !== undefined && suggestions.startMonth !== null){
               $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
             }
-            if(suggestions.noOfInstallment !== 0){
+            if(suggestions.noOfInstallment !== 0 && suggestions.noOfInstallment !== undefined && suggestions.noOfInstallment !== null){
               $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
             }
 
         $scope.inputs.shortinputSlider.options = $scope.parseSuggestions($scope.inputs.shortinputSlider.options, current.shortinput, suggestions.shortinput);
         $scope.inputs.longinputSlider.options = $scope.parseSuggestions($scope.inputs.longinputSlider.options, current.longinput, suggestions.longinput);
-        console.log("Slider");
 
     };
     $scope.parseSuggestions = function(options, current, suggestion, nearest100) {
