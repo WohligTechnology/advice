@@ -29,7 +29,7 @@
     "lodash": "~4.0.0",
     "ui-router": "~0.2.15",
     "angular": "^1.5.0",
-    "angular-material": "^1.0.7",
+    "angular-material": "^1.0.9",
     "nstSlider": "https://github.com/lokku/jquery-nstslider.git#^1.0.13",
     "moment": "^2.13.0",
     "fullpage.js": "https://github.com/alvarotrigo/fullPage.js.git#^2.7.9",
