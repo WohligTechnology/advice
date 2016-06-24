@@ -113,6 +113,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     NavigationService.getSession(function(data){
 if(data.value){
   $scope.user =  data.data;
+  if($scope.user.forVerification){
+    for(var i = 1;i<5;i++){
+      console.log(i);
+      $timeout(function(){
+        $scope.changeStatus(i, 0);
+      },i*300);
+    }
+  }
   _.each($scope.user.nominee,function (key) {
     var d = new Date(key.dob);
     console.log(d.getYear()+" heyeye "+d.getDate());
@@ -1174,9 +1182,17 @@ if(data.value){
     function DialogController($scope, $mdDialog) {
         $scope.closeDialog = function() {
             $mdDialog.hide();
-            $scope.changeTab(4);
-            $scope.changeStatus(4, 0);
+            $scope.user.forVerification= true;
+            NavigationService.saveUserDetails($scope.user, function(data) {
+                if (data.value) {
+                  $scope.changeTab(4);
+                  $scope.changeStatus(4, 0);
+                } else {
 
+                }
+            }, function(err) {
+                console.log(err);
+            });
         };
         $scope.editDetails = function() {
             $mdDialog.hide();
