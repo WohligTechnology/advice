@@ -144,8 +144,6 @@ firstapp.filter('currency', function() {
 firstapp.filter('portfolioserverimage', function() {
   return function(input) {
     if (input) {
-      console.log("herre is the input");
-      console.log(input);
       return  imgurl + input;
     } else {
       // return "img/logo.png";

@@ -1701,6 +1701,7 @@ if(data.value){
         NavigationService.getOnePortfolio($stateParams, function(data) {
             if (data.value) {
                 if (data.data.lumpsum !== undefined) {
+                  globalfunction.changeHeaderText(data.data.goalname);
                     if (data.data.executiontime !== null && data.data.executiontime !== undefined) {
                         if ($stateParams.exec !== "" && new Date(data.data.executiontime).getTime() == $stateParams.exec) {
                             $scope.isLive = true;
@@ -1751,7 +1752,6 @@ if(data.value){
         $scope.inputs.endMonthSlider.value = parseInt($scope.inputs.endMonthSlider.value);
 
         $scope.validateSliders();
-        console.log("here in selectConvert");
     };
 
     for (i = 0; i < 600; i++) {
@@ -1793,6 +1793,9 @@ if(data.value){
         }],
         size: {
             height: 520
+        },
+        title:{
+          text:""
         },
         xAxis: {
             title: {
@@ -2371,6 +2374,10 @@ if(data.value){
         if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value || ($scope.inputs.withdrawalfrequencySlider.value === 1)) {
             $scope.inputs.endMonthSlider.options.floor = $scope.inputs.startMonthSlider.value + 1;
         }
+        if (parseInt($scope.inputs.withdrawalfrequencySlider.value) === 1) {
+            $scope.hideendMonthSlider = true;
+            $scope.inputs.endMonthSlider.value = $scope.inputs.startMonthSlider.value + 1;
+        }
         $scope.parseSliders();
     };
     $scope.letCall = true;
@@ -2421,6 +2428,7 @@ if(data.value){
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
+                    console.log($scope.inputs,$scope.currentPlan.suggestions);
                     $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
                     $scope.showCustomToast();
                 }
@@ -2441,6 +2449,7 @@ if(data.value){
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
+                    console.log($scope.inputs,$scope.currentPlan.suggestions);
                     $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
                     $scope.showCustomToast();
                     $scope.showdonut = true;
@@ -2526,14 +2535,26 @@ if(data.value){
         });
     };
     $scope.suggestIt = function(current, suggestions) {
-        if (suggestions.lumpsum) {
-            $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
-            $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum, true);
-            $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly, true);
-            $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
-            $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
-            $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
-        }
+      console.log(current,suggestions);
+            if(suggestions.installment !== 0 ){
+              $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
+            }
+            if(suggestions.lumpsum !== 0){
+              $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum, true);
+            }
+            if(suggestions.monthly !== 0){
+              $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly, true);
+            }
+            if(suggestions.noOfMonth !== 0){
+              $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
+            }
+            if(suggestions.startMonth !== 0){
+              $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
+            }
+            if(suggestions.noOfInstallment !== 0){
+              $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
+            }
+
         $scope.inputs.shortinputSlider.options = $scope.parseSuggestions($scope.inputs.shortinputSlider.options, current.shortinput, suggestions.shortinput);
         $scope.inputs.longinputSlider.options = $scope.parseSuggestions($scope.inputs.longinputSlider.options, current.longinput, suggestions.longinput);
         console.log("Slider");
@@ -3013,9 +3034,15 @@ if(data.value){
 
 .controller('headerCtrl', function($scope, TemplateService, $mdSidenav, $timeout,$state, $log,NavigationService) {
     $scope.template = TemplateService;
-
+    $scope.texts = {};
     var array = window.location.hash.split('/');
-    $scope.headerText = array[1];
+    globalfunction.changeHeaderText = function(text){
+      $scope.texts.headerText=  text;
+    };
+    if($state.current.name !== "planned"){
+      globalfunction.changeHeaderText(array[1]);
+
+    }
     $scope.toggleLeft = buildDelayedToggler('left');
     NavigationService.getSession(function(data){
       if(data.value){
