@@ -2169,11 +2169,12 @@ if(data.value){
         options: {
             hidePointerLabels: true,
             onChange: function() {
+              $scope.inputs.lumpsumSlider.value=$filter('nearest100')($scope.inputs.lumpsumSlider.value);
+
                 $scope.validateSliders();
             },
             floor: 25000,
             ceil: 25000000,
-            step: 100,
             translate: function(value) {
                 return "₹ " + value;
             },
@@ -2195,11 +2196,12 @@ if(data.value){
         options: {
             hidePointerLabels: true,
             onChange: function() {
+              $scope.inputs.monthlySlider.value=$filter('nearest100')($scope.inputs.monthlySlider.value);
+
                 $scope.validateSliders();
             },
             floor: 5000,
             ceil: 80000,
-            step: 100,
             translate: function(value) {
                 return "₹ " + value;
             },
@@ -2232,11 +2234,12 @@ if(data.value){
         options: {
             hidePointerLabels: true,
             onChange: function() {
+              $scope.inputs.installmentSlider.value=$filter('nearest100')($scope.inputs.installmentSlider.value);
+
                 $scope.validateSliders();
             },
             floor: 6000,
             ceil: 50000,
-            step: 100,
             translate: function(value) {
                 return "₹ " + value;
             },
@@ -2375,6 +2378,9 @@ if(data.value){
         if ($scope.letCall) {
             $scope.letCall = false;
             $timeout(function() {
+              $scope.inputs.lumpsumSlider.value=$filter('nearest100')($scope.inputs.lumpsumSlider.value);
+              $scope.inputs.monthlySlider.value=$filter('nearest100')($scope.inputs.monthlySlider.value);
+              $scope.inputs.installmentSlider.value=$filter('nearest100')($scope.inputs.installmentSlider.value);
 
                 $scope.validateSliders();
                 $scope.letCall = true;
@@ -2750,12 +2756,18 @@ if(data.value){
             scope: $scope.$new()
         });
     };
-    if($state.current.name == "referralsignup"){
+    $scope.stringIsNumber =  function(s) {
+    var x = +s;
+    return x.toString() === s;
+};
+    if($state.current.name == "referralsignup" && $scope.stringIsNumber($stateParams.number)){
       console.log($stateParams.number);
       $scope.signup.referralCode=$stateParams.number;
       $scope.registrationDialog();
       $scope.open.selectedIndex= 1;
 
+    }else{
+      $state.go("home");
     }
     //UPLOADER CODE
     window.uploadUrl = adminURL + 'upload/';
