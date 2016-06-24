@@ -2668,11 +2668,44 @@ if(data.value){
             };
             iterate++;
         });
-        console.log($scope.fundstable);
-        console.log(request.funds);
+
         request.id = $stateParams.id;
-        console.log("Result");
-        console.log(request);
+
+        NavigationService.savePortfolio(request, function(data) {
+            if (data.value) {
+
+                $mdDialog.show(
+                        $mdDialog.alert()
+                        .parent(angular.element(document.querySelector('#popupContainer')))
+                        .clickOutsideToClose(true)
+                        .title('Saved successfully')
+                        .ok('Okay')
+                        .targetEvent(ev)
+                    )
+                    .then(function(result) {
+                        $state.go('portfolio');
+                    });
+            }
+        }, function(err) {
+
+        });
+    };
+    $scope.SaveExecutePlan = function(ev) {
+        var request = null;
+        request = $scope.feasibleresult;
+        request.status = true;
+        request.funds = [];
+        var iterate = 0;
+        _.each($scope.fundstable, function(key) {
+
+            request.funds[iterate] = {
+                fundid: key._id
+            };
+            iterate++;
+        });
+
+        request.id = $stateParams.id;
+
         NavigationService.savePortfolio(request, function(data) {
             if (data.value) {
 
