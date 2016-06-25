@@ -2,7 +2,7 @@ var loading = {};
 var uploadres = [];
 var globalfunction = {};
 
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload','ngclipboard'])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload', 'ngclipboard'])
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams) {
     //Used to name the .html file
@@ -110,26 +110,24 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         fontname: 'more_horiz',
         colorclass: 'color-gray'
     }];
-    NavigationService.getSession(function(data){
-if(data.value){
-  $scope.user =  data.data;
-  if($scope.user.forVerification){
-    for(var i = 1;i<5;i++){
-      console.log(i);
-      $timeout(function(){
-        $scope.changeStatus(i, 0);
-      },i*300);
-    }
-  }
-  _.each($scope.user.nominee,function (key) {
-    var d = new Date(key.dob);
-    console.log(d.getYear()+" heyeye "+d.getDate());
-    key.birthyear=d.getFullYear().toString();
-    key.birthmonth=(d.getMonth()+1).toString();
-    key.birthday=d.getDate().toString();
-  });
-}
-    },function(err){
+    NavigationService.getSession(function(data) {
+        if (data.value) {
+            $scope.user = data.data;
+            if ($scope.user.forVerification) {
+                for (var i = 1; i < 5; i++) {
+                    $scope.changeStatus(i, 0, i *500);
+                }
+                $scope.changeTab(4);
+            }
+            _.each($scope.user.nominee, function(key) {
+                var d = new Date(key.dob);
+                console.log(d.getYear() + " heyeye " + d.getDate());
+                key.birthyear = d.getFullYear().toString();
+                key.birthmonth = (d.getMonth() + 1).toString();
+                key.birthday = d.getDate().toString();
+            });
+        }
+    }, function(err) {
 
     });
     $scope.deleteNominee = function(index) {
@@ -1181,12 +1179,13 @@ if(data.value){
 
     function DialogController($scope, $mdDialog) {
         $scope.closeDialog = function() {
-            $mdDialog.hide();
-            $scope.user.forVerification= true;
+
+            $scope.user.forVerification = true;
             NavigationService.saveUserDetails($scope.user, function(data) {
                 if (data.value) {
-                  $scope.changeTab(4);
-                  $scope.changeStatus(4, 0);
+                    $scope.changeTab(4);
+                    $scope.changeStatus(4, 0);
+                    $mdDialog.hide();
                 } else {
 
                 }
@@ -1202,21 +1201,25 @@ if(data.value){
 
 
     //change status of ticks and move progress bar
-    $scope.changeStatus = function(index, status) {
-
-        $scope.tabs[index].status = $scope.process[status];
-        var i = 0;
-        var contActive = [];
-        _.each($scope.tabs, function(key) {
-            if (key.status.status == 'done') {
-                if (i == contActive.length) {
-                    contActive.push(key);
+    $scope.changeStatus = function(index, status, interval) {
+        if (interval === undefined) {
+            interval = 0;
+        }
+        console.log(index,status,interval);
+        $timeout(function() {
+            $scope.tabs[index].status = $scope.process[status];
+            var i = 0;
+            var contActive = [];
+            _.each($scope.tabs, function(key) {
+                if (key.status.status == 'done') {
+                    if (i == contActive.length) {
+                        contActive.push(key);
+                    }
                 }
-            }
-            i++;
-        });
-        $scope.progress = (contActive.length - 1) * 25;
-
+                i++;
+            });
+            $scope.progress = (contActive.length - 1) * 25;
+        }, interval);
     };
     $scope.inProcess = function(tab) {
         console.log(tab);
@@ -1229,7 +1232,7 @@ if(data.value){
         var tab = 0;
         _.each($scope.tabs, function(key) {
             if (letIn) {
-                if (key.status.status == "done" || i == $scope.tabs.length - 1) {
+                if (key.status.status == "done" || i == $scope.tabs.length - 1 || i== $scope.tabs.length - 2) {
                     if (i == $scope.tabs.length - 2) {
                         letIn = true;
                     }
@@ -1307,26 +1310,25 @@ if(data.value){
 
     };
 
-    $scope.addNomineeDetails = function(formValidate,ev) {
+    $scope.addNomineeDetails = function(formValidate, ev) {
         if (formValidate.$valid) {
-            _.each($scope.user.nominee,function(key){
-              key.dob=new Date(key.birthyear+'-'+key.birthmonth+'-'+key.birthday);
+            _.each($scope.user.nominee, function(key) {
+                key.dob = new Date(key.birthyear + '-' + key.birthmonth + '-' + key.birthday);
             });
             NavigationService.saveUserDetails($scope.user, function(data) {
                 if (data.value) {
                     $scope.changeTab(2);
                     $scope.changeStatus(1, 0);
                 } else {
-                  $mdDialog.show(
-                          $mdDialog.alert()
-                          .parent(angular.element(document.querySelector('#popupContainer')))
-                          .clickOutsideToClose(true)
-                          .title(data.data)
-                          .ok('Okay')
-                          .targetEvent(ev)
-                      )
-                      .then(function(result) {
-                      });
+                    $mdDialog.show(
+                            $mdDialog.alert()
+                            .parent(angular.element(document.querySelector('#popupContainer')))
+                            .clickOutsideToClose(true)
+                            .title(data.data)
+                            .ok('Okay')
+                            .targetEvent(ev)
+                        )
+                        .then(function(result) {});
                 }
             }, function(err) {
                 console.log(err);
@@ -1342,16 +1344,15 @@ if(data.value){
                     $scope.changeTab(3);
                     $scope.changeStatus(2, 0);
                 } else {
-                  $mdDialog.show(
-                          $mdDialog.alert()
-                          .parent(angular.element(document.querySelector('#popupContainer')))
-                          .clickOutsideToClose(true)
-                          .title(data.data)
-                          .ok('Okay')
-                          .targetEvent(ev)
-                      )
-                      .then(function(result) {
-                      });
+                    $mdDialog.show(
+                            $mdDialog.alert()
+                            .parent(angular.element(document.querySelector('#popupContainer')))
+                            .clickOutsideToClose(true)
+                            .title(data.data)
+                            .ok('Okay')
+                            .targetEvent(ev)
+                        )
+                        .then(function(result) {});
                 }
             }, function(err) {
                 console.log(err);
@@ -1366,6 +1367,7 @@ if(data.value){
             NavigationService.saveUserDetails($scope.user, function(data) {
                 if (data.value) {
                     $scope.changeStatus(3, 0);
+                    console.log($scope.tabs[3].status);
                     var formStatus = $scope.getStatus();
                     console.log(formStatus);
                     if (formStatus.status) {
@@ -1385,16 +1387,15 @@ if(data.value){
                             });
                     }
                 } else {
-                  $mdDialog.show(
-                          $mdDialog.alert()
-                          .parent(angular.element(document.querySelector('#popupContainer')))
-                          .clickOutsideToClose(true)
-                          .title(data.data)
-                          .ok('Okay')
-                          .targetEvent(ev)
-                      )
-                      .then(function(result) {
-                      });
+                    $mdDialog.show(
+                            $mdDialog.alert()
+                            .parent(angular.element(document.querySelector('#popupContainer')))
+                            .clickOutsideToClose(true)
+                            .title(data.data)
+                            .ok('Okay')
+                            .targetEvent(ev)
+                        )
+                        .then(function(result) {});
                 }
             }, function(err) {
                 console.log(err);
@@ -1428,19 +1429,19 @@ if(data.value){
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/content/header.html";
     $scope.user = {};
-    $scope.copy={};
-    $scope.copy.copied=false;
-    $scope.origin=window.location.origin;
+    $scope.copy = {};
+    $scope.copy.copied = false;
+    $scope.origin = window.location.origin;
     console.log($scope.origin);
-    $scope.onSuccess=function(e){
-      $scope.copy.copied=true;
-      e.clearSelection();
+    $scope.onSuccess = function(e) {
+        $scope.copy.copied = true;
+        e.clearSelection();
     };
-    NavigationService.getSession(function(data){
-if(data.value){
-  $scope.user =  data.data;
-}
-    },function(err){
+    NavigationService.getSession(function(data) {
+        if (data.value) {
+            $scope.user = data.data;
+        }
+    }, function(err) {
 
     });
 })
@@ -1629,7 +1630,7 @@ if(data.value){
         var namebreak = [];
         var extension = "";
         var allowedTypes = ["jpg", "jpeg", "png"];
-        $scope.onFileSelect = function($files, whichone, uploadtype, id,ev) {
+        $scope.onFileSelect = function($files, whichone, uploadtype, id, ev) {
             console.log(id);
             namebreak = $files[0].name.split('.');
             extension = namebreak[namebreak.length - 1];
@@ -1642,39 +1643,39 @@ if(data.value){
                 }
             });
             if (!$scope.letIn) {
-            globalfunction.onFileSelect($files, function(image) {
-                console.log(image);
-                if (whichone == 1) {
+                globalfunction.onFileSelect($files, function(image) {
+                    console.log(image);
+                    if (whichone == 1) {
 
-                    NavigationService.savePortfolio({
-                        id: id,
-                        image: image[0]
-                    }, function(data) {
-                        if (data.value) {
-                            $scope.getPortfolios();
-                        } else {
-                            console.log("Not logged in");
+                        NavigationService.savePortfolio({
+                            id: id,
+                            image: image[0]
+                        }, function(data) {
+                            if (data.value) {
+                                $scope.getPortfolios();
+                            } else {
+                                console.log("Not logged in");
+                            }
+                        }, function() {
+
+                        });
+                        // console.log();
+                        if (uploadtype == 'single') {
+
                         }
-                    }, function() {
-
-                    });
-                    // console.log();
-                    if (uploadtype == 'single') {
-
                     }
-                }
-            });
-          } else {
-              $mdDialog.show(
-                      $mdDialog.alert()
-                      .parent(angular.element(document.querySelector('#popupContainer')))
-                      .clickOutsideToClose(true)
-                      .title('Please upload ' + allowedTypes.join('/') + " files only")
-                      .ok('Okay')
-                      .targetEvent(ev)
-                  )
-                  .then(function(result) {});
-          }
+                });
+            } else {
+                $mdDialog.show(
+                        $mdDialog.alert()
+                        .parent(angular.element(document.querySelector('#popupContainer')))
+                        .clickOutsideToClose(true)
+                        .title('Please upload ' + allowedTypes.join('/') + " files only")
+                        .ok('Okay')
+                        .targetEvent(ev)
+                    )
+                    .then(function(result) {});
+            }
         };
 
     })
@@ -1717,7 +1718,7 @@ if(data.value){
         NavigationService.getOnePortfolio($stateParams, function(data) {
             if (data.value) {
                 if (data.data.lumpsum !== undefined) {
-                  globalfunction.changeHeaderText(data.data.goalname);
+                    globalfunction.changeHeaderText(data.data.goalname);
                     if (data.data.executiontime !== null && data.data.executiontime !== undefined) {
                         if ($stateParams.exec !== "" && new Date(data.data.executiontime).getTime() == $stateParams.exec) {
                             $scope.isLive = true;
@@ -1810,8 +1811,8 @@ if(data.value){
         size: {
             height: 520
         },
-        title:{
-          text:""
+        title: {
+            text: ""
         },
         xAxis: {
             title: {
@@ -2158,7 +2159,7 @@ if(data.value){
 
     };
     $scope.reflowChartED = function(currentPlan) {
-      console.log("currentPlan");
+        console.log("currentPlan");
         $scope.EDdonutchartConfig.series[0].data[0] = [];
         $scope.EDdonutchartConfig.series[0].data[0].push('Equity');
         $scope.EDdonutchartConfig.series[0].data[0].push(currentPlan.feasible[0].type);
@@ -2188,7 +2189,7 @@ if(data.value){
         options: {
             hidePointerLabels: true,
             onChange: function() {
-              $scope.inputs.lumpsumSlider.value=$filter('nearest100')($scope.inputs.lumpsumSlider.value);
+                $scope.inputs.lumpsumSlider.value = $filter('nearest100')($scope.inputs.lumpsumSlider.value);
 
                 $scope.validateSliders();
             },
@@ -2215,7 +2216,7 @@ if(data.value){
         options: {
             hidePointerLabels: true,
             onChange: function() {
-              $scope.inputs.monthlySlider.value=$filter('nearest100')($scope.inputs.monthlySlider.value);
+                $scope.inputs.monthlySlider.value = $filter('nearest100')($scope.inputs.monthlySlider.value);
 
                 $scope.validateSliders();
             },
@@ -2253,7 +2254,7 @@ if(data.value){
         options: {
             hidePointerLabels: true,
             onChange: function() {
-              $scope.inputs.installmentSlider.value=$filter('nearest100')($scope.inputs.installmentSlider.value);
+                $scope.inputs.installmentSlider.value = $filter('nearest100')($scope.inputs.installmentSlider.value);
 
                 $scope.validateSliders();
             },
@@ -2387,7 +2388,7 @@ if(data.value){
         if ($scope.inputs.startMonthSlider.value < $scope.inputs.monthlyuntildateSlider.value) {
             $scope.inputs.startMonthSlider.options.floor = $scope.inputs.monthlyuntildateSlider.value + 1;
         }
-        if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value ) {
+        if ($scope.inputs.endMonthSlider.value < $scope.inputs.startMonthSlider.value) {
             $scope.inputs.endMonthSlider.value = $scope.inputs.startMonthSlider.value + 1;
         }
         if (parseInt($scope.inputs.withdrawalfrequencySlider.value) === 1) {
@@ -2401,9 +2402,9 @@ if(data.value){
         if ($scope.letCall) {
             $scope.letCall = false;
             $timeout(function() {
-              $scope.inputs.lumpsumSlider.value=$filter('nearest100')($scope.inputs.lumpsumSlider.value);
-              $scope.inputs.monthlySlider.value=$filter('nearest100')($scope.inputs.monthlySlider.value);
-              $scope.inputs.installmentSlider.value=$filter('nearest100')($scope.inputs.installmentSlider.value);
+                $scope.inputs.lumpsumSlider.value = $filter('nearest100')($scope.inputs.lumpsumSlider.value);
+                $scope.inputs.monthlySlider.value = $filter('nearest100')($scope.inputs.monthlySlider.value);
+                $scope.inputs.installmentSlider.value = $filter('nearest100')($scope.inputs.installmentSlider.value);
 
                 $scope.validateSliders();
                 $scope.letCall = true;
@@ -2444,7 +2445,7 @@ if(data.value){
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
-                    console.log($scope.inputs,$scope.currentPlan.suggestions);
+                    console.log($scope.inputs, $scope.currentPlan.suggestions);
                     $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
                     $scope.showCustomToast();
                 }
@@ -2465,7 +2466,7 @@ if(data.value){
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
-                    console.log($scope.inputs,$scope.currentPlan.suggestions);
+                    console.log($scope.inputs, $scope.currentPlan.suggestions);
                     $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
                     $scope.showCustomToast();
                     $scope.showdonut = true;
@@ -2551,25 +2552,25 @@ if(data.value){
         });
     };
     $scope.suggestIt = function(current, suggestions) {
-      console.log(current,suggestions);
-            if(suggestions.installment !== 0  && suggestions.installment !== undefined && suggestions.installment !== null){
-              $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
-            }
-            if(suggestions.lumpsum !== 0 && suggestions.lumpsum !== undefined && suggestions.lumpsum !== null){
-              $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum, true);
-            }
-            if(suggestions.monthly !== 0 && suggestions.monthly !== undefined && suggestions.monthly !== null){
-              $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly, true);
-            }
-            if(suggestions.noOfMonth !== 0 && suggestions.noOfMonth !== undefined && suggestions.noOfMonth !== null){
-              $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
-            }
-            if(suggestions.startMonth !== 0 && suggestions.startMonth !== undefined && suggestions.startMonth !== null){
-              $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
-            }
-            if(suggestions.noOfInstallment !== 0 && suggestions.noOfInstallment !== undefined && suggestions.noOfInstallment !== null){
-              $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
-            }
+        console.log(current, suggestions);
+        if (suggestions.installment !== 0 && suggestions.installment !== undefined && suggestions.installment !== null) {
+            $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
+        }
+        if (suggestions.lumpsum !== 0 && suggestions.lumpsum !== undefined && suggestions.lumpsum !== null) {
+            $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum, true);
+        }
+        if (suggestions.monthly !== 0 && suggestions.monthly !== undefined && suggestions.monthly !== null) {
+            $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly, true);
+        }
+        if (suggestions.noOfMonth !== 0 && suggestions.noOfMonth !== undefined && suggestions.noOfMonth !== null) {
+            $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
+        }
+        if (suggestions.startMonth !== 0 && suggestions.startMonth !== undefined && suggestions.startMonth !== null) {
+            $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
+        }
+        if (suggestions.noOfInstallment !== 0 && suggestions.noOfInstallment !== undefined && suggestions.noOfInstallment !== null) {
+            $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
+        }
 
         $scope.inputs.shortinputSlider.options = $scope.parseSuggestions($scope.inputs.shortinputSlider.options, current.shortinput, suggestions.shortinput);
         $scope.inputs.longinputSlider.options = $scope.parseSuggestions($scope.inputs.longinputSlider.options, current.longinput, suggestions.longinput);
@@ -2807,16 +2808,16 @@ if(data.value){
     ///END DELETE AND EXECUTE
 })
 
-.controller('headerctrl', function($scope, TemplateService, NavigationService, $state, $mdDialog, $upload, $timeout,$stateParams) {
+.controller('headerctrl', function($scope, TemplateService, NavigationService, $state, $mdDialog, $upload, $timeout, $stateParams) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
         $(window).scrollTop(0);
     });
     $scope.login = {};
-    $scope.signup={};
-    $scope.open={};
+    $scope.signup = {};
+    $scope.open = {};
     $scope.registrationDialog = function() {
-      $scope.open.selectedIndex= 0;
+        $scope.open.selectedIndex = 0;
 
         $mdDialog.show({
             template: '<md-dialog class="myClass"></md-dialog>',
@@ -2825,18 +2826,18 @@ if(data.value){
             scope: $scope.$new()
         });
     };
-    $scope.stringIsNumber =  function(s) {
-    var x = +s;
-    return x.toString() === s;
-};
-    if($state.current.name == "referralsignup" && $scope.stringIsNumber($stateParams.number)){
-      console.log($stateParams.number);
-      $scope.signup.referralCode=$stateParams.number;
-      $scope.registrationDialog();
-      $scope.open.selectedIndex= 1;
+    $scope.stringIsNumber = function(s) {
+        var x = +s;
+        return x.toString() === s;
+    };
+    if ($state.current.name == "referralsignup" && $scope.stringIsNumber($stateParams.number)) {
+        console.log($stateParams.number);
+        $scope.signup.referralCode = $stateParams.number;
+        $scope.registrationDialog();
+        $scope.open.selectedIndex = 1;
 
-    }else{
-      $state.go("home");
+    } else {
+        $state.go("home");
     }
     //UPLOADER CODE
     window.uploadUrl = adminURL + 'upload/';
@@ -2860,27 +2861,27 @@ if(data.value){
     };
     //END UPLOADER CODE
 
-    $scope.doLogin = function(input,ev) {
+    $scope.doLogin = function(input, ev) {
         NavigationService.login(input, function(data) {
             if (data.value) {
                 $state.go("profile");
             } else {
-              $mdDialog.show(
-                      $mdDialog.alert()
-                      .parent(angular.element(document.querySelector('#popupContainer')))
-                      .clickOutsideToClose(true)
-                      .title(data.data.message)
-                      .ok('Okay')
-                      .targetEvent(ev)
-                  )
-                  .then(function(result) {
-                    $scope.registrationDialog();
-                    $scope.open.selectedIndex= 0;
-                  });
+                $mdDialog.show(
+                        $mdDialog.alert()
+                        .parent(angular.element(document.querySelector('#popupContainer')))
+                        .clickOutsideToClose(true)
+                        .title(data.data.message)
+                        .ok('Okay')
+                        .targetEvent(ev)
+                    )
+                    .then(function(result) {
+                        $scope.registrationDialog();
+                        $scope.open.selectedIndex = 0;
+                    });
             }
         }, function(err) {});
     };
-    $scope.doSignup = function(input, formValidate,ev) {
+    $scope.doSignup = function(input, formValidate, ev) {
         if (formValidate.$valid) {
             if (input.password == input.cfpassword) {
                 NavigationService.signup(input, function(data) {
@@ -2888,18 +2889,18 @@ if(data.value){
                         console.log(data);
                         $state.go("profile");
                     } else {
-                      $mdDialog.show(
-                              $mdDialog.alert()
-                              .parent(angular.element(document.querySelector('#popupContainer')))
-                              .clickOutsideToClose(true)
-                              .title(data.data.message)
-                              .ok('Okay')
-                              .targetEvent(ev)
-                          )
-                          .then(function(result) {
-                            $scope.registrationDialog();
-                            $scope.open.selectedIndex= 1;
-                          });
+                        $mdDialog.show(
+                                $mdDialog.alert()
+                                .parent(angular.element(document.querySelector('#popupContainer')))
+                                .clickOutsideToClose(true)
+                                .title(data.data.message)
+                                .ok('Okay')
+                                .targetEvent(ev)
+                            )
+                            .then(function(result) {
+                                $scope.registrationDialog();
+                                $scope.open.selectedIndex = 1;
+                            });
                     }
                 }, function(err) {});
             } else {
@@ -2909,15 +2910,15 @@ if(data.value){
                 $scope.signup.cfpassword = undefined;
             }
         } else {
-          $mdDialog.show(
-                  $mdDialog.alert()
-                  .parent(angular.element(document.querySelector('#popupContainer')))
-                  .clickOutsideToClose(true)
-                  .title('Please input all required fields')
-                  .ok('Okay')
-                  .targetEvent(ev)
-              )
-              .then(function(result) {});
+            $mdDialog.show(
+                    $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Please input all required fields')
+                    .ok('Okay')
+                    .targetEvent(ev)
+                )
+                .then(function(result) {});
         }
     };
     $scope.getclass = "menu-in";
@@ -3047,28 +3048,29 @@ if(data.value){
 
 })
 
-.controller('headerCtrl', function($scope, TemplateService, $mdSidenav, $timeout,$state, $log,NavigationService) {
+.controller('headerCtrl', function($scope, TemplateService, $mdSidenav, $timeout, $state, $log, NavigationService) {
     $scope.template = TemplateService;
     $scope.texts = {};
     var array = window.location.hash.split('/');
-    globalfunction.changeHeaderText = function(text){
-      $scope.texts.headerText=  text;
+    globalfunction.changeHeaderText = function(text) {
+        $scope.texts.headerText = text;
     };
-    if($state.current.name !== "planned"){
-      globalfunction.changeHeaderText(array[1]);
+    if ($state.current.name !== "planned") {
+        globalfunction.changeHeaderText(array[1]);
 
     }
     $scope.toggleLeft = buildDelayedToggler('left');
-    NavigationService.getSession(function(data){
-      if(data.value){
+    NavigationService.getSession(function(data) {
+        if (data.value) {
 
-      }else{
-        if($state.current.name !== "referralsignup")
-        $state.go('home');
-      }
-    },function (err) {
-      console.log(err);
+        } else {
+            if ($state.current.name !== "referralsignup")
+                $state.go('home');
+        }
+    }, function(err) {
+        console.log(err);
     });
+
     function debounce(func, wait, context) {
         var timer;
         return function debounced() {
@@ -3081,14 +3083,15 @@ if(data.value){
             }, wait || 10);
         };
     }
-    $scope.logout=function(){
+    $scope.logout = function() {
 
-      NavigationService.logout(function(data){
-        $state.reload();
-      },function (err) {
-        console.log(err);
-      });
+        NavigationService.logout(function(data) {
+            $state.reload();
+        }, function(err) {
+            console.log(err);
+        });
     };
+
     function buildDelayedToggler(navID) {
         return debounce(function() {
             $mdSidenav(navID)

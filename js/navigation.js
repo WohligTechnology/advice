@@ -473,7 +473,7 @@ var navigationservice = angular.module('navigationservice', [])
             }).success(callback).error(err);
         },
         saveUserDetails: function(formData, callback, err) {
-          console.log(JSON.stringify(formData));
+          // console.log(JSON.stringify(formData));
             return $http({
                 url: adminURL + "user/editProfile",
                 method: "POST",
