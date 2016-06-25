@@ -91,7 +91,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     TemplateService.header = "views/content/header.html";
     $scope.formData = {};
     $scope.nominee = {};
-    $scope.nominee.nonominee = true;
+    $scope.nominee.nonominee = false;
     $scope.user = {};
     $scope.user.nominee = [];
     $scope.progress = 0;
@@ -118,6 +118,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     $scope.changeStatus(i, 0, i *500);
                 }
                 $scope.changeTab(4);
+            }
+            if($scope.user.nominee.length > 0){
+              $scope.nominee.nonominee=false;
+            }else{
+              $scope.emptyNominees(true);
             }
             _.each($scope.user.nominee, function(key) {
                 var d = new Date(key.dob);
@@ -1250,7 +1255,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             tab: tab
         };
     };
-    $scope.changeStatus(1, 0);
     $scope.addNominees = function() {
         if ($scope.user.nominee.length <= 2) {
             $scope.user.nominee.push({});
