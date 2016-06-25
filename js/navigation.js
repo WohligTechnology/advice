@@ -135,7 +135,12 @@ var scenarios = [{
     canSkip: true,
     hasSelect: false,
     label: 'startMonth',
-    valueDefault: (new Date()),
+    valueDefault: function(){
+      var def = _.find(result, function(key) {
+         return key.label == 'monthlyuntildate';
+     }).value;
+     return new Date((new Date(def)).setMonth((new Date(def)).getMonth() + 1));
+    },
     valueType: 'date',
     rules: {
         minimum: function(select) {
@@ -177,7 +182,19 @@ var scenarios = [{
     canSkip: true,
     hasSelect: false,
     label: 'endMonth',
-    valueDefault: (new Date()),
+    valueDefault: function(){
+      if(skipped[5]){
+        var def = _.find(result, function(key) {
+           return key.label == 'monthlyuntildate';
+       }).value;
+       return new Date((new Date(def)).setMonth((new Date(def)).getMonth() + 2));
+      }else{
+        var def = _.find(result, function(key) {
+           return key.label == 'startMonth';
+       }).value;
+       return new Date((new Date(def)).setMonth((new Date(def)).getMonth() + 1));
+      }
+    },
     valueType: 'date',
     rules: {
         minimum: function(select) {
@@ -355,7 +372,13 @@ var navigationservice = angular.module('navigationservice', [])
                 return callback(scenarios[0]);
             } else {
                 if (skip) {
+                  if(angular.isFunction(scenarios[responseto].valueDefault)){
+                    result[responseto].value = scenarios[responseto].valueDefault();
+
+                  }else{
                     result[responseto].value = scenarios[responseto].valueDefault;
+
+                  }
                     result[responseto].label = scenarios[responseto].label;
                     skipped[responseto] = skip;
                 } else {
