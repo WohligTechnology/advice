@@ -1574,9 +1574,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.upload = {};
         $scope.uploadFile = function(index) {
             document.getElementById('selector' + index).click();
-            $timeout(function() {
-                console.log($scope.upload.thisfile);
-            }, 8000);
+
         };
         $scope.getPortfolios = function() {
             $scope.liveportfolios = [];
@@ -2841,7 +2839,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.open.selectedIndex = 1;
 
     } else {
-        $state.go("home");
+
     }
     //UPLOADER CODE
     window.uploadUrl = adminURL + 'upload/';
@@ -3066,10 +3064,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.toggleLeft = buildDelayedToggler('left');
     NavigationService.getSession(function(data) {
         if (data.value) {
-
+          console.log("has session");
         } else {
-            if ($state.current.name !== "referralsignup")
+          console.log("no session");
+            if ($state.current.name !== "referralsignup"){
+              console.log("no session referralsignup");
                 $state.go('home');
+              }
         }
     }, function(err) {
         console.log(err);

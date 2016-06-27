@@ -53,13 +53,9 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
             templateUrl: "views/template.html",
             controller: 'PlannerCtrl'
         })
-        .state('archive', {
-            url: "/home",
-            templateUrl: "views/template.html",
-            controller: 'HomeCtrl'
-        })
+        
         .state('referralsignup', {
-            url: "/:number",
+            url: "/ref/:number",
             templateUrl: "views/template.html",
             controller: 'HomeCtrl'
         });
