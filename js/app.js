@@ -53,7 +53,7 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
             templateUrl: "views/template.html",
             controller: 'PlannerCtrl'
         })
-        
+
         .state('referralsignup', {
             url: "/ref/:number",
             templateUrl: "views/template.html",
@@ -95,6 +95,24 @@ firstapp.directive('equalHeight', function($compile, $parse) {
             $( window ).resize(function() {
               var wid = $element.width();
               $element.css({'height': wid});
+            });
+        }
+    };
+});
+
+firstapp.directive('wideSize', function($compile, $parse) {
+    return {
+        restrict: 'EA',
+        replace: false,
+        link: function($scope, element, attrs) {
+            var $element = $(element);
+            var wid = $element.width();
+            var wideVal = (wid / 16) * 9;
+            $element.css({'height': wideVal});
+            $( window ).resize(function() {
+              var wid = $element.width();
+              var wideVal = (wid / 16) * 9;
+              $element.css({'height': wideVal});
             });
         }
     };

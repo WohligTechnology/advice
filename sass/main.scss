@@ -1285,6 +1285,11 @@ input[type=number]::-webkit-outer-spin-button {
   @include align-items(center);
   background-color: #dddddd;
   overflow: hidden;
+  img {
+    width: auto !important;
+    height: 100% !important;
+    margin: 0 auto;
+  }
 }
 .md-toast-animating { overflow: inherit !important; }
 /* Start writing sass here */
