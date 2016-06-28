@@ -36,6 +36,7 @@
     "highcharts": "^4.2.5",
     "highcharts-ng": "^0.0.11",
     "angularjs-slider": "^2.13.0",
-    "ngclipboard": "^1.1.1"
+    "ngclipboard": "^1.1.1",
+    "angular-touch": "^1.5.7"
   }
 }

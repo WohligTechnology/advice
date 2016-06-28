@@ -2,7 +2,7 @@ var loading = {};
 var uploadres = [];
 var globalfunction = {};
 
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload', 'ngclipboard'])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload', 'ngclipboard','ngTouch'])
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams) {
     //Used to name the .html file
@@ -1797,13 +1797,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         },
         series: [{
             data: [],
-            name: 'Best'
+            name: 'Worst'
         }, {
             data: [],
             name: 'Base'
         }, {
             data: [],
-            name: 'Worst'
+            name: 'Best'
         }, {
             type: 'column',
             name: 'Cashflow',
@@ -1901,7 +1901,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         }, interval);
     };
-
+    $scope.mobileScrollBottom=function(ev){
+     $(".planner-main .main-planner-chats").scrollTop(99999999);
+    };
     $scope.replyMessage = function(input, qid, skips) {
         console.log("difference " + (scenarios.length - qid));
         if ((scenarios.length - qid) == 4) {
@@ -2434,8 +2436,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.play(resultNow, function(data) {
             compute++;
             loading.stop();
+            $scope.currentPlan = data;
             if (data.value === false) {
-                $scope.currentPlan = data;
                 $scope.setSliders(resultNow);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
@@ -2451,29 +2453,47 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                     $scope.executeIt = true;
                 }, 1000);
             } else {
-                $scope.currentPlan = data;
 
                 $scope.planlinechartconfig.loading = false;
                 $scope.reflowChart($scope.currentPlan, resultNow);
                 $scope.reflowChartED($scope.currentPlan);
-
                 $scope.setSliders(resultNow);
+$scope.showchart = true;
+              $scope.showdonut = true;
                 if ($scope.currentPlan.suggestions) {
-                    $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
-                    console.log($scope.inputs, $scope.currentPlan.suggestions);
-                    $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
-                    $scope.showCustomToast();
-                    $scope.showdonut = true;
-                    $scope.showchart = true;
+                    if($scope.currentPlan.feasible.length  > 1){
+                      $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
+                      console.log($scope.inputs, $scope.currentPlan.suggestions);
+                      $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
+                      $scope.showCustomToast();
 
-                    $timeout(function() {
-                        $scope.executeIt = true;
-                    }, 1000);
-                } else if (!$scope.currentPlan.suggestions && $scope.currentPlan.feasible.length == 1) {
+
+                      $timeout(function() {
+                          $scope.executeIt = true;
+                      }, 1000);
+                    }else{
+                      $scope.toastText = "DONE! You have reached your optimum investment plan";
+                      $scope.showCustomToast();
+                      $timeout(function () {
+                        $scope.closeToast();
+                        $timeout(function () {
+                          $scope.toastText = "Adjust sliders for better goal change";
+                          $scope.showCustomToast();
+                        },1000);
+                      },4000);
+
+                      $scope.showfunds = true;
+                      $scope.feasibleresult = resultNow;
+                      $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
+                      $timeout(function() {
+                          $scope.executeIt = true;
+                      }, 1000);
+                      $scope.getFunds($scope.currentPlan.feasible[0].type, $scope.currentPlan.feasible[0].tenures, resultNow);
+                    }
+                } else {
 
                     $scope.toastText = "DONE! You have reached your optimum investment plan";
-                    $scope.showchart = true;
-                    $scope.showdonut = true;
+
                     $scope.showfunds = true;
                     $scope.feasibleresult = resultNow;
                     $scope.suggestIt(resultNow, resultNow);
@@ -2483,9 +2503,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                         $scope.executeIt = true;
                     }, 1000);
                     $scope.getFunds($scope.currentPlan.feasible[0].type, $scope.currentPlan.feasible[0].tenures, resultNow);
-                    // $scope.inputs.lumpsumSlider.options.readOnly = true;
-                    // $scope.inputs.monthlySlider.options.readOnly = true;
-                    // $scope.inputs.installmentSlider.options.readOnly = true;
                 }
 
             }
