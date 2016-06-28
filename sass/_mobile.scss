@@ -65,6 +65,9 @@
       margin: 0 0 0 10px;
       input { width: 75%; }
     }
+    .planner-receiver, .planner-sender {
+      bottom: 0;
+    }
   }
   .skip-button { min-width: 60px; }
   .planner-main .planner-chats .planner-receiver .receiver-message span,

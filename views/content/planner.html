@@ -50,13 +50,13 @@
               </div>
             </div>
           </div>
-          <form ng-submit="sendMessage(response.reply)">
+          <form >
             <div layout="row" class="message-box">
 
               <div flex="84" flex-gt-xs="80" flex-xs="80">
                 <div class="chat-input">
                   <md-button class="text-uppercase skip-button" ng-disabled="!currentResponse.canSkip" ng-click="skipIt()">Skip</md-button>
-                  <input ng-hide="currentResponse.hasSelect" type="{{currentResponse.valueType}}" ng-change="typingIt(response.reply)"  ng-model="response.reply" placeholder="Type something .." style="">
+                  <input ng-focus="mobileScrollBottom()" ng-hide="currentResponse.hasSelect" type="{{currentResponse.valueType}}" ng-change="typingIt(response.reply)" ng-model="response.reply" placeholder="Type something .." style="">
                   <md-select ng-show="currentResponse.hasSelect" required ng-change="typingIt(response.reply)" ng-model="response.reply" style="width: 80%; margin: 0; display: inline-block;">
                     <md-option ng-repeat="option in currentResponse.selectValues" value="{{option}}">{{option}}</md-option>
 
@@ -64,10 +64,10 @@
                 </div>
               </div>
               <div flex="16" flex-gt-xs="20" flex-xs="20">
-                <md-button type="submit" class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff"  aria-label="Send">
+                <md-button ng-click="sendMessage(response.reply)" class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff" aria-label="Send">
                   <span class="text-uppercase">Send</span>
                 </md-button>
-                <md-button type="submit" class="send-fab pull-right md-fab md-raised md-primary white hidden-sm hidden-md hidden-lg" md-ink-ripple="#ffffff" aria-label="Send">
+                <md-button ng-click="sendMessage(response.reply)" class="send-fab pull-right md-fab md-raised md-primary white hidden-sm hidden-md hidden-lg" md-ink-ripple="#ffffff" aria-label="Send">
                   <span><i class="material-icons">send</i></span>
                 </md-button>
               </div>
