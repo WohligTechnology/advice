@@ -12,7 +12,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/header.html";
 
-
     $scope.section = {
         one: "views/section/section1.html",
         two: "views/section/section2.html",
@@ -2177,14 +2176,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             value: 25000
         }
     };
-    $scope.suggestions = {
-        installment: 21571,
-        lumpsum: 85011,
-        monthly: 9442,
-        noOfInstallment: 10,
-        noOfMonth: 11,
-        startMonth: 10
-    };
+    $scope.suggestions={};
 
     $scope.inputs.lumpsumSlider = {
         value: 25000,
