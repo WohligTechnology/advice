@@ -714,7 +714,7 @@ md-sidenav.md-sidenav-left {
 }
 // Planner
 .planner-main {
-    margin: 50px 0;
+    margin: 50px 0 10px;
     background-color: white;
     position: relative;
     z-index: 3;
@@ -729,8 +729,8 @@ md-sidenav.md-sidenav-left {
     }
     .planner-chats {
         margin: 30px;
-        min-height: 500px;
-        max-height: 500px;
+        min-height: 400px;
+        max-height: 400px;
         .planner-receiver,
         .planner-sender {
             position: relative;
@@ -1286,6 +1286,7 @@ input[type=number]::-webkit-outer-spin-button {
   background-color: #dddddd;
   overflow: hidden;
 }
+.md-toast-animating { overflow: inherit !important; }
 /* Start writing sass here */
 @import "fancybox-override";
 @import "mobile";
