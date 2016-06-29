@@ -50,7 +50,7 @@
               </div>
             </div>
           </div>
-          <form >
+          <form ng-submit="sendMessage(response.reply)">
             <div layout="row" class="message-box">
 
               <div flex="84" flex-gt-xs="80" flex-xs="80">
@@ -64,10 +64,10 @@
                 </div>
               </div>
               <div flex="16" flex-gt-xs="20" flex-xs="20">
-                <md-button ng-click="sendMessage(response.reply)" class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff" aria-label="Send">
+                <md-button type="submit" class="send-button pull-right md-button md-raised md-primary white hidden-xs" md-ink-ripple="#ffffff" aria-label="Send">
                   <span class="text-uppercase">Send</span>
                 </md-button>
-                <md-button ng-click="sendMessage(response.reply)" class="send-fab pull-right md-fab md-raised md-primary white hidden-sm hidden-md hidden-lg" md-ink-ripple="#ffffff" aria-label="Send">
+                <md-button type="submit" class="send-fab pull-right md-fab md-raised md-primary white hidden-sm hidden-md hidden-lg" md-ink-ripple="#ffffff" aria-label="Send">
                   <span><i class="material-icons">send</i></span>
                 </md-button>
               </div>
