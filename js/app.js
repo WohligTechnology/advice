@@ -162,7 +162,7 @@ firstapp.filter('portfolioserverimage', function() {
     } else {
       // return "img/logo.png";
       console.log("default");
-      return "img/placeholders/portfolio.jpg";
+      return "img/placeholders/portfolio.png";
     }
   };
 });
