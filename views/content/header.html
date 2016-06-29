@@ -1,5 +1,5 @@
 <div ng-controller="headerCtrl">
-  <md-toolbar class="white-bg md-whiteframe-2dp">
+  <md-toolbar class="white-bg md-whiteframe-2dp {{headerClass}}">
     <div class="md-toolbar-tools">
       <md-button class="md-icon-button" md-ink-ripple="#000000" aria-label="Menu" ng-disabled="false" ng-click="toggleLeft()"
             ng-hide="isOpenMenu()">
@@ -7,7 +7,7 @@
       </md-button>
       <h1><a class="navbar-brand" ui-sref="home"><img src="img/logo_beta.svg" alt="Sortvest" class="img-responsive" /></a></h1>
       <span flex></span>
-      <h4 class="black text-capitalize hidden-xs" ng-bind-html="texts.headerText"></h4>
+      <h4 class="black text-capitalize hidden-xs" id="headerTextCtrl">{{texts.headerText}}</h4>
     </div>
   </md-toolbar>
 </div>

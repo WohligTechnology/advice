@@ -1707,6 +1707,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.typing = false;
     $scope.suggestion = false;
     $scope.isLive = false;
+    $scope.headerClass = "planner-header";
     $scope.result = {};
     $scope.showchart = false;
     $scope.showfunds = false;
@@ -1714,12 +1715,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.sixHundredMonths = [];
     var current = $state.current;
     console.log($stateParams);
+
     if ($stateParams.id) {
         $scope.suggestion = true;
         NavigationService.getOnePortfolio($stateParams, function(data) {
             if (data.value) {
+              document.getElementById("headerTextCtrl").innerHTML = data.data.goalname;
+              console.log(document.getElementById("headerTextCtrl"));
                 if (data.data.lumpsum !== undefined) {
-                    globalfunction.changeHeaderText(data.data.goalname);
+
+
                     if (data.data.executiontime !== null && data.data.executiontime !== undefined) {
                         if ($stateParams.exec !== "" && new Date(data.data.executiontime).getTime() == $stateParams.exec) {
                             $scope.isLive = true;
@@ -3061,15 +3066,21 @@ $scope.showchart = true;
 
 .controller('headerCtrl', function($scope, TemplateService, $mdSidenav, $timeout, $state, $log, NavigationService) {
     $scope.template = TemplateService;
-    $scope.texts = {};
+
+
     var array = window.location.hash.split('/');
     globalfunction.changeHeaderText = function(text) {
+      $scope.texts = {};
         $scope.texts.headerText = text;
+        $timeout(function(){
+          $scope.$apply();
+        },10);
     };
     if ($state.current.name !== "planned") {
         globalfunction.changeHeaderText(array[1]);
 
     }
+    console.log("texts",$scope.texts);
     $scope.toggleLeft = buildDelayedToggler('left');
     NavigationService.getSession(function(data) {
         if (data.value) {
