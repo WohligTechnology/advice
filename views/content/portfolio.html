@@ -20,7 +20,7 @@
                                 </div>
                                 <span ng-click="uploadFile(port._id)"> <i class="material-icons">camera_alt</i><input style="display:none;"  ng-file-select='onFileSelect($files,1,"single",port._id,$event)' onclick='this.value=null' type="file" id="selector{{port._id}}"/></span>
                                 <md-card-actions ui-sref="planned({id:port._id,exec:port.execepoch})" layout="row" layout-align="start center">
-                                    <span flex="50" class="title">{{port.goalname}}</span>
+                                    <span flex="50" class="title">{{port.goalname | letterLimit : 18}}</span>
                                     <span flex="20" class="price">{{port.lumpsum | currency}}</span>
                                     <span flex="35" class="time"><span ng-if="port.timetostart.years !== 0">{{port.timetostart.years}}</span> <span ng-if="port.timetostart.years !== 0">Year<span ng-if="port.timetostart.years > 1">s</span></span>
                                     <span ng-if="port.timetostart.months !== 0">{{port.timetostart.months}}</span> <span ng-if="port.timetostart.months !== 0">Month<span ng-if="port.timetostart.months > 1">s</span></span>

@@ -56,7 +56,7 @@
               <div flex="84" flex-gt-xs="80" flex-xs="80">
                 <div class="chat-input">
                   <md-button class="text-uppercase skip-button" ng-disabled="!currentResponse.canSkip" ng-click="skipIt()">Skip</md-button>
-                  <input ng-touch="mobileScrollBottom()" ng-hide="currentResponse.hasSelect" type="{{currentResponse.valueType}}" ng-change="typingIt(response.reply)" ng-model="response.reply" placeholder="Type something .." style="">
+                  <input ng-click="mobileScrollBottom($event)" ng-hide="currentResponse.hasSelect" type="{{currentResponse.valueType}}" ng-change="typingIt(response.reply)" ng-model="response.reply" placeholder="Type something .." style="">
                   <md-select ng-show="currentResponse.hasSelect" required ng-change="typingIt(response.reply)" ng-model="response.reply" style="width: 80%; margin: 0; display: inline-block;">
                     <md-option ng-repeat="option in currentResponse.selectValues" value="{{option}}">{{option}}</md-option>
 

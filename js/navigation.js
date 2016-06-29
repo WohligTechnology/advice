@@ -2,7 +2,7 @@
 var result = [];
 var skipped = [];
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
-var adminURL = "http://localhost:1337/";
+var adminURL = "http://192.168.1.105:1337/";
 // var adminURL = "http://104.199.142.53/";
 var imgurl=adminURL+ "upload/readFile?file=";
 var scenarios = [{

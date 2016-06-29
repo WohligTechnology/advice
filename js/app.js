@@ -166,6 +166,16 @@ firstapp.filter('portfolioserverimage', function() {
     }
   };
 });
+firstapp.filter('letterLimit',function(){
+  return function (value,limit) {
+    console.log(value);
+    if(value.length < limit){
+      return value;
+    }else{
+      return value.slice(0,limit - 2)+ " ..";
+    }
+  };
+});
 firstapp.filter('percentage', function() {
     return function(value) {
         return value + " %";
