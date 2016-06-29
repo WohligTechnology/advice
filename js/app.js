@@ -250,6 +250,30 @@ firstapp.directive('schrollBottom', function() {
         }
     };
 });
+firstapp.directive('focus', function($timeout, $parse) {
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+          scope.$watch(attrs.focus, function(newValue, oldValue) {
+            console.log(element);
+            console.log(attrs);
+              if (newValue) { element[0].focus();
+                $('#chatBox').scrollTop($(window).height());
+              }
+          });
+          element.bind("blur", function(e) {
+              $timeout(function() {
+                  scope.$apply(attrs.focus + "=false");
+              }, 0);
+          });
+          element.bind("focus", function(e) {
+              $timeout(function() {
+                  scope.$apply(attrs.focus + "=true");
+              }, 0);
+          });
+      }
+    };
+  });
 firstapp.directive('fancyboxBox', function($document) {
     return {
         restrict: 'EA',
