@@ -1,6 +1,6 @@
 var loading = {};
 var uploadres = [];
-var globalfunction = {};
+
 
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload', 'ngclipboard','ngTouch'])
 
@@ -2437,13 +2437,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.feasibleresult = null;
         $scope.planlinechartconfig.loading = true;
         $scope.EDdonutchartConfig.loading = true;
-
+        globalfunction.request = {};
         NavigationService.play(resultNow, function(data) {
             compute++;
             loading.stop();
             $scope.currentPlan = data;
             if (data.value === false) {
-                $scope.setSliders(resultNow);
+                $scope.setSliders(globalfunction.request);
                 if ($scope.currentPlan.suggestions) {
                     $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
                     console.log($scope.inputs, $scope.currentPlan.suggestions);
@@ -2462,7 +2462,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.planlinechartconfig.loading = false;
                 $scope.reflowChart($scope.currentPlan, resultNow);
                 $scope.reflowChartED($scope.currentPlan);
-                $scope.setSliders(resultNow);
+                $scope.setSliders(globalfunction.request);
 $scope.showchart = true;
               $scope.showdonut = true;
                 if ($scope.currentPlan.suggestions) {

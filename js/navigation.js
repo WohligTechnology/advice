@@ -1,6 +1,7 @@
 // var adminURL = "";
 var result = [];
 var skipped = [];
+var globalfunction = {};
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
 // var adminURL = "http://192.168.1.105:1337/";
 var adminURL = "http://104.199.142.53/";
@@ -387,6 +388,7 @@ var navigationservice = angular.module('navigationservice', [])
 
         },
         play: function(request, callback, err) {
+          globalfunction.request = _.cloneDeep(request);
             return $http({
                 url: adminURL + "compute/alltypes2",
                 method: "POST",
