@@ -1,5 +1,5 @@
 <md-toast >
-  <span flex>{{toastText}}</span>
+  <span flex ng-bind-html="toastText"></span>
   <md-button ng-click="closeToast()" class="black">
     Close
   </md-button>
