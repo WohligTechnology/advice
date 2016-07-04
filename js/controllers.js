@@ -2489,8 +2489,6 @@ $scope.showchart = true;
                           $scope.executeIt = true;
                       }, 1000);
                     }else{
-                      $scope.toastText = "DONE! You have reached your optimum investment plan";
-                      $scope.showCustomToast();
                       $timeout(function () {
                         $scope.closeToast();
                         $timeout(function () {
@@ -2583,23 +2581,49 @@ $scope.showchart = true;
         console.log(current, suggestions);
         if (suggestions.installment !== 0 && suggestions.installment !== undefined && suggestions.installment !== null) {
             $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
+        }else{
+          $scope.inputs.installmentSlider.options.showSelectionBarFromValue = current.installment;
+          $scope.inputs.installmentSlider.options.ceil = current.installment + 0.3* current.installment;
+          $scope.inputs.installmentSlider.options.floor = current.installment - 0.3* current.installment;
         }
         if (suggestions.lumpsum !== 0 && suggestions.lumpsum !== undefined && suggestions.lumpsum !== null) {
             $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum, true);
+        }else{
+          $scope.inputs.lumpsumSlider.options.showSelectionBarFromValue = current.lumpsum;
+          $scope.inputs.lumpsumSlider.options.ceil = current.lumpsum + 0.3* current.lumpsum;
+          $scope.inputs.lumpsumSlider.options.floor = current.lumpsum - 0.3* current.lumpsum;
         }
         if (suggestions.monthly !== 0 && suggestions.monthly !== undefined && suggestions.monthly !== null) {
             $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly, true);
+        }else{
+          $scope.inputs.monthlySlider.options.showSelectionBarFromValue = current.monthlySlider;
+          $scope.inputs.monthlySlider.options.ceil = current.monthly + 0.3* current.monthly;
+          $scope.inputs.monthlySlider.options.floor = current.monthly - 0.3* current.monthly;
         }
         if (suggestions.noOfMonth !== 0 && suggestions.noOfMonth !== undefined && suggestions.noOfMonth !== null) {
             $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
+        }else{
+          $scope.inputs.monthlyuntildateSlider.options.showSelectionBarFromValue = current.noOfMonth;
+          $scope.inputs.monthlyuntildateSlider.options.ceil = current.noOfMonth + 0.3* current.noOfMonth;
+          $scope.inputs.monthlyuntildateSlider.options.floor = current.noOfMonth - 0.3* current.noOfMonth;
         }
         if (suggestions.startMonth !== 0 && suggestions.startMonth !== undefined && suggestions.startMonth !== null) {
             $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
+        }else{
+          $scope.inputs.startMonthSlider.options.showSelectionBarFromValue = current.startMonth;
+          $scope.inputs.startMonthSlider.options.ceil = parseInt(current.startMonth + 0.3* current.startMonth);
+          $scope.inputs.startMonthSlider.options.floor = parseInt(current.startMonth - 0.3* current.startMonth);
         }
         if (suggestions.noOfInstallment !== 0 && suggestions.noOfInstallment !== undefined && suggestions.noOfInstallment !== null) {
             $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
         }
-
+        //remove if any issue comes with slider automatically moving infinitely
+        else{
+          $scope.inputs.endMonthSlider.options.showSelectionBarFromValue = current.startMonth + current.noOfInstallment;
+          $scope.inputs.endMonthSlider.options.ceil = parseInt((current.startMonth + current.noOfInstallment) + 0.3* (current.startMonth + current.noOfInstallment));
+          $scope.inputs.endMonthSlider.options.floor = parseInt((current.startMonth + current.noOfInstallment) - 0.3* (current.startMonth + current.noOfInstallment));
+        }
+        //remove till here
         $scope.inputs.shortinputSlider.options = $scope.parseSuggestions($scope.inputs.shortinputSlider.options, current.shortinput, suggestions.shortinput);
         $scope.inputs.longinputSlider.options = $scope.parseSuggestions($scope.inputs.longinputSlider.options, current.longinput, suggestions.longinput);
 
