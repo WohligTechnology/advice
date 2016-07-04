@@ -2357,6 +2357,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             hidePointerLabels: true,
             onChange: function() {
+              if($scope.inputs.shortinputSlider.options.ceil > 100){
+                $scope.inputs.shortinputSlider.options.ceil = 100;
+              }
+              if($scope.inputs.shortinputSlider.value > 100){
+                $scope.inputs.shortinputSlider.value = 100;
+              }
                 $scope.validateSliders();
             },
             floor: 0,
@@ -2373,6 +2379,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             hidePointerLabels: true,
             onChange: function() {
+              if($scope.inputs.longinputSlider.options.ceil > 100){
+                $scope.inputs.longinputSlider.options.ceil = 100;
+              }
+              if($scope.inputs.longinputSlider.value > 100){
+                $scope.inputs.longinputSlider.value = 100;
+              }
                 $scope.validateSliders();
             },
             floor: 0,
