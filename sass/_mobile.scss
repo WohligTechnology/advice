@@ -57,6 +57,10 @@
 /* Extra Small Devices, Phones */
 @media (max-width : $screen-xs-max) {
   //.blue-back { display: none; }
+  md-toolbar.planner-header {
+    position: relative !important;
+  }
+  .planner { margin: 0 !important; }
   .planner-main {
     margin: 0;
     box-shadow: none;
