@@ -2418,6 +2418,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.inputs.lumpsumSlider.value = $filter('nearest100')($scope.inputs.lumpsumSlider.value);
                 $scope.inputs.monthlySlider.value = $filter('nearest100')($scope.inputs.monthlySlider.value);
                 $scope.inputs.installmentSlider.value = $filter('nearest100')($scope.inputs.installmentSlider.value);
+                if($scope.inputs.shortinputSlider.value > 100){
+                  $scope.inputs.shortinputSlider.value = 100;
+                }
+                if($scope.inputs.longinputSlider.value > 100){
+                  $scope.inputs.longinputSlider.value = 100;
+                }
 
                 $scope.validateSliders();
                 $scope.letCall = true;
@@ -2604,8 +2610,8 @@ $scope.showchart = true;
             $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
         }else{
           $scope.inputs.monthlyuntildateSlider.options.showSelectionBarFromValue = current.noOfMonth;
-          $scope.inputs.monthlyuntildateSlider.options.ceil = current.noOfMonth + 0.3* current.noOfMonth;
-          $scope.inputs.monthlyuntildateSlider.options.floor = current.noOfMonth - 0.3* current.noOfMonth;
+          $scope.inputs.monthlyuntildateSlider.options.ceil = parseInt(current.noOfMonth + 0.3* current.noOfMonth);
+          $scope.inputs.monthlyuntildateSlider.options.floor = parseInt(current.noOfMonth - 0.3* current.noOfMonth);
         }
         if (suggestions.startMonth !== 0 && suggestions.startMonth !== undefined && suggestions.startMonth !== null) {
             $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
