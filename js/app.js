@@ -141,7 +141,11 @@ firstapp.filter('nearest100', function() {
 });
 firstapp.filter('nearest10', function() {
     return function(value) {
-        return parseInt((value + 5) / 10) * 10;
+      if(value % 10 == 5){
+        return value;
+      }else{
+          return parseInt((value + 5) / 10) * 10;
+      }
     };
 });
 firstapp.filter('currency', function() {

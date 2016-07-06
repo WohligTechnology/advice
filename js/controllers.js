@@ -1,7 +1,6 @@
 var loading = {};
 var uploadres = [];
 
-
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload', 'ngclipboard','ngTouch'])
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams) {
@@ -2031,23 +2030,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.fundstable = [];
     $scope.calculateFunds = function(type, funds, tenures, result) {
+      console.log("RESULT here",result);
         $scope.fundstable = [];
         $scope.fundstable[0] = {};
         $scope.fundstable[1] = {};
         $scope.fundstable[2] = {};
         $scope.fundstable[3] = {};
-
-        // var lumpeq = result.lumpsum * (type / 10);
-        // var lumpdt = result.lumpsum * (Math.abs(10 - type) / 10);
-        // var monthlyeq = result.monthly * (type / 10);
-        // var monthlydt = result.monthly * (Math.abs(10 - type) / 10);
         var eq1, eq2, dt1, dt2;
         if (parseInt(tenures.length / 12) > 3) {
             eq1 = $filter('nearest10')((funds.morethan3equity1percent / 10) * type);
             eq2 = $filter('nearest10')((funds.morethan3equity2percent / 10) * type);
             dt1 = $filter('nearest10')((funds.morethan3debt1percent / 10) * (10 - type));
             dt2 = $filter('nearest10')((funds.morethan3debt2percent / 10) * (10 - type));
-            console.log(eq1 + eq2 + dt1 + dt2);
+            console.log(eq1 + " " + eq2 + " " + dt1 + " " + dt2);
+
             $scope.fundstable[0].name = funds.morethan3equity1fund.name;
             $scope.fundstable[0]._id = funds.morethan3equity1fund._id;
             $scope.fundstable[0].lump = (eq1 / 100) * result.lumpsum;
@@ -2463,7 +2459,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             if (data.value === false) {
                 $scope.setSliders(globalfunction.request);
                 if ($scope.currentPlan.suggestions) {
-                    $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
+                    $scope.suggestIt(globalfunction.request, $scope.currentPlan.suggestions);
                     console.log($scope.inputs, $scope.currentPlan.suggestions);
                     $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
                     $scope.showCustomToast();
@@ -2478,14 +2474,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             } else {
 
                 $scope.planlinechartconfig.loading = false;
-                $scope.reflowChart($scope.currentPlan, resultNow);
+                $scope.reflowChart($scope.currentPlan, globalfunction.request);
                 $scope.reflowChartED($scope.currentPlan);
                 $scope.setSliders(globalfunction.request);
 $scope.showchart = true;
               $scope.showdonut = true;
                 if ($scope.currentPlan.suggestions) {
                     if($scope.currentPlan.feasible.length  > 1){
-                      $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
+                      $scope.suggestIt(globalfunction.request, $scope.currentPlan.suggestions);
                       console.log($scope.inputs, $scope.currentPlan.suggestions);
                       $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
                       $scope.showCustomToast();
@@ -2504,26 +2500,26 @@ $scope.showchart = true;
                       },4000);
 
                       $scope.showfunds = true;
-                      $scope.feasibleresult = resultNow;
-                      $scope.suggestIt(resultNow, $scope.currentPlan.suggestions);
+                      $scope.feasibleresult = globalfunction.request;
+                      $scope.suggestIt(globalfunction.request, $scope.currentPlan.suggestions);
                       $timeout(function() {
                           $scope.executeIt = true;
                       }, 1000);
-                      $scope.getFunds($scope.currentPlan.feasible[0].type, $scope.currentPlan.feasible[0].tenures, resultNow);
+                      $scope.getFunds($scope.currentPlan.feasible[0].type, $scope.currentPlan.feasible[0].tenures, globalfunction.request);
                     }
                 } else {
 
                     $scope.toastText = "DONE! You have reached your optimum investment plan";
 
                     $scope.showfunds = true;
-                    $scope.feasibleresult = resultNow;
-                    $scope.suggestIt(resultNow, resultNow);
+                    $scope.feasibleresult = globalfunction.request;
+                    $scope.suggestIt(globalfunction.request, globalfunction.request);
 
                     $scope.showCustomToast();
                     $timeout(function() {
                         $scope.executeIt = true;
                     }, 1000);
-                    $scope.getFunds($scope.currentPlan.feasible[0].type, $scope.currentPlan.feasible[0].tenures, resultNow);
+                    $scope.getFunds($scope.currentPlan.feasible[0].type, $scope.currentPlan.feasible[0].tenures, globalfunction.request);
                 }
 
             }
