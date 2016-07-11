@@ -3,8 +3,8 @@ var result = [];
 var skipped = [];
 var globalfunction = {};
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
-var adminURL = "http://192.168.1.109:1337/";
-// var adminURL = "http://104.199.142.53/";
+// var adminURL = "http://192.168.1.107:1337/";
+var adminURL = "http://104.199.142.53/";
 var imgurl=adminURL+ "upload/readFile?file=";
 var scenarios = [{
     id: 0,

@@ -1,7 +1,7 @@
 var loading = {};
 var uploadres = [];
 
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload', 'ngclipboard','ngTouch'])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ngMaterial', 'ngMessages', "highcharts-ng", 'rzModule', 'angularFileUpload', 'ngclipboard', 'ngTouch'])
 
 .controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams) {
     //Used to name the .html file
@@ -95,6 +95,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.progress = 0;
     $scope.user.documents = {};
     $scope.checkbox = {};
+    $scope.showIt = {};
     $scope.process = [{
         status: 'done',
         fontname: 'done',
@@ -108,19 +109,32 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         fontname: 'more_horiz',
         colorclass: 'color-gray'
     }];
+    $scope.guardianChahiye = function(index) {
+      $scope.showIt['guardian'+index]=false;
+        if ($scope.user.nominee[index].birthday && $scope.user.nominee[index].birthmonth && $scope.user.nominee[index].birthyear) {
+            var eventTime = new Date();
+            $scope.dob = new Date($scope.user.nominee[index].birthyear + '-' + $scope.user.nominee[index].birthmonth + '-' + $scope.user.nominee[index].birthday);
+            $scope.diffTime = eventTime - $scope.dob;
+            var duration = moment.duration($scope.diffTime, 'milliseconds');
+            duration = moment.duration(duration - 1000, 'milliseconds');
+            if(duration.years()<=18){
+              $scope.showIt['guardian'+index]=true;
+            }
+        }
+    };
     NavigationService.getSession(function(data) {
         if (data.value) {
             $scope.user = data.data;
             if ($scope.user.forVerification) {
                 for (var i = 1; i < 5; i++) {
-                    $scope.changeStatus(i, 0, i *500);
+                    $scope.changeStatus(i, 0, i * 500);
                 }
                 $scope.changeTab(4);
             }
-            if($scope.user.nominee.length > 0){
-              $scope.nominee.nonominee=false;
-            }else{
-              $scope.emptyNominees(true);
+            if ($scope.user.nominee.length > 0) {
+                $scope.nominee.nonominee = false;
+            } else {
+                $scope.emptyNominees(true);
             }
             _.each($scope.user.nominee, function(key) {
                 var d = new Date(key.dob);
@@ -1208,7 +1222,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         if (interval === undefined) {
             interval = 0;
         }
-        console.log(index,status,interval);
+        console.log(index, status, interval);
         $timeout(function() {
             $scope.tabs[index].status = $scope.process[status];
             var i = 0;
@@ -1235,7 +1249,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         var tab = 0;
         _.each($scope.tabs, function(key) {
             if (letIn) {
-                if (key.status.status == "done" || i == $scope.tabs.length - 1 || i== $scope.tabs.length - 2) {
+                if (key.status.status == "done" || i == $scope.tabs.length - 1 || i == $scope.tabs.length - 2) {
                     if (i == $scope.tabs.length - 2) {
                         letIn = true;
                     }
@@ -1418,7 +1432,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         "August", "September", "October", "November", "December"
     ];
     $scope.birthYear = [];
-    var now = new Date().getFullYear() - 18;
+    var now = new Date().getFullYear() - 10;
     for (var i = now; i > 1929; i--) {
         $scope.birthYear.push(i);
     }
@@ -1719,8 +1733,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.suggestion = true;
         NavigationService.getOnePortfolio($stateParams, function(data) {
             if (data.value) {
-              document.getElementById("headerTextCtrl").innerHTML = data.data.goalname;
-              console.log(document.getElementById("headerTextCtrl"));
+                document.getElementById("headerTextCtrl").innerHTML = data.data.goalname;
+                console.log(document.getElementById("headerTextCtrl"));
                 if (data.data.lumpsum !== undefined) {
 
 
@@ -1905,8 +1919,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
         }, interval);
     };
-    $scope.mobileScrollBottom=function(ev){
-     $(".planner-main .main-planner-chats").scrollTop(99999999);
+    $scope.mobileScrollBottom = function(ev) {
+        $(".planner-main .main-planner-chats").scrollTop(99999999);
     };
     $scope.replyMessage = function(input, qid, skips) {
         console.log("difference " + (scenarios.length - qid));
@@ -2030,7 +2044,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.fundstable = [];
     $scope.calculateFunds = function(type, funds, tenures, result) {
-      console.log("RESULT here",result);
+        console.log("RESULT here", result);
         $scope.fundstable = [];
         $scope.fundstable[0] = {};
         $scope.fundstable[1] = {};
@@ -2179,7 +2193,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             value: 25000
         }
     };
-    $scope.suggestions={};
+    $scope.suggestions = {};
 
     $scope.inputs.lumpsumSlider = {
         value: 25000,
@@ -2353,12 +2367,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             hidePointerLabels: true,
             onChange: function() {
-              if($scope.inputs.shortinputSlider.options.ceil > 100){
-                $scope.inputs.shortinputSlider.options.ceil = 100;
-              }
-              if($scope.inputs.shortinputSlider.value > 100){
-                $scope.inputs.shortinputSlider.value = 100;
-              }
+                if ($scope.inputs.shortinputSlider.options.ceil > 100) {
+                    $scope.inputs.shortinputSlider.options.ceil = 100;
+                }
+                if ($scope.inputs.shortinputSlider.value > 100) {
+                    $scope.inputs.shortinputSlider.value = 100;
+                }
                 $scope.validateSliders();
             },
             floor: 0,
@@ -2375,12 +2389,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         options: {
             hidePointerLabels: true,
             onChange: function() {
-              if($scope.inputs.longinputSlider.options.ceil > 100){
-                $scope.inputs.longinputSlider.options.ceil = 100;
-              }
-              if($scope.inputs.longinputSlider.value > 100){
-                $scope.inputs.longinputSlider.value = 100;
-              }
+                if ($scope.inputs.longinputSlider.options.ceil > 100) {
+                    $scope.inputs.longinputSlider.options.ceil = 100;
+                }
+                if ($scope.inputs.longinputSlider.value > 100) {
+                    $scope.inputs.longinputSlider.value = 100;
+                }
                 $scope.validateSliders();
             },
             floor: 0,
@@ -2414,11 +2428,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.inputs.lumpsumSlider.value = $filter('nearest100')($scope.inputs.lumpsumSlider.value);
                 $scope.inputs.monthlySlider.value = $filter('nearest100')($scope.inputs.monthlySlider.value);
                 $scope.inputs.installmentSlider.value = $filter('nearest100')($scope.inputs.installmentSlider.value);
-                if($scope.inputs.shortinputSlider.value > 100){
-                  $scope.inputs.shortinputSlider.value = 100;
+                if ($scope.inputs.shortinputSlider.value > 100) {
+                    $scope.inputs.shortinputSlider.value = 100;
                 }
-                if($scope.inputs.longinputSlider.value > 100){
-                  $scope.inputs.longinputSlider.value = 100;
+                if ($scope.inputs.longinputSlider.value > 100) {
+                    $scope.inputs.longinputSlider.value = 100;
                 }
 
                 $scope.validateSliders();
@@ -2477,35 +2491,35 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.reflowChart($scope.currentPlan, globalfunction.request);
                 $scope.reflowChartED($scope.currentPlan);
                 $scope.setSliders(globalfunction.request);
-$scope.showchart = true;
-              $scope.showdonut = true;
+                $scope.showchart = true;
+                $scope.showdonut = true;
                 if ($scope.currentPlan.suggestions) {
-                    if($scope.currentPlan.feasible.length  > 1){
-                      $scope.suggestIt(globalfunction.request, $scope.currentPlan.suggestions);
-                      console.log($scope.inputs, $scope.currentPlan.suggestions);
-                      $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
-                      $scope.showCustomToast();
+                    if ($scope.currentPlan.feasible.length > 1) {
+                        $scope.suggestIt(globalfunction.request, $scope.currentPlan.suggestions);
+                        console.log($scope.inputs, $scope.currentPlan.suggestions);
+                        $scope.toastText = "Adjust the sliders on the left to reach their tail ends";
+                        $scope.showCustomToast();
 
 
-                      $timeout(function() {
-                          $scope.executeIt = true;
-                      }, 1000);
-                    }else{
-                      $timeout(function () {
-                        $scope.closeToast();
-                        $timeout(function () {
-                          $scope.toastText = "Adjust sliders for better goal change";
-                          $scope.showCustomToast();
-                        },1000);
-                      },4000);
+                        $timeout(function() {
+                            $scope.executeIt = true;
+                        }, 1000);
+                    } else {
+                        $timeout(function() {
+                            $scope.closeToast();
+                            $timeout(function() {
+                                $scope.toastText = "Adjust sliders for better goal change";
+                                $scope.showCustomToast();
+                            }, 1000);
+                        }, 4000);
 
-                      $scope.showfunds = true;
-                      $scope.feasibleresult = globalfunction.request;
-                      $scope.suggestIt(globalfunction.request, $scope.currentPlan.suggestions);
-                      $timeout(function() {
-                          $scope.executeIt = true;
-                      }, 1000);
-                      $scope.getFunds($scope.currentPlan.feasible[0].type, $scope.currentPlan.feasible[0].tenures, globalfunction.request);
+                        $scope.showfunds = true;
+                        $scope.feasibleresult = globalfunction.request;
+                        $scope.suggestIt(globalfunction.request, $scope.currentPlan.suggestions);
+                        $timeout(function() {
+                            $scope.executeIt = true;
+                        }, 1000);
+                        $scope.getFunds($scope.currentPlan.feasible[0].type, $scope.currentPlan.feasible[0].tenures, globalfunction.request);
                     }
                 } else {
 
@@ -2583,47 +2597,47 @@ $scope.showchart = true;
         console.log(current, suggestions);
         if (suggestions.installment !== 0 && suggestions.installment !== undefined && suggestions.installment !== null) {
             $scope.inputs.installmentSlider.options = $scope.parseSuggestions($scope.inputs.installmentSlider.options, current.installment, suggestions.installment, true);
-        }else{
-          $scope.inputs.installmentSlider.options.showSelectionBarFromValue = current.installment;
-          $scope.inputs.installmentSlider.options.ceil = current.installment + 0.3* current.installment;
-          $scope.inputs.installmentSlider.options.floor = current.installment - 0.3* current.installment;
+        } else {
+            $scope.inputs.installmentSlider.options.showSelectionBarFromValue = current.installment;
+            $scope.inputs.installmentSlider.options.ceil = current.installment + 0.3 * current.installment;
+            $scope.inputs.installmentSlider.options.floor = current.installment - 0.3 * current.installment;
         }
         if (suggestions.lumpsum !== 0 && suggestions.lumpsum !== undefined && suggestions.lumpsum !== null) {
             $scope.inputs.lumpsumSlider.options = $scope.parseSuggestions($scope.inputs.lumpsumSlider.options, current.lumpsum, suggestions.lumpsum, true);
-        }else{
-          $scope.inputs.lumpsumSlider.options.showSelectionBarFromValue = current.lumpsum;
-          $scope.inputs.lumpsumSlider.options.ceil = current.lumpsum + 0.3* current.lumpsum;
-          $scope.inputs.lumpsumSlider.options.floor = current.lumpsum - 0.3* current.lumpsum;
+        } else {
+            $scope.inputs.lumpsumSlider.options.showSelectionBarFromValue = current.lumpsum;
+            $scope.inputs.lumpsumSlider.options.ceil = current.lumpsum + 0.3 * current.lumpsum;
+            $scope.inputs.lumpsumSlider.options.floor = current.lumpsum - 0.3 * current.lumpsum;
         }
         if (suggestions.monthly !== 0 && suggestions.monthly !== undefined && suggestions.monthly !== null) {
             $scope.inputs.monthlySlider.options = $scope.parseSuggestions($scope.inputs.monthlySlider.options, current.monthly, suggestions.monthly, true);
-        }else{
-          $scope.inputs.monthlySlider.options.showSelectionBarFromValue = current.monthlySlider;
-          $scope.inputs.monthlySlider.options.ceil = current.monthly + 0.3* current.monthly;
-          $scope.inputs.monthlySlider.options.floor = current.monthly - 0.3* current.monthly;
+        } else {
+            $scope.inputs.monthlySlider.options.showSelectionBarFromValue = current.monthlySlider;
+            $scope.inputs.monthlySlider.options.ceil = current.monthly + 0.3 * current.monthly;
+            $scope.inputs.monthlySlider.options.floor = current.monthly - 0.3 * current.monthly;
         }
         if (suggestions.noOfMonth !== 0 && suggestions.noOfMonth !== undefined && suggestions.noOfMonth !== null) {
             $scope.inputs.monthlyuntildateSlider.options = $scope.parseSuggestions($scope.inputs.monthlyuntildateSlider.options, current.noOfMonth, suggestions.noOfMonth);
-        }else{
-          $scope.inputs.monthlyuntildateSlider.options.showSelectionBarFromValue = current.noOfMonth;
-          $scope.inputs.monthlyuntildateSlider.options.ceil = parseInt(current.noOfMonth + 0.3* current.noOfMonth);
-          $scope.inputs.monthlyuntildateSlider.options.floor = parseInt(current.noOfMonth - 0.3* current.noOfMonth);
+        } else {
+            $scope.inputs.monthlyuntildateSlider.options.showSelectionBarFromValue = current.noOfMonth;
+            $scope.inputs.monthlyuntildateSlider.options.ceil = parseInt(current.noOfMonth + 0.3 * current.noOfMonth);
+            $scope.inputs.monthlyuntildateSlider.options.floor = parseInt(current.noOfMonth - 0.3 * current.noOfMonth);
         }
         if (suggestions.startMonth !== 0 && suggestions.startMonth !== undefined && suggestions.startMonth !== null) {
             $scope.inputs.startMonthSlider.options = $scope.parseSuggestions($scope.inputs.startMonthSlider.options, current.startMonth, suggestions.startMonth);
-        }else{
-          $scope.inputs.startMonthSlider.options.showSelectionBarFromValue = current.startMonth;
-          $scope.inputs.startMonthSlider.options.ceil = parseInt(current.startMonth + 0.3* current.startMonth);
-          $scope.inputs.startMonthSlider.options.floor = parseInt(current.startMonth - 0.3* current.startMonth);
+        } else {
+            $scope.inputs.startMonthSlider.options.showSelectionBarFromValue = current.startMonth;
+            $scope.inputs.startMonthSlider.options.ceil = parseInt(current.startMonth + 0.3 * current.startMonth);
+            $scope.inputs.startMonthSlider.options.floor = parseInt(current.startMonth - 0.3 * current.startMonth);
         }
         if (suggestions.noOfInstallment !== 0 && suggestions.noOfInstallment !== undefined && suggestions.noOfInstallment !== null) {
             $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
         }
         //remove if any issue comes with slider automatically moving infinitely
-        else{
-          $scope.inputs.endMonthSlider.options.showSelectionBarFromValue = current.startMonth + current.noOfInstallment;
-          $scope.inputs.endMonthSlider.options.ceil = parseInt((current.startMonth + current.noOfInstallment) + 0.3* (current.startMonth + current.noOfInstallment));
-          $scope.inputs.endMonthSlider.options.floor = parseInt((current.startMonth + current.noOfInstallment) - 0.3* (current.startMonth + current.noOfInstallment));
+        else {
+            $scope.inputs.endMonthSlider.options.showSelectionBarFromValue = current.startMonth + current.noOfInstallment;
+            $scope.inputs.endMonthSlider.options.ceil = parseInt((current.startMonth + current.noOfInstallment) + 0.3 * (current.startMonth + current.noOfInstallment));
+            $scope.inputs.endMonthSlider.options.floor = parseInt((current.startMonth + current.noOfInstallment) - 0.3 * (current.startMonth + current.noOfInstallment));
         }
         //remove till here
         $scope.inputs.shortinputSlider.options = $scope.parseSuggestions($scope.inputs.shortinputSlider.options, current.shortinput, suggestions.shortinput);
@@ -3108,27 +3122,27 @@ $scope.showchart = true;
 
     var array = window.location.hash.split('/');
     globalfunction.changeHeaderText = function(text) {
-      $scope.texts = {};
+        $scope.texts = {};
         $scope.texts.headerText = text;
-        $timeout(function(){
-          $scope.$apply();
-        },10);
+        $timeout(function() {
+            $scope.$apply();
+        }, 10);
     };
     if ($state.current.name !== "planned") {
         globalfunction.changeHeaderText(array[1]);
 
     }
-    console.log("texts",$scope.texts);
+    console.log("texts", $scope.texts);
     $scope.toggleLeft = buildDelayedToggler('left');
     NavigationService.getSession(function(data) {
         if (data.value) {
-          console.log("has session");
+            console.log("has session");
         } else {
-          console.log("no session");
-            if ($state.current.name !== "referralsignup"){
-              console.log("no session referralsignup");
+            console.log("no session");
+            if ($state.current.name !== "referralsignup") {
+                console.log("no session referralsignup");
                 $state.go('home');
-              }
+            }
         }
     }, function(err) {
         console.log(err);
