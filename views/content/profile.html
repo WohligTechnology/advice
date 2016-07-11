@@ -125,13 +125,13 @@
         <div class="col-sm-6">
           <md-input-container name="guardianName" class="md-block">
             <label>Guardian Name</label>
-            <input required ng-change="inProcess(1)" ng-model="nominee.guardianName">
+            <input required ng-required="showIt.guardian{{$index}}" ng-change="inProcess(1)" ng-model="nominee.guardianName">
           </md-input-container>
         </div>
         <div class="col-sm-6">
           <md-input-container name="guardianPan" class="md-block">
             <label>Guardian PAN</label>
-            <input required ng-change="inProcess(1)" ng-model="nominee.guardianPan">
+            <input required ng-required="showIt.guardian{{$index}}" ng-change="inProcess(1)" ng-model="nominee.guardianPan">
           </md-input-container>
         </div>
       </div>
