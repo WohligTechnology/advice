@@ -43,6 +43,11 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
             templateUrl: "views/template.html",
             controller: 'PortfolioCtrl'
         })
+        .state('verifyemail', {
+            url: "/verifyemail/:text",
+            templateUrl: "views/template.html",
+            controller: 'VerifyEmailCtrl'
+        })
         .state('planner', {
             url: "/planner",
             templateUrl: "views/template.html",

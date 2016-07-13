@@ -1469,6 +1469,22 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     TemplateService.header = "views/content/header.html";
 })
+.controller('VerifyEmailCtrl', function($scope,$stateParams, TemplateService, NavigationService, $timeout) {
+    $scope.template = TemplateService.changecontent("verifyemail");
+    $scope.menutitle = NavigationService.makeactive("Notification");
+    TemplateService.title = $scope.menutitle;
+    $scope.ver = {};
+    $scope.ver.verify= $stateParams.text;
+    $scope.navigation = NavigationService.getnav();
+    // NavigationService.emailVerification($scope.ver,function (data) {
+    //   if(data.value){
+    //     console.log(data);
+    //   }else{
+    //     console.log("err",data);
+    //   }
+    // });
+    TemplateService.header = "views/content/header.html";
+})
 
 .controller('OverviewCtrl', function($scope, TemplateService, NavigationService, $timeout) {
     $scope.template = TemplateService.changecontent("overview");
@@ -3128,7 +3144,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.$apply();
         }, 10);
     };
-    if ($state.current.name !== "planned") {
+    if ($state.current.name !== "planned" ) {
         globalfunction.changeHeaderText(array[1]);
 
     }
@@ -3139,7 +3155,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             console.log("has session");
         } else {
             console.log("no session");
-            if ($state.current.name !== "referralsignup") {
+            console.log($state.current.name);
+            if ($state.current.name !== "referralsignup" && $state.current.name !== "verifyemail") {
                 console.log("no session referralsignup");
                 $state.go('home');
             }
