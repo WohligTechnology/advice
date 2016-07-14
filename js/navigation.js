@@ -4,7 +4,8 @@ var skipped = [];
 var globalfunction = {};
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
 // var adminURL = "http://192.168.1.107:1337/";
-var adminURL = "http://104.199.142.53/";
+// var adminURL = "http://104.199.142.53/";
+var adminURL = "http://localhost/";
 var imgurl=adminURL+ "upload/readFile?file=";
 var scenarios = [{
     id: 0,
@@ -473,13 +474,22 @@ var navigationservice = angular.module('navigationservice', [])
         },
         signup: function(request, callback, err) {
             return $http({
-                url: adminURL + "user/save",
+                url: adminURL + "tempuser/save",
                 method: "POST",
                 data: {
                     "email": request.email,
                     "password": request.password,
                     "mobile":request.mobile,
                     "referralCode":request.referralCode
+                }
+            }).success(callback).error(err);
+        },
+        emailVerification: function(request, callback, err) {
+            return $http({
+                url: adminURL + "tempuser/emailVerification",
+                method: "POST",
+                data: {
+                    "verifyemail": request.verify
                 }
             }).success(callback).error(err);
         },

@@ -1,5 +1,10 @@
 <div class="container">
-  <div>
-    <img src="" alt="">
-  </div>
+    <div class="verify-success" ng-show="sc.status">
+        <h4>Email Verified</h4>
+        <p>Please proceed to login, <a ui-sref="home">Click Here</a></p>
+    </div>
+    <div class="verify-failure" ng-hide="sc.status">
+        <h4>Email Already Verified</h4>
+        <p>Please proceed to login, <a ui-sref="home">Click Here</a></p>
+    </div>
 </div>

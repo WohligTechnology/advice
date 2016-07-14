@@ -1474,15 +1474,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.menutitle = NavigationService.makeactive("Notification");
     TemplateService.title = $scope.menutitle;
     $scope.ver = {};
+    $scope.sc={};
     $scope.ver.verify= $stateParams.text;
     $scope.navigation = NavigationService.getnav();
-    // NavigationService.emailVerification($scope.ver,function (data) {
-    //   if(data.value){
-    //     console.log(data);
-    //   }else{
-    //     console.log("err",data);
-    //   }
-    // });
+    NavigationService.emailVerification($scope.ver,function (data) {
+      console.log(data);
+      $scope.sc.status=data.value;
+      if(data.value){
+        console.log(data);
+      }else{
+        console.log("err",data);
+      }
+    },function (err) {
+      console.log(err);
+    });
     TemplateService.header = "views/content/header.html";
 })
 
@@ -2971,7 +2976,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 NavigationService.signup(input, function(data) {
                     if (data.value) {
                         console.log(data);
-                        $state.go("profile");
+                        $mdDialog.show(
+                                $mdDialog.alert()
+                                .parent(angular.element(document.querySelector('#popupContainer')))
+                                .clickOutsideToClose(true)
+                                .title("Please check your inbox, we've sent a mail for verification")
+                                .ok('Okay')
+                                .targetEvent(ev)
+                            )
+                            .then(function(result) {
+
+                            });
                     } else {
                         $mdDialog.show(
                                 $mdDialog.alert()
