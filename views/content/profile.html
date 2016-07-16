@@ -288,7 +288,7 @@
             <div class="address-cor col-md-4">
               <md-button class="" ng-class="{'md-success':user.documents.corraddressproof,'md-primary':!user.documents.corraddressproof}"  aria-label="File">
                 <input ng-model="user.documents.corraddressproof" name="corraddressproof" required type="file"  ng-required = "!user.documents.corraddressproof" ng-file-select="onFileSelect($files,1,'single','corraddressproof',$event)" >
-                <span class="text-uppercase white">Address Proof (Corresponance)<i ng-if="user.documents.corraddressproof" class="material-icons document-success">done</i></span>
+                <span class="text-uppercase white">Address Proof (Correspondence)<i ng-if="user.documents.corraddressproof" class="material-icons document-success">done</i></span>
               </md-button>
               <md-checkbox ng-model="checkbox.sameaddress" ng-change="samePermanentAddress(checkbox.sameaddress)" md-no-ink aria-label="Same as Permanant Address" class="same" layout="row">
                 Same as Permanant Address
