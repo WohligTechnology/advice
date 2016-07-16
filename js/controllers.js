@@ -19,6 +19,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         five: "views/section/section5.html",
         six: "views/section/section6.html",
         seven: "views/section/section7.html",
+        eight: "views/section/section8.html"
     };
 
     $scope.changeFullPage = function(no) {
