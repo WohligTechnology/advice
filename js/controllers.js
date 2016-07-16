@@ -2904,6 +2904,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
     $scope.login = {};
     $scope.signup = {};
+    $scope.forgotpassword={};
     $scope.open = {};
     $scope.registrationDialog = function() {
         $scope.open.selectedIndex = 0;
@@ -2916,11 +2917,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     };
     $scope.forgotPasswordDialog = function() {
-      
+
         $mdDialog.show({
             template: '<md-dialog class="myClass"></md-dialog>',
             templateUrl: 'views/modal/forgotpassword.html',
-            clickOutsideToClose: true,
+            clickOutsideToClose: false,
             scope: $scope.$new()
         });
     };
@@ -2976,6 +2977,41 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                         $scope.registrationDialog();
                         $scope.open.selectedIndex = 0;
                     });
+            }
+        }, function(err) {});
+    };
+    $scope.doForgot = function(input, ev) {
+        NavigationService.forgotPassword(input, function(data) {
+            if (data.value) {
+            if(data.data.comment.includes("not")){
+              $mdDialog.show(
+                      $mdDialog.alert()
+                      .parent(angular.element(document.querySelector('#popupContainer')))
+                      .clickOutsideToClose(true)
+                      .title("User does not exist")
+                      .ok('Okay')
+                      .targetEvent(ev)
+                  )
+                  .then(function(result) {
+                      $scope.registrationDialog();
+                      $scope.open.selectedIndex = 0;
+                  });
+            }else{
+              $mdDialog.show(
+                      $mdDialog.alert()
+                      .parent(angular.element(document.querySelector('#popupContainer')))
+                      .clickOutsideToClose(true)
+                      .title("Please check your email for further instructions")
+                      .ok('Okay')
+                      .targetEvent(ev)
+                  )
+                  .then(function(result) {
+                      $scope.registrationDialog();
+                      $scope.open.selectedIndex = 0;
+                  });
+            }
+            } else {
+              console.log(data);
             }
         }, function(err) {});
     };

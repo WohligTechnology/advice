@@ -503,6 +503,15 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }).success(callback).error(err);
         },
+        forgotPassword: function(request, callback, err) {
+            return $http({
+                url: adminURL + "user/forgotPassword",
+                method: "POST",
+                data: {
+                    "email": request.email
+                }
+            }).success(callback).error(err);
+        },
         saveUserDetails: function(formData, callback, err) {
           // console.log(JSON.stringify(formData));
             return $http({
