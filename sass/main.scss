@@ -1268,6 +1268,12 @@ md-sidenav.md-sidenav-left {
   width: 50%;
   height: 800px;
 }
+.home-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 @mixin home-section-back($img) {
   background-image: url($img);
   background-size: cover;
@@ -1287,10 +1293,7 @@ md-sidenav.md-sidenav-left {
   }
   .section-one-content {
     @extend .home-section-half;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @extend .home-flex;
     .content-image {
       width: 100%;
       height: auto;
@@ -1406,10 +1409,10 @@ md-sidenav.md-sidenav-left {
     bottom: 200px;
     right: 200px;
     button {
-      padding: 8px 30px;
+      padding: 10px 45px;
       background-color: black;
       color: #fff;
-      font-size: 16px;
+      font-size: 18px;
       border-radius: 0;
     }
   }
@@ -1417,10 +1420,7 @@ md-sidenav.md-sidenav-left {
 .section-six {
   overflow: hidden;
   @extend .home-section;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @extend .home-flex;
   h2 {
     font-size: 36px;
     font-weight: bold;
@@ -1451,16 +1451,16 @@ md-sidenav.md-sidenav-left {
 }
 .section-seven {
   @extend .home-section;
+  height: 600px;
   h2 {
     font-size: 36px;
     font-weight: bold;
+    margin: 50px 0 -50px;
   }
   .section-seven-image {
     @extend .home-section-half;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @extend .home-flex;
+    height: 600px;
     .image {
       width: 400px;
       height: auto;
@@ -1476,16 +1476,64 @@ md-sidenav.md-sidenav-left {
   }
   .section-seven-content {
     @extend .home-section-half;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @extend .home-flex;
+    height: 600px;
     p {
       width: 100%;
       color: #3B67BC;
       margin-top: 20px;
       font-size: 20px;
       letter-spacing: 1px;
+    }
+  }
+}
+.section-eight {
+  @extend .home-section;
+  height: 600px;
+  margin-top: -200px;
+  .row { width: 100%; }
+  .section-eight-image {
+    @extend .home-section-half;
+    height: 600px;
+    @extend .home-flex;
+  }
+  .section-eight-content {
+    @extend .home-section-half;
+    height: 600px;
+    //padding: 8% 0 0;
+    @extend .home-flex;
+    h3 {
+      font-size: 48px;
+      font-weight: bold;
+    }
+    p {
+      width: 100%;
+      margin-top: 20px;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+  }
+  footer {
+    padding: 20px 0 !important;
+    background-color: #3F3F3F;
+    .links {
+      color: white;
+      font-size: 20px;
+      a {
+        margin: 0 5px;
+        color: white;
+        font-size: 20px;
+        text-decoration: none;
+        @include transition(all 300ms ease-in-out);
+        &:hover {
+          color: #999;
+        }
+      }
+    }
+    p {
+      margin-top: 10px;
+      color: white;
+      font-size: 16px;
     }
   }
 }
