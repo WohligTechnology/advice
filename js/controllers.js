@@ -2915,6 +2915,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             scope: $scope.$new()
         });
     };
+    $scope.forgotPasswordDialog = function() {
+      
+        $mdDialog.show({
+            template: '<md-dialog class="myClass"></md-dialog>',
+            templateUrl: 'views/modal/forgotpassword.html',
+            clickOutsideToClose: true,
+            scope: $scope.$new()
+        });
+    };
     $scope.stringIsNumber = function(s) {
         var x = +s;
         return x.toString() === s;

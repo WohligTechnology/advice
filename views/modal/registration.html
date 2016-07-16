@@ -13,7 +13,9 @@
           <md-input-container class="md-block">
             <label class="text-uppercase">Password</label>
             <input type="password" ng-model="login.password" id="password" name="password" required>
-          </md-input-container>
+
+            <a style="cursor: pointer;float: right;text-decoration: none;" ng-click="closeDialog();forgotPasswordDialog()"> Forgot Password?</a></md-input-container>
+
         </div>
 
         <md-button type="submit"class="md-raised md-primary md-blue">Submit</md-button>
