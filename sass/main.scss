@@ -1414,6 +1414,41 @@ md-sidenav.md-sidenav-left {
     }
   }
 }
+.section-six {
+  overflow: hidden;
+  @extend .home-section;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h2 {
+    font-size: 36px;
+    font-weight: bold;
+  }
+  .blue-section {
+    width: 110%;
+    background-color: #4472C4;
+    margin-top: 50px;
+    padding: 80px 0 120px;
+    @include transform(rotate(-3deg));
+    .container {
+      @include transform(rotate(3deg));
+    }
+    .image-one, .image-two, .image-three {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      img { height: 100%; }
+      p {
+        margin-top: 40px;
+        font-size: 16px;
+        color: white;
+      }
+    }
+    .rotate-one { margin-top: 30px; }
+    .rotate-three { margin-top: -30px; }
+  }
+}
 
 // registration dialog
 md-dialog {
