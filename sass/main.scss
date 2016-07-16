@@ -1388,6 +1388,32 @@ md-sidenav.md-sidenav-left {
     }
   }
 }
+.section-five {
+  @extend .home-section;
+  position: relative;
+  .section-five-image {
+    @extend .home-section;
+    .image {
+      width: 100%;
+      height: 100%;
+      @include home-section-back('../img/home/section_five.jpg');
+      background-size: contain !important;
+      background-repeat: no-repeat !important;
+    }
+  }
+  .try-button {
+    position: absolute;
+    bottom: 200px;
+    right: 200px;
+    button {
+      padding: 8px 30px;
+      background-color: black;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 0;
+    }
+  }
+}
 
 // registration dialog
 md-dialog {
