@@ -6,6 +6,9 @@
         <!-- <md-button class="md-primary md-raised pull-right" md-ink-ripple="#ffffff" aria-label="Redeem">Redeem</md-button>
         <md-button class="md-primary md-raised pull-right" md-ink-ripple="#ffffff" aria-label="Points">Points: {{user.points}}</md-button>
       </div> -->
+      <div ng-if='user.referred.length == 0'>
+          <h4 style="text-align:center;color:#999;">No Referrals</h4 >
+      </div>
       <div class="all-referrals" ng-if='user.referred.length !== 0'>
         <div class="row">
           <div class="col-sm-3 col-xs-6" ng-repeat="ref in user.referred">
@@ -16,7 +19,9 @@
           </div>
 
         </div>
+
       </div>
+
       <div class="row">
         <div class="referral-code md-whiteframe-2dp">
           <p>In case you are looking to create an investment plan for your goals do check out www.sortvest.com. You will need my referral code (<span class="text-bold">{{user.mobile}}</span>) to sign up.</p>

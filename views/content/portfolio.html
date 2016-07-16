@@ -29,6 +29,9 @@
                             </md-card>
                         </div>
                     </div>
+                    <div ng-if="liveportfolios.length == 0">
+                      <h4 style="text-align:center;color:#999;">No Live Plans</h4 >
+                    </div>
                 </div>
 
                 <md-list-item class="md-2-line">
@@ -53,11 +56,15 @@
                         </div>
                     </div>
                 </div>
+                <div ng-if="savedportfolios.length == 0">
+                  <h4 style="text-align:center;color:#999;">No Saved Plans</h4 >
+                </div>
             </div>
         </div>
     </div>
     <div class="add-button text-right">
-        <a ng-click="showConfirm($event)">
+        <!-- <a ng-click="showConfirm($event)"> -->
+        <a ui-sref="planner">
             <md-button aria-label="menu" class="md-fab md-primary md-whiteframe-2dp">
                 <i class="material-icons">add</i>
                 <md-tooltip md-direction="top">
