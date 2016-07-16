@@ -1314,6 +1314,23 @@ md-dialog {
       color: white !important;
     }
   }
+  .forgot-password {
+    width: 350px;
+    margin-bottom: 15px;
+    h5 {
+      margin: 20px 0;
+      font-size: 20px;
+    }
+    form {
+      margin: 40px 30px 0;
+      .form-group { margin: 0; }
+      md-input-container.md-block { margin: 0; }
+    }
+    .md-blue {
+      background-color: #4285F4 !important;
+      color: white !important;
+    }
+  }
 }
 
 .md-toast-content {
