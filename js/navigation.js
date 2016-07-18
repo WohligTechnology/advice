@@ -503,6 +503,15 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }).success(callback).error(err);
         },
+        resendOTP: function(request, callback, err) {
+            return $http({
+                url: adminURL + "otp/save",
+                method: "POST",
+                data: {
+                    "contact": request.contact
+                }
+            }).success(callback).error(err);
+        },
         getOnePortfolio: function(request, callback, err) {
             return $http({
                 url: adminURL + "portfolio/getOne",

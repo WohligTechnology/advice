@@ -1,7 +1,7 @@
 <md-tabs md-selected="open.selectedIndex" md-dynamic-height md-stretch-tabs="always" class="registration">
   <md-tab label="Login">
     <md-content class="md-padding text-center">
-      <form name="loginForm"  ng-submit="doLogin(login,$event);closeDialog();">
+      <form name="loginForm"  ng-submit="closeDialog();doLogin(login,$event);">
         <div class="form-group">
           <md-input-container class="md-block">
             <label class="text-uppercase">Email</label>

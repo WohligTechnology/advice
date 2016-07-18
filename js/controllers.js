@@ -2916,6 +2916,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.forgotpassword = {};
     $scope.verify = {};
     $scope.open = {};
+    $scope.resend = {};
+    $scope.resend.text = "Resend";
     $scope.registrationDialog = function() {
         $scope.open.selectedIndex = 0;
 
@@ -2957,6 +2959,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     }
     //UPLOADER CODE
+    NavigationService.getSession(function(data) {
+        if (data.value) {
+            if($state.current.name == "home"){
+              $state.go("portfolio");
+            }
+        } else {
+
+        }
+    }, function(err) {
+        console.log(err);
+    });
+
     window.uploadUrl = adminURL + 'upload/';
     var imagejstupld = "";
     $scope.images = [];
@@ -2981,7 +2995,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.doLogin = function(input, ev) {
         NavigationService.login(input, function(data) {
             if (data.value) {
-                $state.go("profile");
+              loading.start();
+                $timeout(function () {
+                  loading.stop();
+                  $state.go("profile");
+                },1500);
             } else {
                 $mdDialog.show(
                         $mdDialog.alert()
@@ -3033,6 +3051,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         }, function(err) {});
     };
+    $scope.resendOTP = function () {
+      var input={};
+      input.contact = $scope.signup.mobile;
+      NavigationService.resendOTP(input,function (data) {
+        if(data.value){
+          $scope.resend.text = "Sent";
+          $timeout(function () {
+            $scope.resend.text = "Resend";
+          },1000);
+        }
+      },function (err) {
+
+      });
+    };
     $scope.checkOTP = function(input, ev) {
         input.contact = $scope.signup.mobile;
         NavigationService.checkOTP(input, function(data) {
@@ -3041,7 +3073,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                         $mdDialog.alert()
                         .parent(angular.element(document.querySelector('#popupContainer')))
                         .clickOutsideToClose(true)
-                        .title("Please proceed to login")
+                        .title("You are all set. Please proceed to login ..")
                         .ok('Okay')
                         .targetEvent(ev)
                     )
@@ -3067,7 +3099,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                           $mdDialog.alert()
                           .parent(angular.element(document.querySelector('#popupContainer')))
                           .clickOutsideToClose(true)
-                          .title(data.data)
+                          .title("Verified! "+data.data)
                           .ok('Okay')
                           .targetEvent(ev)
                       )
