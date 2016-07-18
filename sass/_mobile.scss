@@ -71,16 +71,23 @@
   }
   .nominee-details, .regulatory-details, .document-upload, .verification { margin-top: 120px; }
   .section-one, .section-two, .section-three, .section-four,
-  .section-one-image, .section-two-image, .section-three-image, .section-four-image, .section-five, .section-five-image,
+  .section-one-image, .section-two-image, .section-three-image, .section-four-image,
   .section-one-content, .section-two-content, .section-three-content, .section-four-content {
     height: 600px !important;
   }
   .section-one .section-one-content p { margin: 20px 50px 0; }
   .section-two .section-two-content, .section-three .section-three-content, .section-four .section-four-content {
-    h3 { font-size: 27px; }
+    h3 { padding: 0; font-size: 24px; }
     p { font-size: 16px; }
   }
   .section-six h2 { font-size: 32px; }
+  .section-seven {
+    .section-seven-image .image {
+      width: 250px !important;
+      padding: 40px !important;
+    }
+    .section-seven-content p { font-size: 16px; }
+  }
 }
 
 /* Extra Small Devices, Phones */
@@ -183,21 +190,54 @@
     }
   }
   .section-one .section-one-content .content-image img { width: 250px; }
-  .section-five { margin-top: 400px; }
+  .section-one .section-one-content p { font-size: 20px; }
+  .section-five {
+    height: 400px;
+    .section-five-image {
+      height: 400px;
+      .image { background-size: cover !important; }
+    }
+  }
   .section-six {
     h2 { margin: 0 20px; font-size: 28px; }
     height: auto;
     padding-bottom: 30px;
+    margin-top: 30px;
     .blue-section {
+      width: 120%;
+      padding: 0 !important;
       .image-one, .image-two, .image-three {
         width: 150px;
         height: 150px;
         p { margin-top: 10px !important; }
       }
       .rotate-one, .rotate-two, .rotate-three { height: 300px; }
-      .rotate-one { margin-top: -30px !important; }
+      .rotate-one { margin-top: 30px !important; }
       .rotate-three { margin-top: 0 !important; }
     }
+  }
+  .section-seven, .section-eight {
+    h2, h3 {
+      font-size: 28px;
+      margin: 50px 20px;
+    }
+    .section-seven-image, .section-seven-content, .section-eight-image, .section-eight-content { width: 100%; height: auto; }
+    .section-seven-content, .section-eight-content { width: auto; margin: 50px; }
+  }
+  .section-eight-image img {
+    width: 200px;
+    margin-top: 50px;
+  }
+  .section-eight .section-eight-content {
+    h3 { margin: 0; font-size: 24px; }
+    p { font-size: 16px; text-align: center; }
+  }
+  .section-eight footer {
+    .links {
+      font-size: 14px;
+      a { font-size: 14px; }
+    }
+    p { margin: 0 10px; font-size: 12px; }
   }
 }
 
@@ -209,4 +249,14 @@
   .planner-main .planner-chats .planner-sender .sender-message { max-width: 65%; }
   .portfolio .portfolio-main .live-portfolios md-card md-card-actions .price,
   .portfolio .portfolio-main .saved-portfolios md-card md-card-actions .price { margin-left: -100px; }
+  .navbar-header { margin-left: 20px; }
+  .navbar-brand {
+    padding: 25px 10px !important;
+    img { width: 100px !important; }
+  }
+  .login {
+    margin: 20px 20px 0 0 !important;
+    padding: 6px 20px !important;
+    font-size: 14px !important;
+  }
 }
