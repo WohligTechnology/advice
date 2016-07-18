@@ -1,7 +1,7 @@
 <md-tabs md-selected="open.selectedIndex" md-dynamic-height md-stretch-tabs="always" class="registration">
   <md-tab label="Login">
     <md-content class="md-padding text-center">
-      <form name="loginForm"  ng-submit="doLogin(login,$event)">
+      <form name="loginForm"  ng-submit="doLogin(login,$event);closeDialog();">
         <div class="form-group">
           <md-input-container class="md-block">
             <label class="text-uppercase">Email</label>
@@ -23,7 +23,7 @@
   </md-tab>
   <md-tab label="Signup">
     <md-content class="md-padding text-center">
-      <form name="signupForm" ng-submit="doSignup(signup,signupForm,$event)">
+      <form name="signupForm" ng-submit="doSignup(signup,signupForm,$event);closeDialog();">
         <div class="form-group">
          <md-input-container class="md-block">
            <label class="text-uppercase">Email</label>

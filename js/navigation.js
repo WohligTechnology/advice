@@ -493,6 +493,16 @@ var navigationservice = angular.module('navigationservice', [])
                 }
             }).success(callback).error(err);
         },
+        checkOTP: function(request, callback, err) {
+            return $http({
+                url: adminURL + "otp/checkOtp",
+                method: "POST",
+                data: {
+                    "contact": request.contact,
+                    "otp":request.otp
+                }
+            }).success(callback).error(err);
+        },
         getOnePortfolio: function(request, callback, err) {
             return $http({
                 url: adminURL + "portfolio/getOne",

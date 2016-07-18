@@ -1,0 +1,19 @@
+<section class="forgot-password">
+  <div class="text-center">
+    <h5 class="text-uppercase">OTP verification</h5>
+    <md-divider></md-divider>
+    <div>
+      <form name="verifyForm" ng-submit="checkOTP(verify,$event);closeDialog();">
+        <p>Please enter the 6-digit OTP sent on your entered mobile number</p>
+        <div class="form-group">
+          <md-input-container class="md-block">
+            <label class="text-uppercase">OTP</label>
+            <input type="number" ng-minlength="6" style="font-size:20px;width:100%;text-align:center;" ng-model="verify.otp" id="otp" name="otp" required>
+          </md-input-container>
+        </div>
+        <md-button ng-show="!verifyForm.otp.$invalid" type="submit" class="md-raised md-primary md-blue">Submit</md-button>
+      </form>
+    </div>
+  </div>
+  <!-- <button type="button" name="button" ng-click="closeDialog();"></button> -->
+</section>

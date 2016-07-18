@@ -111,15 +111,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         colorclass: 'color-gray'
     }];
     $scope.guardianChahiye = function(index) {
-      $scope.showIt['guardian'+index]=false;
+        $scope.showIt['guardian' + index] = false;
         if ($scope.user.nominee[index].birthday && $scope.user.nominee[index].birthmonth && $scope.user.nominee[index].birthyear) {
             var eventTime = new Date();
             $scope.dob = new Date($scope.user.nominee[index].birthyear + '-' + $scope.user.nominee[index].birthmonth + '-' + $scope.user.nominee[index].birthday);
             $scope.diffTime = eventTime - $scope.dob;
             var duration = moment.duration($scope.diffTime, 'milliseconds');
             duration = moment.duration(duration - 1000, 'milliseconds');
-            if(duration.years()<=18){
-              $scope.showIt['guardian'+index]=true;
+            if (duration.years() <= 18) {
+                $scope.showIt['guardian' + index] = true;
             }
         }
     };
@@ -1464,33 +1464,33 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 })
 
 .controller('NotificationCtrl', function($scope, TemplateService, NavigationService, $timeout) {
-    $scope.template = TemplateService.changecontent("notification");
-    $scope.menutitle = NavigationService.makeactive("Notification");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-    TemplateService.header = "views/content/header.html";
-})
-.controller('VerifyEmailCtrl', function($scope,$stateParams, TemplateService, NavigationService, $timeout) {
-    $scope.template = TemplateService.changecontent("verifyemail");
-    $scope.menutitle = NavigationService.makeactive("Notification");
-    TemplateService.title = $scope.menutitle;
-    $scope.ver = {};
-    $scope.sc={};
-    $scope.ver.verify= $stateParams.text;
-    $scope.navigation = NavigationService.getnav();
-    NavigationService.emailVerification($scope.ver,function (data) {
-      console.log(data);
-      $scope.sc.status=data.value;
-      if(data.value){
-        console.log(data);
-      }else{
-        console.log("err",data);
-      }
-    },function (err) {
-      console.log(err);
-    });
-    TemplateService.header = "views/content/header.html";
-})
+        $scope.template = TemplateService.changecontent("notification");
+        $scope.menutitle = NavigationService.makeactive("Notification");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        TemplateService.header = "views/content/header.html";
+    })
+    .controller('VerifyEmailCtrl', function($scope, $stateParams, TemplateService, NavigationService, $timeout) {
+        $scope.template = TemplateService.changecontent("verifyemail");
+        $scope.menutitle = NavigationService.makeactive("Notification");
+        TemplateService.title = $scope.menutitle;
+        $scope.ver = {};
+        $scope.sc = {};
+        $scope.ver.verify = $stateParams.text;
+        $scope.navigation = NavigationService.getnav();
+        NavigationService.emailVerification($scope.ver, function(data) {
+            console.log(data);
+            $scope.sc.status = data.value;
+            if (data.value) {
+                console.log(data);
+            } else {
+                console.log("err", data);
+            }
+        }, function(err) {
+            console.log(err);
+        });
+        TemplateService.header = "views/content/header.html";
+    })
 
 .controller('OverviewCtrl', function($scope, TemplateService, NavigationService, $timeout) {
     $scope.template = TemplateService.changecontent("overview");
@@ -2905,7 +2905,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
     $scope.login = {};
     $scope.signup = {};
-    $scope.forgotpassword={};
+    $scope.forgotpassword = {};
+    $scope.verify = {};
     $scope.open = {};
     $scope.registrationDialog = function() {
         $scope.open.selectedIndex = 0;
@@ -2922,6 +2923,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $mdDialog.show({
             template: '<md-dialog class="myClass"></md-dialog>',
             templateUrl: 'views/modal/forgotpassword.html',
+            clickOutsideToClose: false,
+            scope: $scope.$new()
+        });
+    };
+    $scope.otpDialog = function() {
+        $mdDialog.show({
+            template: '<md-dialog class="myClass"></md-dialog>',
+            templateUrl: 'views/modal/otpverify.html',
             clickOutsideToClose: false,
             scope: $scope.$new()
         });
@@ -2984,37 +2993,83 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.doForgot = function(input, ev) {
         NavigationService.forgotPassword(input, function(data) {
             if (data.value) {
-            if(data.data.comment.includes("not")){
-              $mdDialog.show(
-                      $mdDialog.alert()
-                      .parent(angular.element(document.querySelector('#popupContainer')))
-                      .clickOutsideToClose(true)
-                      .title("User does not exist")
-                      .ok('Okay')
-                      .targetEvent(ev)
-                  )
-                  .then(function(result) {
-                      $scope.registrationDialog();
-                      $scope.open.selectedIndex = 0;
-                  });
-            }else{
-              $mdDialog.show(
-                      $mdDialog.alert()
-                      .parent(angular.element(document.querySelector('#popupContainer')))
-                      .clickOutsideToClose(true)
-                      .title("Please check your email for further instructions")
-                      .ok('Okay')
-                      .targetEvent(ev)
-                  )
-                  .then(function(result) {
-                      $scope.registrationDialog();
-                      $scope.open.selectedIndex = 0;
-                  });
-            }
+                if (data.data.comment.includes("not")) {
+                    $mdDialog.show(
+                            $mdDialog.alert()
+                            .parent(angular.element(document.querySelector('#popupContainer')))
+                            .clickOutsideToClose(true)
+                            .title("User does not exist")
+                            .ok('Okay')
+                            .targetEvent(ev)
+                        )
+                        .then(function(result) {
+                            $scope.registrationDialog();
+                            $scope.open.selectedIndex = 0;
+                        });
+                } else {
+                    $mdDialog.show(
+                            $mdDialog.alert()
+                            .parent(angular.element(document.querySelector('#popupContainer')))
+                            .clickOutsideToClose(true)
+                            .title("Please check your email for further instructions")
+                            .ok('Okay')
+                            .targetEvent(ev)
+                        )
+                        .then(function(result) {
+                            $scope.registrationDialog();
+                            $scope.open.selectedIndex = 0;
+                        });
+                }
             } else {
-              console.log(data);
+                console.log(data);
             }
         }, function(err) {});
+    };
+    $scope.checkOTP = function(input, ev) {
+        input.contact = $scope.signup.mobile;
+        NavigationService.checkOTP(input, function(data) {
+            if (data.value) {
+                $mdDialog.show(
+                        $mdDialog.alert()
+                        .parent(angular.element(document.querySelector('#popupContainer')))
+                        .clickOutsideToClose(true)
+                        .title("Please proceed to login")
+                        .ok('Okay')
+                        .targetEvent(ev)
+                    )
+                    .then(function(result) {
+                        $scope.registrationDialog();
+                        $scope.open.selectedIndex = 0;
+                    });
+            } else {
+                if(angular.isObject(data.data)){
+                  $mdDialog.show(
+                          $mdDialog.alert()
+                          .parent(angular.element(document.querySelector('#popupContainer')))
+                          .clickOutsideToClose(true)
+                          .title(data.data.message)
+                          .ok('Okay')
+                          .targetEvent(ev)
+                      )
+                      .then(function(result) {
+                          $scope.otpDialog();
+                      });
+                }else{
+                  $mdDialog.show(
+                          $mdDialog.alert()
+                          .parent(angular.element(document.querySelector('#popupContainer')))
+                          .clickOutsideToClose(true)
+                          .title(data.data)
+                          .ok('Okay')
+                          .targetEvent(ev)
+                      )
+                      .then(function(result) {
+                      });
+                }
+            }
+        }, function(err) {
+            console.log(err);
+        });
     };
     $scope.doSignup = function(input, formValidate, ev) {
         if (formValidate.$valid) {
@@ -3022,17 +3077,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 NavigationService.signup(input, function(data) {
                     if (data.value) {
                         console.log(data);
-                        $mdDialog.show(
-                                $mdDialog.alert()
-                                .parent(angular.element(document.querySelector('#popupContainer')))
-                                .clickOutsideToClose(true)
-                                .title("Please check your inbox, we've sent a mail for verification")
-                                .ok('Okay')
-                                .targetEvent(ev)
-                            )
-                            .then(function(result) {
-
-                            });
+                        $scope.otpDialog();
                     } else {
                         $mdDialog.show(
                                 $mdDialog.alert()
@@ -3205,7 +3250,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.$apply();
         }, 10);
     };
-    if ($state.current.name !== "planned" ) {
+    if ($state.current.name !== "planned") {
         globalfunction.changeHeaderText(array[1]);
 
     }
