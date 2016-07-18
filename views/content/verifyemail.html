@@ -1,10 +1,12 @@
 <div class="container">
     <div class="verify-success" ng-show="sc.status">
         <h4>Email Verified</h4>
-        <p>Please proceed to login, <a ui-sref="home">Click Here</a></p>
+        <p ng-hide="er.errText">Please proceed to login, <a ui-sref="home">Click Here</a></p>
+        <p  ng-show="er.errText">{{sc.text}}</p>
     </div>
     <div class="verify-failure" ng-hide="sc.status">
         <h4>Email Already Verified</h4>
-        <p>Please proceed to login, <a ui-sref="home">Click Here</a></p>
+        <p ng-hide="er.errText">Please proceed to login, <a ui-sref="home">Click Here</a></p>
+        <p  ng-show="er.errText">{{sc.text}}</p>
     </div>
 </div>

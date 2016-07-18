@@ -1476,15 +1476,23 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         TemplateService.title = $scope.menutitle;
         $scope.ver = {};
         $scope.sc = {};
+        $scope.er = {};
+        $scope.er.errText = false;
         $scope.ver.verify = $stateParams.text;
         $scope.navigation = NavigationService.getnav();
         NavigationService.emailVerification($scope.ver, function(data) {
             console.log(data);
+            $scope.er.errText = false;
             $scope.sc.status = data.value;
+
             if (data.value) {
-                console.log(data);
+
             } else {
-                console.log("err", data);
+                if(data.error && data.error.includes("mobile")){
+                  $scope.sc.status = true;
+                  $scope.sc.text = data.error;
+                  $scope.er.errText = true;
+                }
             }
         }, function(err) {
             console.log(err);
