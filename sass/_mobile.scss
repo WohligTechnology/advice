@@ -1,3 +1,14 @@
+/* Large Large Devices */
+@media (max-width: 1600px) {
+  .section-one .section-one-content p { font-size: 28px; }
+  .section-two .section-two-content, .section-three .section-three-content, .section-four .section-four-content {
+    padding: 8% 100px 0 !important;
+    h3 { font-size: 40px; }
+    p { font-size: 18px; }
+  }
+
+}
+
 /* Large Devices, Wide Screens */
 @media (max-width : 1200px) {
   .profile .user-profile .user-form .navigation-tabs { width: 100%; }
@@ -6,6 +17,13 @@
   // width: 500px;
   //   margin-left: -190px;
   //   margin-top: 80px;
+  .section-one .section-one-content .content-image img { width: 300px; }
+  .section-one .section-one-content p { font-size: 24px; }
+  .section-two .section-two-content, .section-three .section-three-content, .section-four .section-four-content {
+    padding: 8% 60px 0 !important;
+    h3 { font-size: 32px; }
+    p { font-size: 18px; }
+  }
 }
 
 /* Medium Devices, Desktops */
@@ -52,6 +70,16 @@
     }
   }
   .nominee-details, .regulatory-details, .document-upload, .verification { margin-top: 120px; }
+  .section-one, .section-two, .section-three, .section-four,
+  .section-one-image, .section-two-image, .section-three-image, .section-four-image,
+  .section-one-content, .section-two-content, .section-three-content, .section-four-content {
+    height: 600px !important;
+  }
+  .section-one .section-one-content p { margin: 20px 50px 0; }
+  .section-two .section-two-content, .section-three .section-three-content, .section-four .section-four-content {
+    h3 { font-size: 27px; }
+    p { font-size: 16px; }
+  }
 }
 
 /* Extra Small Devices, Phones */
@@ -140,6 +168,12 @@
     .right-bar { padding: 20px !important; }
   }
 
+  .section-one, .section-two, .section-three, .section-four {
+    .section-one-content, .section-two-content, .section-three-content, .section-four-content,
+    .section-one-image, .section-two-image, .section-three-image, .section-four-image { width: 100% !important; height: 400px !important; }
+    .section-one-content, .section-two-content, .section-three-content, .section-four-content { height: 300px !important; }
+  }
+  .section-one .section-one-content .content-image img { width: 250px; }
 }
 
 /* Custom, iPhone Retina */
