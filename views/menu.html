@@ -2,15 +2,15 @@
     <div layout-fill layout="column">
       <div class="header-user">
         <div class="header-user-image">
-          <img src="img/referrals/5.png" alt="" class="img-responsive img-circle" />
+          <img ng-src="{{user.documents.photo | profileserverimage}}" alt="" class="img-responsive img-circle" />
         </div>
-        <div class="header-user-detail">
+        <!-- <div class="header-user-detail">
           <span class="header-user-name">Jonathon	Owen</span>
           <div class="wallet pull-right">
             <span><i class="material-icons">account_balance_wallet</i></span>
             <span class="wallet-money">1,13,135</span>
           </div>
-        </div>
+        </div> -->
       </div>
       <md-list class="headerList">
         <md-list-item class="{{menu.classis}}" ng-repeat="menu in navigation" ui-sref="{{menu.anchor}}" ui-sref-active="active" md-no-ink>

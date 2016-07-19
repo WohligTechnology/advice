@@ -175,6 +175,17 @@ firstapp.filter('portfolioserverimage', function() {
     }
   };
 });
+firstapp.filter('profileserverimage', function() {
+  return function(input) {
+    if (input) {
+      return  imgurl + input;
+    } else {
+      // return "img/logo.png";
+      console.log("default");
+      return "img/referrals/5.png";
+    }
+  };
+});
 firstapp.filter('letterLimit',function(){
   return function (value,limit) {
     console.log(value);

@@ -80,6 +80,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         desg: "Product Manager, TATA Honeywell",
         descp: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
     }];
+    $scope.tryIt = function () {
+      globalfunction.startSignup();
+    };
 })
 
 .controller('ProfileCtrl', function($scope, TemplateService, NavigationService, $timeout, $log, $window, $mdDialog, $upload) {
@@ -128,7 +131,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.user = data.data;
             if ($scope.user.forVerification) {
                 for (var i = 1; i < 5; i++) {
-                    $scope.changeStatus(i, 0, i * 500);
+                    // $scope.changeStatus(i, 0, i * 500);
+                    $scope.changeStatus(i, 0, 500);
                 }
                 $scope.changeTab(4);
             }
@@ -2928,6 +2932,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             scope: $scope.$new()
         });
     };
+    globalfunction.startSignup = function () {
+      $scope.registrationDialog();
+      $scope.open.selectedIndex = 1;
+    };
     $scope.forgotPasswordDialog = function() {
 
         $mdDialog.show({
@@ -3280,7 +3288,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 .controller('headerCtrl', function($scope, TemplateService, $mdSidenav, $timeout, $state, $log, NavigationService) {
     $scope.template = TemplateService;
-
+    $scope.user = {};
 
     var array = window.location.hash.split('/');
     globalfunction.changeHeaderText = function(text) {
@@ -3290,6 +3298,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.$apply();
         }, 10);
     };
+
     if ($state.current.name !== "planned") {
         globalfunction.changeHeaderText(array[1]);
 
@@ -3298,7 +3307,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.toggleLeft = buildDelayedToggler('left');
     NavigationService.getSession(function(data) {
         if (data.value) {
-            console.log("has session");
+            $scope.user = data.data;
         } else {
             console.log("no session");
             console.log($state.current.name);

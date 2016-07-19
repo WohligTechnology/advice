@@ -4,8 +4,8 @@ var skipped = [];
 var globalfunction = {};
 // var adminURL = "http://wohlig.io:81/callApi/7advisors";
 // var adminURL = "http://192.168.1.107:1337/";
-// var adminURL = "http://104.199.142.53/";
-var adminURL = "http://localhost/";
+var adminURL = "http://104.199.142.53/";
+// var adminURL = "http://localhost/";
 var imgurl=adminURL+ "upload/readFile?file=";
 var scenarios = [{
     id: 0,
@@ -330,7 +330,8 @@ var navigationservice = angular.module('navigationservice', [])
     var navigation = [{
         name: "Overview",
         classis: "active",
-        anchor: "overview",
+        // anchor: "overview",
+        anchor: "",
         icon: "donut_large"
     }, {
         name: "Portfolios",
@@ -340,7 +341,8 @@ var navigationservice = angular.module('navigationservice', [])
     }, {
         name: "Notification",
         classis: "active",
-        anchor: "notification",
+        // anchor: "notification",
+        anchor: "",
         icon: "notifications"
     }, {
         name: "Referral",
