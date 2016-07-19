@@ -80,8 +80,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         desg: "Product Manager, TATA Honeywell",
         descp: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries"
     }];
-    $scope.tryIt = function () {
-      globalfunction.startSignup();
+    $scope.tryIt = function() {
+        globalfunction.startSignup();
     };
 })
 
@@ -1492,10 +1492,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             if (data.value) {
 
             } else {
-                if(data.error && data.error.includes("mobile")){
-                  $scope.sc.status = true;
-                  $scope.sc.text = data.error;
-                  $scope.er.errText = true;
+                if (data.error && data.error.includes("mobile")) {
+                    $scope.sc.status = true;
+                    $scope.sc.text = data.error;
+                    $scope.er.errText = true;
                 }
             }
         }, function(err) {
@@ -2202,8 +2202,23 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.planlinechartconfig.series[0].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.series[1].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.series[2].data.unshift(currentPlan.cashflow[0]);
-        $scope.planlinechartconfig.series[3].data = currentPlan.cashflow;
-        // $scope.planlinechartconfig.title.text = "Goal : "+result.goalname;
+        console.log("Annually ", $scope.inputs.withdrawalfrequencySlider.value);
+        if ($scope.inputs.withdrawalfrequencySlider.value === 3) {
+            var i = 0;
+            var newCashflow = _.map(currentPlan.cashflow, function(key) {
+                if ((i - (result.startMonth + 1)) % 12 === 0 || i <= result.startMonth) {
+                    i++;
+                    return key;
+                } else {
+                    i++;
+                    return 0;
+                }
+            });
+            $scope.planlinechartconfig.series[3].data = newCashflow;
+        } else {
+            $scope.planlinechartconfig.series[3].data = currentPlan.cashflow;
+        }
+
         $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()), "MMM, '''yy"));
         _.each(currentPlan.feasible[0].tenures, function(key) {
             $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key), "MMM, '''yy"));
@@ -2486,6 +2501,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultSlider.installment = $scope.inputs.installmentSlider.value;
         resultSlider.shortinput = $scope.inputs.shortinputSlider.value;
         resultSlider.longinput = $scope.inputs.longinputSlider.value;
+        if($scope.inputs.withdrawalfrequencySlider.value == 1){
+          resultSlider.withdrawalfrequency="One Shot";
+        }else if($scope.inputs.withdrawalfrequencySlider.value == 2){
+          resultSlider.withdrawalfrequency="Monthly";
+        }else{
+          resultSlider.withdrawalfrequency="Annually";
+        }
         if ($scope.executeIt) {
             $scope.executeCompute(resultSlider);
         }
@@ -2522,9 +2544,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             } else {
 
                 $scope.planlinechartconfig.loading = false;
+                $scope.setSliders(globalfunction.request);
                 $scope.reflowChart($scope.currentPlan, globalfunction.request);
                 $scope.reflowChartED($scope.currentPlan);
-                $scope.setSliders(globalfunction.request);
+
                 $scope.showchart = true;
                 $scope.showdonut = true;
                 if ($scope.currentPlan.suggestions) {
@@ -2717,10 +2740,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.inputs.inflationSlider.options.ceil = res.inflation + 5;
         $scope.inputs.inflationSlider.options.floor = res.inflation - 5;
         $scope.inputs.installmentSlider.value = res.installment;
+        console.log("frequency fucking bug ", res.withdrawalfrequency);
         if (res.withdrawalfrequency == 'One Shot') {
             $scope.inputs.withdrawalfrequencySlider.value = 1;
         } else if (res.withdrawalfrequency == 'Monthly') {
             $scope.inputs.withdrawalfrequencySlider.value = 2;
+        }else{
+          $scope.inputs.withdrawalfrequencySlider.value = 3;
         }
     };
     //TOAST
@@ -2932,9 +2958,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             scope: $scope.$new()
         });
     };
-    globalfunction.startSignup = function () {
-      $scope.registrationDialog();
-      $scope.open.selectedIndex = 1;
+    globalfunction.startSignup = function() {
+        $scope.registrationDialog();
+        $scope.open.selectedIndex = 1;
     };
     $scope.forgotPasswordDialog = function() {
 
@@ -2969,8 +2995,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     //UPLOADER CODE
     NavigationService.getSession(function(data) {
         if (data.value) {
-            if($state.current.name == "home"){
-              $state.go("portfolio");
+            if ($state.current.name == "home") {
+                $state.go("portfolio");
             }
         } else {
 
@@ -3003,11 +3029,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.doLogin = function(input, ev) {
         NavigationService.login(input, function(data) {
             if (data.value) {
-              loading.start();
-                $timeout(function () {
-                  loading.stop();
-                  $state.go("profile");
-                },1500);
+                loading.start();
+                $timeout(function() {
+                    loading.stop();
+                    $state.go("profile");
+                }, 1500);
             } else {
                 $mdDialog.show(
                         $mdDialog.alert()
@@ -3059,19 +3085,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         }, function(err) {});
     };
-    $scope.resendOTP = function () {
-      var input={};
-      input.contact = $scope.signup.mobile;
-      NavigationService.resendOTP(input,function (data) {
-        if(data.value){
-          $scope.resend.text = "Sent";
-          $timeout(function () {
-            $scope.resend.text = "Resend";
-          },1000);
-        }
-      },function (err) {
+    $scope.resendOTP = function() {
+        var input = {};
+        input.contact = $scope.signup.mobile;
+        NavigationService.resendOTP(input, function(data) {
+            if (data.value) {
+                $scope.resend.text = "Sent";
+                $timeout(function() {
+                    $scope.resend.text = "Resend";
+                }, 1000);
+            }
+        }, function(err) {
 
-      });
+        });
     };
     $scope.checkOTP = function(input, ev) {
         input.contact = $scope.signup.mobile;
@@ -3090,29 +3116,28 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                         $scope.open.selectedIndex = 0;
                     });
             } else {
-                if(angular.isObject(data.data)){
-                  $mdDialog.show(
-                          $mdDialog.alert()
-                          .parent(angular.element(document.querySelector('#popupContainer')))
-                          .clickOutsideToClose(true)
-                          .title(data.data.message)
-                          .ok('Okay')
-                          .targetEvent(ev)
-                      )
-                      .then(function(result) {
-                          $scope.otpDialog();
-                      });
-                }else{
-                  $mdDialog.show(
-                          $mdDialog.alert()
-                          .parent(angular.element(document.querySelector('#popupContainer')))
-                          .clickOutsideToClose(true)
-                          .title("Verified! "+data.data)
-                          .ok('Okay')
-                          .targetEvent(ev)
-                      )
-                      .then(function(result) {
-                      });
+                if (angular.isObject(data.data)) {
+                    $mdDialog.show(
+                            $mdDialog.alert()
+                            .parent(angular.element(document.querySelector('#popupContainer')))
+                            .clickOutsideToClose(true)
+                            .title(data.data.message)
+                            .ok('Okay')
+                            .targetEvent(ev)
+                        )
+                        .then(function(result) {
+                            $scope.otpDialog();
+                        });
+                } else {
+                    $mdDialog.show(
+                            $mdDialog.alert()
+                            .parent(angular.element(document.querySelector('#popupContainer')))
+                            .clickOutsideToClose(true)
+                            .title("Verified! " + data.data)
+                            .ok('Okay')
+                            .targetEvent(ev)
+                        )
+                        .then(function(result) {});
                 }
             }
         }, function(err) {
