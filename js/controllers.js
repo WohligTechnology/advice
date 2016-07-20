@@ -2196,12 +2196,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.reflowChart = function(currentPlan, result) {
         console.log(result);
         $scope.planlinechartconfig.xAxis.categories = [];
-        $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
-        $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
-        $scope.planlinechartconfig.series[2].data = currentPlan.feasible[0].median99;
-        $scope.planlinechartconfig.series[0].data.unshift(currentPlan.cashflow[0]);
-        $scope.planlinechartconfig.series[1].data.unshift(currentPlan.cashflow[0]);
-        $scope.planlinechartconfig.series[2].data.unshift(currentPlan.cashflow[0]);
+
+
         console.log("Annually ", $scope.inputs.withdrawalfrequencySlider.value);
         if ($scope.inputs.withdrawalfrequencySlider.value === 3) {
             var i = 0;
@@ -2215,10 +2211,49 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 }
             });
             $scope.planlinechartconfig.series[3].data = newCashflow;
+            i=0;
+            var newMedian1 = _.map(currentPlan.feasible[0].median1, function(key) {
+                if ((i - (result.startMonth )) % 12 === 0 || i <= result.startMonth) {
+                    i++;
+                    return key;
+                } else {
+                    i++;
+                    return null;
+                }
+            });
+            $scope.planlinechartconfig.series[0].data = newMedian1;
+            i=0;
+            var newMedian50 = _.map(currentPlan.feasible[0].median50, function(key) {
+                if ((i - (result.startMonth )) % 12 === 0 || i <= result.startMonth) {
+                    i++;
+                    return key;
+                } else {
+                    i++;
+                    return null;
+                }
+            });
+            $scope.planlinechartconfig.series[1].data = newMedian50;
+            i=0;
+            var newMedian99 = _.map(currentPlan.feasible[0].median99, function(key) {
+                if ((i - (result.startMonth )) % 12 === 0 || i <= result.startMonth) {
+                    i++;
+                    return key;
+                } else {
+                    i++;
+                    return null;
+                }
+            });
+            $scope.planlinechartconfig.series[2].data = newMedian99;
+
         } else {
+          $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
+          $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
+          $scope.planlinechartconfig.series[2].data = currentPlan.feasible[0].median99;
             $scope.planlinechartconfig.series[3].data = currentPlan.cashflow;
         }
-
+        $scope.planlinechartconfig.series[0].data.unshift(currentPlan.cashflow[0]);
+        $scope.planlinechartconfig.series[1].data.unshift(currentPlan.cashflow[0]);
+        $scope.planlinechartconfig.series[2].data.unshift(currentPlan.cashflow[0]);
         $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()), "MMM, '''yy"));
         _.each(currentPlan.feasible[0].tenures, function(key) {
             $scope.planlinechartconfig.xAxis.categories.push($filter('date')((new Date()).setMonth((new Date()).getMonth() + key), "MMM, '''yy"));
