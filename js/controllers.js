@@ -2723,7 +2723,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.inputs.startMonthSlider.options.floor = parseInt(current.startMonth - 0.3 * current.startMonth);
         }
         if (suggestions.noOfInstallment !== 0 && suggestions.noOfInstallment !== undefined && suggestions.noOfInstallment !== null) {
-            $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, suggestions.startMonth + suggestions.noOfInstallment);
+            $scope.inputs.endMonthSlider.options = $scope.parseSuggestions($scope.inputs.endMonthSlider.options, current.startMonth + current.noOfInstallment, current.startMonth + suggestions.noOfInstallment);
         }
         //remove if any issue comes with slider automatically moving infinitely
         else {

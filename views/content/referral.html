@@ -13,8 +13,8 @@
         <div class="row">
           <div class="col-sm-3 col-xs-6" ng-repeat="ref in user.referred">
             <div class="referral-image text-center">
-              <img src="img/referrals/1.png" alt="" class="img-responsive img-circle" />
-              <p>{{ref.user.email}}</p>
+              <img src="{{ref.user.documents.photo | profileserverimage}}" alt="" class="img-responsive img-circle" />
+              <p>{{ref.user.name || ref.user.email}}</p>
             </div>
           </div>
 
