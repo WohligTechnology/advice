@@ -1317,7 +1317,7 @@ md-sidenav.md-sidenav-left {
     h3 {
       padding: 0 10px;
       display: inline-block;
-      font-size: 48px;
+      font-size: 40px;
       font-weight: bold;
       border-bottom: 1px solid black;
     }
@@ -1352,7 +1352,7 @@ md-sidenav.md-sidenav-left {
     h3 {
       padding: 0 10px;
       display: inline-block;
-      font-size: 48px;
+      font-size: 40px;
       font-weight: bold;
       border-bottom: 1px solid black;
     }
@@ -1371,7 +1371,7 @@ md-sidenav.md-sidenav-left {
     h3 {
       padding: 0 10px;
       display: inline-block;
-      font-size: 48px;
+      font-size: 40px;
       font-weight: bold;
       border-bottom: 1px solid black;
     }
@@ -1422,7 +1422,7 @@ md-sidenav.md-sidenav-left {
   @extend .home-section;
   @extend .home-flex;
   h2 {
-    font-size: 36px;
+    font-size: 40px;
     font-weight: bold;
   }
   .blue-section {
@@ -1453,7 +1453,7 @@ md-sidenav.md-sidenav-left {
   @extend .home-section;
   height: 600px;
   h2 {
-    font-size: 36px;
+    font-size: 40px;
     font-weight: bold;
     margin: 50px 0 -50px;
   }
@@ -1471,6 +1471,7 @@ md-sidenav.md-sidenav-left {
       img {
         width: 100%;
         height: 100%;
+        @include transform(translate(0, 10px));
       }
     }
   }
@@ -1502,8 +1503,8 @@ md-sidenav.md-sidenav-left {
     height: 600px;
     //padding: 8% 0 0;
     @extend .home-flex;
-    h3 {
-      font-size: 48px;
+    p.heading {
+      font-size: 40px;
       font-weight: bold;
     }
     p {
