@@ -6,7 +6,8 @@
     h3 { font-size: 40px; }
     p { font-size: 18px; }
   }
-
+  .section-two .section-two-content h3, .section-three .section-three-content h3, .section-four .section-four-content h3,
+  .section-six h2, .section-seven h2, .section-eight .section-eight-content p.heading { font-size: 36px; }
 }
 
 /* Large Devices, Wide Screens */
@@ -24,6 +25,7 @@
     h3 { font-size: 32px; }
     p { font-size: 18px; }
   }
+  .section-six h2, .section-seven h2, .section-eight .section-eight-content p.heading { font-size: 32px; }
 }
 
 /* Medium Devices, Desktops */
@@ -199,7 +201,7 @@
     }
   }
   .section-six {
-    h2 { margin: 0 20px; font-size: 28px; }
+    h2 { margin: 20px 20px 0; font-size: 24px; }
     height: auto;
     padding-bottom: 30px;
     margin-top: 30px;
@@ -218,7 +220,7 @@
   }
   .section-seven, .section-eight {
     h2, h3 {
-      font-size: 28px;
+      font-size: 24px;
       margin: 50px 20px;
     }
     .section-seven-image, .section-seven-content, .section-eight-image, .section-eight-content { width: 100%; height: auto; }
@@ -229,8 +231,8 @@
     margin-top: 50px;
   }
   .section-eight .section-eight-content {
-    h3 { margin: 0; font-size: 24px; }
-    p { font-size: 16px; text-align: center; }
+    p.heading { margin: 0; font-size: 24px; text-align: center; }
+    p { font-size: 16px; }
   }
   .section-eight footer {
     .links {
