@@ -25,6 +25,7 @@
     h3 { font-size: 32px; }
     p { font-size: 18px; }
   }
+  .section-five .try-button { right: 100px !important; }
   .section-six h2, .section-seven h2, .section-eight .section-eight-content p.heading { font-size: 32px; }
 }
 
@@ -82,6 +83,8 @@
     h3 { padding: 0; font-size: 24px; }
     p { font-size: 16px; }
   }
+  .section-five .section-five-image .image { background-size: cover !important; }
+  .section-five .try-button { bottom: 100px !important; }
   .section-six h2 { font-size: 32px; }
   .section-seven {
     .section-seven-image .image {
@@ -195,9 +198,28 @@
   .section-one .section-one-content p { font-size: 20px; }
   .section-five {
     height: 400px;
-    .section-five-image {
-      height: 400px;
-      .image { background-size: cover !important; }
+    .section-five-image { height: 400px; }
+  }
+  .section-five .try-button {
+    bottom: 50px !important;
+    right: 50px !important;
+    button {
+      padding: 6px 25px !important;
+      font-size: 16px !important;
+    }
+  }
+  .section-four {
+    height: auto !important;
+    .section-four-content {
+      float: none !important;
+      padding-top: 40px !important;
+    }
+    .section-four-image {
+      height: 500px !important;
+      float: none !important;
+      .image {
+        background-position: center 60% !important;
+      }
     }
   }
   .section-six {

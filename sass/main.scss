@@ -247,6 +247,12 @@ md-dialog .md-primary {
         @include transition(all 300ms linear);
     }
 }
+.header {
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+}
+.navbar { margin: 0 !important; }
 .navbar-header {
   margin-left: 50px;
 }
@@ -1282,7 +1288,7 @@ md-sidenav.md-sidenav-left {
 
 .section-one {
   @extend .home-section;
-  margin-top: 69px;
+  margin-top: 70px;
   .section-one-image {
     @extend .home-section-half;
     .image {
