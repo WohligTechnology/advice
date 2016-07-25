@@ -263,7 +263,10 @@
     }
     p { margin: 0 10px; font-size: 12px; }
   }
-  md-dialog .registration { width: 350px !important; }
+  md-dialog .registration {
+    width: 300px !important;
+    md-content { padding: 30px !important; }
+  }
 }
 
 /* Custom, iPhone Retina */
