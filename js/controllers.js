@@ -138,8 +138,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
             if ($scope.user.nominee.length > 0) {
                 $scope.nominee.nonominee = false;
-            } else {
-                $scope.emptyNominees(true);
             }
             _.each($scope.user.nominee, function(key) {
                 var d = new Date(key.dob);
