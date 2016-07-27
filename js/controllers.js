@@ -2889,6 +2889,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     };
     $scope.SaveExecutePlan = function(ev) {
+      loading.start();
         var request = null;
         request = $scope.feasibleresult;
         request.status = true;
@@ -2897,7 +2898,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         _.each($scope.fundstable, function(key) {
 
             request.funds[iterate] = {
-                fundid: key._id
+                fundid: key._id,
+                lump:key.lump,
+                monthly:key.monthly
             };
             iterate++;
         });
@@ -2905,6 +2908,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         request.id = $stateParams.id;
 
         NavigationService.savePortfolio(request, function(data) {
+          loading.stop();
             if (data.value) {
 
                 $mdDialog.show(
@@ -2936,6 +2940,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     };
     $scope.ExecutePlan = function(ev) {
+      loading.start();
         var confirm = $mdDialog.confirm()
             .title('Are you sure you want to make the plan live?')
             .ariaLabel('Lucky day')
@@ -2958,6 +2963,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             request.id = $stateParams.id;
             request.executiontime = new Date();
             NavigationService.savePortfolio(request, function(data) {
+              loading.stop();
                 if (data.value) {
                     $state.go('portfolio');
                 }
