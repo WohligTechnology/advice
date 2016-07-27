@@ -2209,9 +2209,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 }
             });
             $scope.planlinechartconfig.series[3].data = newCashflow;
-            i=0;
+            i = 0;
             var newMedian1 = _.map(currentPlan.feasible[0].median1, function(key) {
-                if ((i - (result.startMonth )) % 12 === 0 || i <= result.startMonth) {
+                if ((i - (result.startMonth)) % 12 === 0 || i <= result.startMonth) {
                     i++;
                     return key;
                 } else {
@@ -2220,9 +2220,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 }
             });
             $scope.planlinechartconfig.series[0].data = newMedian1;
-            i=0;
+            i = 0;
             var newMedian50 = _.map(currentPlan.feasible[0].median50, function(key) {
-                if ((i - (result.startMonth )) % 12 === 0 || i <= result.startMonth) {
+                if ((i - (result.startMonth)) % 12 === 0 || i <= result.startMonth) {
                     i++;
                     return key;
                 } else {
@@ -2231,9 +2231,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 }
             });
             $scope.planlinechartconfig.series[1].data = newMedian50;
-            i=0;
+            i = 0;
             var newMedian99 = _.map(currentPlan.feasible[0].median99, function(key) {
-                if ((i - (result.startMonth )) % 12 === 0 || i <= result.startMonth) {
+                if ((i - (result.startMonth)) % 12 === 0 || i <= result.startMonth) {
                     i++;
                     return key;
                 } else {
@@ -2244,9 +2244,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.planlinechartconfig.series[2].data = newMedian99;
 
         } else {
-          $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
-          $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
-          $scope.planlinechartconfig.series[2].data = currentPlan.feasible[0].median99;
+            $scope.planlinechartconfig.series[0].data = currentPlan.feasible[0].median1;
+            $scope.planlinechartconfig.series[1].data = currentPlan.feasible[0].median50;
+            $scope.planlinechartconfig.series[2].data = currentPlan.feasible[0].median99;
             $scope.planlinechartconfig.series[3].data = currentPlan.cashflow;
         }
         $scope.planlinechartconfig.series[0].data.unshift(currentPlan.cashflow[0]);
@@ -2534,12 +2534,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         resultSlider.installment = $scope.inputs.installmentSlider.value;
         resultSlider.shortinput = $scope.inputs.shortinputSlider.value;
         resultSlider.longinput = $scope.inputs.longinputSlider.value;
-        if($scope.inputs.withdrawalfrequencySlider.value == 1){
-          resultSlider.withdrawalfrequency="One Shot";
-        }else if($scope.inputs.withdrawalfrequencySlider.value == 2){
-          resultSlider.withdrawalfrequency="Monthly";
-        }else{
-          resultSlider.withdrawalfrequency="Annually";
+        if ($scope.inputs.withdrawalfrequencySlider.value == 1) {
+            resultSlider.withdrawalfrequency = "One Shot";
+        } else if ($scope.inputs.withdrawalfrequencySlider.value == 2) {
+            resultSlider.withdrawalfrequency = "Monthly";
+        } else {
+            resultSlider.withdrawalfrequency = "Annually";
         }
         if ($scope.executeIt) {
             $scope.executeCompute(resultSlider);
@@ -2778,8 +2778,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.inputs.withdrawalfrequencySlider.value = 1;
         } else if (res.withdrawalfrequency == 'Monthly') {
             $scope.inputs.withdrawalfrequencySlider.value = 2;
-        }else{
-          $scope.inputs.withdrawalfrequencySlider.value = 3;
+        } else {
+            $scope.inputs.withdrawalfrequencySlider.value = 3;
         }
     };
     //TOAST
@@ -2862,7 +2862,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         _.each($scope.fundstable, function(key) {
 
             request.funds[iterate] = {
-                fundid: key._id
+                fundid: key._id,
+                lump: key.lump,
+                monthly: key.monthly
+
             };
             iterate++;
         });
@@ -2889,7 +2892,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     };
     $scope.SaveExecutePlan = function(ev) {
-      loading.start();
+        loading.start();
         var request = null;
         request = $scope.feasibleresult;
         request.status = true;
@@ -2899,8 +2902,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
             request.funds[iterate] = {
                 fundid: key._id,
-                lump:key.lump,
-                monthly:key.monthly
+                lump: key.lump,
+                monthly: key.monthly
             };
             iterate++;
         });
@@ -2908,7 +2911,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         request.id = $stateParams.id;
 
         NavigationService.savePortfolio(request, function(data) {
-          loading.stop();
+            loading.stop();
             if (data.value) {
 
                 $mdDialog.show(
@@ -2940,7 +2943,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         });
     };
     $scope.ExecutePlan = function(ev) {
-      loading.start();
+
         var confirm = $mdDialog.confirm()
             .title('Are you sure you want to make the plan live?')
             .ariaLabel('Lucky day')
@@ -2948,6 +2951,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             .ok('Confirm')
             .cancel('Cancel');
         $mdDialog.show(confirm).then(function() {
+            loading.start();
             var request = null;
             request = $scope.feasibleresult;
             request.status = true;
@@ -2956,14 +2960,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             _.each($scope.fundstable, function(key) {
 
                 request.funds[iterate] = {
-                    fundid: key._id
+                    fundid: key._id,
+                    lump: key.lump,
+                    monthly: key.monthly
                 };
                 iterate++;
             });
             request.id = $stateParams.id;
             request.executiontime = new Date();
             NavigationService.savePortfolio(request, function(data) {
-              loading.stop();
+                loading.stop();
                 if (data.value) {
                     $state.go('portfolio');
                 }
