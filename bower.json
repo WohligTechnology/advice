@@ -38,5 +38,8 @@
     "angularjs-slider": "^2.13.0",
     "ngclipboard": "^1.1.1",
     "angular-touch": "^1.5.7"
+  },
+  "resolution":{
+    "angular":"^1.5.0"
   }
 }
